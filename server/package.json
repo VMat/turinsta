@@ -2,7 +2,7 @@
   "name": "turinsta",
   "version": "0.1.0",
   "description": "A social newtwork for travelers!",
-  "repository": "",
+  "repository": "https://Matias_Villalva@bitbucket.org/Matias_Villalva/turinsta.git",
   "license": "",
   "engines": {
     "node": "5.9.1"
