@@ -2,6 +2,8 @@
   "name": "turinsta",
   "version": "0.1.0",
   "description": "A social newtwork for travelers!",
+  "repository": "",
+  "license": "",
   "engines": {
     "node": "5.9.1"
   },
@@ -21,4 +23,5 @@
     "superlogin": "^0.6.1"
   },
   "dependencies": {}
+  
 }
