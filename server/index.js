@@ -1,7 +1,7 @@
 console.log("0");
 
 // Set up
-var express  = require('express');
+var express  = require('server/express');
 var app      = express();                               // create our app w/ express
 var mongoose = require('mongoose');                     // mongoose for mongodb
 var morgan = require('morgan');             // log requests to the console (express4)
