@@ -1,3 +1,5 @@
+console.log("0");
+
 // Set up
 var express  = require('express');
 var app      = express();                               // create our app w/ express
