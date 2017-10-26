@@ -9,7 +9,7 @@
   },
   "main": "index.js",
   "scripts": {
-    "start": "node index.js"
+    "start": "npm install & node index.js"
   },
   "devDependencies": {
     "mongoose": "^4.6.2",
