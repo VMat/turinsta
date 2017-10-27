@@ -9,7 +9,7 @@
   },
   "main": "index.js",
   "scripts": {
-    "start": "npm install && node index.js"
+    "postinstall": "node index.js"
   },
   "devDependencies": {
     "mongoose": "^4.6.2",
@@ -23,5 +23,5 @@
     "superlogin": "^0.6.1"
   },
   "dependencies": {}
-  
+
 }
