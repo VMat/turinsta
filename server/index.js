@@ -8,8 +8,11 @@ const methodOverride = require('method-override'); // simulate DELETE and PUT (e
 const cors = require('cors');
 const path = require('path');
 
+const storageService = require('services/storageService');
+const routeServer = require('router/routeServer');
+
 // Configuration
-//mongoose.connect('mongodb://localhost/reviewking');
+storageService.connect();
 
 app.use(morgan('dev'));                                         // log every request to the console
 app.use(bodyParser.urlencoded({'extended':'true'}));            // parse application/x-www-form-urlencoded
@@ -26,6 +29,7 @@ app.use((req, res, next)=>{
 });
 
 // Routes
+app.use('/api', routeServer);
 app.use(express.static(path.join(__dirname + '/../www')));
 
 // views is directory for all template files
