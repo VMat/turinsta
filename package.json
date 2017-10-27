@@ -10,7 +10,7 @@
         "lint": "ionic-app-scripts lint",
         "ionic:build": "ionic-app-scripts build",
         "ionic:serve": "ionic-app-scripts serve",
-        "postinstall": "cd server && npm install"
+        "preinstall": "cd server && npm install"
     },
     "dependencies": {
         "express": "^4.14.0",
