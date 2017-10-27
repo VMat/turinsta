@@ -8,8 +8,8 @@ const methodOverride = require('method-override'); // simulate DELETE and PUT (e
 const cors = require('cors');
 const path = require('path');
 
-const storageService = require('services/storageService');
-const routeServer = require('router/routeServer');
+const storageService = require('./services/storageService');
+const routeServer = require('./router/routeServer');
 
 // Configuration
 storageService.connect();
