@@ -1,53 +1,53 @@
-const Products = require('../models/product');
+const Publications = require('../models/publication');
 const Commons = require('./commons');
 
-var ProductInterface = (function(){
+var PublicationInterface = (function(){
   
-  function oProductInterface(){};
+  function oPublicationInterface(){};
   
-  oProductInterface.prototype = {
+  PublicationInterface.prototype = {
     
     getAll: ()=>{
-      return Products.find();
+      return Publications.find();
     },
     
     getOne: (id)=>{
-      return Products.find({"uniqueCode": id}).exec();
+      return Publications.find({"uniqueCode": id}).exec();
     },
         
-    insert: (product)=>{
-      return Commons.getNextUniqueCode(Products,(nextUniqueCode)=>{
-        let newProduct = new Products(product);
-        newProduct.uniqueCode = nextUniqueCode;
-        return newProduct.save();
+    insert: (publication)=>{
+      return Commons.getNextUniqueCode(Publications,(nextUniqueCode)=>{
+        let newPublication = new Publications(publication);
+        newPublication.uniqueCode = nextUniqueCode;
+        return newPublication.save();
       })
     },
     
-    update: (id, product)=>{
+    update: (id, publication)=>{
       
-      //return Products.findOneAndUpdate({'uniqueCode':id}, product, {upsert:false}, (err, updatedProduct)=>{updatedProduct});
+      //return Publications.findOneAndUpdate({'uniqueCode':id}, product, {upsert:false}, (err, updatedProduct)=>{updatedProduct});
       
-      return Products.find({"uniqueCode": id}).
-        exec((err,products)=>{
-          if(products.length > 0){
-            products[0].name = product.name;
-            products[0].description = product.description;
-            products[0].priceSince = product.priceSince;
-            return products[0].save();            
+      return Publications.find({"uniqueCode": id}).
+        exec((err,publications)=>{
+          if(publications.length > 0){
+            publications[0].name = publication.name;
+            publications[0].description = publication.description;
+            publications[0].priceSince = publication.priceSince;
+            return publications[0].save();            
           }
         });
     },
     
     deleteAll: ()=>{
-      return Products.remove();
+      return Publications.remove();
     },
     
     deleteOne: (id)=>{
-      return Products.find({"uniqueCode": id}).
-        exec((err,products)=>{
-          if(products.length > 0){
-            products[0].remove((err,deletedProduct)=>{
-              return deletedProduct;
+      return Publications.find({"uniqueCode": id}).
+        exec((err,publications)=>{
+          if(publications.length > 0){
+            publications[0].remove((err,deletedPublication)=>{
+              return deletedPublication;
             });
           }
         });
@@ -55,11 +55,11 @@ var ProductInterface = (function(){
     
   };
 
-  return oProductInterface;
+  return PublicationInterface;
 
 })();
 
-oProductInterface = new ProductInterface();
+oPublicationInterface = new PublicationInterface();
 
-module.exports = oProductInterface;
+module.exports = oPublicationInterface;
 
