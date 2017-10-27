@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const productInterface = require('./productInterface');
+const publicationInterface = require('./publicationInterface');
 
 let db = (function(){
 
@@ -17,28 +17,28 @@ let db = (function(){
       });
     },
     
-    getProducts: ()=>{
-      return productInterface.getAll();
+    getPublication: ()=>{
+      return publicationInterface.getAll();
     },
     
-    getProduct: (id)=>{
-      return productInterface.getOne(id);
+    getPublication: (id)=>{
+      return publicationInterface.getOne(id);
     },
         
-    createProduct: (product)=>{
-      return productInterface.insert(product);
+    createPublication: (publication)=>{
+      return publicationInterface.insert(publication);
     },
     
-    updateProduct: (id, product)=>{
-      return productInterface.update(id, product);
+    updatePublication: (id, publication)=>{
+      return publicationInterface.update(id, publication);
     },
     
-    deleteProducts: ()=>{
-      return productInterface.deleteAll();
+    deletePublication: ()=>{
+      return publicationInterface.deleteAll();
     },
     
-    deleteProduct: (id)=>{
-      return productInterface.deleteOne(id);
+    deletePublication: (id)=>{
+      return publicationInterface.deleteOne(id);
     }     
   };
   
