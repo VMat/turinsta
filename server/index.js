@@ -1,12 +1,12 @@
 // Set up
-var express  = require('express');
-var app      = express();                               // create our app w/ express
-var mongoose = require('mongoose');                     // mongoose for mongodb
-var morgan = require('morgan');             // log requests to the console (express4)
-var bodyParser = require('body-parser');    // pull information from HTML POST (express4)
-var methodOverride = require('method-override'); // simulate DELETE and PUT (express4)
-var cors = require('cors');
-var path = require('path');
+const express  = require('express');
+const app      = express();                               // create our app w/ express
+const mongoose = require('mongoose');                     // mongoose for mongodb
+const morgan = require('morgan');             // log requests to the console (express4)
+const bodyParser = require('body-parser');    // pull information from HTML POST (express4)
+const methodOverride = require('method-override'); // simulate DELETE and PUT (express4)
+const cors = require('cors');
+const path = require('path');
 
 // Configuration
 //mongoose.connect('mongodb://localhost/reviewking');
@@ -18,7 +18,7 @@ app.use(bodyParser.json({ type: 'application/vnd.api+json' })); // parse applica
 app.use(methodOverride());
 app.use(cors());
 
-app.use(function(req, res, next) {
+app.use((req, res, next)=>{
   res.header("Access-Control-Allow-Origin", "*");
   res.header('Access-Control-Allow-Methods', 'DELETE, PUT');
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
@@ -32,10 +32,11 @@ app.use(express.static(path.join(__dirname + '/../www')));
 app.set('views', __dirname + '/../www');
 app.set('view engine', 'html');
 
-app.get('/', function(request, response) {
+app.get('/',(request, response)=>{
   response.render('index');
 });
 
 // listen (start app with node server.js) ======================================
-app.listen(process.env.PORT || 5000)
-console.log("App listening on port " + app.address().port);
+const listener = app.listen(process.env.PORT || 5000, ()=>{
+    console.log('Listening on port ' + listener.address().port);
+});
