@@ -20,6 +20,14 @@ let Commons = (function(){
             nextUniqueCode = 1;
           }
         }).then(()=>{return fn(nextUniqueCode)});
+    },
+    
+    getAll: (Collection)=>{
+      return Collection.find()
+    },
+    
+    getOne: (Collection,id)=>{
+      return Collection.findById(id);
     }
   
   };
