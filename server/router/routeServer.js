@@ -6,6 +6,6 @@ routeServer.get('/', function (req, res){
 });
 
 // API REST PRODUCTOS
-routeServer.use('/productos', publicationApi);
+routeServer.use('/publications', publicationApi);
 
 module.exports = routeServer;
