@@ -9,7 +9,6 @@
   },
   "main": "index.js",
   "scripts": {
-    "postinstall": "node index.js"
   },
   "dependencies": {
     "mongoose": "^4.6.2",
