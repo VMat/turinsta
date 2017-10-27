@@ -4,7 +4,7 @@ const mongoose = require('mongoose');
 const publicationSchema = new mongoose.Schema({
   _id: { type: String },
 	user: {
-		_id: { type: String }
+		_id: { type: String },
 		avatar: String,
 		username: String,
 		score: Number
