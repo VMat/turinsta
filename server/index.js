@@ -28,6 +28,8 @@ app.use(function(req, res, next) {
 // Routes
 app.use(express.static(path.join(__dirname + '/../www')));
 
+console.log(__dirnam);
+
 // views is directory for all template files
 app.set('views', __dirname + '/../www');
 app.set('view engine', 'html');
@@ -38,4 +40,4 @@ app.get('/', function(request, response) {
 
 // listen (start app with node server.js) ======================================
 app.listen(5000);
-console.log("App listening on port 8080");
+console.log("App listening on port 5000");
