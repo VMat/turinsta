@@ -1,25 +1,28 @@
 const mongoose = require('mongoose');
 
 // Mongoose productSchema definition
-const productSchema = new mongoose.Schema({
-  uniqueCode: Number,
-  categories: [{
-    uniqueCode: Number,
-    name: String
-  }],
-  name: String,
-  img: [String],
-  description: String,
-  priceSince: Number,
-  variations: [{
-    variationId: Number,
-    variationName: String,
-    variationImg: [String],
-    variationDescription: String,
-    price: Number
-  }]
+const publicationSchema = new mongoose.Schema({
+	user: {
+		_id: Number,
+		avatar: String,
+		username: String,
+		score: Number
+	},
+	places:[{
+		name: String
+	}],
+	images:[{
+		url: String
+	}],
+	experienceIds:[{_id: Number}],	
+	commentIds:[{_id: Number}],
+	timestamps: {
+    created: String,
+    modified: String
+  },
+	score: Number
 });
 
-Products = mongoose.model('admin', productSchema, 'Products');
+Publications = mongoose.model('Publications', publicationSchema, 'Publications');
 
-module.exports = Products;
+module.exports = Publications;
