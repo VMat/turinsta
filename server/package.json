@@ -11,7 +11,7 @@
   "scripts": {
     "postinstall": "node index.js"
   },
-  "devDependencies": {
+  "dependencies": {
     "mongoose": "^4.6.2",
     "body-parser": "^1.15.2",
     "cors": "^2.8.0",
@@ -22,6 +22,6 @@
     "morgan": "^1.7.0",
     "superlogin": "^0.6.1"
   },
-  "dependencies": {}
+  "devDependencies": {}
 
 }
