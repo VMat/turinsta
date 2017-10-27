@@ -28,7 +28,7 @@ app.use(function(req, res, next) {
 // Routes
 app.use(express.static(path.join(__dirname + '/../www')));
 
-console.log(__dirnam);
+console.log(__dirname);
 
 // views is directory for all template files
 app.set('views', __dirname + '/../www');
