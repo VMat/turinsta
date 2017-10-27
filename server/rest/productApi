@@ -1,0 +1,40 @@
+const router = require('express').Router();
+const productService = require('../services/productService');
+  
+router.get('/',(req, res)=>{
+  productService.getProducts()
+    .then(products=>{res.status(200).json(products)})
+    .catch(error=>{res.status(500).send(err)})
+});
+
+router.get('/:id',(req, res)=>{
+  productService.getProduct(req.params.id)
+    .then(products=>{res.status(200).json(products)})
+    .catch(error=>{res.status(500).send(err)})
+});
+
+router.post('/',(req, res)=>{
+  productService.createProduct(req.body)
+    .then(product=>{res.status(200).json(product)})
+    .catch(error=>{res.status(500).send(err)})
+});
+
+router.put('/:id',(req, res)=>{
+  productService.updateProduct(req.params.id,req.body)
+    .then(product=>{res.status(200).json(product)})
+    .catch(error=>{res.status(500).send(err)})
+});
+
+router.delete('/',(req, res)=>{
+  productService.deleteProducts()
+    .then(products=>{res.status(200).json(products)})
+    .catch(error=>{res.status(500).send(err)})
+});
+
+router.delete('/:id',(req, res)=>{
+  productService.deleteProduct(req.params.id)
+    .then(product=>{res.status(200).json(product)})
+    .catch(error=>{res.status(500).send(err)})
+});
+
+module.exports = router;
