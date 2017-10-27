@@ -33,10 +33,9 @@ app.set('views', __dirname + '/../www');
 app.set('view engine', 'html');
 
 app.get('/', function(request, response) {
-  console.log("Hola");
   response.render('index');
 });
 
 // listen (start app with node server.js) ======================================
 app.listen(process.env.PORT || 5000)
-console.log("App listening on port" + process.env.PORT || 5000);
+console.log("App listening on port " + app.address().port);
