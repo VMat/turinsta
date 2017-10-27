@@ -15,7 +15,7 @@ var storageService = (function(){
     },
     
     getPublication: (id)=>{
-      return db.getPublications(id);
+      return db.getPublication(id);
     },
     
     createPublication: (publication)=>{
