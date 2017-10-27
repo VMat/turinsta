@@ -5,7 +5,7 @@ var PublicationInterface = (function(){
   
   function oPublicationInterface(){};
   
-  PublicationInterface.prototype = {
+  oPublicationInterface.prototype = {
     
     getAll: ()=>{
       return Publications.find();
@@ -55,7 +55,7 @@ var PublicationInterface = (function(){
     
   };
 
-  return PublicationInterface;
+  return oPublicationInterface;
 
 })();
 
