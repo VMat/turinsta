@@ -27,6 +27,7 @@ let Commons = (function(){
     },
     
     getOne: (Collection,id)=>{
+      console.log(id);
       return Collection.findById(id);
     }
   
