@@ -13,6 +13,7 @@
         "start": "cd server && npm update && npm install"
     },
     "dependencies": {
+        "express": "^4.14.0",
         "@angular/common": "4.4.3",
         "@angular/compiler": "4.4.3",
         "@angular/compiler-cli": "4.4.3",
