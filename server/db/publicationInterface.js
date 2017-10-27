@@ -8,11 +8,11 @@ var PublicationInterface = (function(){
   oPublicationInterface.prototype = {
     
     getAll: ()=>{
-      return Publications.find();
+      return Commons.getAll(Publications);
     },
     
     getOne: (id)=>{
-      return Publications.find({"uniqueCode": id}).exec();
+      return Commons.getOne(Publications, id);
     },
         
     insert: (publication)=>{
