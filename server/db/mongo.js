@@ -17,7 +17,7 @@ let db = (function(){
       });
     },
     
-    getPublication: ()=>{
+    getPublications: ()=>{
       return publicationInterface.getAll();
     },
     
