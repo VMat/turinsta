@@ -10,116 +10,36 @@ var storageService = (function(){
       db.connect();
     },
     
-    getProducts: ()=>{
-      return db.getProducts();
+    getPublications: ()=>{
+      return db.getPublications();
     },
     
-    getProduct: (id)=>{
-      return db.getProduct(id);
+    getPublication: (id)=>{
+      return db.getPublications(id);
     },
     
-    createProduct: (product)=>{
-      return db.createProduct(product);
+    createPublication: (publication)=>{
+      return db.createPublication(publication);
     },
     
-    updateProduct: (id,product)=>{
-      return db.updateProduct(id,product);
+    updatePublication: (id,publication)=>{
+      return db.updatePublication(id,publication);
     },
     
-    deleteProducts: ()=>{
-      return db.deleteProducts();
+    deletePublications: ()=>{
+      return db.deletePublications();
     },
     
-    deleteProduct: (id)=>{
-      return db.deleteProduct(id);
-    },
-    
-    getAccounts: ()=>{
-      return db.getAccounts();
-    },
+    deletePublication: (id)=>{
+      return db.deletePublication(id);
+    }    
    
-    getAccount: (id)=>{
-      return db.getAccount(id);
-    },
-    
-    createAccount: (account)=>{
-      return db.createAccount(account);
-    },
-    
-    patchAccount: (id, account)=>{
-      return db.patchAccount(id, account);
-    },
-    
-    updateAccount: (id, account)=>{
-      return db.updateAccount(id, account);
-    },
-    
-    deleteAccounts: ()=>{
-      return db.deleteAccounts();
-    },
-    
-    deleteAccount: (id)=>{
-      return db.deleteAccount(id);
-    },
-    
-    getRequests: ()=>{
-      return db.getRequests();
-    },
-    
-    getRequest: (id)=>{
-      return db.getRequest(id);
-    },
-    
-    createRequest: (request)=>{
-      return db.createRequest(request);
-    },
-    
-    updateRequest: (id, request)=>{
-      return db.updateRequest(id, request);
-    },
-    
-    deleteRequests: ()=>{
-      return db.deleteRequests();
-    },
-    
-    deleteRequest: (id)=>{
-      return db.deleteRequest(id);
-    },
-    
-    getNews: ()=>{
-      return db.getNews();
-    },
-   
-    getNovelty: (id)=>{
-      return db.getNovelty(id);
-    },
-    
-    createNovelty: (novelty)=>{
-      return db.createNovelty(novelty);
-    },
-    
-    patchNovelty: (id, novelty)=>{
-      return db.patchNovelty(id, novelty);
-    },
-    
-    updateNovelty: (id, novelty)=>{
-      return db.updateNovelty(id, novelty);
-    },
-    
-    deleteNews: ()=>{
-      return db.deleteNews();
-    },
-    
-    deleteNovelty: (id)=>{
-      return db.deleteNovelty(id);
-    }
-    
   };
   
   return oStorageService;
 
 })();
 
-var oStorageServiceb = new storageService();
+var oStorageService = new storageService();
 
-module.exports = oStorageServiceb;
+module.exports = oStorageService;
