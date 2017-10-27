@@ -2,9 +2,9 @@ const mongoose = require('mongoose');
 
 // Mongoose productSchema definition
 const publicationSchema = new mongoose.Schema({
-  _id: String,
+  _id: { type: String }
 	user: {
-		_id: String,
+		_id: { type: String }
 		avatar: String,
 		username: String,
 		score: Number
@@ -15,8 +15,8 @@ const publicationSchema = new mongoose.Schema({
 	images:[{
 		url: String
 	}],
-	experienceIds:[{_id: String}],	
-	commentIds:[{_id: String}],
+	experienceIds:[{_id: { type: String }}],	
+	commentIds:[{_id: { type: String }}],
 	timestamps: {
     created: String,
     modified: String
