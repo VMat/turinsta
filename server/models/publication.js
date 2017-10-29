@@ -1,8 +1,9 @@
 const mongoose = require('mongoose');
+const ObjectId = require('mongoose').Types.ObjectId;
 
 // Mongoose productSchema definition
 const publicationSchema = new mongoose.Schema({
-  _id: { type: String },
+  _id: ObjectId,
 	user: {
 		_id: { type: String },
 		avatar: String,
@@ -15,7 +16,7 @@ const publicationSchema = new mongoose.Schema({
 	images:[{
 		url: String
 	}],
-	experienceIds:[{_id: { type: String }}],	
+	experienceIds:[{_id: { type: String }}],
 	commentIds:[{_id: { type: String }}],
 	timestamps: {
     created: String,
