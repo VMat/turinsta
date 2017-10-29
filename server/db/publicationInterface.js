@@ -2,57 +2,35 @@ const Publications = require('../models/publication');
 const Commons = require('./commons');
 
 var PublicationInterface = (function(){
-  
-  function oPublicationInterface(){};
-  
+
+  function oPublicationInterface(){}
+
   oPublicationInterface.prototype = {
-    
+
     getAll: ()=>{
       return Commons.getAll(Publications);
     },
-    
+
     getOne: (id)=>{
       return Commons.getOne(Publications, id);
     },
-        
+
     insert: (publication)=>{
-      return Commons.getNextUniqueCode(Publications,(nextUniqueCode)=>{
-        let newPublication = new Publications(publication);
-        newPublication.uniqueCode = nextUniqueCode;
-        return newPublication.save();
-      })
+      return Commons.insert(new Publications(publication));
     },
-    
+
     update: (id, publication)=>{
-      
-      //return Publications.findOneAndUpdate({'uniqueCode':id}, product, {upsert:false}, (err, updatedProduct)=>{updatedProduct});
-      
-      return Publications.find({"uniqueCode": id}).
-        exec((err,publications)=>{
-          if(publications.length > 0){
-            publications[0].name = publication.name;
-            publications[0].description = publication.description;
-            publications[0].priceSince = publication.priceSince;
-            return publications[0].save();            
-          }
-        });
+      return Commons.update(Publications,id,publication);
     },
-    
+
     deleteAll: ()=>{
-      return Publications.remove();
+      return Commons.removeAll(Publications);
     },
-    
+
     deleteOne: (id)=>{
-      return Publications.find({"uniqueCode": id}).
-        exec((err,publications)=>{
-          if(publications.length > 0){
-            publications[0].remove((err,deletedPublication)=>{
-              return deletedPublication;
-            });
-          }
-        });
+      return Commons.removeOne(Publications,id);
     }
-    
+
   };
 
   return oPublicationInterface;

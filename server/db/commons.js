@@ -1,37 +1,35 @@
 let Commons = (function(){
 
-  function oCommons(){};
-  
+  function oCommons(){}
+
   oCommons.prototype = {
-    
-    getNextUniqueCode: (Collection,fn)=>{
-      
-      let nextUniqueCode = null;
-      
-      return Collection.find({}).
-        limit(1).
-        sort('-uniqueCode').
-        select('uniqueCode').
-        exec((err,doc)=>{
-          if(doc.length>0){
-            nextUniqueCode = doc[0].uniqueCode + 1;
-          }
-          else{
-            nextUniqueCode = 1;
-          }
-        }).then(()=>{return fn(nextUniqueCode)});
-    },
-    
+
     getAll: (Collection)=>{
       return Collection.find()
     },
-    
+
     getOne: (Collection,id)=>{
       return Collection.findById(id);
+    },
+
+    insert: (newPublication)=>{
+      return newPublication.save();
+    },
+
+    update: (Collection,id,doc)=>{
+      return Collection.findByIdAndUpdate(id, doc, {upsert:false});
+    },
+
+    removeAll: (Collection)=>{
+      return Collection.remove();
+    },
+
+    removeOne: (Collection,id)=>{
+      return Collection.findByIdAndRemove(id);
     }
-  
+
   };
-  
+
   return oCommons;
 
 })();
