@@ -3,7 +3,7 @@ const ObjectId = require('mongoose').Types.ObjectId;
 
 // Mongoose productSchema definition
 const publicationSchema = new mongoose.Schema({
-  _id: ObjectId,
+  _id: { type: ObjectId },
 	user: {
 		_id: { type: String },
 		avatar: String,
