@@ -5,7 +5,7 @@ const userSchema = new mongoose.Schema({
 	avatar: String,
 	username: String,
 	score: Number,
-	publicationIds: []
+	publications: []
 });
 
 const Users = mongoose.model('Users', userSchema, 'Users');
