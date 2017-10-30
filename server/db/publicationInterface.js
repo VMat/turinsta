@@ -9,11 +9,17 @@ var PublicationInterface = (function(){
   oPublicationInterface.prototype = {
 
     getAll: ()=>{
-      return Commons.getAll(Publications).populate('user');
+      return Commons.getAll(Publications)
+        .populate('user')
+        .populate('experiences')
+        .populate('comments');
     },
 
     getOne: (id)=>{
-      return Commons.getOne(Publications, id).populate('user');
+      return Commons.getOne(Publications, id)        
+        .populate('user')
+        .populate('experiences')
+        .populate('comments');
     },
 
     insert: (publication)=>{
