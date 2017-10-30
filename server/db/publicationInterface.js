@@ -8,11 +8,11 @@ var PublicationInterface = (function(){
   oPublicationInterface.prototype = {
 
     getAll: ()=>{
-      return Commons.getAll(Publications);
+      return Commons.getAll(Publications).populate('user');
     },
 
     getOne: (id)=>{
-      return Commons.getOne(Publications, id);
+      return Commons.getOne(Publications, id).populate('user');
     },
 
     insert: (publication)=>{
