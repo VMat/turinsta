@@ -21,6 +21,6 @@ const publicationSchema = new schema({
 	score: Number
 });
 
-Publications = mongoose.model('Publications', publicationSchema, 'Publications');
+const Publications = mongoose.model('Publications', publicationSchema, 'Publications');
 
 module.exports = Publications;
