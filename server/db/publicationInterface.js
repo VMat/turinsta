@@ -1,4 +1,5 @@
 const Publications = require('../models/publication');
+const Users = require('../models/user');
 const Commons = require('./commons');
 
 var PublicationInterface = (function(){
