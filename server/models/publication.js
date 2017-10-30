@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const schema = mongoose.Schema;
 
 // Mongoose publicationSchema definition
-const publicationSchema = new mongoose.Schema({
+const publicationSchema = new schema({
   user: {
 		type: schema.Types.ObjectId, ref: 'Users'
 	},
