@@ -1,4 +1,3 @@
-
 const mongoose = require('mongoose');
 
 // Mongoose experienceSchema definition
@@ -8,6 +7,6 @@ const experienceSchema = new mongoose.Schema({
 	score: Number	
 });
 
-Experiences = mongoose.model('Experiences', userSchema, 'Experiences');
+const Experiences = mongoose.model('Experiences', userSchema, 'Experiences');
 
 module.exports = Experiences;
