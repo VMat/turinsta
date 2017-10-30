@@ -12,8 +12,8 @@ const publicationSchema = new schema({
 	images:[{
 		url: String
 	}],
-	experienceIds:[{_id: { type: String }}],
-	commentIds:[{_id: { type: String }}],
+	experiences:[{type: schema.Types.ObjectId, ref: 'Experiences'}],
+	comments:[{type: schema.Types.ObjectId, ref: 'Comments'}],
 	timestamps: {
     created: String,
     modified: String
