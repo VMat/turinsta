@@ -4,7 +4,7 @@ const schema = mongoose.Schema;
 // Mongoose publicationSchema definition
 const publicationSchema = new mongoose.Schema({
   user: {
-		type: schema.Types.ObjectId, ref: 'Users'
+		type: schema.Types.ObjectId, ref: 'user'
 	},
 	places:[{
 		name: String
