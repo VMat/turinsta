@@ -23,14 +23,14 @@ app.use(cors());
 
 app.use((req, res, next)=>{
   res.header("Access-Control-Allow-Origin", "*");
-  res.header('Access-Control-Allow-Methods', 'DELETE, GET');
+  res.header('Access-Control-Allow-Methods', 'DELETE, PUT');
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
   next();
 });
 
 // Routes
 app.use('/api', routeServer);
-app.use(express.static(path.join(__dirname + '/../www')));
+//app.use(express.static(path.join(__dirname + '/../www')));
 app.use('/static', express.static(path.join(__dirname + '/assets')));
 
 // views is directory for all template files
