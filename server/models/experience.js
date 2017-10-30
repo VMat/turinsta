@@ -7,6 +7,6 @@ const experienceSchema = new mongoose.Schema({
 	score: Number	
 });
 
-const Experiences = mongoose.model('Experiences', userSchema, 'Experiences');
+const Experiences = mongoose.model('Experiences', experienceSchema, 'Experiences');
 
 module.exports = Experiences;
