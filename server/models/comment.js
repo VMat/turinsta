@@ -1,14 +1,15 @@
 const mongoose = require('mongoose');
+const schema = mongoose.Schema;
 
 // Mongoose commentSchema definition
-const commentSchema = new mongoose.Schema({
+const commentSchema = new schema({
 	user: {
-		type: Schema.Types.ObjectId, ref: 'Users'
+		type: schema.Types.ObjectId, ref: 'Users'
 	},
 	date: String,
 	content: String,
 	replies: [
-    {type: Schema.Types.ObjectId, ref: 'Comments'}
+    {type: schema.Types.ObjectId, ref: 'Comments'}
 	]
 });
 
