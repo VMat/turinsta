@@ -1,12 +1,10 @@
 const mongoose = require('mongoose');
+const schema = mongoose.Schema;
 
 // Mongoose productSchema definition
 const publicationSchema = new mongoose.Schema({
-	user: {
-		_id: { type: String },
-		avatar: String,
-		username: String,
-		score: Number
+  user: {
+		type: schema.Types.ObjectId, ref: 'users'
 	},
 	places:[{
 		name: String
