@@ -31,7 +31,7 @@ app.use((req, res, next)=>{
 // Routes
 app.use('/api', routeServer);
 app.use(express.static(path.join(__dirname + '/../www')));
-app.use(express.static(path.join(__dirname + '/assets')));
+app.use('/static', express.static(path.join(__dirname + '/assets')));
 
 // views is directory for all template files
 app.set('views', __dirname + '/../www');
