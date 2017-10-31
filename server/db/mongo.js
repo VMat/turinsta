@@ -29,8 +29,8 @@ let db = (function(){
       return publicationInterface.insert(publication);
     },
     
-    updatePublication: (id, publication)=>{
-      return publicationInterface.update(id, publication);
+    updatePublication: (publication)=>{
+      return publicationInterface.update(publication);
     },
     
     deletePublications: ()=>{
