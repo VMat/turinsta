@@ -28,8 +28,8 @@ var PublicationInterface = (function(){
       return Commons.insert(new Publications(publication));
     },
 
-    update: (id, publication)=>{
-      return Commons.update(Publications,id,publication);
+    update: (publication)=>{
+      return Commons.update(Publications,publication);
     },
 
     deleteAll: ()=>{
