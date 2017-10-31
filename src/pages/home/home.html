@@ -1,5 +1,7 @@
 <ion-content padding>
-  <div *ngFor="let publication of publications">
-    <publication [data]=publication></publication>
-  </div>
+  <ion-list [virtualScroll]="publications">
+    <ion-item *virtualItem="let publication">
+      <publication [data]=publication></publication>
+    </ion-item>
+  </ion-list>
 </ion-content>

@@ -220,7 +220,7 @@ var HomePage = (function () {
 }());
 HomePage = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
-        selector: 'page-home',template:/*ion-inline-start:"C:\Users\Matias\WebstormProjects\turinsta\src\pages\home\home.html"*/'<ion-content padding>\n  <div *ngFor="let publication of publications">\n    <publication [data]=publication></publication>\n  </div>\n</ion-content>\n'/*ion-inline-end:"C:\Users\Matias\WebstormProjects\turinsta\src\pages\home\home.html"*/
+        selector: 'page-home',template:/*ion-inline-start:"C:\Users\Matias\WebstormProjects\turinsta\src\pages\home\home.html"*/'<ion-content padding>\n  <ion-list [virtualScroll]="publications">\n    <ion-item *virtualItem="let publication">\n      <publication [data]=publication></publication>\n    </ion-item>\n  </ion-list>\n</ion-content>\n'/*ion-inline-end:"C:\Users\Matias\WebstormProjects\turinsta\src\pages\home\home.html"*/
     }),
     __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["e" /* NavController */], __WEBPACK_IMPORTED_MODULE_2__providers_storage_storage__["a" /* StorageProvider */]])
 ], HomePage);
@@ -461,7 +461,7 @@ __decorate([
 ], PublicationComponent.prototype, "data", void 0);
 PublicationComponent = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
-        selector: 'publication',template:/*ion-inline-start:"C:\Users\Matias\WebstormProjects\turinsta\src\components\publication\publication.html"*/'<!-- Generated template for the PublicationComponent component -->\n<div>\n  {{data.user.username}}\n  {{data.places[0].name}}\n  {{data.score}}\n</div>\n'/*ion-inline-end:"C:\Users\Matias\WebstormProjects\turinsta\src\components\publication\publication.html"*/
+        selector: 'publication',template:/*ion-inline-start:"C:\Users\Matias\WebstormProjects\turinsta\src\components\publication\publication.html"*/'<!-- Generated template for the PublicationComponent component -->\n<ion-card>\n  <ion-card-header>\n    <ion-item>\n      <p item-start>{{data.user.username}}</p>\n      <p align="center">{{data.places[0].name}}</p>\n      <p item-end>{{data.score}}</p>\n    </ion-item>\n  </ion-card-header>\n  <ion-card-content align="center">\n    <ion-slides>\n      <ion-slide *ngFor="let image of data.images">\n        <ion-img class="img-responsive" style="width: 500px; height: 500px" src="{{image.url}}" cache="true">\n        </ion-img>\n      </ion-slide>\n    </ion-slides>\n  </ion-card-content>\n</ion-card>\n'/*ion-inline-end:"C:\Users\Matias\WebstormProjects\turinsta\src\components\publication\publication.html"*/
     }),
     __metadata("design:paramtypes", [])
 ], PublicationComponent);

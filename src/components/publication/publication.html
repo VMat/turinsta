@@ -1,6 +1,18 @@
 <!-- Generated template for the PublicationComponent component -->
-<div>
-  {{data.user.username}}
-  {{data.places[0].name}}
-  {{data.score}}
-</div>
+<ion-card>
+  <ion-card-header>
+    <ion-item>
+      <p item-start>{{data.user.username}}</p>
+      <p align="center">{{data.places[0].name}}</p>
+      <p item-end>{{data.score}}</p>
+    </ion-item>
+  </ion-card-header>
+  <ion-card-content align="center">
+    <ion-slides>
+      <ion-slide *ngFor="let image of data.images">
+        <ion-img class="img-responsive" style="width: 500px; height: 500px" src="{{image.url}}" cache="true">
+        </ion-img>
+      </ion-slide>
+    </ion-slides>
+  </ion-card-content>
+</ion-card>
