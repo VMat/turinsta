@@ -33,7 +33,7 @@ let db = (function(){
       return publicationInterface.update(id, publication);
     },
     
-    deletePublication: ()=>{
+    deletePublications: ()=>{
       return publicationInterface.deleteAll();
     },
     
