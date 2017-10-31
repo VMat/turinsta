@@ -18,7 +18,8 @@ const publicationSchema = new schema({
     created: String,
     modified: String
   },
-	score: Number
+	score: Number,
+  description: String
 });
 
 const Publications = mongoose.model('Publications', publicationSchema, 'Publications');
