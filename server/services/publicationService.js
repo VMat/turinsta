@@ -30,9 +30,9 @@ const publicationService = (function(){
       })
     },
     
-    updatePublication: (id,publication)=>{
+    updatePublication: (publication)=>{
       return new Promise((resolve, reject)=>{
-        storageService.updatePublication(id,publication).
+        storageService.updatePublication(publication).
           then(updatedPublication=>resolve(updatedPublication)).
           catch(error=>reject(error))  
       })
