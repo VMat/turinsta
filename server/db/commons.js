@@ -16,8 +16,8 @@ let Commons = (function(){
       return newPublication.save();
     },
 
-    update: (Collection,id,doc)=>{
-      return Collection.findByIdAndUpdate(id, doc, {upsert:false});
+    update: (Collection,doc)=>{
+      return Collection.findByIdAndUpdate(doc._id, doc, {upsert:false});
     },
 
     removeAll: (Collection)=>{
