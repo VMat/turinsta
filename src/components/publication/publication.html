@@ -1,17 +1,26 @@
 <!-- Generated template for the PublicationComponent component -->
-<ion-card>
-  <ion-card-header>
-    <ion-item>
-      <p item-start>{{data.user.username}}</p>
-      <p align="center">{{data.places[0].name}}</p>
-      <p item-end>{{data.score}}</p>
+<ion-card style="width: 100%; margin: 0 auto; padding: 0">
+  <ion-card-header style="width: 100%; margin: 0 auto; padding: 0">
+    <ion-item style="width: 100%; margin: 0; padding: 0">
+      <ion-avatar item-start>
+        <img src="{{data.user.avatar}}">
+      </ion-avatar>
+      <div>
+        <p>{{data.places[0].name}}</p>
+        <p style="display: inline-block">{{data.score}}<ion-icon name="star"></ion-icon></p>
+      </div>
+      <div item-end>
+        <p>{{data.user.username}}</p>
+        <p align="right">{{data.user.score}}<ion-icon name="star"></ion-icon></p>
+      </div>
     </ion-item>
   </ion-card-header>
-  <ion-card-content align="center">
+  <ion-card-content align="center" style="width: 100%; padding: 0">
     <ion-slides>
       <ion-slide *ngFor="let image of data.images">
-        <ion-img class="img-responsive" style="width: 500px; height: 500px" src="{{image.url}}" cache="true">
-        </ion-img>
+        <!--<ion-img style="min-height: 500px; margin: 0 auto" src="{{image.url}}" cache="true">-->
+        <!--</ion-img>-->
+        <img style="width: 100%; height: auto" src="{{image.url}}" />
       </ion-slide>
     </ion-slides>
   </ion-card-content>
