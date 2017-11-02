@@ -32,6 +32,14 @@ const storageService = (function(){
 
     deletePublication: (id)=>{
       return db.deletePublication(id);
+    },
+    
+    getActivities: ()=>{
+      return db.getActivities();
+    },
+    
+    getActivity: (id)=>{
+      return db.getActivity(id);
     }
 
   };
