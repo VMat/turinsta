@@ -1,5 +1,6 @@
 const routeServer = require('express').Router();
 const publicationApi = require('../rest/publicationApi');
+const activityApi = require('../rest/activityApi');
 
 routeServer.get('/', function (req, res){
   res.json(200, {msg: 'OK' });
