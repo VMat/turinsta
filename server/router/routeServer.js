@@ -5,7 +5,10 @@ routeServer.get('/', function (req, res){
   res.json(200, {msg: 'OK' });
 });
 
-// API REST PRODUCTOS
+// API REST PUBLICATIONS
 routeServer.use('/publications', publicationApi);
+
+// API REST ACTIVITIES
+routeServer.use('/activities', activityApi);
 
 module.exports = routeServer;
