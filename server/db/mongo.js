@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const publicationInterface = require('./publicationInterface');
+const activityInterface = require('./activityInterface');
 
 let db = (function(){
 
@@ -39,7 +40,15 @@ let db = (function(){
     
     deletePublication: (id)=>{
       return publicationInterface.deleteOne(id);
-    }     
+    },
+    
+    getActivities: ()=>{
+      return activityInterface.getAll();
+    },
+    
+    getActivity: (id)=>{
+      return activityInterface.getOne(id);
+    }
   };
   
   return oDb;
