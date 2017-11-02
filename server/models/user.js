@@ -5,7 +5,12 @@ const userSchema = new mongoose.Schema({
 	avatar: String,
 	username: String,
 	score: Number,
-	publications: []
+	publications: [],
+  notifications: {
+	  unseenActivities:[{
+			type: Schema.Types.ObjectId, ref: 'Activities'
+		}]
+  }
 });
 
 const Users = mongoose.model('Users', userSchema, 'Users');
