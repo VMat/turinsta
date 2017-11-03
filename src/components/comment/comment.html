@@ -1,11 +1,11 @@
 <!-- Generated template for the CommentComponent component -->
-<ion-item padding-left="10px">
+<ion-item style="padding-left: 20px; word-wrap: break-word;overflow-wrap: break-word">
   <ion-avatar item-start>
     <img src="{{data.user.avatar}}">
   </ion-avatar>
-  <p item-left><b>{{data.user.name}}</b></p>
-  <p item-left>{{data.content}}</p>
-  <ion-list>
-    <comment *ngFor="let reply of data.replies" [data]=reply></comment>
-  </ion-list>
+  <p><b>{{data.user.name}}</b>&nbsp;{{data.content}}</p>
 </ion-item>
+<ion-list style="padding-left: 20px" item-start *ngIf="data.replies!=undefined">
+  <comment *ngFor="let reply of data.replies" [data]=reply></comment>
+</ion-list>
+

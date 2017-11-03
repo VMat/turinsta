@@ -1,6 +1,6 @@
 <!-- Generated template for the PublicationComponent component -->
 <ion-card>
-  <ion-card-header>
+  <ion-card-header style="width: 100%;margin: 0 auto;padding: 0">
     <ion-item>
       <ion-avatar item-start>
         <img src="{{data.user.avatar}}">
@@ -21,12 +21,12 @@
         <img style="width: 100%; height: auto" src="{{image.url}}" />
       </ion-slide>
     </ion-slides>
-    <ion-card-title>{{data.description}}</ion-card-title>
-    <ion-list>
+    <p style="font-style: italic">{{data.description}}</p>
+    <ion-list *ngIf="data.experiences.length >0">
       <ion-title class="secondary-title">Experiencias</ion-title>
       <experience *ngFor="let experience of data.experiences" [data]=experience></experience>
     </ion-list>
-    <ion-list>
+    <ion-list *ngIf="data.comments.length >0">
       <ion-title class="secondary-title">Comentarios</ion-title>
       <comment *ngFor="let comment of data.comments" [data]=comment></comment>
     </ion-list>
