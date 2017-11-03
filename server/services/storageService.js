@@ -68,6 +68,26 @@ const storageService = (function(){
 
     deleteComment: (id)=>{
       return db.deleteComment(id);
+    },
+    
+    getUsers: ()=>{
+      return db.getUsers();
+    },
+    
+    getUser: (id)=>{
+      return db.getUser(id);
+    },
+        
+    createUser: (user)=>{
+      return db.createUser(user);
+    },
+
+    updateUser: (user)=>{
+      return db.updateUser(user);
+    },
+
+    deleteUser: (id)=>{
+      return db.deleteUser(id);
     }
 
   };
