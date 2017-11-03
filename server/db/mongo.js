@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 const publicationInterface = require('./publicationInterface');
 const activityInterface = require('./activityInterface');
 const commentInterface = require('./commentInterface');
+const userInterface = require('./userInterface');
 
 let db = (function(){
 
@@ -77,6 +78,26 @@ let db = (function(){
     
     deleteComment: (id)=>{
       return commentInterface.deleteOne(id);
+    },
+    
+    getUsers: ()=>{
+      return userInterface.getAll();
+    },
+    
+    getUser: (id)=>{
+      return userInterface.getOne(id);
+    },
+    
+    createUser: (user)=>{
+      return userInterface.insert(user);
+    },
+    
+    updateUser: (user)=>{
+      return userInterface.update(user);
+    },
+    
+    deleteUser: (id)=>{
+      return userInterface.deleteOne(id);
     }
   };
   
