@@ -52,6 +52,22 @@ const storageService = (function(){
 
     deleteActivity: (id)=>{
       return db.deleteActivity(id);
+    },
+    
+    getComment: (id)=>{
+      return db.getComment(id);
+    },
+    
+    createComment: (comment)=>{
+      return db.createComment(comment);
+    },
+
+    updateComment: (comment)=>{
+      return db.updateComment(comment);
+    },
+
+    deleteComment: (id)=>{
+      return db.deleteComment(id);
     }
 
   };
