@@ -15,6 +15,8 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { StorageProvider } from '../providers/storage/storage';
 import {HttpModule} from "@angular/http";
+import {ExperienceComponent} from "../components/experience/experience";
+import {CommentComponent} from "../components/comment/comment";
 
 @NgModule({
   declarations: [
@@ -24,7 +26,9 @@ import {HttpModule} from "@angular/http";
     AccountPage,
     HomePage,
     TabsPage,
-    PublicationComponent
+    PublicationComponent,
+    ExperienceComponent,
+    CommentComponent
   ],
   imports: [
     BrowserModule,

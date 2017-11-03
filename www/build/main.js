@@ -112,15 +112,15 @@ webpackEmptyAsyncContext.id = 110;
 
 var map = {
 	"../pages/account/account.module": [
-		270,
+		272,
 		2
 	],
 	"../pages/activities/activities.module": [
-		271,
+		273,
 		1
 	],
 	"../pages/places/places.module": [
-		272,
+		274,
 		0
 	]
 };
@@ -223,10 +223,9 @@ HomePage = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
         selector: 'page-home',template:/*ion-inline-start:"C:\Users\Matias\WebstormProjects\turinsta\src\pages\home\home.html"*/'<ion-content>\n  <ion-list [virtualScroll]="publications">\n    <ion-item *virtualItem="let publication">\n      <publication [data]=publication></publication>\n    </ion-item>\n  </ion-list>\n</ion-content>\n'/*ion-inline-end:"C:\Users\Matias\WebstormProjects\turinsta\src\pages\home\home.html"*/
     }),
-    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["e" /* NavController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["e" /* NavController */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_2__providers_storage_storage__["a" /* StorageProvider */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__providers_storage_storage__["a" /* StorageProvider */]) === "function" && _b || Object])
+    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["e" /* NavController */], __WEBPACK_IMPORTED_MODULE_2__providers_storage_storage__["a" /* StorageProvider */]])
 ], HomePage);
 
-var _a, _b;
 //# sourceMappingURL=home.js.map
 
 /***/ }),
@@ -313,12 +312,16 @@ Object(__WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__["a" /* pl
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__ionic_native_splash_screen__ = __webpack_require__(195);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__providers_storage_storage__ = __webpack_require__(198);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__angular_http__ = __webpack_require__(199);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__components_experience_experience__ = __webpack_require__(270);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__components_comment_comment__ = __webpack_require__(271);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+
+
 
 
 
@@ -347,7 +350,9 @@ AppModule = __decorate([
             __WEBPACK_IMPORTED_MODULE_7__pages_account_account__["a" /* AccountPage */],
             __WEBPACK_IMPORTED_MODULE_4__pages_home_home__["a" /* HomePage */],
             __WEBPACK_IMPORTED_MODULE_8__pages_tabs_tabs__["a" /* TabsPage */],
-            __WEBPACK_IMPORTED_MODULE_9__components_publication_publication__["a" /* PublicationComponent */]
+            __WEBPACK_IMPORTED_MODULE_9__components_publication_publication__["a" /* PublicationComponent */],
+            __WEBPACK_IMPORTED_MODULE_14__components_experience_experience__["a" /* ExperienceComponent */],
+            __WEBPACK_IMPORTED_MODULE_15__components_comment_comment__["a" /* CommentComponent */]
         ],
         imports: [
             __WEBPACK_IMPORTED_MODULE_1__angular_platform_browser__["a" /* BrowserModule */],
@@ -463,12 +468,100 @@ __decorate([
 ], PublicationComponent.prototype, "data", void 0);
 PublicationComponent = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
-        selector: 'publication',template:/*ion-inline-start:"C:\Users\Matias\WebstormProjects\turinsta\src\components\publication\publication.html"*/'<!-- Generated template for the PublicationComponent component -->\n<ion-card style="  width: 100%; margin: 0 auto; padding: 0">\n  <ion-card-header>\n    <ion-item>\n      <ion-avatar item-start>\n        <img src="{{data.user.avatar}}">\n      </ion-avatar>\n      <div>\n        <p>{{data.places[0].name}}</p>\n        <p style="display: inline-block">{{data.score}}<ion-icon name="star"></ion-icon></p>\n      </div>\n      <div item-end>\n        <p>{{data.user.username}}</p>\n        <p align="right">{{data.user.score}}<ion-icon name="star"></ion-icon></p>\n      </div>\n    </ion-item>\n  </ion-card-header>\n  <ion-card-content>\n    <ion-slides  align="center">\n      <ion-slide *ngFor="let image of data.images">\n        <img style="width: 100%; height: auto" src="{{image.url}}" />\n      </ion-slide>\n    </ion-slides>\n    <ion-card-title>{{data.description}}</ion-card-title>\n    <p *ngFor="let experience of data.experiences">\n      {{experience.content}}\n    </p>\n    <p *ngFor="let comment of data.comments">\n      <ion-avatar item-start>\n        <img src="{{comment.user.avatar}}">\n      </ion-avatar>\n      {{comment.content}}\n    </p>\n  </ion-card-content>\n</ion-card>\n'/*ion-inline-end:"C:\Users\Matias\WebstormProjects\turinsta\src\components\publication\publication.html"*/
+        selector: 'publication',template:/*ion-inline-start:"C:\Users\Matias\WebstormProjects\turinsta\src\components\publication\publication.html"*/'<!-- Generated template for the PublicationComponent component -->\n<ion-card>\n  <ion-card-header>\n    <ion-item>\n      <ion-avatar item-start>\n        <img src="{{data.user.avatar}}">\n      </ion-avatar>\n      <div>\n        <p>{{data.places[0].name}}</p>\n        <p style="display: inline-block">{{data.score}}<ion-icon name="star"></ion-icon></p>\n      </div>\n      <div item-end>\n        <p>{{data.user.username}}</p>\n        <p align="right">{{data.user.score}}<ion-icon name="star"></ion-icon></p>\n      </div>\n    </ion-item>\n  </ion-card-header>\n  <ion-card-content>\n    <ion-slides  align="center">\n      <ion-slide *ngFor="let image of data.images">\n        <img style="width: 100%; height: auto" src="{{image.url}}" />\n      </ion-slide>\n    </ion-slides>\n    <ion-card-title>{{data.description}}</ion-card-title>\n    <ion-list>\n      <ion-title class="secondary-title">Experiencias</ion-title>\n      <experience *ngFor="let experience of data.experiences" [data]=experience></experience>\n    </ion-list>\n    <ion-list>\n      <ion-title class="secondary-title">Comentarios</ion-title>\n      <comment *ngFor="let comment of data.comments" [data]=comment></comment>\n    </ion-list>\n  </ion-card-content>\n</ion-card>\n'/*ion-inline-end:"C:\Users\Matias\WebstormProjects\turinsta\src\components\publication\publication.html"*/
     }),
     __metadata("design:paramtypes", [])
 ], PublicationComponent);
 
 //# sourceMappingURL=publication.js.map
+
+/***/ }),
+
+/***/ 270:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ExperienceComponent; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+/**
+ * Generated class for the ExperienceComponent component.
+ *
+ * See https://angular.io/api/core/Component for more info on Angular
+ * Components.
+ */
+var ExperienceComponent = (function () {
+    function ExperienceComponent() {
+        this.data = null;
+        console.log('Hello ExperienceComponent Component');
+    }
+    return ExperienceComponent;
+}());
+__decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["E" /* Input */])(),
+    __metadata("design:type", Object)
+], ExperienceComponent.prototype, "data", void 0);
+ExperienceComponent = __decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
+        selector: 'experience',template:/*ion-inline-start:"C:\Users\Matias\WebstormProjects\turinsta\src\components\experience\experience.html"*/'<!-- Generated template for the ExperienceComponent component -->\n<ion-item>\n  <p item-start>{{data.category}}</p>\n  <p item-left>{{data.content}}</p>\n</ion-item>\n'/*ion-inline-end:"C:\Users\Matias\WebstormProjects\turinsta\src\components\experience\experience.html"*/
+    }),
+    __metadata("design:paramtypes", [])
+], ExperienceComponent);
+
+//# sourceMappingURL=experience.js.map
+
+/***/ }),
+
+/***/ 271:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return CommentComponent; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+/**
+ * Generated class for the CommentComponent component.
+ *
+ * See https://angular.io/api/core/Component for more info on Angular
+ * Components.
+ */
+var CommentComponent = (function () {
+    function CommentComponent() {
+        this.data = null;
+        console.log('Hello CommentComponent Component');
+    }
+    return CommentComponent;
+}());
+__decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["E" /* Input */])(),
+    __metadata("design:type", Object)
+], CommentComponent.prototype, "data", void 0);
+CommentComponent = __decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
+        selector: 'comment',template:/*ion-inline-start:"C:\Users\Matias\WebstormProjects\turinsta\src\components\comment\comment.html"*/'<!-- Generated template for the CommentComponent component -->\n<ion-item padding-left="10px">\n  <ion-avatar item-start>\n    <img src="{{data.user.avatar}}">\n  </ion-avatar>\n  <p item-left><b>{{data.user.name}}</b></p>\n  <p item-left>{{data.content}}</p>\n  <ion-list>\n    <comment *ngFor="let reply of data.replies" [data]=reply></comment>\n  </ion-list>\n</ion-item>\n'/*ion-inline-end:"C:\Users\Matias\WebstormProjects\turinsta\src\components\comment\comment.html"*/
+    }),
+    __metadata("design:paramtypes", [])
+], CommentComponent);
+
+//# sourceMappingURL=comment.js.map
 
 /***/ }),
 

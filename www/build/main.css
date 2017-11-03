@@ -25512,6 +25512,15 @@ ion-navbar.toolbar {
   min-height: calc(46px + constant(safe-area-inset-top));
 }
 
+.secondary-title .toolbar-title-md {
+  -webkit-text-stroke: 1px lightblue !important;
+  color: #ffffff;
+  font-weight: bolder;
+  text-shadow: 1px  1px 0 lightgrey, -1px -1px 0 lightgrey, 1px -1px 0 lightgrey, -1px  1px 0 lightgrey, 1px  1px 0 lightgrey;
+  font-size: xx-large;
+  font-family: 'Chiller', cursive;
+}
+
 publication ion-card {
   width: 100%;
   margin: 0 auto;

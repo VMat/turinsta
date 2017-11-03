@@ -1,5 +1,5 @@
 <!-- Generated template for the PublicationComponent component -->
-<ion-card style="  width: 100%; margin: 0 auto; padding: 0">
+<ion-card>
   <ion-card-header>
     <ion-item>
       <ion-avatar item-start>
@@ -22,14 +22,13 @@
       </ion-slide>
     </ion-slides>
     <ion-card-title>{{data.description}}</ion-card-title>
-    <p *ngFor="let experience of data.experiences">
-      {{experience.content}}
-    </p>
-    <p *ngFor="let comment of data.comments">
-      <ion-avatar item-start>
-        <img src="{{comment.user.avatar}}">
-      </ion-avatar>
-      {{comment.content}}
-    </p>
+    <ion-list>
+      <ion-title class="secondary-title">Experiencias</ion-title>
+      <experience *ngFor="let experience of data.experiences" [data]=experience></experience>
+    </ion-list>
+    <ion-list>
+      <ion-title class="secondary-title">Comentarios</ion-title>
+      <comment *ngFor="let comment of data.comments" [data]=comment></comment>
+    </ion-list>
   </ion-card-content>
 </ion-card>
