@@ -35,7 +35,7 @@ const activityService = (function(){
         storageService.updateActivity(activityToUpdate).
           then(activity=>resolve(activity)).
           catch(error=>reject(error))        
-      }),
+      })
     },
         
     deleteActivity: (id)=>{
