@@ -1,7 +1,7 @@
 <!-- Generated template for the PublicationComponent component -->
-<ion-card style="width: 100%; margin: 0 auto; padding: 0">
-  <ion-card-header style="width: 100%; margin: 0 auto; padding: 0">
-    <ion-item style="width: 100%; margin: 0; padding: 0">
+<ion-card style="  width: 100%; margin: 0 auto; padding: 0">
+  <ion-card-header>
+    <ion-item>
       <ion-avatar item-start>
         <img src="{{data.user.avatar}}">
       </ion-avatar>
@@ -15,13 +15,21 @@
       </div>
     </ion-item>
   </ion-card-header>
-  <ion-card-content align="center" style="width: 100%; padding: 0">
-    <ion-slides>
+  <ion-card-content>
+    <ion-slides  align="center">
       <ion-slide *ngFor="let image of data.images">
-        <!--<ion-img style="min-height: 500px; margin: 0 auto" src="{{image.url}}" cache="true">-->
-        <!--</ion-img>-->
         <img style="width: 100%; height: auto" src="{{image.url}}" />
       </ion-slide>
     </ion-slides>
+    <ion-card-title>{{data.description}}</ion-card-title>
+    <p *ngFor="let experience of data.experiences">
+      {{experience.content}}
+    </p>
+    <p *ngFor="let comment of data.comments">
+      <ion-avatar item-start>
+        <img src="{{comment.user.avatar}}">
+      </ion-avatar>
+      {{comment.content}}
+    </p>
   </ion-card-content>
 </ion-card>

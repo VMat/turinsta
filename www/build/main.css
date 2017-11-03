@@ -25512,6 +25512,29 @@ ion-navbar.toolbar {
   min-height: calc(46px + constant(safe-area-inset-top));
 }
 
+publication ion-card {
+  width: 100%;
+  margin: 0 auto;
+  padding: 0;
+}
+
+ion-card-header {
+  width: 100%;
+  margin: 0 auto;
+  padding: 0;
+}
+
+ion-item {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+ion-card-content {
+  width: 100%;
+  padding: 0;
+}
+
 .toolbar-title-md {
   color: #ffffff;
   font-weight: bolder;
