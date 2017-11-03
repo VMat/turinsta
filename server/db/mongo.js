@@ -48,6 +48,18 @@ let db = (function(){
     
     getActivity: (id)=>{
       return activityInterface.getOne(id);
+    },
+    
+    createActivity: (activity)=>{
+      return activityInterface.insert(activity);
+    },
+    
+    updateActivity: (activity)=>{
+      return activityInterface.update(activity);
+    },
+    
+    deleteActivity: (id)=>{
+      return activityInterface.deleteOne(id);
     }
   };
   
