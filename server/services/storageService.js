@@ -40,6 +40,18 @@ const storageService = (function(){
     
     getActivity: (id)=>{
       return db.getActivity(id);
+    },
+    
+    createActivity: (activity)=>{
+      return db.createActivity(activity);
+    },
+
+    updateActivity: (activity)=>{
+      return db.updateActivity(activity);
+    },
+
+    deleteActivity: (id)=>{
+      return db.deleteActivity(id);
     }
 
   };
