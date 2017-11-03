@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const publicationInterface = require('./publicationInterface');
 const activityInterface = require('./activityInterface');
+const commentInterface = require('./commentInterface');
 
 let db = (function(){
 
@@ -60,6 +61,22 @@ let db = (function(){
     
     deleteActivity: (id)=>{
       return activityInterface.deleteOne(id);
+    },
+    
+    getComment: (id)=>{
+      return commentInterface.getOne(id);
+    },
+    
+    createComment: (activity)=>{
+      return commentInterface.insert(activity);
+    },
+    
+    updateComment: (activity)=>{
+      return commentInterface.update(activity);
+    },
+    
+    deleteComment: (id)=>{
+      return commentInterface.deleteOne(id);
     }
   };
   
