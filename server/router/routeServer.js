@@ -12,4 +12,7 @@ routeServer.use('/publications', publicationApi);
 // API REST ACTIVITIES
 routeServer.use('/activities', activityApi);
 
+// API REST COMMENTS
+routeServer.use('/comments', commentApi);
+
 module.exports = routeServer;
