@@ -20,6 +20,30 @@ const activityService = (function(){
           then(activities=>resolve(activities)).
           catch(error=>reject(error))        
       })                
+    },
+    
+    createActivity: (newActivity)=>{      
+      return new Promise((resolve, reject)=>{
+        storageService.createActivity(newActivity).
+          then(activity=>resolve(activity)).
+          catch(error=>reject(error))        
+      })
+    },
+    
+    putActivity: (activityToUpdate)=>{
+      return new Promise((resolve, reject)=>{
+        storageService.updateActivity(activityToUpdate).
+          then(activity=>resolve(activity)).
+          catch(error=>reject(error))        
+      }),
+    },
+        
+    deleteActivity: (id)=>{
+      return new Promise((resolve, reject)=>{
+        storageService.deleteActivity(id).
+          then(activity=>resolve(activity)).
+          catch(error=>reject(error))        
+      })  
     }
   };
 
