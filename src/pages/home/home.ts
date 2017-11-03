@@ -16,6 +16,7 @@ export class HomePage {
 
   getPublications(){
     this.storageService.getPublications().subscribe(data => {
+      sessionStorage.setItem("publications",JSON.stringify(data));
       this.publications = data;
     });
   }

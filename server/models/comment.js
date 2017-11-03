@@ -4,8 +4,10 @@ const schema = mongoose.Schema;
 // Mongoose commentSchema definition
 const commentSchema = new schema({
 	user: {
-		type: schema.Types.ObjectId, ref: 'Users'
-	},
+	  id: {type: schema.Types.ObjectId, ref: 'Users'},
+    name: String,
+	  avatar: String
+  },
 	date: String,
 	content: String,
 	replies: [

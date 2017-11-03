@@ -4,7 +4,7 @@ const Experiences = require('../models/experience');
 const Comments = require('../models/comment');
 const Commons = require('./commons');
 
-var PublicationInterface = (function(){
+const PublicationInterface = (function(){
 
   function oPublicationInterface(){}
 
@@ -14,8 +14,7 @@ var PublicationInterface = (function(){
       return Commons.getAll(Publications)
         .populate('user')
         .populate('experiences')
-        .populate('comments')
-        .populate('comments.user');
+        .populate('comments');
     },
 
     getOne: (id)=>{
@@ -47,7 +46,7 @@ var PublicationInterface = (function(){
 
 })();
 
-oPublicationInterface = new PublicationInterface();
+const oPublicationInterface = new PublicationInterface();
 
 module.exports = oPublicationInterface;
 
