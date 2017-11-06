@@ -9,9 +9,7 @@ const CommentInterface = (function(){
   oCommentInterface.prototype = {
 
     getOne: (id)=>{
-      return Commons.getOne(Comments, id)        
-        .populate('user')
-        .populate('replies.user');
+      return Commons.getOne(Comments, id);
     },
     
     insert: (comment)=>{
