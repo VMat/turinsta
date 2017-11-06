@@ -84,10 +84,6 @@ const storageService = (function(){
 
     updateUser: (user)=>{
       return db.updateUser(user);
-    },
-
-    deleteUser: (id)=>{
-      return db.deleteUser(id);
     }
 
   };
