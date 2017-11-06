@@ -24,7 +24,7 @@ const userService = (function(){
     
     createUser: (user)=>{
       return new Promise((resolve, reject)=>{
-        storageService.createUser(comment).
+        storageService.createUser(user).
           then(newUser=>resolve(newUser)).
           catch(error=>reject(error)) 
       })
