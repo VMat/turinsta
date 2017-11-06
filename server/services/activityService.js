@@ -30,7 +30,7 @@ const activityService = (function(){
       })
     },
     
-    putActivity: (activityToUpdate)=>{
+    updateActivity: (activityToUpdate)=>{
       return new Promise((resolve, reject)=>{
         storageService.updateActivity(activityToUpdate).
           then(activity=>resolve(activity)).
