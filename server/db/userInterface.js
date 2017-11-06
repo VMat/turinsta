@@ -23,11 +23,8 @@ const UserInterface = (function(){
 
     update: (user)=>{
       return Commons.update(Users, user);
-    },
-
-    deleteOne: (id)=>{
-      return Commons.removeOne(Users, id);
     }
+    
   }
 
   return oUserInterface;
