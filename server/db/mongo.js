@@ -94,11 +94,8 @@ let db = (function(){
     
     updateUser: (user)=>{
       return userInterface.update(user);
-    },
-    
-    deleteUser: (id)=>{
-      return userInterface.deleteOne(id);
     }
+    
   };
   
   return oDb;
