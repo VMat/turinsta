@@ -13,9 +13,14 @@ import {Component, Input} from '@angular/core';
 export class PublicationComponent {
 
   @Input() data: any = null;
+  sections: any = [{name: "Experiences", show: false}, {name: "Comments", show: false}];
 
   constructor() {
     console.log('Hello PublicationComponent Component');
   }
 
+  toggleSection(i) {
+    this.sections = this.sections.map((section,index)=>{if(index!=i){section.show = false} return section});
+    this.sections[i].show = !this.sections[i].show;
+  };
 }

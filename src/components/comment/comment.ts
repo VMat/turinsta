@@ -13,9 +13,13 @@ import {Component, Input} from '@angular/core';
 export class CommentComponent {
 
   @Input() data: any = null;
+  showReplies: Boolean = false;
 
   constructor() {
     console.log('Hello CommentComponent Component');
   }
 
+  toogleReplies(){
+    this.showReplies = !this.showReplies;
+  }
 }

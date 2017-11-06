@@ -17,6 +17,7 @@ import { StorageProvider } from '../providers/storage/storage';
 import {HttpModule} from "@angular/http";
 import {ExperienceComponent} from "../components/experience/experience";
 import {CommentComponent} from "../components/comment/comment";
+import {CommentListComponent} from "../components/comment-list/comment-list";
 
 @NgModule({
   declarations: [
@@ -28,6 +29,7 @@ import {CommentComponent} from "../components/comment/comment";
     TabsPage,
     PublicationComponent,
     ExperienceComponent,
+    CommentListComponent,
     CommentComponent
   ],
   imports: [

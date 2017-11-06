@@ -22,4 +22,8 @@ export class StorageProvider {
       .map((res:Response) => res.json());
   }
 
+  sendComment(){
+
+  }
+
 }

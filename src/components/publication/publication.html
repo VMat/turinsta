@@ -1,34 +1,49 @@
 <!-- Generated template for the PublicationComponent component -->
-<ion-card>
-  <ion-card-header style="width: 100%;margin: 0 auto;padding: 0">
+<ion-card text-wrap>
+  <ion-card-header class="publication-card-header">
     <ion-item>
       <ion-avatar item-start>
         <img src="{{data.user.avatar}}">
       </ion-avatar>
       <div>
-        <p>{{data.places[0].name}}</p>
-        <p style="display: inline-block">{{data.score}}<ion-icon name="star"></ion-icon></p>
+          <p class="publication-important-text">{{data.places[0].name}}</p>
+          <p>{{data.score}}<ion-icon name="star"></ion-icon></p>
       </div>
       <div item-end>
-        <p>{{data.user.username}}</p>
+        <p class="publication-important-text">{{data.user.username}}</p>
         <p align="right">{{data.user.score}}<ion-icon name="star"></ion-icon></p>
       </div>
     </ion-item>
   </ion-card-header>
   <ion-card-content>
-    <ion-slides  align="center">
+    <ion-slides align="center">
       <ion-slide *ngFor="let image of data.images">
-        <img style="width: 100%; height: auto" src="{{image.url}}" />
+        <img class="publication-image" src="{{image.url}}" />
       </ion-slide>
     </ion-slides>
-    <p style="font-style: italic">{{data.description}}</p>
-    <ion-list *ngIf="data.experiences.length >0">
-      <ion-title class="secondary-title">Experiencias</ion-title>
-      <experience *ngFor="let experience of data.experiences" [data]=experience></experience>
+    <p *ngIf="data.description!=null" class="publication-description"><b>{{data.user.username}}</b>&nbsp;{{data.description}}</p>
+    <ion-list>
+      <ion-item class="publication-buttons-item">
+        <button item-start *ngIf="data.experiences.length >0" class="publication-button" (click)="toggleSection(0)" ion-button clear>
+          <ion-icon class="publication-icon" name="ios-paper" isActive="{{sections[0].show}}">
+            <ion-badge class="publication-badge">{{data.experiences.length}}</ion-badge>
+          </ion-icon>
+        </button>
+        <button item-left class="publication-button" (click)="toggleSection(1)" ion-button clear>
+          <ion-icon class="publication-icon" name="ios-text" isActive="{{sections[1].show}}">
+            <ion-badge *ngIf="data.comments.length >0" class="publication-badge">{{data.comments.length}}</ion-badge>
+          </ion-icon>
+        </button>
+      </ion-item>
     </ion-list>
-    <ion-list *ngIf="data.comments.length >0">
-      <ion-title class="secondary-title">Comentarios</ion-title>
-      <comment *ngFor="let comment of data.comments" [data]=comment></comment>
+    <ion-list *ngIf="sections[0].show">
+      <experience *ngFor="let experience of data.experiences" [data]=experience [show]="!sections[0].show"></experience>
+      <button item-left class="publication-button" color="secondary" ion-button clear>
+        <ion-icon style="font-size: 20px" class="publication-icon" name="ios-add-circle"></ion-icon>
+      </button>
     </ion-list>
+    <div *ngIf="sections[1].show">
+      <comment-list [data]=data.comments></comment-list>
+    </div>
   </ion-card-content>
 </ion-card>

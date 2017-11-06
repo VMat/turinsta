@@ -1,11 +1,15 @@
 <!-- Generated template for the CommentComponent component -->
-<ion-item style="padding-left: 20px; word-wrap: break-word;overflow-wrap: break-word">
-  <ion-avatar item-start>
-    <img src="{{data.user.avatar}}">
-  </ion-avatar>
-  <p><b>{{data.user.name}}</b>&nbsp;{{data.content}}</p>
+<ion-item>
+  <ion-item style="padding-left: 20px">
+    <ion-avatar item-start>
+      <img src="{{data.user.avatar}}">
+    </ion-avatar>
+    <p item-left><b>{{data.user.name}}</b>&nbsp;{{data.content}}</p>
+    <button item-left *ngIf="data.replies!=undefined" (click)="toogleReplies()" class="publication-button" color="primary" ion-button clear>
+      <ion-icon style="font-size: 20px" class="publication-icon" name="{{showReplies? 'ios-remove-circle' : 'ios-add-circle'}}"></ion-icon>
+    </button>
+  </ion-item>
+  <ion-item *ngIf="showReplies">
+    <comment-list [data]=data.replies></comment-list>
+  </ion-item>
 </ion-item>
-<ion-list style="padding-left: 20px" item-start *ngIf="data.replies!=undefined">
-  <comment *ngFor="let reply of data.replies" [data]=reply></comment>
-</ion-list>
-

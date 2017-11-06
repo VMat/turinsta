@@ -25512,13 +25512,59 @@ ion-navbar.toolbar {
   min-height: calc(46px + constant(safe-area-inset-top));
 }
 
+.publication-card-header {
+  width: 100%;
+  margin: 0 auto;
+  padding: 0;
+}
+
+.publication-image {
+  width: 100% !important;
+  height: auto;
+}
+
+.publication-description {
+  padding: 10px 0;
+}
+
+.publication-badge {
+  padding: 2px 5px;
+  font-size: 10px;
+  background-color: blue;
+  position: absolute;
+  top: 0;
+  right: 0;
+  border-radius: 100%;
+}
+
+.publication-icon {
+  font-size: 30px;
+}
+
+.publication-button {
+  position: relative;
+  top: 1px;
+  right: 1px;
+}
+
+.publication-buttons-item {
+  padding: 0 !important;
+  margin: 0;
+}
+
 .secondary-title .toolbar-title-md {
-  -webkit-text-stroke: 1px lightblue !important;
-  color: #ffffff;
-  font-weight: bolder;
-  text-shadow: 1px  1px 0 lightgrey, -1px -1px 0 lightgrey, 1px -1px 0 lightgrey, -1px  1px 0 lightgrey, 1px  1px 0 lightgrey;
-  font-size: xx-large;
+  all: initial;
+  cursor: pointer;
+  font-size: medium;
   font-family: 'Chiller', cursive;
+}
+
+p {
+  font-size: x-small !important;
+}
+
+.publication-important-text {
+  font-weight: bold !important;
 }
 
 publication ion-card {
