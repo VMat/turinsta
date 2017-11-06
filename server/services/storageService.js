@@ -40,6 +40,54 @@ const storageService = (function(){
     
     getActivity: (id)=>{
       return db.getActivity(id);
+    },
+    
+    createActivity: (activity)=>{
+      return db.createActivity(activity);
+    },
+
+    updateActivity: (activity)=>{
+      return db.updateActivity(activity);
+    },
+
+    deleteActivity: (id)=>{
+      return db.deleteActivity(id);
+    },
+    
+    getComment: (id)=>{
+      return db.getComment(id);
+    },
+    
+    createComment: (comment)=>{
+      return db.createComment(comment);
+    },
+
+    updateComment: (comment)=>{
+      return db.updateComment(comment);
+    },
+
+    deleteComment: (id)=>{
+      return db.deleteComment(id);
+    },
+    
+    getUsers: ()=>{
+      return db.getUsers();
+    },
+    
+    getUser: (id)=>{
+      return db.getUser(id);
+    },
+        
+    createUser: (user)=>{
+      return db.createUser(user);
+    },
+
+    updateUser: (user)=>{
+      return db.updateUser(user);
+    },
+
+    deleteUser: (id)=>{
+      return db.deleteUser(id);
     }
 
   };

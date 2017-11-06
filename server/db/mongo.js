@@ -1,6 +1,8 @@
 const mongoose = require('mongoose');
 const publicationInterface = require('./publicationInterface');
 const activityInterface = require('./activityInterface');
+const commentInterface = require('./commentInterface');
+const userInterface = require('./userInterface');
 
 let db = (function(){
 
@@ -48,6 +50,54 @@ let db = (function(){
     
     getActivity: (id)=>{
       return activityInterface.getOne(id);
+    },
+    
+    createActivity: (activity)=>{
+      return activityInterface.insert(activity);
+    },
+    
+    updateActivity: (activity)=>{
+      return activityInterface.update(activity);
+    },
+    
+    deleteActivity: (id)=>{
+      return activityInterface.deleteOne(id);
+    },
+    
+    getComment: (id)=>{
+      return commentInterface.getOne(id);
+    },
+    
+    createComment: (activity)=>{
+      return commentInterface.insert(activity);
+    },
+    
+    updateComment: (activity)=>{
+      return commentInterface.update(activity);
+    },
+    
+    deleteComment: (id)=>{
+      return commentInterface.deleteOne(id);
+    },
+    
+    getUsers: ()=>{
+      return userInterface.getAll();
+    },
+    
+    getUser: (id)=>{
+      return userInterface.getOne(id);
+    },
+    
+    createUser: (user)=>{
+      return userInterface.insert(user);
+    },
+    
+    updateUser: (user)=>{
+      return userInterface.update(user);
+    },
+    
+    deleteUser: (id)=>{
+      return userInterface.deleteOne(id);
     }
   };
   

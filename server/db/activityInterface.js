@@ -24,6 +24,18 @@ var ActivityInterface = (function(){
         .populate('caption')
         .populate('relatedUsers')
         .populate('publication');
+    },
+    
+    insert: (activity)=>{
+      return Commons.insert(new Activities(activity));
+    },
+
+    update: (activity)=>{
+      return Commons.update(Activities,activity);
+    },
+
+    deleteOne: (id)=>{
+      return Commons.removeOne(Activities, id);
     }
   }
 
