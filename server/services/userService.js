@@ -36,15 +36,8 @@ const userService = (function(){
           then(updatedUser=>resolve(updatedUser)).
           catch(error=>reject(error))  
       })
-    },
-    
-    deleteUser: (id)=>{
-      return new Promise((resolve, reject)=>{
-      storageService.deleteUser(id).
-        then(deletedUser=>resolve(deletedUser)).
-        catch(error=>reject(error))  
-      })
     }
+    
   };
 
   return oUserService;
