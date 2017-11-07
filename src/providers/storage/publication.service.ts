@@ -10,9 +10,9 @@ export class PublicationService {
   }
 
   getPublications() {
-
-    return this.storageService.getPublications();
-    // return Observable.timer(1000).mapTo(publications)
+    
+    //return this.storageService.getPublications();
+    return Observable.timer(1000).mapTo(this.storageService.getPublications());
   }
 
 
