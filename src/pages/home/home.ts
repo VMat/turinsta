@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import {StorageProvider} from "../../providers/storage/storage";
 import {Observable} from "rxjs";
