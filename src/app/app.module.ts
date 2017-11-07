@@ -18,6 +18,14 @@ import {HttpModule} from "@angular/http";
 import {ExperienceComponent} from "../components/experience/experience";
 import {CommentComponent} from "../components/comment/comment";
 import {CommentListComponent} from "../components/comment-list/comment-list";
+import {StoreModule} from "@ngrx/store";
+import { postReducer } from '../providers/reducers/post.reducer';
+import {publicationReducer} from "../providers/reducers/publication.reducer";
+import {EffectsModule} from "@ngrx/effects";
+import {PublicationEffects} from "../providers/storage/publication.effects";
+import {StoreDevtoolsModule} from "@ngrx/store-devtools";
+import {PublicationService} from "../providers/storage/publication.service";
+import {PublicationListComponent} from "../components/publication-list/publication-list";
 
 @NgModule({
   declarations: [
@@ -28,6 +36,7 @@ import {CommentListComponent} from "../components/comment-list/comment-list";
     HomePage,
     TabsPage,
     PublicationComponent,
+    PublicationListComponent,
     ExperienceComponent,
     CommentListComponent,
     CommentComponent
@@ -35,7 +44,17 @@ import {CommentListComponent} from "../components/comment-list/comment-list";
   imports: [
     BrowserModule,
     IonicModule.forRoot(MyApp),
-    HttpModule
+    HttpModule,
+    StoreModule.forRoot({
+      post: postReducer,
+      publication: publicationReducer
+    }),
+    EffectsModule.forRoot([
+        PublicationEffects
+    ]),
+    StoreDevtoolsModule.instrument({
+      maxAge: 10 // number of states to retain
+    })
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -50,7 +69,8 @@ import {CommentListComponent} from "../components/comment-list/comment-list";
     StatusBar,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
-    StorageProvider
+    StorageProvider,
+    PublicationService
   ]
 })
 export class AppModule {}
