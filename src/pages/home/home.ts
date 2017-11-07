@@ -38,8 +38,8 @@ export class HomePage implements OnInit, OnDestroy{
     }
 
     public ngOnDestroy(): void {
-        if (this.postsSubscription) {
-            this.postsSubscription.unsubscribe();
+        if (this.publicationSubscription) {
+            this.publicationSubscription.unsubscribe();
         }
         if (this.timerSubscription) {
             this.timerSubscription.unsubscribe();
@@ -47,7 +47,7 @@ export class HomePage implements OnInit, OnDestroy{
     }
   
     private refreshData(): void {
-        this.postsSubscription = this.storageService.getPublications().subscribe(publications => {
+        this.publicationSubscription = this.storageService.getPublications().subscribe(publications => {
             this.publications = publications;
             this.subscribeToData();
         });
