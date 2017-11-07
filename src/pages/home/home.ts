@@ -1,10 +1,9 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import {StorageProvider} from "../../providers/storage/storage";
-import {Observable} from "rxjs";
+import {Observable, AnonymousSubscription} from "rxjs";
 import {Store} from "@ngrx/store";
 import {getPublications} from "../../providers/reducers/publication.reducer";
-import {AnonymousSubscription} from "rxjs/Subscription";
 
 interface AppState {
   publication: any
