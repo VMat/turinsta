@@ -26,6 +26,10 @@ import {PublicationEffects} from "../providers/storage/publication.effects";
 import {StoreDevtoolsModule} from "@ngrx/store-devtools";
 import {PublicationService} from "../providers/storage/publication.service";
 import {PublicationListComponent} from "../components/publication-list/publication-list";
+import {PublicationHeaderComponent} from "../components/publication-header/publication-header";
+import {PublicationBodyComponent} from "../components/publication-body/publication-body";
+import {PublicationFooterComponent} from "../components/publication-footer/publication-footer";
+import {ExperienceListComponent} from "../components/experience-list/experience-list";
 
 @NgModule({
   declarations: [
@@ -35,11 +39,15 @@ import {PublicationListComponent} from "../components/publication-list/publicati
     AccountPage,
     HomePage,
     TabsPage,
+    PublicationHeaderComponent,
+    PublicationBodyComponent,
+    PublicationFooterComponent,
     PublicationComponent,
     PublicationListComponent,
+    ExperienceListComponent,
     ExperienceComponent,
-    CommentListComponent,
-    CommentComponent
+    CommentComponent,
+    CommentListComponent
   ],
   imports: [
     BrowserModule,

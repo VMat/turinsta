@@ -13,7 +13,6 @@ import {Component, Input} from '@angular/core';
 export class ExperienceComponent {
 
   @Input() data: any = null;
-  @Input() show: boolean = null;
 
   constructor() {
     console.log('Hello ExperienceComponent Component');

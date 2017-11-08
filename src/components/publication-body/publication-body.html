@@ -1,0 +1,7 @@
+<!-- Generated template for the PublicationBodyComponent component -->
+<ion-slides align="center">
+  <ion-slide *ngFor="let image of data.images">
+    <img class="publication-image" src="{{image.url}}" />
+  </ion-slide>
+</ion-slides>
+<p *ngIf="data.description" class="publication-description"><b>{{data.user.username}}</b>&nbsp;{{data.description}}</p>

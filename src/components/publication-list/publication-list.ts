@@ -8,8 +8,8 @@ import {Component, Input, ChangeDetectionStrategy} from '@angular/core';
  */
 @Component({
   selector: 'publication-list',
-  templateUrl: 'publication-list.html',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  templateUrl: 'publication-list.html'
+  // changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class PublicationListComponent {
 

@@ -1,7 +1,8 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import {StorageProvider} from "../../providers/storage/storage";
-import {Observable, AnonymousSubscription} from "rxjs";
+import {Observable} from "rxjs";
+import {AnonymousSubscription} from "rxjs/Subscription";
 import {Store} from "@ngrx/store";
 import {getPublications} from "../../providers/reducers/publication.reducer";
 
@@ -18,7 +19,7 @@ export class HomePage implements OnInit, OnDestroy{
   //publications : Observable<any>;
   private timerSubscription: AnonymousSubscription;
   private publicationSubscription: AnonymousSubscription;
-  private publications: Any;
+  private publications: any;
 
   constructor(public storageService:StorageProvider, public navCtrl: NavController, private store: Store<AppState>) {
     //this.store.dispatch(getPublications());
@@ -31,7 +32,7 @@ export class HomePage implements OnInit, OnDestroy{
   //     this.publications = data;
   //   });
   // }
-  
+
     public ngOnInit(): void {
         this.refreshData();
     }
@@ -44,7 +45,7 @@ export class HomePage implements OnInit, OnDestroy{
             this.timerSubscription.unsubscribe();
         }
     }
-  
+
     private refreshData(): void {
         this.publicationSubscription = this.storageService.getPublications().subscribe(publications => {
             this.publications = publications;
@@ -55,5 +56,5 @@ export class HomePage implements OnInit, OnDestroy{
     private subscribeToData(): void {
         this.timerSubscription = Observable.timer(5000).first().subscribe(() => this.refreshData());
     }
-  
+
 }
