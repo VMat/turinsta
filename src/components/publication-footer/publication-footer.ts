@@ -13,8 +13,7 @@ import {ChangeDetectionStrategy, Component, Input} from '@angular/core';
 })
 export class PublicationFooterComponent {
 
-  /*@Input() data: any = null;*/
-  data: any = {comments:[],experiences:[]};
+  @Input() data: any = null;
   sections: any = [{name: "Experiences", show: false}, {name: "Comments", show: false}];
 
   constructor() {

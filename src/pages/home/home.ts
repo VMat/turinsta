@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import {Component, OnDestroy, OnInit, ChangeDetectionStrategy} from '@angular/core';
 import { NavController } from 'ionic-angular';
 import {StorageProvider} from "../../providers/storage/storage";
 import {Observable} from "rxjs";
@@ -12,7 +12,8 @@ interface AppState {
 
 @Component({
   selector: 'page-home',
-  templateUrl: 'home.html'
+  templateUrl: 'home.html',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class HomePage implements OnInit, OnDestroy{
 

@@ -1,4 +1,4 @@
-import {Component, Input} from '@angular/core';
+import {Component, Input, ChangeDetectionStrategy} from '@angular/core';
 import {StorageProvider} from "../../providers/storage/storage";
 
 /**
@@ -9,7 +9,8 @@ import {StorageProvider} from "../../providers/storage/storage";
  */
 @Component({
   selector: 'comment-list',
-  templateUrl: 'comment-list.html'
+  templateUrl: 'comment-list.html',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CommentListComponent {
 

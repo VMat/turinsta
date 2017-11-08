@@ -1,4 +1,4 @@
-import {Component, Input} from '@angular/core';
+import {Component, Input, ChangeDetectionStrategy} from '@angular/core';
 
 /**
  * Generated class for the CommentComponent component.
@@ -8,7 +8,8 @@ import {Component, Input} from '@angular/core';
  */
 @Component({
   selector: 'comment',
-  templateUrl: 'comment.html'
+  templateUrl: 'comment.html',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CommentComponent {
 
