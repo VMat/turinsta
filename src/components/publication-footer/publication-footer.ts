@@ -1,4 +1,4 @@
-import {Component, Input} from '@angular/core';
+import {ChangeDetectionStrategy, Component, Input} from '@angular/core';
 
 /**
  * Generated class for the PublicationFooterComponent component.
@@ -8,7 +8,8 @@ import {Component, Input} from '@angular/core';
  */
 @Component({
   selector: 'publication-footer',
-  templateUrl: 'publication-footer.html'
+  templateUrl: 'publication-footer.html',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class PublicationFooterComponent {
 
