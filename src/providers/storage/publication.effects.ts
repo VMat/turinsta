@@ -3,6 +3,7 @@ import { Actions, Effect } from "@ngrx/effects";
 import { Observable } from "rxjs";
 import { GET_PUBLICATIONS, GET_PUBLICATIONS_SUCCESS, GET_PUBLICATIONS_ERROR } from "../reducers/publication.reducer";
 import { PublicationService } from "./publication.service";
+import {Action} from "@ngrx/store";
 
 @Injectable()
 export class PublicationEffects {
@@ -10,10 +11,12 @@ export class PublicationEffects {
                private publicationsService : PublicationService ) {
   }
 
-  @Effect() getPublicatios$ = this.actions$
+  @Effect() getPublicatios$: Observable<Action> = this.actions$
     .ofType(GET_PUBLICATIONS)
-    .switchMap(action =>
-      this.publicationsService.getPublications()
-        .map(todos => ({type: GET_PUBLICATIONS_SUCCESS, payload: todos}))
-        .catch(() => Observable.of({type: GET_PUBLICATIONS_ERROR})));
+    .switchMap(() => Observable
+      .timer(0,5000)
+      .switchMap(() => this.publicationsService.getPublications()
+        .map(publications => ({type: GET_PUBLICATIONS_SUCCESS, payload: publications}))
+        .catch(() => Observable.of({type: GET_PUBLICATIONS_ERROR})))
+    );
 }
