@@ -23,7 +23,8 @@ export class CommentListComponent {
   }
 
   sendComment(){
-    this.storageService.sendComment(this.publicationId, this.commentValue).subscribe(data => {
+    this.storageService.sendComment(this.publicationId, this.commentValue).subscribe(comment => {
+      sessionStorage.setItem("newComment",JSON.stringify(comment));
     });
   }
 }

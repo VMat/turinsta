@@ -771,7 +771,8 @@ var CommentListComponent = (function () {
         console.log('Hello CommentListComponent Component');
     }
     CommentListComponent.prototype.sendComment = function () {
-        this.storageService.sendComment(this.publicationId, this.commentValue).subscribe(function (data) {
+        this.storageService.sendComment(this.publicationId, this.commentValue).subscribe(function (comment) {
+            sessionStorage.setItem("newComment", JSON.stringify(comment));
         });
     };
     return CommentListComponent;
@@ -782,16 +783,17 @@ __decorate([
 ], CommentListComponent.prototype, "data", void 0);
 __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["E" /* Input */])(),
-    __metadata("design:type", String)
+    __metadata("design:type", Object)
 ], CommentListComponent.prototype, "publicationId", void 0);
 CommentListComponent = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
         selector: 'comment-list',template:/*ion-inline-start:"C:\Users\Matias\WebstormProjects\turinsta\src\components\comment-list\comment-list.html"*/'<!-- Generated template for the CommentListComponent component -->\n<ion-list>\n  <comment *ngFor="let comment of data" [data]=comment></comment>\n  <ion-item>\n    <ion-textarea [(ngModel)]="commentValue" item-start style="font-size: x-small" placeholder="Escribe un comentario..."></ion-textarea>\n    <button item-left ion-button clear (click)="sendComment()">\n      <ion-icon name="send"></ion-icon>\n    </button>\n  </ion-item>\n</ion-list>\n'/*ion-inline-end:"C:\Users\Matias\WebstormProjects\turinsta\src\components\comment-list\comment-list.html"*/,
         changeDetection: __WEBPACK_IMPORTED_MODULE_0__angular_core__["j" /* ChangeDetectionStrategy */].OnPush
     }),
-    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__providers_storage_storage__["a" /* StorageProvider */]])
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__providers_storage_storage__["a" /* StorageProvider */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__providers_storage_storage__["a" /* StorageProvider */]) === "function" && _a || Object])
 ], CommentListComponent);
 
+var _a;
 //# sourceMappingURL=comment-list.js.map
 
 /***/ }),

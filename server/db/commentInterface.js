@@ -25,14 +25,16 @@ const CommentInterface = (function(){
           };
           oComment.publication = comment.publication;
           oComment.content = comment.content;
-          return Commons.insert(new Comments(oComment));
-            /*.then(comment=>{
+          Commons.insert(new Comments(oComment))
+            .then(comment=>{
+              console.log("new comment" + comment._id);
               PublicationInterface.getOne(comment.publication)
               .then(publication=>{
+                console.log("get publication" + publication._id);
                 publication.comments.push(comment._id);
                 PublicationInterface.update(publication)
               })
-            });*/
+            });
         });
     },
 
