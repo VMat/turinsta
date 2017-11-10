@@ -27,12 +27,9 @@ const CommentInterface = (function(){
           oComment.content = comment.content;
           return Commons.insert(new Comments(oComment))
             .then(comment=>{
-              console.log("new comment" + comment._id);
               return PublicationInterface.getOne(comment.publication)
               .then(publication=>{
-                console.log("get publication" + publication._id);
                 publication.comments.push(comment._id);
-                publication.description = "...";
                 return PublicationInterface.update(publication)
               })
             });
