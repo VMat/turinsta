@@ -15,6 +15,7 @@ import {StorageProvider} from "../../providers/storage/storage";
 export class CommentListComponent {
 
   @Input() data: any = null;
+  @Input() publicationId: String = null;
   commentValue: String = null;
 
   constructor(public storageService: StorageProvider) {
@@ -22,6 +23,6 @@ export class CommentListComponent {
   }
 
   sendComment(){
-    this.storageService.sendComment();
+    this.storageService.sendComment(this.publicationId, this.commentValue);
   }
 }

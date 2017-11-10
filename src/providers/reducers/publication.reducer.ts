@@ -9,9 +9,10 @@ export function getPublications() {
   }
 }
 
-export function activePublication(){
+export function activePublication(id){
   return {
-    type: ACTIVE_PUBLICATION
+    type: ACTIVE_PUBLICATION,
+    payload: id
   }
 }
 
@@ -32,13 +33,19 @@ export function publicationReducer(state = initialState, { type, payload } ) {
           {data: payload, pending: false})
       }
       else{
-        let comments = state.data[0].comments;
-        state.data[0] = payload[0];
-        state.data[0].comments = comments;
-        return state;
+        if(Boolean(state.active)){
+          let indexPayload = null;
+          let indexData = null;
+          payload.forEach((publication,i)=>{
+            if(publication._id == state.active){
+              indexPayload = i;
+            }
+          });
+          state.data.forEach((item,i)=>{if(item._id == state.active){indexData=i}});
+          payload[indexPayload] = state.data[indexData]
+        }
       }
-       /*Object.assign({}, state,
-        {data: payload, pending: false})*/
+      return Object.assign({}, state, {data: payload, pending: false});
     case GET_PUBLICATIONS_ERROR:
       return Object.assign({}, state, {pending: false, error: "Error"});
     case ACTIVE_PUBLICATION:

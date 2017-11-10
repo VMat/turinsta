@@ -3,6 +3,7 @@ const schema = mongoose.Schema;
 
 // Mongoose commentSchema definition
 const commentSchema = new schema({
+  publication: {type: schema.Types.ObjectId, ref: 'Publications'},
 	user: {
 	  id: {type: schema.Types.ObjectId, ref: 'Users'},
     name: String,

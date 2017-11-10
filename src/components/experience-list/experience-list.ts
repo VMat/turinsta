@@ -13,6 +13,7 @@ import {Component, Input} from '@angular/core';
 export class ExperienceListComponent {
 
   @Input() data: any = null;
+  @Input() publicationId: String = null;
 
   constructor() {
     console.log('Hello ExperienceListComponent Component');

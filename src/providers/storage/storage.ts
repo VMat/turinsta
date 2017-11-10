@@ -22,8 +22,9 @@ export class StorageProvider {
       .map((res:Response) => res.json());
   }
 
-  sendComment(){
-
+  sendComment(comment, publicationId){
+    return this.http.post(StorageProvider.baseUrl + 'comments',{publication: publicationId, user: "59f7562af36d282363087270", content: comment})
+      .map((res:Response) => res.json());
   }
 
 }

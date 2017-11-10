@@ -5,7 +5,7 @@ import {Observable} from "rxjs";
 import {Store} from "@ngrx/store";
 import {getPublications} from "../../providers/reducers/publication.reducer";
 
-interface AppState {
+export interface AppState {
   publication: any
 }
 

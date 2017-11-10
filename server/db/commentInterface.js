@@ -1,6 +1,7 @@
 const Comments = require('../models/comment');
 const Users = require('../models/user');
 const Commons = require('./commons');
+const UserInterface = require('./userInterface');
 
 const CommentInterface = (function(){
 
@@ -11,9 +12,20 @@ const CommentInterface = (function(){
     getOne: (id)=>{
       return Commons.getOne(Comments, id);
     },
-    
+
     insert: (comment)=>{
-      return Commons.insert(new Comments(comment));
+      return UserInterface.getOne(comment.user)
+        .then(user=>{
+          let oComment = {};
+          oComment.user = {
+            id: user._id,
+            name: user.username,
+            avatar: user.avatar
+          };
+          oComment.publication = comment.publication;
+          oComment.content = comment.content;
+          return Commons.insert(new Comments(oComment));
+        });
     },
 
     update: (comment)=>{
@@ -23,7 +35,7 @@ const CommentInterface = (function(){
     deleteOne: (id)=>{
       return Commons.removeOne(Comments, id);
     }
-  }
+  };
 
   return oCommentInterface;
 

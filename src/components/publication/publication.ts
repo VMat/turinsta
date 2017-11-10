@@ -1,4 +1,8 @@
 import {Component, Input, ChangeDetectionStrategy} from '@angular/core';
+import {activePublication} from "../../providers/reducers/publication.reducer";
+import {Store} from "@ngrx/store";
+import {AppState} from "../../pages/home/home";
+import {Events} from "ionic-angular";
 
 /**
  * Generated class for the PublicationComponent component.
@@ -11,11 +15,22 @@ import {Component, Input, ChangeDetectionStrategy} from '@angular/core';
   templateUrl: 'publication.html',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
+
 export class PublicationComponent {
 
   @Input() data: any = null;
 
-  constructor() {
+  constructor(public store: Store<AppState>, public events: Events) {
     console.log('Hello PublicationComponent Component');
+    events.subscribe('dynamicContent:showed', (publicationId, showed) => {
+      if(publicationId == this.data._id){
+        if(showed){
+          this.store.dispatch(activePublication(this.data._id));
+        }
+        else{
+          this.store.dispatch(activePublication(null));
+        }
+      }
+    });
   }
 }

@@ -29,7 +29,7 @@ ActivitiesPageModule = __decorate([
             __WEBPACK_IMPORTED_MODULE_2__activities__["a" /* ActivitiesPage */],
         ],
         imports: [
-            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["d" /* IonicPageModule */].forChild(__WEBPACK_IMPORTED_MODULE_2__activities__["a" /* ActivitiesPage */]),
+            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["e" /* IonicPageModule */].forChild(__WEBPACK_IMPORTED_MODULE_2__activities__["a" /* ActivitiesPage */]),
         ],
     })
 ], ActivitiesPageModule);
