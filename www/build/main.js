@@ -868,7 +868,7 @@ var PublicationEffects = (function () {
         this.getPublicatios$ = this.actions$
             .ofType(__WEBPACK_IMPORTED_MODULE_3__reducers_publication_reducer__["a" /* GET_PUBLICATIONS */])
             .switchMap(function () { return __WEBPACK_IMPORTED_MODULE_2_rxjs__["Observable"]
-            .timer(5000)
+            .timer(0, 5000)
             .switchMap(function () { return _this.publicationsService.getPublications()
             .map(function (publications) { return ({ type: __WEBPACK_IMPORTED_MODULE_3__reducers_publication_reducer__["c" /* GET_PUBLICATIONS_SUCCESS */], payload: publications }); })
             .catch(function () { return __WEBPACK_IMPORTED_MODULE_2_rxjs__["Observable"].of({ type: __WEBPACK_IMPORTED_MODULE_3__reducers_publication_reducer__["b" /* GET_PUBLICATIONS_ERROR */] }); }); }); });
@@ -877,14 +877,14 @@ var PublicationEffects = (function () {
 }());
 __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_1__ngrx_effects__["b" /* Effect */])(),
-    __metadata("design:type", __WEBPACK_IMPORTED_MODULE_2_rxjs__["Observable"])
+    __metadata("design:type", typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_2_rxjs__["Observable"] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2_rxjs__["Observable"]) === "function" && _a || Object)
 ], PublicationEffects.prototype, "getPublicatios$", void 0);
 PublicationEffects = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["B" /* Injectable */])(),
-    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__ngrx_effects__["a" /* Actions */],
-        __WEBPACK_IMPORTED_MODULE_4__publication_service__["a" /* PublicationService */]])
+    __metadata("design:paramtypes", [typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1__ngrx_effects__["a" /* Actions */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__ngrx_effects__["a" /* Actions */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_4__publication_service__["a" /* PublicationService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_4__publication_service__["a" /* PublicationService */]) === "function" && _c || Object])
 ], PublicationEffects);
 
+var _a, _b, _c;
 //# sourceMappingURL=publication.effects.js.map
 
 /***/ }),
