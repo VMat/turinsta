@@ -24,8 +24,8 @@ let Commons = (function(){
       return Collection.remove();
     },
 
-    removeOne: (Collection,id)=>{
-      return Collection.findByIdAndRemove(id);
+    removeOne: (Collection,doc)=>{
+      return Collection.findByIdAndRemove(doc._id);
     }
 
   };
