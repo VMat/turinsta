@@ -2,6 +2,7 @@ const Comments = require('../models/comment');
 const Users = require('../models/user');
 const Commons = require('./commons');
 const UserInterface = require('./userInterface');
+const PublicationInterface = require('./publicationInterface');
 
 const CommentInterface = (function(){
 
@@ -24,7 +25,14 @@ const CommentInterface = (function(){
           };
           oComment.publication = comment.publication;
           oComment.content = comment.content;
-          return Commons.insert(new Comments(oComment));
+          return Commons.insert(new Comments(oComment))
+            .then(comment=>{
+              PublicationInterface.getOne(comment.publication)
+              .then(publication=>{
+                publication.comments.push(comment._id);
+                PublicationInterface.update(publication)
+              })
+            });
         });
     },
 

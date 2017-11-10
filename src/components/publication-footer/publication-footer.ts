@@ -15,7 +15,6 @@ import {Events} from "ionic-angular";
 export class PublicationFooterComponent {
 
   @Input() data: any = null;
-  @Input() publicationId: String = null;
   sections: any = [{name: "Experiences", show: false}, {name: "Comments", show: false}];
 
   constructor(public events: Events) {

@@ -23,6 +23,7 @@ export class CommentListComponent {
   }
 
   sendComment(){
-    this.storageService.sendComment(this.publicationId, this.commentValue);
+    this.storageService.sendComment(this.publicationId, this.commentValue).subscribe(data => {
+    });
   }
 }

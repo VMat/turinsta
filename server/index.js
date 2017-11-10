@@ -7,7 +7,7 @@ const bodyParser = require('body-parser');    // pull information from HTML POST
 const methodOverride = require('method-override'); // simulate DELETE and PUT (express4)
 const cors = require('cors');
 const path = require('path');
-const serveStatic = require('serve-static')
+const serveStatic = require('serve-static');
 
 const storageService = require('./services/storageService');
 const routeServer = require('./router/routeServer');
