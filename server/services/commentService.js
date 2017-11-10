@@ -30,9 +30,9 @@ const commentService = (function(){
       })
     },
     
-    deleteComment: (id)=>{
+    deleteComment: (comment)=>{
       return new Promise((resolve, reject)=>{
-      storageService.deleteComment(id).
+      storageService.deleteComment(comment).
         then(deletedComment=>resolve(deletedComment)).
         catch(error=>reject(error))  
       })
