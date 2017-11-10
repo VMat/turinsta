@@ -66,8 +66,8 @@ const storageService = (function(){
       return db.updateComment(comment);
     },
 
-    deleteComment: (id)=>{
-      return db.deleteComment(id);
+    deleteComment: (comment)=>{
+      return db.deleteComment(comment);
     },
     
     getUsers: ()=>{
