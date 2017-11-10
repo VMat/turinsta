@@ -40,8 +40,15 @@ const CommentInterface = (function(){
       return Commons.update(Comments, comment);
     },
 
-    deleteOne: (id)=>{
-      return Commons.removeOne(Comments, id);
+    deleteOne: (comment)=>{
+      return PublicationInterface.getOne(comment.publication)
+        .then(publication=>{
+          publication.comments.splice(publication.comments.indexOf(comment._id), 1);
+          return PublicationInterface.update(publication)
+            .then(=>{
+              return Commons.removeOne(Comments, comment);
+            })
+        })
     }
   };
 
