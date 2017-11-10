@@ -45,7 +45,7 @@ const CommentInterface = (function(){
         .then(publication=>{
           publication.comments.splice(publication.comments.indexOf(comment._id), 1);
           return PublicationInterface.update(publication)
-            .then(=>{
+            .then(()=>{
               return Commons.removeOne(Comments, comment);
             })
         })
