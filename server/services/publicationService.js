@@ -38,17 +38,9 @@ const publicationService = (function(){
       })
     },
     
-    deletePublications: ()=>{
+    deletePublication: (publication)=>{
       return new Promise((resolve, reject)=>{
-        storageService.deletePublications().
-          then(deletedPublications=>resolve(deletedPublications)).
-          catch(error=>reject(error))  
-      })
-    },
-    
-    deletePublication: (id)=>{
-      return new Promise((resolve, reject)=>{
-      storageService.deletePublication(id).
+      storageService.deletePublication(publication).
         then(deletedPublication=>resolve(deletedPublication)).
         catch(error=>reject(error))  
       })
