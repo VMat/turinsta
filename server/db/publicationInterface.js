@@ -32,12 +32,8 @@ const PublicationInterface = (function(){
       return Commons.update(Publications,publication);
     },
 
-    deleteAll: ()=>{
-      return Commons.removeAll(Publications);
-    },
-
-    deleteOne: (id)=>{
-      return Commons.removeOne(Publications,id);
+    deleteOne: (publication)=>{
+      return Commons.removeOne(Publications,publication);
     }
 
   };
