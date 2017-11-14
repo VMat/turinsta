@@ -34,8 +34,8 @@ var ActivityInterface = (function(){
       return Commons.update(Activities,activity);
     },
 
-    deleteOne: (id)=>{
-      return Commons.removeOne(Activities, id);
+    deleteOne: (activity)=>{
+      return Commons.removeOne(Activities, activity);
     }
   }
 
