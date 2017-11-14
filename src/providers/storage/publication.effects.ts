@@ -11,7 +11,7 @@ export class PublicationEffects {
                private publicationsService : PublicationService ) {
   }
 
-  @Effect() getPublicatios$: Observable<Action> = this.actions$
+  @Effect() getPublications$: Observable<Action> = this.actions$
     .ofType(GET_PUBLICATIONS)
     .switchMap(() => Observable
       .timer(0,5000)

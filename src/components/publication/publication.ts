@@ -1,8 +1,8 @@
 import {Component, Input, ChangeDetectionStrategy} from '@angular/core';
 import {activePublication} from "../../providers/reducers/publication.reducer";
 import {Store} from "@ngrx/store";
-import {AppState} from "../../pages/home/home";
 import {Events} from "ionic-angular";
+import {AppState} from "../../providers/models/publication.model";
 
 /**
  * Generated class for the PublicationComponent component.

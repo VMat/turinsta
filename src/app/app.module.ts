@@ -19,7 +19,6 @@ import {ExperienceComponent} from "../components/experience/experience";
 import {CommentComponent} from "../components/comment/comment";
 import {CommentListComponent} from "../components/comment-list/comment-list";
 import {StoreModule} from "@ngrx/store";
-import { postReducer } from '../providers/reducers/post.reducer';
 import {publicationReducer} from "../providers/reducers/publication.reducer";
 import {EffectsModule} from "@ngrx/effects";
 import {PublicationEffects} from "../providers/storage/publication.effects";
@@ -54,8 +53,8 @@ import {ExperienceListComponent} from "../components/experience-list/experience-
     IonicModule.forRoot(MyApp),
     HttpModule,
     StoreModule.forRoot({
-      post: postReducer,
-      publication: publicationReducer
+      // post: postReducer,
+      publications: publicationReducer
     }),
     EffectsModule.forRoot([
         PublicationEffects

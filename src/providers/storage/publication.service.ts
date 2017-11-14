@@ -16,4 +16,8 @@ export class PublicationService {
   activePublication(id){
     return id;
   }
+
+  savePublicationState(publicationState){
+    return publicationState;
+  }
 }

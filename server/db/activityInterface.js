@@ -15,17 +15,17 @@ var ActivityInterface = (function(){
         .populate('user')
         .populate('caption')
         .populate('relatedUsers')
-        .populate('publication');
+        .populate('AppState');
     },
 
     getOne: (id)=>{
-      return Commons.getOne(Activities, id)        
+      return Commons.getOne(Activities, id)
         .populate('user')
         .populate('caption')
         .populate('relatedUsers')
-        .populate('publication');
+        .populate('AppState');
     },
-    
+
     insert: (activity)=>{
       return Commons.insert(new Activities(activity));
     },

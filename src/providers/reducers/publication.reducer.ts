@@ -1,7 +1,10 @@
+import {tassign} from "tassign";
 export const GET_PUBLICATIONS = "GET_PUBLICATIONS";
 export const GET_PUBLICATIONS_SUCCESS = "GET_PUBLICATIONS_SUCCESS";
 export const GET_PUBLICATIONS_ERROR = "GET_PUBLICATIONS_ERROR";
 export const ACTIVE_PUBLICATION = "ACTIVE_PUBLICATION";
+export const SAVE_PUBLICATION_STATE = "SAVE_PUBLICATION_STATE";
+export const RESUME_PUBLICATION = "RESUME_PUBLICATION";
 
 export function getPublications() {
   return {
@@ -16,9 +19,23 @@ export function activePublication(id){
   }
 }
 
+export function savePublicationState(publicationState){
+  return {
+    type: SAVE_PUBLICATION_STATE,
+    payload: publicationState
+  }
+}
+
+export function resumePublication(){
+  return {
+    type: RESUME_PUBLICATION
+  }
+}
+
 const initialState = {
-  data: [],
-  active: String,
+  publications: [],
+  active: null,
+  resumeTo: {publicationId: null, experience: {open: false,experienceId: null}, comment: {open: false, commentId: null}},
   pending: false,
   error: null
 };
@@ -26,31 +43,28 @@ const initialState = {
 export function publicationReducer(state = initialState, { type, payload } ) {
   switch( type ) {
     case GET_PUBLICATIONS:
-      return Object.assign({}, state, {pending: true, error: null});
+      return tassign(state,{pending: true, error: null});
     case GET_PUBLICATIONS_SUCCESS:
-      if(state.data.length == 0){
-        return Object.assign({}, state,
-          {data: payload, pending: false})
+      if(Boolean(state.active)){
+        let indexPayload = null;
+        let indexData = null;
+        payload.forEach((publication,i)=>{
+          if(publication._id == state.active){
+            indexPayload = i;
+          }
+        });
+        state.publications.forEach((item,i)=>{if(item._id == state.active){indexData=i}});
+        payload[indexPayload] = state.publications[indexData]
       }
-      else{
-        if(Boolean(state.active)){
-          let indexPayload = null;
-          let indexData = null;
-          payload.forEach((publication,i)=>{
-            if(publication._id == state.active){
-              indexPayload = i;
-            }
-          });
-          state.data.forEach((item,i)=>{if(item._id == state.active){indexData=i}});
-          payload[indexPayload] = state.data[indexData]
-        }
-      }
-      return Object.assign({}, state, {data: payload, pending: false});
+      return tassign(state, {publications: payload, pending: false});
     case GET_PUBLICATIONS_ERROR:
-      return Object.assign({}, state, {pending: false, error: "Error"});
+      return tassign(state, {pending: false, error: "Error"});
     case ACTIVE_PUBLICATION:
-        state.active = payload;
-        return state;
+      return tassign(state,{active: payload});
+    case SAVE_PUBLICATION_STATE:
+      return tassign(state, {resumeTo: payload});
+    case RESUME_PUBLICATION:
+      return tassign(state, {resumeTo: initialState.resumeTo});
     default:
       return state;
   }

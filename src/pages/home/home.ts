@@ -4,10 +4,7 @@ import {StorageProvider} from "../../providers/storage/storage";
 import {Observable} from "rxjs";
 import {Store} from "@ngrx/store";
 import {getPublications} from "../../providers/reducers/publication.reducer";
-
-export interface AppState {
-  publication: any
-}
+import {AppState} from "../../providers/models/publication.model";
 
 @Component({
   selector: 'page-home',
@@ -20,6 +17,6 @@ export class HomePage{
 
   constructor(public storageService:StorageProvider, public navCtrl: NavController, private store: Store<AppState>) {
     this.store.dispatch(getPublications());
-    this.publications = store.select("publication");
+    this.publications = store.select("publications");
   }
 }
