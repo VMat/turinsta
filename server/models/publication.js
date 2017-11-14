@@ -18,6 +18,7 @@ const publicationSchema = new schema({
     created: String,
     modified: String
   },
+  followers: [{type: schema.Types.ObjectId, "ref": 'Users'}],
 	score: Number,
   description: String
 });
