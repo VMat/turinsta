@@ -13,7 +13,10 @@ const userSchema = new Schema({
 	  unseenActivities:[{
 			type: Schema.Types.ObjectId, ref: 'Activities'
 		}]
-  }
+  },
+  favorites: [{type: schema.Types.ObjectId, "ref": 'Publications'}],
+  followers: [{type: schema.Types.ObjectId, "ref": 'Users'}],
+  followedes: [{type: schema.Types.ObjectId, "ref": 'Users'}]
 });
 
 const Users = mongoose.model('Users', userSchema, 'Users');
