@@ -38,9 +38,9 @@ const activityService = (function(){
       })
     },
         
-    deleteActivity: (id)=>{
+    deleteActivity: (activity)=>{
       return new Promise((resolve, reject)=>{
-        storageService.deleteActivity(id).
+        storageService.deleteActivity(activity).
           then(activity=>resolve(activity)).
           catch(error=>reject(error))        
       })  
