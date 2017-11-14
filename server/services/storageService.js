@@ -26,12 +26,8 @@ const storageService = (function(){
       return db.updatePublication(publication);
     },
 
-    deletePublications: ()=>{
-      return db.deletePublications();
-    },
-
-    deletePublication: (id)=>{
-      return db.deletePublication(id);
+    deletePublication: (publication)=>{
+      return db.deletePublication(publication);
     },
     
     getActivities: ()=>{
@@ -50,8 +46,8 @@ const storageService = (function(){
       return db.updateActivity(activity);
     },
 
-    deleteActivity: (id)=>{
-      return db.deleteActivity(id);
+    deleteActivity: (activity)=>{
+      return db.deleteActivity(activity);
     },
     
     getComment: (id)=>{
