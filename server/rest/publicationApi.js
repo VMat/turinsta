@@ -26,13 +26,7 @@ router.put('/',(req, res)=>{
 });
 
 router.delete('/',(req, res)=>{
-  publicationService.deletePublications()
-    .then(publications=>{res.status(200).json(publications)})
-    .catch(error=>{res.status(500).send(error)})
-});
-
-router.delete('/:id',(req, res)=>{
-  publicationService.deletePublication(req.params.id)
+  publicationService.deletePublication(req.body)
     .then(publication=>{res.status(200).json(publication)})
     .catch(error=>{res.status(500).send(error)})
 });
