@@ -3,7 +3,7 @@ import {Events} from "ionic-angular";
 import {Observable} from "rxjs";
 import {AppState} from "../../providers/models/publication.model";
 import {Store} from "@ngrx/store";
-import {resumePublication, activePublication} from "../../providers/reducers/publication.reducer";
+import {resumePublication, activePublication, getPublications} from "../../providers/reducers/publication.reducer";
 
 /**
  * Generated class for the PublicationFooterComponent component.
@@ -20,21 +20,9 @@ export class PublicationFooterComponent {
 
   @Input() data: any = null;
   sections: any = [{name: "Experiences", show: false}, {name: "Comments", show: false}];
-  stateToRestore: Observable<any>;
 
   constructor(public events: Events, private store: Store<AppState>) {
     console.log('Hello PublicationFooterComponent Component');
-    this.stateToRestore = store.select("publications");
-    this.stateToRestore.subscribe((state)=>{
-      if(Boolean(this.data)){
-        if(state.resumeTo.publicationId == this.data._id){
-          if(state.resumeTo.comment.open){
-            this.store.dispatch(resumePublication());
-            alert("eefsee");
-          }
-        }
-      }
-    })
   }
 
   toggleSection(i) {

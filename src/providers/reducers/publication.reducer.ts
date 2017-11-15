@@ -54,7 +54,16 @@ export function publicationReducer(state = initialState, { type, payload } ) {
           }
         });
         state.publications.forEach((item,i)=>{if(item._id == state.active){indexData=i}});
-        payload[indexPayload] = state.publications[indexData]
+
+        if(Boolean(state.resumeTo.publicationId)){
+          let newComments =  payload[indexPayload].comments;
+          payload[indexPayload] = state.publications[indexData];
+          payload[indexPayload].comments = newComments;
+          state.resumeTo = initialState.resumeTo;
+        }
+        else{
+          payload[indexPayload] = state.publications[indexData];
+        }
       }
       return tassign(state, {publications: payload, pending: false});
     case GET_PUBLICATIONS_ERROR:

@@ -2,7 +2,7 @@
 <ion-list>
   <comment *ngFor="let comment of data" [data]=comment></comment>
   <ion-item>
-    <ion-textarea [(ngModel)]="commentValue" item-start style="font-size: x-small" placeholder="Escribe un comentario..."></ion-textarea>
+    <ion-textarea id="comment" [(ngModel)]="commentValue" item-start style="font-size: x-small" placeholder="Escribe un comentario..."></ion-textarea>
     <button item-left ion-button clear (click)="sendComment()">
       <ion-icon name="send"></ion-icon>
     </button>

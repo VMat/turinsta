@@ -769,18 +769,27 @@ var __metadata = (this && this.__metadata) || function (k, v) {
  */
 var CommentListComponent = (function () {
     function CommentListComponent(storageService, store) {
+        var _this = this;
         this.storageService = storageService;
         this.store = store;
         this.data = null;
         this.publicationId = null;
         this.commentValue = null;
         console.log('Hello CommentListComponent Component');
+        store.subscribe(function (state) {
+            if (state.publications.active === _this.publicationId) {
+                if (Boolean(document.getElementById('comment'))) {
+                    document.getElementById('comment').getElementsByTagName('textarea')[0].blur();
+                    document.getElementById('comment').getElementsByTagName('textarea')[0].focus();
+                }
+            }
+        });
     }
     CommentListComponent.prototype.sendComment = function () {
         var _this = this;
         this.storageService.sendComment(this.publicationId, this.commentValue).subscribe(function (comment) {
-            _this.store.dispatch(Object(__WEBPACK_IMPORTED_MODULE_2__providers_reducers_publication_reducer__["h" /* savePublicationState */])({ publicationId: _this.publicationId, experience: null, comment: { open: true, commentId: null } }));
-            _this.store.dispatch(Object(__WEBPACK_IMPORTED_MODULE_2__providers_reducers_publication_reducer__["d" /* activePublication */])(null));
+            _this.store.dispatch(Object(__WEBPACK_IMPORTED_MODULE_2__providers_reducers_publication_reducer__["g" /* savePublicationState */])({ publicationId: _this.publicationId, experience: null, comment: { open: true, commentId: null } }));
+            _this.commentValue = null;
         });
     };
     return CommentListComponent;
@@ -791,16 +800,17 @@ __decorate([
 ], CommentListComponent.prototype, "data", void 0);
 __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["E" /* Input */])(),
-    __metadata("design:type", String)
+    __metadata("design:type", Object)
 ], CommentListComponent.prototype, "publicationId", void 0);
 CommentListComponent = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
-        selector: 'comment-list',template:/*ion-inline-start:"C:\Users\Matias\WebstormProjects\turinsta\src\components\comment-list\comment-list.html"*/'<!-- Generated template for the CommentListComponent component -->\n<ion-list>\n  <comment *ngFor="let comment of data" [data]=comment></comment>\n  <ion-item>\n    <ion-textarea [(ngModel)]="commentValue" item-start style="font-size: x-small" placeholder="Escribe un comentario..."></ion-textarea>\n    <button item-left ion-button clear (click)="sendComment()">\n      <ion-icon name="send"></ion-icon>\n    </button>\n  </ion-item>\n</ion-list>\n'/*ion-inline-end:"C:\Users\Matias\WebstormProjects\turinsta\src\components\comment-list\comment-list.html"*/,
+        selector: 'comment-list',template:/*ion-inline-start:"C:\Users\Matias\WebstormProjects\turinsta\src\components\comment-list\comment-list.html"*/'<!-- Generated template for the CommentListComponent component -->\n<ion-list>\n  <comment *ngFor="let comment of data" [data]=comment></comment>\n  <ion-item>\n    <ion-textarea id="comment" [(ngModel)]="commentValue" item-start style="font-size: x-small" placeholder="Escribe un comentario..."></ion-textarea>\n    <button item-left ion-button clear (click)="sendComment()">\n      <ion-icon name="send"></ion-icon>\n    </button>\n  </ion-item>\n</ion-list>\n'/*ion-inline-end:"C:\Users\Matias\WebstormProjects\turinsta\src\components\comment-list\comment-list.html"*/,
         changeDetection: __WEBPACK_IMPORTED_MODULE_0__angular_core__["j" /* ChangeDetectionStrategy */].OnPush
     }),
-    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__providers_storage_storage__["a" /* StorageProvider */], __WEBPACK_IMPORTED_MODULE_3__ngrx_store__["h" /* Store */]])
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__providers_storage_storage__["a" /* StorageProvider */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__providers_storage_storage__["a" /* StorageProvider */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_3__ngrx_store__["h" /* Store */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__ngrx_store__["h" /* Store */]) === "function" && _b || Object])
 ], CommentListComponent);
 
+var _a, _b;
 //# sourceMappingURL=comment-list.js.map
 
 /***/ }),
@@ -871,8 +881,8 @@ PublicationEffects = __decorate([
 /* unused harmony export RESUME_PUBLICATION */
 /* harmony export (immutable) */ __webpack_exports__["e"] = getPublications;
 /* harmony export (immutable) */ __webpack_exports__["d"] = activePublication;
-/* harmony export (immutable) */ __webpack_exports__["h"] = savePublicationState;
-/* harmony export (immutable) */ __webpack_exports__["g"] = resumePublication;
+/* harmony export (immutable) */ __webpack_exports__["g"] = savePublicationState;
+/* unused harmony export resumePublication */
 /* harmony export (immutable) */ __webpack_exports__["f"] = publicationReducer;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_tassign__ = __webpack_require__(325);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_tassign___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_tassign__);
@@ -930,7 +940,15 @@ function publicationReducer(state, _a) {
                 state.publications.forEach(function (item, i) { if (item._id == state.active) {
                     indexData_1 = i;
                 } });
-                payload[indexPayload_1] = state.publications[indexData_1];
+                if (Boolean(state.resumeTo.publicationId)) {
+                    var newComments = payload[indexPayload_1].comments;
+                    payload[indexPayload_1] = state.publications[indexData_1];
+                    payload[indexPayload_1].comments = newComments;
+                    state.resumeTo = initialState.resumeTo;
+                }
+                else {
+                    payload[indexPayload_1] = state.publications[indexData_1];
+                }
             }
             return Object(__WEBPACK_IMPORTED_MODULE_0_tassign__["tassign"])(state, { publications: payload, pending: false });
         case GET_PUBLICATIONS_ERROR:
@@ -1112,23 +1130,11 @@ var __metadata = (this && this.__metadata) || function (k, v) {
  */
 var PublicationFooterComponent = (function () {
     function PublicationFooterComponent(events, store) {
-        var _this = this;
         this.events = events;
         this.store = store;
         this.data = null;
         this.sections = [{ name: "Experiences", show: false }, { name: "Comments", show: false }];
         console.log('Hello PublicationFooterComponent Component');
-        this.stateToRestore = store.select("publications");
-        this.stateToRestore.subscribe(function (state) {
-            if (Boolean(_this.data)) {
-                if (state.resumeTo.publicationId == _this.data._id) {
-                    if (state.resumeTo.comment.open) {
-                        _this.store.dispatch(Object(__WEBPACK_IMPORTED_MODULE_3__providers_reducers_publication_reducer__["g" /* resumePublication */])());
-                        alert("eefsee");
-                    }
-                }
-            }
-        });
     }
     PublicationFooterComponent.prototype.toggleSection = function (i) {
         this.sections = this.sections.map(function (section, index) { if (index != i) {
@@ -1149,10 +1155,9 @@ PublicationFooterComponent = __decorate([
         selector: 'publication-footer',template:/*ion-inline-start:"C:\Users\Matias\WebstormProjects\turinsta\src\components\publication-footer\publication-footer.html"*/'<!-- Generated template for the PublicationFooterComponent component -->\n<ion-list>\n  <ion-item class="publication-buttons-item">\n    <button item-start *ngIf="data.experiences.length >0" class="publication-button" (click)="toggleSection(0)" ion-button clear>\n      <ion-icon class="publication-icon" name="ios-paper" isActive="{{sections[0].show}}">\n        <ion-badge class="publication-badge">{{data.experiences.length}}</ion-badge>\n      </ion-icon>\n    </button>\n    <button item-left class="publication-button" (click)="toggleSection(1)" ion-button clear>\n      <ion-icon class="publication-icon" name="ios-text" isActive="{{sections[1].show}}">\n        <ion-badge *ngIf="data.comments.length >0" class="publication-badge">{{data.comments.length}}</ion-badge>\n      </ion-icon>\n    </button>\n  </ion-item>\n</ion-list>\n<experience-list *ngIf="sections[0].show" [data]=data.experiences [publicationId]=data._id></experience-list>\n<comment-list *ngIf="sections[1].show" [data]=data.comments [publicationId]=data._id></comment-list>\n'/*ion-inline-end:"C:\Users\Matias\WebstormProjects\turinsta\src\components\publication-footer\publication-footer.html"*/,
         changeDetection: __WEBPACK_IMPORTED_MODULE_0__angular_core__["j" /* ChangeDetectionStrategy */].OnPush
     }),
-    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* Events */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* Events */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_2__ngrx_store__["h" /* Store */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__ngrx_store__["h" /* Store */]) === "function" && _b || Object])
+    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* Events */], __WEBPACK_IMPORTED_MODULE_2__ngrx_store__["h" /* Store */]])
 ], PublicationFooterComponent);
 
-var _a, _b;
 //# sourceMappingURL=publication-footer.js.map
 
 /***/ }),
