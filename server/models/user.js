@@ -1,17 +1,17 @@
 const mongoose = require('mongoose');
-const Schema = mongoose.Schema;
+const schema = mongoose.Schema;
 
 // Mongoose userSchema definition
-const userSchema = new Schema({
+const userSchema = new schema({
 	avatar: String,
 	username: String,
 	score: Number,
 	publications: [{
-  			type: Schema.Types.ObjectId, ref: 'Publications'
+  			type: schema.Types.ObjectId, ref: 'Publications'
   }],
   notifications: {
 	  unseenActivities:[{
-			type: Schema.Types.ObjectId, ref: 'Activities'
+			type: schema.Types.ObjectId, ref: 'Activities'
 		}]
   },
   favorites: [{type: schema.Types.ObjectId, "ref": 'Publications'}],
