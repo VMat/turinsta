@@ -27,8 +27,8 @@ export class CommentListComponent{
     store.subscribe((state)=>{
       if(state.publications.active === this.publicationId){
         if(Boolean(document.getElementById('comment'))){
-          document.getElementById('comment').getElementsByTagName('textarea')[0].blur();
           document.getElementById('comment').getElementsByTagName('textarea')[0].focus();
+          document.getElementById('comment').getElementsByTagName('textarea')[0].blur();
         }
       }
     });
@@ -36,7 +36,6 @@ export class CommentListComponent{
 
   sendComment(){
     this.storageService.sendComment(this.publicationId, this.commentValue).subscribe(comment => {
-      this.store.dispatch(savePublicationState({publicationId: this.publicationId, experience: null, comment: {open: true, commentId: null}}));
       this.commentValue = null;
     });
   }

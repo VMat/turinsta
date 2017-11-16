@@ -55,14 +55,11 @@ export function publicationReducer(state = initialState, { type, payload } ) {
         });
         state.publications.forEach((item,i)=>{if(item._id == state.active){indexData=i}});
 
-        if(Boolean(state.resumeTo.publicationId)){
-          let newComments =  payload[indexPayload].comments;
-          payload[indexPayload] = state.publications[indexData];
-          payload[indexPayload].comments = newComments;
-          state.resumeTo = initialState.resumeTo;
-        }
-        else{
-          payload[indexPayload] = state.publications[indexData];
+        let updatedPublication = {...payload[indexPayload]};
+        payload[indexPayload] = state.publications[indexData];
+
+        for(let property in updatedPublication){
+          payload[indexPayload][property] = updatedPublication[property]
         }
       }
       return tassign(state, {publications: payload, pending: false});
