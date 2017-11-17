@@ -14,6 +14,7 @@ import {Component, Input, ChangeDetectionStrategy} from '@angular/core';
 export class CommentComponent {
 
   @Input() data: any = null;
+  @Input() publicationId: any = null;
   showReplies: Boolean = false;
 
   constructor() {

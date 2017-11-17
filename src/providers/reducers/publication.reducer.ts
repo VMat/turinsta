@@ -40,27 +40,48 @@ const initialState = {
   error: null
 };
 
+function copyAllProperties(targetObject,sourceObject){
+  if(Object.keys(sourceObject).length > 0){
+    for(let property in sourceObject){
+      targetObject[property] = copyAllProperties(targetObject[property],sourceObject[property]);
+    }
+  }
+  else{
+    return sourceObject
+  }
+}
+
+function isPrimitive(arg) {
+  var type = typeof arg;
+  return arg == null || (type != "object" && type != "function");
+}
+
 export function publicationReducer(state = initialState, { type, payload } ) {
   switch( type ) {
     case GET_PUBLICATIONS:
       return tassign(state,{pending: true, error: null});
     case GET_PUBLICATIONS_SUCCESS:
-      if(Boolean(state.active)){
+      if(Boolean(state.active)) {
         let indexPayload = null;
         let indexData = null;
-        payload.forEach((publication,i)=>{
-          if(publication._id == state.active){
+        payload.forEach((publication, i) => {
+          if (publication._id == state.active) {
             indexPayload = i;
           }
         });
-        state.publications.forEach((item,i)=>{if(item._id == state.active){indexData=i}});
+        state.publications.forEach((item, i) => {
+          if (item._id == state.active) {
+            indexData = i
+          }
+        });
 
         let updatedPublication = {...payload[indexPayload]};
-        payload[indexPayload] = state.publications[indexData];
+        payload = state.publications;
 
-        for(let property in updatedPublication){
-          payload[indexPayload][property] = updatedPublication[property]
+        for(let property in updatedPublication) {
+          payload[indexData][property] = updatedPublication[property];
         }
+
       }
       return tassign(state, {publications: payload, pending: false});
     case GET_PUBLICATIONS_ERROR:

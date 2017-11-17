@@ -27,8 +27,14 @@ export class CommentListComponent{
     store.subscribe((state)=>{
       if(state.publications.active === this.publicationId){
         if(Boolean(document.getElementById('comment'))){
-          document.getElementById('comment').getElementsByTagName('textarea')[0].focus();
-          document.getElementById('comment').getElementsByTagName('textarea')[0].blur();
+          if(document.getElementById('comment').getElementsByTagName('textarea')[0] === document.activeElement){
+            document.getElementById('comment').getElementsByTagName('textarea')[0].blur();
+            document.getElementById('comment').getElementsByTagName('textarea')[0].focus();
+          }
+          else{
+            document.getElementById('comment').getElementsByTagName('textarea')[0].focus();
+            document.getElementById('comment').getElementsByTagName('textarea')[0].blur();
+          }
         }
       }
     });

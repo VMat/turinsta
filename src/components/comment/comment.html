@@ -10,6 +10,6 @@
     </button>
   </ion-item>
   <ion-item *ngIf="showReplies">
-    <comment-list [data]=data.replies></comment-list>
+    <comment-list [data]=data.replies [publicationId]=publicationId></comment-list>
   </ion-item>
 </ion-item>

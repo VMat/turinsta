@@ -715,6 +715,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var CommentComponent = (function () {
     function CommentComponent() {
         this.data = null;
+        this.publicationId = null;
         this.showReplies = false;
         console.log('Hello CommentComponent Component');
     }
@@ -727,9 +728,13 @@ __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["E" /* Input */])(),
     __metadata("design:type", Object)
 ], CommentComponent.prototype, "data", void 0);
+__decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["E" /* Input */])(),
+    __metadata("design:type", Object)
+], CommentComponent.prototype, "publicationId", void 0);
 CommentComponent = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
-        selector: 'comment',template:/*ion-inline-start:"C:\Users\Matias\WebstormProjects\turinsta\src\components\comment\comment.html"*/'<!-- Generated template for the CommentComponent component -->\n<ion-item>\n  <ion-item style="padding-left: 20px">\n    <ion-avatar item-start>\n      <img src="{{data.user.avatar}}">\n    </ion-avatar>\n    <p item-left><b>{{data.user.name}}</b>&nbsp;{{data.content}}</p>\n    <button item-left *ngIf="data.replies!=undefined" (click)="toogleReplies()" class="publication-button" color="primary" ion-button clear>\n      <ion-icon style="font-size: 20px" class="publication-icon" name="{{showReplies? \'ios-remove-circle\' : \'ios-add-circle\'}}"></ion-icon>\n    </button>\n  </ion-item>\n  <ion-item *ngIf="showReplies">\n    <comment-list [data]=data.replies></comment-list>\n  </ion-item>\n</ion-item>\n'/*ion-inline-end:"C:\Users\Matias\WebstormProjects\turinsta\src\components\comment\comment.html"*/,
+        selector: 'comment',template:/*ion-inline-start:"C:\Users\Matias\WebstormProjects\turinsta\src\components\comment\comment.html"*/'<!-- Generated template for the CommentComponent component -->\n<ion-item>\n  <ion-item style="padding-left: 20px">\n    <ion-avatar item-start>\n      <img src="{{data.user.avatar}}">\n    </ion-avatar>\n    <p item-left><b>{{data.user.name}}</b>&nbsp;{{data.content}}</p>\n    <button item-left *ngIf="data.replies!=undefined" (click)="toogleReplies()" class="publication-button" color="primary" ion-button clear>\n      <ion-icon style="font-size: 20px" class="publication-icon" name="{{showReplies? \'ios-remove-circle\' : \'ios-add-circle\'}}"></ion-icon>\n    </button>\n  </ion-item>\n  <ion-item *ngIf="showReplies">\n    <comment-list [data]=data.replies [publicationId]=publicationId></comment-list>\n  </ion-item>\n</ion-item>\n'/*ion-inline-end:"C:\Users\Matias\WebstormProjects\turinsta\src\components\comment\comment.html"*/,
         changeDetection: __WEBPACK_IMPORTED_MODULE_0__angular_core__["j" /* ChangeDetectionStrategy */].OnPush
     }),
     __metadata("design:paramtypes", [])
@@ -777,8 +782,14 @@ var CommentListComponent = (function () {
         store.subscribe(function (state) {
             if (state.publications.active === _this.publicationId) {
                 if (Boolean(document.getElementById('comment'))) {
-                    document.getElementById('comment').getElementsByTagName('textarea')[0].focus();
-                    document.getElementById('comment').getElementsByTagName('textarea')[0].blur();
+                    if (document.getElementById('comment').getElementsByTagName('textarea')[0] === document.activeElement) {
+                        document.getElementById('comment').getElementsByTagName('textarea')[0].blur();
+                        document.getElementById('comment').getElementsByTagName('textarea')[0].focus();
+                    }
+                    else {
+                        document.getElementById('comment').getElementsByTagName('textarea')[0].focus();
+                        document.getElementById('comment').getElementsByTagName('textarea')[0].blur();
+                    }
                 }
             }
         });
@@ -801,7 +812,7 @@ __decorate([
 ], CommentListComponent.prototype, "publicationId", void 0);
 CommentListComponent = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
-        selector: 'comment-list',template:/*ion-inline-start:"C:\Users\Matias\WebstormProjects\turinsta\src\components\comment-list\comment-list.html"*/'<!-- Generated template for the CommentListComponent component -->\n<ion-list>\n  <comment *ngFor="let comment of data" [data]=comment></comment>\n  <ion-item>\n    <ion-textarea id="comment" [(ngModel)]="commentValue" item-start style="font-size: x-small" placeholder="Escribe un comentario..."></ion-textarea>\n    <button item-left ion-button clear (click)="sendComment()">\n      <ion-icon name="send"></ion-icon>\n    </button>\n  </ion-item>\n</ion-list>\n'/*ion-inline-end:"C:\Users\Matias\WebstormProjects\turinsta\src\components\comment-list\comment-list.html"*/,
+        selector: 'comment-list',template:/*ion-inline-start:"C:\Users\Matias\WebstormProjects\turinsta\src\components\comment-list\comment-list.html"*/'<!-- Generated template for the CommentListComponent component -->\n<ion-list>\n  <comment *ngFor="let comment of data" [data]=comment [publicationId]=publicationId></comment>\n  <ion-item>\n    <ion-textarea id="comment" [(ngModel)]="commentValue" item-start style="font-size: x-small" placeholder="Escribe un comentario..."></ion-textarea>\n    <button item-left ion-button clear (click)="sendComment()">\n      <ion-icon name="send"></ion-icon>\n    </button>\n  </ion-item>\n</ion-list>\n'/*ion-inline-end:"C:\Users\Matias\WebstormProjects\turinsta\src\components\comment-list\comment-list.html"*/,
         changeDetection: __WEBPACK_IMPORTED_MODULE_0__angular_core__["j" /* ChangeDetectionStrategy */].OnPush
     }),
     __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__providers_storage_storage__["a" /* StorageProvider */], __WEBPACK_IMPORTED_MODULE_2__ngrx_store__["h" /* Store */]])
@@ -926,6 +937,20 @@ var initialState = {
     pending: false,
     error: null
 };
+function copyAllProperties(targetObject, sourceObject) {
+    if (Object.keys(sourceObject).length > 0) {
+        for (var property in sourceObject) {
+            targetObject[property] = copyAllProperties(targetObject[property], sourceObject[property]);
+        }
+    }
+    else {
+        return sourceObject;
+    }
+}
+function isPrimitive(arg) {
+    var type = typeof arg;
+    return arg == null || (type != "object" && type != "function");
+}
 function publicationReducer(state, _a) {
     if (state === void 0) { state = initialState; }
     var type = _a.type, payload = _a.payload;
@@ -941,13 +966,15 @@ function publicationReducer(state, _a) {
                         indexPayload_1 = i;
                     }
                 });
-                state.publications.forEach(function (item, i) { if (item._id == state.active) {
-                    indexData_1 = i;
-                } });
+                state.publications.forEach(function (item, i) {
+                    if (item._id == state.active) {
+                        indexData_1 = i;
+                    }
+                });
                 var updatedPublication = __assign({}, payload[indexPayload_1]);
-                payload[indexPayload_1] = state.publications[indexData_1];
+                payload = state.publications;
                 for (var property in updatedPublication) {
-                    payload[indexPayload_1][property] = updatedPublication[property];
+                    payload[indexData_1][property] = updatedPublication[property];
                 }
             }
             return Object(__WEBPACK_IMPORTED_MODULE_0_tassign__["tassign"])(state, { publications: payload, pending: false });
