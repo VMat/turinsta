@@ -11,15 +11,7 @@ const commentSchema = new schema({
   },
 	date: String,
 	content: String,
-	replies: [{
-    user: {
-      id: {type: schema.Types.ObjectId, ref: 'Users'},
-      name: String,
-      avatar: String
-    },
-    date: String,
-    content: String
-  }]
+	replies: [{type: schema.Types.ObjectId, ref: 'Comments'}]
 });
 
 const Comments = mongoose.model('Comments', commentSchema, 'Comments');
