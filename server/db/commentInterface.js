@@ -30,7 +30,11 @@ const CommentInterface = (function(){
               if(comment.parent!=null){
                 return Commons.getOne(Comments,comment.parent)
                 .then(comment=>{
-                  comment.replies.push(insertedComment._id);
+                  comment.replies.push({
+                    user: insertedComment.user,
+                    date: insertedComment.date,
+                    content: insertedComment.content
+                  });
                   return Commons.update(Comments,comment)
                 })
               }
