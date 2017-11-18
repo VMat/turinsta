@@ -11,7 +11,7 @@ import {Component, Input, ChangeDetectionStrategy} from '@angular/core';
   templateUrl: 'comment.html',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class CommentComponent {
+export class CommentComponent{
 
   @Input() data: any = null;
   @Input() publicationId: any = null;

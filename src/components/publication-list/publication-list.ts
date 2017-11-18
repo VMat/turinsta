@@ -15,9 +15,7 @@ export class PublicationListComponent {
 
   @Input() data: any = null;
 
-
   constructor() {
     console.log('Hello PublicationListComponent Component');
   }
-
 }

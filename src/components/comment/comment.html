@@ -9,7 +9,7 @@
       <ion-icon style="font-size: 20px" class="publication-icon" name="{{showReplies? 'ios-remove-circle' : 'ios-add-circle'}}"></ion-icon>
     </button>
   </ion-item>
-  <ion-item *ngIf="showReplies">
-    <comment-list [data]=data.replies [publicationId]=publicationId></comment-list>
+  <ion-item *ngIf="data.replies != null">
+    <comment-list *ngIf="showReplies" [data]=data.replies [publicationId]=publicationId></comment-list>
   </ion-item>
 </ion-item>
