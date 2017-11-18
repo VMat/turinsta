@@ -28,10 +28,10 @@ const CommentInterface = (function(){
           return Commons.insert(new Comments(oComment))
             .then(insertedComment=>{
               if(comment.parent!=null){
-                return this.getOne(comment.parent)
+                return Commons.getOne(Comments,comment.parent)
                 .then(comment=>{
                   comment.replies.push(insertedComment._id);
-                  return this.update(comment)
+                  return Commons.update(Comments,comment)
                 })
               }
               else{
