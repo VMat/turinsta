@@ -14,7 +14,8 @@ const PublicationInterface = (function(){
       return Commons.getAll(Publications)
         .populate('user')
         .populate('experiences')
-        .populate('comments');
+        .populate('comments')
+        .populate('comments.replies');
     },
 
     getOne: (id)=>{
