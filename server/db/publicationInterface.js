@@ -15,7 +15,7 @@ const PublicationInterface = (function(){
         .populate('user')
         .populate('experiences')
         .populate('comments')
-        .populate('replies');
+        .populate('comments.replies');
     },
 
     getOne: (id)=>{
