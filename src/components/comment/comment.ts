@@ -1,4 +1,7 @@
 import {Component, Input, ChangeDetectionStrategy} from '@angular/core';
+import {StorageProvider} from "../../providers/storage/storage";
+import {Store} from "@ngrx/store";
+import {AppState} from "../../providers/models/publication.model";
 
 /**
  * Generated class for the CommentComponent component.
@@ -15,10 +18,12 @@ export class CommentComponent{
 
   @Input() data: any = null;
   @Input() publicationId: any = null;
-  showReplies: Boolean = false;
+  showReplies: boolean = false;
 
-  constructor() {
-    console.log('Hello CommentComponent Component');
+  constructor(public storageService: StorageProvider, public store: Store<AppState>) {
+    console.log('Hello CommentListComponent Component');
+    store.subscribe((state)=>{
+    });
   }
 
   toogleReplies(){

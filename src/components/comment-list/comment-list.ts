@@ -18,6 +18,7 @@ export class CommentListComponent{
 
   @Input() data: any = null;
   @Input() publicationId: String = null;
+  @Input() commentId: String = null;
   commentValue: String = null;
   setFocus: Boolean = false;
 
@@ -37,7 +38,7 @@ export class CommentListComponent{
   }
 
   sendComment(){
-    this.storageService.sendComment(this.publicationId, this.commentValue).subscribe(comment => {
+    this.storageService.sendComment(this.publicationId, this.commentId, this.commentValue).subscribe(comment => {
       this.commentValue = null;
       this.setFocus = true;
     });

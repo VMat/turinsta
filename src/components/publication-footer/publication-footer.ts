@@ -26,9 +26,20 @@ export class PublicationFooterComponent {
   }
 
   toggleSection(i) {
-    this.sections = this.sections.map((section,index)=>{if(index!=i){section.show = false} return section});
+    let alreadyActived = false;
+    this.sections = this.sections.map((section,index)=>{
+      if(index!=i){
+        if(section.show){
+          alreadyActived = true;
+        }
+        section.show = false;
+      }
+      return section
+    });
     this.sections[i].show = !this.sections[i].show;
-    this.sections[i].show ? this.store.dispatch(activePublication(this.data._id)) : this.store.dispatch(activePublication(null));
+    if(!alreadyActived){
+      this.sections[i].show ? this.store.dispatch(activePublication(this.data._id)) : this.store.dispatch(activePublication(null));
+    }
   };
 
 }

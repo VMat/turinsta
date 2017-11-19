@@ -62,23 +62,49 @@ export function publicationReducer(state = initialState, { type, payload } ) {
         let updatedPublication = {...payload[indexPayload]};
         payload = state.publications;
 
-        for(let property in updatedPublication){
-            payload[indexData][property] = updatedPublication[property];
+        for(let property in updatedPublication){ //Actualizo las propiedades de la publicación activa manteniendo el id del objeto publicación
+
+            if(property!="comments"){
+              payload[indexData][property] = updatedPublication[property];
+            }
+            else{ // Si si trata de comentarios itero sobre los mismos y actualizo cada uno para mantener el id del objeto comentario
+                let commentIndex = null;
+                updatedPublication[property].forEach((updatedComment,i)=>{
+                  payload[indexData][property].forEach((comment,i)=>{
+                    if(comment._id==updatedComment._id){
+                      commentIndex = i;
+                    }
+                  });
+
+                  if(commentIndex != null){
+                    for(let subproperty in updatedComment){
+                      payload[indexData][property][commentIndex][subproperty] = updatedComment[subproperty];
+                    }
+                    indexData = null;
+                  }
+                  else{
+                    payload[indexData][property].push(updatedComment);
+                  }
+              });
+            }
         }
       }
-      return tassign(state, {publications: payload, pending: false});
+      return tassign(state, {publications: payload, pending: false}); //
     case GET_PUBLICATIONS_ERROR:
       return tassign(state, {pending: false, error: "Error"});
     case ACTIVE_PUBLICATION:
-      let indexData = null;
-      state.publications.forEach((item, i) => {
+      if(payload!=null){
+        let indexData = null;
+        state.publications.forEach((item, i) => {
           if (item._id == state.active) {
             indexData = i
           }
         });
         let copyState = state.publications;
         copyState[indexData] = {...state.publications[indexData]};
-        return tassign(state,{publications: copyState, active: payload});
+        return tassign(state,{publications: copyState, active: payload}); //Cambio el id de objeto de la última publicación activa para que se actualice
+      }
+      return tassign(state,{active: payload}); //Reseteo la variable active para que la próxima vuelta se actualicen todos las publicaciones
     case SAVE_PUBLICATION_STATE:
       return tassign(state, {resumeTo: payload});
     case RESUME_PUBLICATION:

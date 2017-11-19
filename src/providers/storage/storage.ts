@@ -12,6 +12,7 @@ import 'rxjs/add/operator/map';
 export class StorageProvider {
 
   static baseUrl: string = 'https://turinsta-staging.herokuapp.com/api/';
+  readonly userId: String = "59f7562af36d282363087270";
 
   constructor(public http: Http) {
     console.log('Hello StorageProvider Provider');
@@ -22,10 +23,10 @@ export class StorageProvider {
       .map((res:Response) => res.json());
   }
 
-  sendComment(publicationId, comment){
+  sendComment(publicationId, commentId, comment){
     let headers = new Headers();
     headers.append('Content-Type', 'application/json');
-    return this.http.post(StorageProvider.baseUrl + 'comments',{publication: publicationId, user: "59f7562af36d282363087270", content: comment},{headers: headers})
+    return this.http.post(StorageProvider.baseUrl + 'comments',{publication: publicationId, parent: commentId, user: this.userId, content: comment},{headers: headers})
       .map((res:Response) => res.json());
   }
 
