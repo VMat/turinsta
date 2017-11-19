@@ -13,12 +13,12 @@ const commentSchema = new schema({
 	content: String,
 	replies: [{
     user: {
-      id: {type: schema.Types.ObjectId, ref: 'Users'},
+	    id: {type: schema.Types.ObjectId, ref: 'Users'},
       name: String,
-      avatar: String
+	    avatar: String
     },
-    date: String,
-    content: String
+	  date: String,
+	  content: String
   }]
 });
 

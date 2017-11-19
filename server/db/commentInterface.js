@@ -26,13 +26,26 @@ const CommentInterface = (function(){
           oComment.publication = comment.publication;
           oComment.content = comment.content;
           return Commons.insert(new Comments(oComment))
-            .then(comment=>{
-              return PublicationInterface.getOne(comment.publication)
-              .then(publication=>{
-                publication.comments.push(comment._id);
-                return PublicationInterface.update(publication)
-              })
-            });
+            .then(insertedComment=>{
+              if(comment.parent!=null){
+                return Commons.getOne(Comments,comment.parent)
+                .then(comment=>{
+                  comment.replies.push({
+                    user: insertedComment.user,
+                    date: insertedComment.date,
+                    content: insertedComment.content
+                  });
+                  return Commons.update(Comments,comment)
+                })
+              }
+              else{
+                return PublicationInterface.getOne(insertedComment.publication)
+                .then(publication=>{
+                  publication.comments.push(insertedComment._id);
+                  return PublicationInterface.update(publication)
+                })
+              }
+          });
         });
     },
 
