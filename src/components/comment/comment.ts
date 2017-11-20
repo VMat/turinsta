@@ -32,10 +32,13 @@ export class CommentComponent{
   }
 
   updateComment(){
-    this.storageService.updateComment(this.data);
+    this.storageService.updateComment(this.data).subscribe((updatedComment)=>{
+      this.editionMode = false;
+    });
   }
 
   deleteComment(){
-    this.storageService.deleteComment(this.data);
+    this.storageService.deleteComment(this.data).subscribe((deletedComment)=>{
+    });
   }
 }

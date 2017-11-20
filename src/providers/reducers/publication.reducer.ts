@@ -55,7 +55,7 @@ export function publicationReducer(state = initialState, { type, payload } ) {
         });
         state.publications.forEach((item, i) => {
           if(item._id == state.active){
-            indexData = i
+            indexData = i;
           }
         });
 
@@ -69,7 +69,7 @@ export function publicationReducer(state = initialState, { type, payload } ) {
             }
             else{ // Si si trata de comentarios itero sobre los mismos y actualizo cada uno para mantener el id del objeto comentario
                 let commentIndex = null;
-                updatedPublication[property].forEach((updatedComment,i)=>{
+                updatedPublication[property].forEach((updatedComment)=>{
                   payload[indexData][property].forEach((comment,i)=>{
                     if(comment._id==updatedComment._id){
                       commentIndex = i;
@@ -80,7 +80,7 @@ export function publicationReducer(state = initialState, { type, payload } ) {
                     for(let subproperty in updatedComment){
                       payload[indexData][property][commentIndex][subproperty] = updatedComment[subproperty];
                     }
-                    indexData = null;
+                    commentIndex = null;
                   }
                   else{
                     payload[indexData][property].push(updatedComment);
