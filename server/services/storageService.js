@@ -29,15 +29,15 @@ const storageService = (function(){
     deletePublication: (publication)=>{
       return db.deletePublication(publication);
     },
-    
+
     getActivities: ()=>{
       return db.getActivities();
     },
-    
+
     getActivity: (id)=>{
       return db.getActivity(id);
     },
-    
+
     createActivity: (activity)=>{
       return db.createActivity(activity);
     },
@@ -49,11 +49,11 @@ const storageService = (function(){
     deleteActivity: (activity)=>{
       return db.deleteActivity(activity);
     },
-    
+
     getComment: (id)=>{
       return db.getComment(id);
     },
-    
+
     createComment: (comment)=>{
       return db.createComment(comment);
     },
@@ -62,18 +62,18 @@ const storageService = (function(){
       return db.updateComment(comment);
     },
 
-    deleteComment: (comment)=>{
-      return db.deleteComment(comment);
+    deleteComment: (id)=>{
+      return db.deleteComment(id);
     },
-    
+
     getUsers: ()=>{
       return db.getUsers();
     },
-    
+
     getUser: (id)=>{
       return db.getUser(id);
     },
-        
+
     createUser: (user)=>{
       return db.createUser(user);
     },

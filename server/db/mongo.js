@@ -76,8 +76,8 @@ let db = (function(){
       return commentInterface.update(comment);
     },
 
-    deleteComment: (comment)=>{
-      return commentInterface.deleteOne(comment);
+    deleteComment: (id)=>{
+      return commentInterface.deleteOne(id);
     },
 
     getUsers: ()=>{

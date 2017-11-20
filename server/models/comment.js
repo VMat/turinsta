@@ -11,9 +11,11 @@ const commentSchema = new schema({
   },
 	date: String,
 	content: String,
+  parent: {type: schema.Types.ObjectId, ref: 'Comments'},
 	replies: [{
+    id: {type: schema.Types.ObjectId, ref: 'Comments'},
     user: {
-	    id: {type: schema.Types.ObjectId, ref: 'Users'},
+      id: {type: schema.Types.ObjectId, ref: 'Users'},
       name: String,
 	    avatar: String
     },

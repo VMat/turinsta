@@ -4,9 +4,21 @@
     <ion-avatar item-start>
       <img src="{{data.user.avatar}}">
     </ion-avatar>
-    <p item-left><b>{{data.user.name}}</b>&nbsp;{{data.content}}</p>
-    <button item-left *ngIf="data.replies!=undefined" (click)="toogleReplies()" class="publication-button" color="primary" ion-button clear>
+    <p *ngIf="!editionMode" item-left><b>{{data.user.name}}</b>&nbsp;{{data.content}}</p>
+    <p *ngIf="editionMode" item-left><b>{{data.user.name}}</b>
+      <input type="text" item-left [(ngModel)]="data.content">
+      <button class="publication-button" color="success" ion-button clear (click)="updateComment()">
+        <ion-icon style="font-size: 20px" class="publication-icon" name="send"></ion-icon>
+      </button>
+    </p>
+    <button item-left *ngIf="data.replies!=undefined" (click)="toogleReplies()" class="publication-button" color="secondary" ion-button clear>
       <ion-icon style="font-size: 20px" class="publication-icon" name="{{showReplies? 'ios-remove-circle' : 'ios-add-circle'}}"></ion-icon>
+    </button>
+    <button item-left class="publication-button" color="primary" ion-button clear (click)="toogleEditionMode()">
+      <ion-icon style="font-size: 20px" class="publication-icon" name="create"></ion-icon>
+    </button>
+    <button item-left class="publication-button" color="danger" ion-button (click)="deleteComment()" clear>
+      <ion-icon style="font-size: 20px" class="publication-icon" name="ios-trash-outline"></ion-icon>
     </button>
   </ion-item>
   <ion-item *ngIf="data.replies != null">

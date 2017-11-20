@@ -29,6 +29,7 @@ import {PublicationHeaderComponent} from "../components/publication-header/publi
 import {PublicationBodyComponent} from "../components/publication-body/publication-body";
 import {PublicationFooterComponent} from "../components/publication-footer/publication-footer";
 import {ExperienceListComponent} from "../components/experience-list/experience-list";
+import { CommonsProvider } from '../providers/commons/commons';
 
 @NgModule({
   declarations: [
@@ -77,7 +78,8 @@ import {ExperienceListComponent} from "../components/experience-list/experience-
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     StorageProvider,
-    PublicationService
+    PublicationService,
+    CommonsProvider
   ]
 })
 export class AppModule {}

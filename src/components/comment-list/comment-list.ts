@@ -2,6 +2,7 @@ import {Component, Input, ChangeDetectionStrategy} from '@angular/core';
 import {StorageProvider} from "../../providers/storage/storage";
 import {Store} from "@ngrx/store";
 import {AppState} from "../../providers/models/publication.model";
+import {CommonsProvider} from "../../providers/commons/commons";
 
 /**
  * Generated class for the CommentListComponent component.
@@ -22,7 +23,7 @@ export class CommentListComponent{
   commentValue: String = null;
   setFocus: Boolean = false;
 
-  constructor(public storageService: StorageProvider, public store: Store<AppState>) {
+  constructor(public storageService: StorageProvider, public commonsService: CommonsProvider, public store: Store<AppState>) {
     console.log('Hello CommentListComponent Component');
     store.subscribe((state)=>{
       if(state.publications.active === this.publicationId){
@@ -38,7 +39,7 @@ export class CommentListComponent{
   }
 
   sendComment(){
-    this.storageService.sendComment(this.publicationId, this.commentId, this.commentValue).subscribe(comment => {
+    this.storageService.createComment({user: this.commonsService.getUserId(), publication: this.publicationId, parent: this.commentId, content: this.commentValue}).subscribe(comment => {
       this.commentValue = null;
       this.setFocus = true;
     });

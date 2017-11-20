@@ -12,10 +12,11 @@ import 'rxjs/add/operator/map';
 export class StorageProvider {
 
   static baseUrl: string = 'https://turinsta-staging.herokuapp.com/api/';
-  readonly userId: String = "59f7562af36d282363087270";
+  static headers = new Headers();
 
   constructor(public http: Http) {
     console.log('Hello StorageProvider Provider');
+    StorageProvider.headers.append('Content-Type', 'application/json');
   }
 
   getPublications() {
@@ -23,11 +24,18 @@ export class StorageProvider {
       .map((res:Response) => res.json());
   }
 
-  sendComment(publicationId, commentId, comment){
-    let headers = new Headers();
-    headers.append('Content-Type', 'application/json');
-    return this.http.post(StorageProvider.baseUrl + 'comments',{publication: publicationId, parent: commentId, user: this.userId, content: comment},{headers: headers})
+  createComment(comment){
+    return this.http.post(StorageProvider.baseUrl + 'comments',comment,{headers: StorageProvider.headers})
       .map((res:Response) => res.json());
   }
 
+  updateComment(comment){
+    return this.http.put(StorageProvider.baseUrl + 'comments',comment,{headers: StorageProvider.headers})
+      .map((res:Response) => res.json());
+  }
+
+  deleteComment(comment){
+    return this.http.delete(StorageProvider.baseUrl + 'comments/' + comment._id,{headers: StorageProvider.headers})
+      .map((res:Response) => res.json());
+  }
 }

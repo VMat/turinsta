@@ -384,12 +384,14 @@ Object(__WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__["a" /* pl
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_25__components_publication_body_publication_body__ = __webpack_require__(588);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_26__components_publication_footer_publication_footer__ = __webpack_require__(589);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_27__components_experience_list_experience_list__ = __webpack_require__(590);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_28__providers_commons_commons__ = __webpack_require__(594);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+
 
 
 
@@ -477,7 +479,8 @@ AppModule = __decorate([
             __WEBPACK_IMPORTED_MODULE_11__ionic_native_splash_screen__["a" /* SplashScreen */],
             { provide: __WEBPACK_IMPORTED_MODULE_0__angular_core__["v" /* ErrorHandler */], useClass: __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["c" /* IonicErrorHandler */] },
             __WEBPACK_IMPORTED_MODULE_12__providers_storage_storage__["a" /* StorageProvider */],
-            __WEBPACK_IMPORTED_MODULE_22__providers_storage_publication_service__["a" /* PublicationService */]
+            __WEBPACK_IMPORTED_MODULE_22__providers_storage_publication_service__["a" /* PublicationService */],
+            __WEBPACK_IMPORTED_MODULE_28__providers_commons_commons__["a" /* CommonsProvider */]
         ]
     })
 ], AppModule);
@@ -723,12 +726,21 @@ var CommentComponent = (function () {
         this.data = null;
         this.publicationId = null;
         this.showReplies = false;
+        this.enabledEdition = new __WEBPACK_IMPORTED_MODULE_0__angular_core__["w" /* EventEmitter */]();
+        this.editionMode = false;
         console.log('Hello CommentListComponent Component');
         store.subscribe(function (state) {
         });
     }
     CommentComponent.prototype.toogleReplies = function () {
         this.showReplies = !this.showReplies;
+    };
+    CommentComponent.prototype.enableEdition = function () {
+        this.editionMode = !this.editionMode;
+        // this.enabledEdition.emit();
+    };
+    CommentComponent.prototype.delete = function () {
+        alert("Desea borrar el comentario?");
     };
     return CommentComponent;
 }());
@@ -740,9 +752,13 @@ __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["E" /* Input */])(),
     __metadata("design:type", Object)
 ], CommentComponent.prototype, "publicationId", void 0);
+__decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["S" /* Output */])(),
+    __metadata("design:type", Object)
+], CommentComponent.prototype, "enabledEdition", void 0);
 CommentComponent = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
-        selector: 'comment',template:/*ion-inline-start:"C:\Users\Matias\WebstormProjects\turinsta\src\components\comment\comment.html"*/'<!-- Generated template for the CommentComponent component -->\n<ion-item>\n  <ion-item style="padding-left: 20px">\n    <ion-avatar item-start>\n      <img src="{{data.user.avatar}}">\n    </ion-avatar>\n    <p item-left><b>{{data.user.name}}</b>&nbsp;{{data.content}}</p>\n    <button item-left *ngIf="data.replies!=undefined" (click)="toogleReplies()" class="publication-button" color="primary" ion-button clear>\n      <ion-icon style="font-size: 20px" class="publication-icon" name="{{showReplies? \'ios-remove-circle\' : \'ios-add-circle\'}}"></ion-icon>\n    </button>\n  </ion-item>\n  <ion-item *ngIf="data.replies != null">\n    <comment-list *ngIf="showReplies" [data]=data.replies [publicationId]=publicationId [commentId]=data._id></comment-list>\n  </ion-item>\n</ion-item>\n'/*ion-inline-end:"C:\Users\Matias\WebstormProjects\turinsta\src\components\comment\comment.html"*/,
+        selector: 'comment',template:/*ion-inline-start:"C:\Users\Matias\WebstormProjects\turinsta\src\components\comment\comment.html"*/'<!-- Generated template for the CommentComponent component -->\n<ion-item>\n  <ion-item style="padding-left: 20px">\n    <ion-avatar item-start>\n      <img src="{{data.user.avatar}}">\n    </ion-avatar>\n    <p *ngIf="!editionMode" item-left><b>{{data.user.name}}</b>&nbsp;{{data.content}}</p>\n    <p *ngIf="editionMode" item-left><b>{{data.user.name}}</b>\n      <input type="text" item-left [(ngModel)]="data.content">\n      <button class="publication-button" color="success" ion-button clear (click)="updateComment()">\n        <ion-icon style="font-size: 20px" class="publication-icon" name="send"></ion-icon>\n      </button>\n    </p>\n    <button item-left *ngIf="data.replies!=undefined" (click)="toogleReplies()" class="publication-button" color="secondary" ion-button clear>\n      <ion-icon style="font-size: 20px" class="publication-icon" name="{{showReplies? \'ios-remove-circle\' : \'ios-add-circle\'}}"></ion-icon>\n    </button>\n    <button item-left class="publication-button" color="primary" ion-button clear (click)="toogleEditionMode()">\n      <ion-icon style="font-size: 20px" class="publication-icon" name="create"></ion-icon>\n    </button>\n    <button item-left class="publication-button" color="danger" ion-button (click)="deleteComment()" clear>\n      <ion-icon style="font-size: 20px" class="publication-icon" name="ios-trash-outline"></ion-icon>\n    </button>\n  </ion-item>\n  <ion-item *ngIf="data.replies != null">\n    <comment-list *ngIf="showReplies" [data]=data.replies [publicationId]=publicationId [commentId]=data._id></comment-list>\n  </ion-item>\n</ion-item>\n'/*ion-inline-end:"C:\Users\Matias\WebstormProjects\turinsta\src\components\comment\comment.html"*/,
         changeDetection: __WEBPACK_IMPORTED_MODULE_0__angular_core__["j" /* ChangeDetectionStrategy */].OnPush
     }),
     __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__providers_storage_storage__["a" /* StorageProvider */], __WEBPACK_IMPORTED_MODULE_2__ngrx_store__["h" /* Store */]])
@@ -760,6 +776,7 @@ CommentComponent = __decorate([
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__providers_storage_storage__ = __webpack_require__(53);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__ngrx_store__ = __webpack_require__(32);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_commons_commons__ = __webpack_require__(594);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -772,6 +789,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
+
 /**
  * Generated class for the CommentListComponent component.
  *
@@ -779,9 +797,10 @@ var __metadata = (this && this.__metadata) || function (k, v) {
  * Components.
  */
 var CommentListComponent = (function () {
-    function CommentListComponent(storageService, store) {
+    function CommentListComponent(storageService, commonsService, store) {
         var _this = this;
         this.storageService = storageService;
+        this.commonsService = commonsService;
         this.store = store;
         this.data = null;
         this.publicationId = null;
@@ -803,7 +822,7 @@ var CommentListComponent = (function () {
     }
     CommentListComponent.prototype.sendComment = function () {
         var _this = this;
-        this.storageService.sendComment(this.publicationId, this.commentId, this.commentValue).subscribe(function (comment) {
+        this.storageService.createComment({ user: this.commonsService.getUserId(), publication: this.publicationId, parent: this.commentId, content: this.commentValue }).subscribe(function (comment) {
             _this.commentValue = null;
             _this.setFocus = true;
         });
@@ -816,20 +835,21 @@ __decorate([
 ], CommentListComponent.prototype, "data", void 0);
 __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["E" /* Input */])(),
-    __metadata("design:type", String)
+    __metadata("design:type", Object)
 ], CommentListComponent.prototype, "publicationId", void 0);
 __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["E" /* Input */])(),
-    __metadata("design:type", String)
+    __metadata("design:type", Object)
 ], CommentListComponent.prototype, "commentId", void 0);
 CommentListComponent = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
         selector: 'comment-list',template:/*ion-inline-start:"C:\Users\Matias\WebstormProjects\turinsta\src\components\comment-list\comment-list.html"*/'<!-- Generated template for the CommentListComponent component -->\n<ion-list>\n  <comment *ngFor="let comment of data" [data]=comment [publicationId]=publicationId></comment>\n  <ion-item>\n    <ion-textarea id="comment" [(ngModel)]="commentValue" item-start style="font-size: x-small" placeholder="Escribe un comentario..."></ion-textarea>\n    <button item-left ion-button clear (click)="sendComment()">\n      <ion-icon name="send"></ion-icon>\n    </button>\n  </ion-item>\n</ion-list>\n'/*ion-inline-end:"C:\Users\Matias\WebstormProjects\turinsta\src\components\comment-list\comment-list.html"*/,
         changeDetection: __WEBPACK_IMPORTED_MODULE_0__angular_core__["j" /* ChangeDetectionStrategy */].OnPush
     }),
-    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__providers_storage_storage__["a" /* StorageProvider */], __WEBPACK_IMPORTED_MODULE_2__ngrx_store__["h" /* Store */]])
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__providers_storage_storage__["a" /* StorageProvider */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__providers_storage_storage__["a" /* StorageProvider */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_3__providers_commons_commons__["a" /* CommonsProvider */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__providers_commons_commons__["a" /* CommonsProvider */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_2__ngrx_store__["h" /* Store */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__ngrx_store__["h" /* Store */]) === "function" && _c || Object])
 ], CommentListComponent);
 
+var _a, _b, _c;
 //# sourceMappingURL=comment-list.js.map
 
 /***/ }),
@@ -918,28 +938,35 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var StorageProvider = StorageProvider_1 = (function () {
     function StorageProvider(http) {
         this.http = http;
-        this.userId = "59f7562af36d282363087270";
         console.log('Hello StorageProvider Provider');
+        StorageProvider_1.headers.append('Content-Type', 'application/json');
     }
     StorageProvider.prototype.getPublications = function () {
         return this.http.get(StorageProvider_1.baseUrl + 'publications')
             .map(function (res) { return res.json(); });
     };
-    StorageProvider.prototype.sendComment = function (publicationId, commentId, comment) {
-        var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["a" /* Headers */]();
-        headers.append('Content-Type', 'application/json');
-        return this.http.post(StorageProvider_1.baseUrl + 'comments', { publication: publicationId, parent: commentId, user: this.userId, content: comment }, { headers: headers })
+    StorageProvider.prototype.createComment = function (comment) {
+        return this.http.post(StorageProvider_1.baseUrl + 'comments', comment, { headers: StorageProvider_1.headers })
+            .map(function (res) { return res.json(); });
+    };
+    StorageProvider.prototype.updateComment = function (comment) {
+        return this.http.put(StorageProvider_1.baseUrl + 'comments', comment, { headers: StorageProvider_1.headers })
+            .map(function (res) { return res.json(); });
+    };
+    StorageProvider.prototype.deleteComment = function (comment) {
+        return this.http.delete(StorageProvider_1.baseUrl + 'comments/' + comment._id, { headers: StorageProvider_1.headers })
             .map(function (res) { return res.json(); });
     };
     return StorageProvider;
 }());
 StorageProvider.baseUrl = 'https://turinsta-staging.herokuapp.com/api/';
+StorageProvider.headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["a" /* Headers */]();
 StorageProvider = StorageProvider_1 = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["B" /* Injectable */])(),
-    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* Http */]])
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* Http */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* Http */]) === "function" && _a || Object])
 ], StorageProvider);
 
-var StorageProvider_1;
+var StorageProvider_1, _a;
 //# sourceMappingURL=storage.js.map
 
 /***/ }),
@@ -1333,6 +1360,57 @@ ExperienceListComponent = __decorate([
 ], ExperienceListComponent);
 
 //# sourceMappingURL=experience-list.js.map
+
+/***/ }),
+
+/***/ 594:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return CommonsProvider; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_http__ = __webpack_require__(243);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_add_operator_map__ = __webpack_require__(244);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_add_operator_map___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_rxjs_add_operator_map__);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+/*
+  Generated class for the CommonsProvider provider.
+
+  See https://angular.io/guide/dependency-injection for more info on providers
+  and Angular DI.
+*/
+var CommonsProvider = (function () {
+    function CommonsProvider(http) {
+        this.http = http;
+        console.log('Hello CommonsProvider Provider');
+        this.setUserId("59f7562af36d282363087270");
+    }
+    CommonsProvider.prototype.setUserId = function (userId) {
+        sessionStorage.setItem("userId", userId);
+    };
+    CommonsProvider.prototype.getUserId = function () {
+        return sessionStorage.getItem("userId");
+    };
+    return CommonsProvider;
+}());
+CommonsProvider = __decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["B" /* Injectable */])(),
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* Http */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* Http */]) === "function" && _a || Object])
+], CommonsProvider);
+
+var _a;
+//# sourceMappingURL=commons.js.map
 
 /***/ })
 

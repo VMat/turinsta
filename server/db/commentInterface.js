@@ -24,6 +24,7 @@ const CommentInterface = (function(){
             avatar: user.avatar
           };
           oComment.publication = comment.publication;
+          oComment.parent = comment.parent;
           oComment.content = comment.content;
           return Commons.insert(new Comments(oComment))
             .then(insertedComment=>{
@@ -31,6 +32,7 @@ const CommentInterface = (function(){
                 return Commons.getOne(Comments,comment.parent)
                 .then(comment=>{
                   comment.replies.push({
+                    id: insertedComment._id,
                     user: insertedComment.user,
                     date: insertedComment.date,
                     content: insertedComment.content
@@ -50,16 +52,29 @@ const CommentInterface = (function(){
     },
 
     update: (comment)=>{
+      if(comment.parent != null){
+        return Commons.getOne(Comments,comment.parent)
+          .then(comment=>{
+            comment.replies.filter((reply)=>{
+              return reply.id == comment._id;
+            })[0].content = insertedComment.content;
+
+            return Commons.update(Comments,comment)
+          })
+      }
       return Commons.update(Comments, comment);
     },
 
-    deleteOne: (comment)=>{
-      return PublicationInterface.getOne(comment.publication)
-        .then(publication=>{
-          publication.comments.splice(publication.comments.indexOf(comment._id), 1);
-          return PublicationInterface.update(publication)
-            .then(()=>{
-              return Commons.removeOne(Comments, comment);
+    deleteOne: (id)=>{
+      return Commons.getOne(Comments,id)
+        .then(comment=>{
+          return PublicationInterface.getOne(comment.publication)
+            .then(publication=>{
+              publication.comments.splice(publication.comments.indexOf(comment._id), 1);
+              return PublicationInterface.update(publication)
+                .then(()=>{
+                  return Commons.removeOne(Comments, comment);
+                })
             })
         })
     }

@@ -1,6 +1,6 @@
 const router = require('express').Router();
 const commentService = require('../services/commentService');
-  
+
 router.get('/:id',(req, res)=>{
   commentService.getComment(req.params.id)
     .then(comment=>{res.status(200).json(comment)})
@@ -19,8 +19,8 @@ router.put('/',(req, res)=>{
     .catch(error=>{res.status(500).send(error)})
 });
 
-router.delete('/',(req, res)=>{
-  commentService.deleteComment(req.body)
+router.delete('/:id',(req, res)=>{
+  commentService.deleteComment(req.params.id)
     .then(comment=>{res.status(200).json(comment)})
     .catch(error=>{res.status(500).send(error)})
 });
