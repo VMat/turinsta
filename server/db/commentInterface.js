@@ -75,21 +75,21 @@ const CommentInterface = (function(){
               .then(parent=>{
                 console.log("parent: " + parent._id);
                 let indexToDelete = null;
-                parent.replies.forEach((reply,i)=>{
+                parent.replies.filter((reply,i)=>{
                   if(reply.id == comment._id){
                     indexToDelete = i;
                   }
-                }).then(()=>{
-                  if(indexToDelete!=null){
-                    console.log("index to delete : " + indexToDelete);
-                    parent.replies.splice(indexToDelete,1);
-                  }
-                  return Commons.update(Comments,parent)
-                    .then(()=>{
-                      return Commons.removeOne(Comments, comment);
-                    })
-                  });
-              })
+                });
+
+                if(indexToDelete!=null){
+                  console.log("index to delete : " + indexToDelete);
+                  parent.replies.splice(indexToDelete,1);
+                }
+                return Commons.update(Comments,parent)
+                  .then(()=>{
+                    return Commons.removeOne(Comments, comment);
+                  })
+              });
           }
           else{
             return PublicationInterface.getOne(comment.publication)
