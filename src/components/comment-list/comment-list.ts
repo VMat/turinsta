@@ -19,6 +19,7 @@ export class CommentListComponent{
 
   @Input() data: any = null;
   @Input() publicationId: String = null;
+  @Input() publicationOwner: String = null;
   @Input() commentId: String = null;
   commentValue: String = null;
   setFocus: Boolean = false;
@@ -26,13 +27,12 @@ export class CommentListComponent{
   constructor(public storageService: StorageProvider, public commonsService: CommonsProvider, public store: Store<AppState>) {
     console.log('Hello CommentListComponent Component');
     store.subscribe((state)=>{
-      if(state.publications.active === this.publicationId){
-        if(Boolean(document.getElementById('comment'))){
-          if(this.setFocus){
-            document.getElementById('comment').getElementsByTagName('textarea')[0].blur();
-            document.getElementById('comment').getElementsByTagName('textarea')[0].focus();
-            this.setFocus = false;
-          }
+      if(Boolean(document.getElementById('comment'))){
+        if(this.setFocus){
+          document.getElementById('comment').getElementsByTagName('textarea')[0].blur();
+          document.getElementById('comment').getElementsByTagName('textarea')[0].focus();
+          document.getElementById('comment').getElementsByTagName('textarea')[0].blur();
+          this.setFocus = false;
         }
       }
     });

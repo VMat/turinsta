@@ -2,6 +2,7 @@ import {Component, Input, ChangeDetectionStrategy, Output, EventEmitter} from '@
 import {StorageProvider} from "../../providers/storage/storage";
 import {Store} from "@ngrx/store";
 import {AppState} from "../../providers/models/publication.model";
+import {CommonsProvider} from "../../providers/commons/commons";
 
 /**
  * Generated class for the CommentComponent component.
@@ -18,21 +19,20 @@ export class CommentComponent{
 
   @Input() data: any = null;
   @Input() publicationId: any = null;
+  @Input() publicationOwner: any = null;
   @Output() commentDeleted = new EventEmitter();
   showReplies: boolean = false;
   editionMode: boolean = false;
   setFocus: boolean = false;
 
-  constructor(public storageService: StorageProvider, private store: Store<AppState>) {
+  constructor(public storageService: StorageProvider, public commonsService: CommonsProvider, private store: Store<AppState>) {
     console.log('Hello CommentListComponent Component');
     store.subscribe((state)=>{
-      if(state.publications.active === this.publicationId){
-        if(Boolean(document.getElementById('commentEdition'))){
-          if(this.setFocus){
-            document.getElementById('commentEdition').focus();
-            document.getElementById('commentEdition').blur();
-            this.setFocus = false;
-          }
+      if(Boolean(document.getElementById('commentEdition'))){
+        if(this.setFocus){
+          document.getElementById('commentEdition').focus();
+          document.getElementById('commentEdition').blur();
+          this.setFocus = false;
         }
       }
     });
@@ -58,4 +58,16 @@ export class CommentComponent{
       this.commentDeleted.emit();
     });
   }
+
+  checkEditionPermission(){
+    return this.data.user.id == this.commonsService.getUserId();
+  }
+
+  checkDeletePermission(){
+    let loggedUser = this.commonsService.getUserId();
+    sessionStorage.setItem("publcationOwner",this.publicationOwner);
+    sessionStorage.setItem("loggedUser",loggedUser);
+    return (this.publicationOwner == loggedUser) || (this.data.user.id == loggedUser);
+  }
+
 }

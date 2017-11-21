@@ -14,14 +14,14 @@
     <button item-left *ngIf="data.replies!=undefined" (click)="toogleReplies()" class="publication-button" color="secondary" ion-button clear>
       <ion-icon style="font-size: 20px" class="publication-icon" name="{{showReplies? 'ios-remove-circle' : 'ios-add-circle'}}"></ion-icon>
     </button>
-    <button item-left class="publication-button" color="primary" ion-button clear (click)="toogleEditionMode()">
+    <button *ngIf="checkEditionPermission()" item-left class="publication-button" color="primary" ion-button clear (click)="toogleEditionMode()">
       <ion-icon style="font-size: 20px" class="publication-icon" name="create"></ion-icon>
     </button>
-    <button item-left class="publication-button" color="danger" ion-button (click)="deleteComment()" clear>
+    <button *ngIf="checkDeletePermission()" item-left class="publication-button" color="danger" ion-button (click)="deleteComment()" clear>
       <ion-icon style="font-size: 20px" class="publication-icon" name="ios-trash-outline"></ion-icon>
     </button>
   </ion-item>
   <ion-item *ngIf="data.replies != null">
-    <comment-list *ngIf="showReplies" [data]=data.replies [publicationId]=publicationId [commentId]=data._id></comment-list>
+    <comment-list *ngIf="showReplies" [data]=data.replies [publicationId]=publicationId [publicationOwner]=publicationOwner [commentId]=data._id></comment-list>
   </ion-item>
 </ion-item>
