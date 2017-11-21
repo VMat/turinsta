@@ -66,6 +66,7 @@ const CommentInterface = (function(){
     },
 
     deleteOne: (id)=>{
+      console.log("id: " + id);
       return Commons.getOne(Comments,id)
         .then(comment=>{
           console.log("comment: " + comment._id);
