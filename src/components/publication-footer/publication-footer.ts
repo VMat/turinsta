@@ -1,9 +1,8 @@
 import {ChangeDetectionStrategy, Component, Input} from '@angular/core';
 import {Events} from "ionic-angular";
-import {Observable} from "rxjs";
 import {AppState} from "../../providers/models/publication.model";
 import {Store} from "@ngrx/store";
-import {resumePublication, activePublication, getPublications} from "../../providers/reducers/publication.reducer";
+import {activePublication} from "../../providers/reducers/publication.reducer";
 
 /**
  * Generated class for the PublicationFooterComponent component.
@@ -38,7 +37,7 @@ export class PublicationFooterComponent {
     });
     this.sections[i].show = !this.sections[i].show;
     if(!alreadyActived){
-      this.sections[i].show ? this.store.dispatch(activePublication(this.data._id)) : this.store.dispatch(activePublication(null));
+      // this.sections[i].show ? this.store.dispatch(activePublication(this.data._id)) : this.store.dispatch(activePublication(null));
     }
   };
 

@@ -1,27 +1,26 @@
 <!-- Generated template for the CommentComponent component -->
-<ion-item>
-  <ion-item style="padding-left: 20px">
-    <ion-avatar item-start>
-      <img src="{{data.user.avatar}}">
-    </ion-avatar>
-    <p *ngIf="!editionMode" item-left><b>{{data.user.name}}</b>&nbsp;{{data.content}}</p>
-    <p *ngIf="editionMode" item-left><b>{{data.user.name}}</b>
-      <input type="text" id="commentEdition" item-left [(ngModel)]="data.content" />
-      <button class="publication-button" color="success" ion-button clear (click)="updateComment()">
-        <ion-icon style="font-size: 20px" class="publication-icon" name="send"></ion-icon>
-      </button>
-    </p>
-    <button item-left *ngIf="data.replies!=undefined" (click)="toogleReplies()" class="publication-button" color="secondary" ion-button clear>
-      <ion-icon style="font-size: 20px" class="publication-icon" name="{{showReplies? 'ios-remove-circle' : 'ios-add-circle'}}"></ion-icon>
+<ion-item class="comment-content">
+  <ion-avatar class="comment-avatar" item-start>
+    <img src="{{data.user.avatar}}">
+  </ion-avatar>
+  <p *ngIf="!editionMode" item-left><b>{{data.user.name}}</b>&nbsp;{{data.content}}</p>
+  <p *ngIf="editionMode" item-left><b>{{data.user.name}}</b>
+    <input type="text" id="commentEdition" item-left [(ngModel)]="data.content" />
+    <button class="publication-button" color="success" ion-button clear (click)="updateComment()">
+      <ion-icon style="font-size: 20px" class="publication-icon" name="checkmark"></ion-icon>
     </button>
-    <button *ngIf="checkEditionPermission()" item-left class="publication-button" color="primary" ion-button clear (click)="toogleEditionMode()">
-      <ion-icon style="font-size: 20px" class="publication-icon" name="create"></ion-icon>
+    <button class="publication-button" color="danger" ion-button clear (click)="toogleEditionMode()">
+      <ion-icon style="font-size: 20px" class="publication-icon" name="close"></ion-icon>
     </button>
-    <button *ngIf="checkDeletePermission()" item-left class="publication-button" color="danger" ion-button (click)="deleteComment()" clear>
-      <ion-icon style="font-size: 20px" class="publication-icon" name="ios-trash-outline"></ion-icon>
-    </button>
-  </ion-item>
-  <ion-item *ngIf="data.replies != null">
-    <comment-list *ngIf="showReplies" [data]=data.replies [publicationId]=publicationId [publicationOwner]=publicationOwner [commentId]=data._id></comment-list>
-  </ion-item>
+  </p>
+  <button *ngIf="data.replies!=undefined && !editionMode"  item-right (click)="toogleReplies()" class="publication-button" color="secondary" ion-button clear>
+    <ion-icon style="font-size: 20px" class="publication-icon" name="{{showReplies? 'ios-arrow-dropdown' : 'ios-arrow-dropright'}}"></ion-icon>
+  </button>
+  <button *ngIf="checkEditionPermission() && !editionMode" item-right class="publication-button" color="primary" ion-button clear (click)="toogleEditionMode()">
+    <ion-icon style="font-size: 20px" class="publication-icon" name="create"></ion-icon>
+  </button>
+  <button *ngIf="checkDeletePermission() && !editionMode" item-right class="publication-button" color="danger" ion-button (click)="deleteComment()" clear>
+    <ion-icon style="font-size: 20px" class="publication-icon" name="ios-trash-outline"></ion-icon>
+  </button>
 </ion-item>
+<comment-list *ngIf="showReplies" [data]=data.replies [publicationId]=publicationId [publicationOwner]=publicationOwner [commentId]=data._id></comment-list>

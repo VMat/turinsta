@@ -27822,8 +27822,8 @@ ion-navbar.toolbar {
 }
 
 .publication-badge {
-  padding: 2px 5px;
-  font-size: 10px;
+  padding: 1px 5px;
+  font-size: xx-small;
   background-color: blue;
   position: absolute;
   top: 0;
@@ -27832,7 +27832,7 @@ ion-navbar.toolbar {
 }
 
 .publication-icon {
-  font-size: 30px;
+  font-size: x-large;
 }
 
 .publication-button {
@@ -27882,6 +27882,40 @@ ion-item {
 ion-card-content {
   width: 100%;
   padding: 0;
+}
+
+.publication-footer-section {
+  width: 100%;
+}
+
+.comment-list {
+  padding: 10px;
+  width: 100%;
+}
+
+.comment-list p, textarea, input {
+  font-size: xx-small !important;
+}
+
+.comment-list ion-icon {
+  font-size: large !important;
+}
+
+.comment-content {
+  position: relative;
+  padding-left: 25px;
+}
+
+.comment-avatar {
+  position: absolute;
+  left: 0;
+  top: 10px;
+  margin: 0 !important;
+}
+
+.comment-avatar img {
+  max-width: 20px !important;
+  max-height: 20px !important;
 }
 
 .toolbar-title-md {

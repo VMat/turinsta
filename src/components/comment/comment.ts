@@ -3,6 +3,7 @@ import {StorageProvider} from "../../providers/storage/storage";
 import {Store} from "@ngrx/store";
 import {AppState} from "../../providers/models/publication.model";
 import {CommonsProvider} from "../../providers/commons/commons";
+import {activePublication} from "../../providers/reducers/publication.reducer";
 
 /**
  * Generated class for the CommentComponent component.
@@ -48,6 +49,7 @@ export class CommentComponent{
 
   updateComment(){
     this.storageService.updateComment(this.data).subscribe((updatedComment)=>{
+      this.store.dispatch(activePublication(this.publicationId));
       this.editionMode = false;
       this.setFocus = true;
     });
@@ -55,6 +57,7 @@ export class CommentComponent{
 
   deleteComment(){
     this.storageService.deleteComment(this.data).subscribe((deletedComment)=>{
+      this.store.dispatch(activePublication(this.publicationId));
       this.commentDeleted.emit();
     });
   }
@@ -65,8 +68,6 @@ export class CommentComponent{
 
   checkDeletePermission(){
     let loggedUser = this.commonsService.getUserId();
-    sessionStorage.setItem("publcationOwner",this.publicationOwner);
-    sessionStorage.setItem("loggedUser",loggedUser);
     return (this.publicationOwner == loggedUser) || (this.data.user.id == loggedUser);
   }
 

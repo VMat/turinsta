@@ -3,8 +3,6 @@ export const GET_PUBLICATIONS = "GET_PUBLICATIONS";
 export const GET_PUBLICATIONS_SUCCESS = "GET_PUBLICATIONS_SUCCESS";
 export const GET_PUBLICATIONS_ERROR = "GET_PUBLICATIONS_ERROR";
 export const ACTIVE_PUBLICATION = "ACTIVE_PUBLICATION";
-export const SAVE_PUBLICATION_STATE = "SAVE_PUBLICATION_STATE";
-export const RESUME_PUBLICATION = "RESUME_PUBLICATION";
 
 export function getPublications() {
   return {
@@ -19,23 +17,9 @@ export function activePublication(id){
   }
 }
 
-export function savePublicationState(publicationState){
-  return {
-    type: SAVE_PUBLICATION_STATE,
-    payload: publicationState
-  }
-}
-
-export function resumePublication(){
-  return {
-    type: RESUME_PUBLICATION
-  }
-}
-
 const initialState = {
   publications: [],
   active: null,
-  resumeTo: {publicationId: null, experience: {open: false,experienceId: null}, comment: {open: false, commentId: null}},
   pending: false,
   error: null
 };
@@ -100,8 +84,14 @@ export function publicationReducer(state = initialState, { type, payload } ) {
               });
             }
         }
+        return tassign(state, {publications: payload, pending: false, active: null});
       }
-      return tassign(state, {publications: payload, pending: false}); //
+      else{
+        if(state.publications.length == 0){
+          return tassign(state, {publications: payload, pending: false});
+        }
+      }
+      return state;
     case GET_PUBLICATIONS_ERROR:
       return tassign(state, {pending: false, error: "Error"});
     case ACTIVE_PUBLICATION:
@@ -117,10 +107,6 @@ export function publicationReducer(state = initialState, { type, payload } ) {
         return tassign(state,{publications: copyState, active: payload}); //Cambio el id de objeto de la última publicación activa para que se actualice
       }
       return tassign(state,{active: payload}); //Reseteo la variable active para que la próxima vuelta se actualicen todos las publicaciones
-    case SAVE_PUBLICATION_STATE:
-      return tassign(state, {resumeTo: payload});
-    case RESUME_PUBLICATION:
-      return tassign(state, {resumeTo: initialState.resumeTo});
     default:
       return state;
   }

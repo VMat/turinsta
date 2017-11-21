@@ -56,7 +56,7 @@ const CommentInterface = (function(){
         return Commons.getOne(Comments,comment.parent)
           .then(comment=>{
             comment.replies.filter((reply)=>{
-              return reply.id.equals(comment._id);
+              return reply.id == comment._id;
             })[0].content = insertedComment.content;
 
             return Commons.update(Comments,comment)
@@ -66,20 +66,14 @@ const CommentInterface = (function(){
     },
 
     deleteOne: (id)=>{
-      console.log("id: " + id);
       return Commons.getOne(Comments,id)
         .then(comment=>{
-          console.log("comment: " + comment._id);
           if(comment.parent != null){
             return Commons.getOne(Comments,comment.parent)
               .then(parent=>{
-                console.log("parent: " + parent._id);
 
                 parent.replies.filter((reply,i)=>{
-                  console.log(reply.id);
-                  console.log(comment._id);
                   if(reply.id.equals(comment._id)){
-                    console.log("reply.id == comment._id");
                     parent.replies.splice(i,1);
                     console.log(parent.replies.length);
                   }

@@ -88,4 +88,5 @@
     <plugin name="ionic-plugin-keyboard" spec="^2.2.1" />
     <allow-navigation href="http://192.168.1.35:8101" />
     <allow-navigation href="http://192.168.1.36:8101" />
+    <allow-navigation href="http://192.168.0.31:8101" />
 </widget>

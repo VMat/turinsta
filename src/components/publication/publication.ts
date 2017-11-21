@@ -22,15 +22,15 @@ export class PublicationComponent {
 
   constructor(public store: Store<AppState>, public events: Events) {
     console.log('Hello PublicationComponent Component');
-    events.subscribe('dynamicContent:showed', (publicationId, showed) => {
-      if(publicationId == this.data._id){
-        if(showed){
-          this.store.dispatch(activePublication(this.data._id));
-        }
-        else{
-          this.store.dispatch(activePublication(null));
-        }
-      }
-    });
+    // events.subscribe('dynamicContent:showed', (publicationId, showed) => {
+    //   if(publicationId == this.data._id){
+    //     if(showed){
+    //       this.store.dispatch(activePublication(this.data._id));
+    //     }
+    //     else{
+    //       this.store.dispatch(activePublication(null));
+    //     }
+    //   }
+    // });
   }
 }

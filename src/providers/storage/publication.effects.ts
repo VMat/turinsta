@@ -14,7 +14,7 @@ export class PublicationEffects {
   @Effect() getPublications$: Observable<Action> = this.actions$
     .ofType(GET_PUBLICATIONS)
     .switchMap(() => Observable
-      .timer(0,5000)
+      .timer(0,10000)
       .switchMap(() => this.publicationsService.getPublications()
         .map(publications => ({type: GET_PUBLICATIONS_SUCCESS, payload: publications}))
         .catch(() => Observable.of({type: GET_PUBLICATIONS_ERROR})))

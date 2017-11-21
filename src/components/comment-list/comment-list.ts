@@ -3,6 +3,7 @@ import {StorageProvider} from "../../providers/storage/storage";
 import {Store} from "@ngrx/store";
 import {AppState} from "../../providers/models/publication.model";
 import {CommonsProvider} from "../../providers/commons/commons";
+import {activePublication} from "../../providers/reducers/publication.reducer";
 
 /**
  * Generated class for the CommentListComponent component.
@@ -40,6 +41,7 @@ export class CommentListComponent{
 
   sendComment(){
     this.storageService.createComment({user: this.commonsService.getUserId(), publication: this.publicationId, parent: this.commentId, content: this.commentValue}).subscribe(comment => {
+      this.store.dispatch(activePublication(this.publicationId));
       this.commentValue = null;
       this.setFocus = true;
     });
