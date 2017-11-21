@@ -53,17 +53,20 @@ const CommentInterface = (function(){
 
     update: (comment)=>{
       if(comment.parent != null){
-        return Commons.getOne(Comments,comment.parent)
-          .then(parent=>{
-            parent.replies.filter((reply)=>{
-              return reply.id.equals(comment._id);
-            })[0].content = comment.content;
+        return Commons.getOne(Comments,comment.id)
+          .then((originalComment)=>{
+            return Commons.getOne(Comments,originalComment.parent)
+              .then(parent=>{
+                parent.replies.filter((reply)=>{
+                  return reply.id.equals(originalComment._id);
+                })[0].content = comment.content;
 
-            return Commons.update(Comments,parent)
-              .then(()=>{
-                return Commons.update(Comments, comment);
+                return Commons.update(Comments,parent)
+                  .then(()=>{
+                    return Commons.update(Comments, originalComment);
+                  })
               })
-          })
+          });
       }
       return Commons.update(Comments, comment);
     },
@@ -78,7 +81,6 @@ const CommentInterface = (function(){
                 parent.replies.filter((reply,i)=>{
                   if(reply.id.equals(comment._id)){
                     parent.replies.splice(i,1);
-                    console.log(parent.replies.length);
                   }
                 });
 
