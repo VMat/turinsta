@@ -76,6 +76,8 @@ const CommentInterface = (function(){
                 console.log("parent: " + parent._id);
                 let indexToDelete = null;
                 parent.replies.filter((reply,i)=>{
+                  console.log("reply.id : " + reply.id);
+                  console.log("comment._id : " + comment._id);
                   if(reply.id == comment._id){
                     indexToDelete = i;
                   }
