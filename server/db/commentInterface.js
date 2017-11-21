@@ -77,13 +77,15 @@ const CommentInterface = (function(){
 
                 parent.replies.filter((reply,i)=>{
                   if(reply.id == comment._id){
+                    console.log("reply.id == comment._id");
                     parent.replies.splice(i,1);
+                    console.log(parent.replies.length);
                   }
                 });
 
-                return Commons.removeOne(Comments, comment)
+                return Commons.update(Comments,parent)
                   .then(()=>{
-                    return Commons.update(Comments,parent);
+                    return Commons.removeOne(Comments, comment);
                   })
               });
           }
