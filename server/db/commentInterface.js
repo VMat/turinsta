@@ -79,17 +79,16 @@ const CommentInterface = (function(){
                   if(reply.id == comment._id){
                     indexToDelete = i;
                   }
-                });
-
-                if(indexToDelete!=null){
-                  console.log("index to delete : " + indexToDelete);
-                  parent.replies.splice(indexToDelete,1);
-                }
-
-                return Commons.update(Comments,parent)
-                  .then(()=>{
-                    return Commons.removeOne(Comments, comment);
-                  })
+                }).then(()=>{
+                  if(indexToDelete!=null){
+                    console.log("index to delete : " + indexToDelete);
+                    parent.replies.splice(indexToDelete,1);
+                  }
+                  return Commons.update(Comments,parent)
+                    .then(()=>{
+                      return Commons.removeOne(Comments, comment);
+                    })
+                  });
               })
           }
           else{
