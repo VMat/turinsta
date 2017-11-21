@@ -54,12 +54,15 @@ const CommentInterface = (function(){
     update: (comment)=>{
       if(comment.parent != null){
         return Commons.getOne(Comments,comment.parent)
-          .then(comment=>{
-            comment.replies.filter((reply)=>{
-              return reply.id == comment._id;
-            })[0].content = insertedComment.content;
+          .then(parent=>{
+            parent.replies.filter((reply)=>{
+              return reply.id.equals(comment._id);
+            })[0].content = comment.content;
 
-            return Commons.update(Comments,comment)
+            return Commons.update(Comments,parent)
+              .then(()=>{
+                return Commons.update(Comments, comment);
+              })
           })
       }
       return Commons.update(Comments, comment);
