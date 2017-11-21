@@ -82,6 +82,7 @@ const CommentInterface = (function(){
                 });
 
                 if(indexToDelete!=null){
+                  console.log("index to delete : " + indexToDelete);
                   parent.replies.splice(indexToDelete,1);
                 }
 
