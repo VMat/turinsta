@@ -62,29 +62,41 @@ export function publicationReducer(state = initialState, { type, payload } ) {
         let updatedPublication = {...payload[indexPayload]};
         payload = state.publications;
 
-        for(let property in updatedPublication){ //Actualizo las propiedades de la publicación activa manteniendo el id del objeto publicación
+      //Actualizo las propiedades de la publicación activa manteniendo el id del objeto publicación
+        for(let property in updatedPublication){
 
             if(property!="comments"){
               payload[indexData][property] = updatedPublication[property];
             }
-            else{ // Si si trata de comentarios itero sobre los mismos y actualizo cada uno para mantener el id del objeto comentario
+      // Si si trata de comentarios itero sobre los mismos y actualizo cada uno para mantener el id del objeto comentario
+            else{
                 let commentIndex = null;
                 updatedPublication[property].forEach((updatedComment)=>{
+
                   payload[indexData][property].forEach((comment,i)=>{
+
                     if(comment._id==updatedComment._id){
                       commentIndex = i;
                     }
+                    else{
+                      if(!updatedPublication[property].some((item)=>{return item._id == comment._id})){
+      // No existe el comentario en payload, entonces borro el comentario de state
+                        payload[indexData][property].splice(i,1);
+                      }
+                    }
                   });
 
+      // Existe el comentario en state y en payload, entonces actualizo las propiedades del mismo
                   if(commentIndex != null){
                     for(let subproperty in updatedComment){
                       payload[indexData][property][commentIndex][subproperty] = updatedComment[subproperty];
                     }
-                    commentIndex = null;
                   }
                   else{
+      // No existe el comentario en state, entonces lo agrego
                     payload[indexData][property].push(updatedComment);
                   }
+                  commentIndex = null;
               });
             }
         }

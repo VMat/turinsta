@@ -44,4 +44,8 @@ export class CommentListComponent{
       this.setFocus = true;
     });
   }
+
+  commentDeleted(event){
+    this.setFocus = true;
+  }
 }

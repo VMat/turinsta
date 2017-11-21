@@ -68,14 +68,36 @@ const CommentInterface = (function(){
     deleteOne: (id)=>{
       return Commons.getOne(Comments,id)
         .then(comment=>{
-          return PublicationInterface.getOne(comment.publication)
-            .then(publication=>{
-              publication.comments.splice(publication.comments.indexOf(comment._id), 1);
-              return PublicationInterface.update(publication)
-                .then(()=>{
-                  return Commons.removeOne(Comments, comment);
-                })
-            })
+          if(comment.parent != null){
+            return Commons.getOne(Comments,comment.parent)
+              .then(parent=>{
+                let indexToDelete = null;
+                parent.replies.forEach((reply,i)=>{
+                  if(reply.id == comment._id){
+                    indexToDelete = i;
+                  }
+                });
+
+                if(indexToDelete!=null){
+                  parent.replies.splice(indexToDelete,1);
+                }
+
+                return Commons.update(Comments,parent)
+                  .then(()=>{
+                    return Commons.removeOne(Comments, comment);
+                  })
+              })
+          }
+          else{
+            return PublicationInterface.getOne(comment.publication)
+              .then(publication=>{
+                publication.comments.splice(publication.comments.indexOf(comment._id), 1);
+                return PublicationInterface.update(publication)
+                  .then(()=>{
+                    return Commons.removeOne(Comments, comment);
+                  })
+              })
+          }
         })
     }
   };
