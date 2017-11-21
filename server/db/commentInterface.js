@@ -81,9 +81,9 @@ const CommentInterface = (function(){
                   }
                 });
 
-                return Commons.update(Comments,parent)
+                return Commons.removeOne(Comments, comment)
                   .then(()=>{
-                    return Commons.removeOne(Comments, comment);
+                    return Commons.update(Comments,parent);
                   })
               });
           }
