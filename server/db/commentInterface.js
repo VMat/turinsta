@@ -76,7 +76,9 @@ const CommentInterface = (function(){
                 console.log("parent: " + parent._id);
 
                 parent.replies.filter((reply,i)=>{
-                  if(reply.id == comment._id){
+                  console.log(reply.id);
+                  console.log(comment._id);
+                  if(reply.id === comment._id){
                     console.log("reply.id == comment._id");
                     parent.replies.splice(i,1);
                     console.log(parent.replies.length);
