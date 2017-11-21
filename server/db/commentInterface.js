@@ -56,7 +56,7 @@ const CommentInterface = (function(){
         return Commons.getOne(Comments,comment.parent)
           .then(comment=>{
             comment.replies.filter((reply)=>{
-              return reply.id == comment._id;
+              return reply.id.equals(comment._id);
             })[0].content = insertedComment.content;
 
             return Commons.update(Comments,comment)
@@ -78,7 +78,7 @@ const CommentInterface = (function(){
                 parent.replies.filter((reply,i)=>{
                   console.log(reply.id);
                   console.log(comment._id);
-                  if(reply.id === comment._id){
+                  if(reply.id.equals(comment._id)){
                     console.log("reply.id == comment._id");
                     parent.replies.splice(i,1);
                     console.log(parent.replies.length);
