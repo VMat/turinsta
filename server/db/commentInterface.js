@@ -74,19 +74,13 @@ const CommentInterface = (function(){
             return Commons.getOne(Comments,comment.parent)
               .then(parent=>{
                 console.log("parent: " + parent._id);
-                let indexToDelete = null;
+
                 parent.replies.filter((reply,i)=>{
-                  console.log("reply.id : " + reply.id);
-                  console.log("comment._id : " + comment._id);
                   if(reply.id == comment._id){
-                    indexToDelete = i;
+                    parent.replies.splice(i,1);
                   }
                 });
 
-                if(indexToDelete!=null){
-                  console.log("index to delete : " + indexToDelete);
-                  parent.replies.splice(indexToDelete,1);
-                }
                 return Commons.update(Comments,parent)
                   .then(()=>{
                     return Commons.removeOne(Comments, comment);
