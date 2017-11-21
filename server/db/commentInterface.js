@@ -68,9 +68,11 @@ const CommentInterface = (function(){
     deleteOne: (id)=>{
       return Commons.getOne(Comments,id)
         .then(comment=>{
+          console.log("comment: " + comment._id);
           if(comment.parent != null){
             return Commons.getOne(Comments,comment.parent)
               .then(parent=>{
+                console.log("parent: " + parent._id);
                 let indexToDelete = null;
                 parent.replies.forEach((reply,i)=>{
                   if(reply.id == comment._id){
