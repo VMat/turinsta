@@ -644,8 +644,6 @@ var Reset = (function () {
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return PublicationComponent; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__ngrx_store__ = __webpack_require__(32);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_ionic_angular__ = __webpack_require__(33);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -656,8 +654,6 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 
-
-
 /**
  * Generated class for the PublicationComponent component.
  *
@@ -665,21 +661,9 @@ var __metadata = (this && this.__metadata) || function (k, v) {
  * Components.
  */
 var PublicationComponent = (function () {
-    function PublicationComponent(store, events) {
-        this.store = store;
-        this.events = events;
+    function PublicationComponent() {
         this.data = null;
         console.log('Hello PublicationComponent Component');
-        // events.subscribe('dynamicContent:showed', (publicationId, showed) => {
-        //   if(publicationId == this.data._id){
-        //     if(showed){
-        //       this.store.dispatch(activePublication(this.data._id));
-        //     }
-        //     else{
-        //       this.store.dispatch(activePublication(null));
-        //     }
-        //   }
-        // });
     }
     return PublicationComponent;
 }());
@@ -692,10 +676,9 @@ PublicationComponent = __decorate([
         selector: 'publication',template:/*ion-inline-start:"C:\Users\Matias\WebstormProjects\turinsta\src\components\publication\publication.html"*/'<!-- Generated template for the PublicationComponent component -->\n<ion-card text-wrap>\n  <ion-card-header class="publication-card-header">\n    <publication-header [data]=data></publication-header>\n  </ion-card-header>\n  <ion-card-content>\n    <publication-body [data]=data></publication-body>\n    <publication-footer [data]=data></publication-footer>\n  </ion-card-content>\n</ion-card>\n'/*ion-inline-end:"C:\Users\Matias\WebstormProjects\turinsta\src\components\publication\publication.html"*/,
         changeDetection: __WEBPACK_IMPORTED_MODULE_0__angular_core__["j" /* ChangeDetectionStrategy */].OnPush
     }),
-    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__ngrx_store__["h" /* Store */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__ngrx_store__["h" /* Store */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["a" /* Events */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["a" /* Events */]) === "function" && _b || Object])
+    __metadata("design:paramtypes", [])
 ], PublicationComponent);
 
-var _a, _b;
 //# sourceMappingURL=publication.js.map
 
 /***/ }),
@@ -986,7 +969,7 @@ var PublicationEffects = (function () {
         this.getPublications$ = this.actions$
             .ofType(__WEBPACK_IMPORTED_MODULE_3__reducers_publication_reducer__["a" /* GET_PUBLICATIONS */])
             .switchMap(function () { return __WEBPACK_IMPORTED_MODULE_2_rxjs__["Observable"]
-            .timer(0, 10000)
+            .timer(0, 8000)
             .switchMap(function () { return _this.publicationsService.getPublications()
             .map(function (publications) { return ({ type: __WEBPACK_IMPORTED_MODULE_3__reducers_publication_reducer__["c" /* GET_PUBLICATIONS_SUCCESS */], payload: publications }); })
             .catch(function () { return __WEBPACK_IMPORTED_MODULE_2_rxjs__["Observable"].of({ type: __WEBPACK_IMPORTED_MODULE_3__reducers_publication_reducer__["b" /* GET_PUBLICATIONS_ERROR */] }); }); }); });

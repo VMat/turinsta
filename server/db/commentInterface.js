@@ -53,16 +53,11 @@ const CommentInterface = (function(){
 
     update: (comment)=>{
       if(Boolean(comment.id)){ // Si tiene la propiedad "id" es porque es una respuesta
-        console.log("comment.id: " + comment.id);
         return Commons.getOne(Comments,comment.id)
           .then((originalComment)=>{
-            console.log("originalComment._id: " + originalComment._id);
             return Commons.getOne(Comments,originalComment.parent)
               .then(parent=>{
-                console.log("parent._id: " + parent._id);
                 parent.replies.filter((reply)=>{
-                  console.log("reply.id: " + reply.id);
-                  console.log("originalComment._id: " + originalComment._id);
                   return reply.id.equals(originalComment._id);
                 })[0].content = comment.content;
 
