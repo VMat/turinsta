@@ -45,6 +45,7 @@ export class CommentListComponent{
     this.storageService.createComment({user: this.commonsService.getUserId(), publication: this.publicationId, parent: this.commentId, content: this.commentValue}).subscribe(comment => {
       this.store.dispatch(activePublication(this.publicationId));
       this.setFocus = true;
+      this.commonsService.presentToast("Comentario grabado con éxito");
     });
   }
 

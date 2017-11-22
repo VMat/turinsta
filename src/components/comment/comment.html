@@ -6,7 +6,7 @@
   <p *ngIf="!editionMode" item-left><b>{{data.user.name}}</b>&nbsp;{{data.content}}</p>
   <p *ngIf="editionMode" item-left><b>{{data.user.name}}</b>
     <input type="text" id="{{data.id!=undefined?data.id: data._id}}" item-left [(ngModel)]="data.content" />
-    <button class="publication-button" color="success" ion-button clear (click)="updateComment()">
+    <button class="publication-button" color="success" ion-button clear (click)="confirmUpdate()">
       <ion-icon style="font-size: 20px" class="publication-icon" name="checkmark"></ion-icon>
     </button>
     <button class="publication-button" color="danger" ion-button clear (click)="toogleEditionMode()">
@@ -19,7 +19,7 @@
   <button *ngIf="checkEditionPermission() && !editionMode" item-right class="publication-button" color="primary" ion-button clear (click)="toogleEditionMode()">
     <ion-icon style="font-size: 20px" class="publication-icon" name="create"></ion-icon>
   </button>
-  <button *ngIf="checkDeletePermission() && !editionMode" item-right class="publication-button" color="danger" ion-button (click)="deleteComment()" clear>
+  <button *ngIf="checkDeletePermission() && !editionMode" item-right class="publication-button" color="danger" ion-button (click)="confirmDelete()" clear>
     <ion-icon style="font-size: 20px" class="publication-icon" name="ios-trash-outline"></ion-icon>
   </button>
 </ion-item>
