@@ -29,11 +29,13 @@ export class CommentComponent{
   constructor(public storageService: StorageProvider, public commonsService: CommonsProvider, private store: Store<AppState>) {
     console.log('Hello CommentListComponent Component');
     store.subscribe((state)=>{
-      if(Boolean(document.getElementById('commentEdition'))){
-        if(this.setFocus){
+      if((state.publications.active == this.publicationId) && this.setFocus){
+        if(Boolean(document.getElementById('commentEdition'))){
           document.getElementById('commentEdition').focus();
           document.getElementById('commentEdition').blur();
+          this.editionMode = false;
           this.setFocus = false;
+          this.store.dispatch(activePublication(null));
         }
       }
     });
@@ -50,7 +52,6 @@ export class CommentComponent{
   updateComment(){
     this.storageService.updateComment(this.data).subscribe((updatedComment)=>{
       this.store.dispatch(activePublication(this.publicationId));
-      this.editionMode = false;
       this.setFocus = true;
     });
   }

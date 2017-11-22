@@ -28,12 +28,14 @@ export class CommentListComponent{
   constructor(public storageService: StorageProvider, public commonsService: CommonsProvider, public store: Store<AppState>) {
     console.log('Hello CommentListComponent Component');
     store.subscribe((state)=>{
-      if(Boolean(document.getElementById('comment'))){
-        if(this.setFocus){
+      if((state.publications.active == this.publicationId) && this.setFocus){
+        if(Boolean(document.getElementById('comment'))){
           document.getElementById('comment').getElementsByTagName('textarea')[0].blur();
           document.getElementById('comment').getElementsByTagName('textarea')[0].focus();
           document.getElementById('comment').getElementsByTagName('textarea')[0].blur();
+          this.commentValue = null;
           this.setFocus = false;
+          this.store.dispatch(activePublication(null));
         }
       }
     });
@@ -42,12 +44,12 @@ export class CommentListComponent{
   sendComment(){
     this.storageService.createComment({user: this.commonsService.getUserId(), publication: this.publicationId, parent: this.commentId, content: this.commentValue}).subscribe(comment => {
       this.store.dispatch(activePublication(this.publicationId));
-      this.commentValue = null;
       this.setFocus = true;
     });
   }
 
   commentDeleted(event){
+    this.store.dispatch(activePublication(this.publicationId));
     this.setFocus = true;
   }
 }
