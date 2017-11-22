@@ -5,7 +5,7 @@
   </ion-avatar>
   <p *ngIf="!editionMode" item-left><b>{{data.user.name}}</b>&nbsp;{{data.content}}</p>
   <p *ngIf="editionMode" item-left><b>{{data.user.name}}</b>
-    <input type="text" id="commentEdition" item-left [(ngModel)]="data.content" />
+    <input type="text" id="{{data.id!=undefined?data.id: data._id}}" item-left [(ngModel)]="data.content" />
     <button class="publication-button" color="success" ion-button clear (click)="updateComment()">
       <ion-icon style="font-size: 20px" class="publication-icon" name="checkmark"></ion-icon>
     </button>

@@ -19,20 +19,20 @@ import {activePublication} from "../../providers/reducers/publication.reducer";
 export class CommentListComponent{
 
   @Input() data: any = null;
-  @Input() publicationId: String = null;
-  @Input() publicationOwner: String = null;
-  @Input() commentId: String = null;
-  commentValue: String = null;
-  setFocus: Boolean = false;
+  @Input() publicationId: string = null;
+  @Input() publicationOwner: string = null;
+  @Input() commentId: string = null;
+  commentValue: string = null;
+  setFocus: boolean = false;
 
   constructor(public storageService: StorageProvider, public commonsService: CommonsProvider, public store: Store<AppState>) {
     console.log('Hello CommentListComponent Component');
     store.subscribe((state)=>{
       if((state.publications.active == this.publicationId) && this.setFocus){
-        if(Boolean(document.getElementById('comment'))){
-          document.getElementById('comment').getElementsByTagName('textarea')[0].blur();
-          document.getElementById('comment').getElementsByTagName('textarea')[0].focus();
-          document.getElementById('comment').getElementsByTagName('textarea')[0].blur();
+        if(Boolean(document.getElementById(this.publicationId))){
+          document.getElementById(this.publicationId).getElementsByTagName('textarea')[0].blur();
+          document.getElementById(this.publicationId).getElementsByTagName('textarea')[0].focus();
+          document.getElementById(this.publicationId).getElementsByTagName('textarea')[0].blur();
           this.commentValue = null;
           this.setFocus = false;
           this.store.dispatch(activePublication(null));

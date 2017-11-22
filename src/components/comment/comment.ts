@@ -30,9 +30,9 @@ export class CommentComponent{
     console.log('Hello CommentListComponent Component');
     store.subscribe((state)=>{
       if((state.publications.active == this.publicationId) && this.setFocus){
-        if(Boolean(document.getElementById('commentEdition'))){
-          document.getElementById('commentEdition').focus();
-          document.getElementById('commentEdition').blur();
+        if(Boolean(document.getElementById(this.data.id!=undefined?this.data.id: this.data._id))){
+          document.getElementById(this.data.id!=undefined?this.data.id: this.data._id).focus();
+          document.getElementById(this.data.id!=undefined?this.data.id: this.data._id).blur();
           this.editionMode = false;
           this.setFocus = false;
           this.store.dispatch(activePublication(null));

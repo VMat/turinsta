@@ -772,9 +772,9 @@ var CommentComponent = (function () {
         console.log('Hello CommentListComponent Component');
         store.subscribe(function (state) {
             if ((state.publications.active == _this.publicationId) && _this.setFocus) {
-                if (Boolean(document.getElementById('commentEdition'))) {
-                    document.getElementById('commentEdition').focus();
-                    document.getElementById('commentEdition').blur();
+                if (Boolean(document.getElementById(_this.data.id != undefined ? _this.data.id : _this.data._id))) {
+                    document.getElementById(_this.data.id != undefined ? _this.data.id : _this.data._id).focus();
+                    document.getElementById(_this.data.id != undefined ? _this.data.id : _this.data._id).blur();
                     _this.editionMode = false;
                     _this.setFocus = false;
                     _this.store.dispatch(Object(__WEBPACK_IMPORTED_MODULE_4__providers_reducers_publication_reducer__["d" /* activePublication */])(null));
@@ -829,7 +829,7 @@ __decorate([
 ], CommentComponent.prototype, "commentDeleted", void 0);
 CommentComponent = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
-        selector: 'comment',template:/*ion-inline-start:"C:\Users\Matias\WebstormProjects\turinsta\src\components\comment\comment.html"*/'<!-- Generated template for the CommentComponent component -->\n<ion-item class="comment-content">\n  <ion-avatar class="comment-avatar" item-start>\n    <img src="{{data.user.avatar}}">\n  </ion-avatar>\n  <p *ngIf="!editionMode" item-left><b>{{data.user.name}}</b>&nbsp;{{data.content}}</p>\n  <p *ngIf="editionMode" item-left><b>{{data.user.name}}</b>\n    <input type="text" id="commentEdition" item-left [(ngModel)]="data.content" />\n    <button class="publication-button" color="success" ion-button clear (click)="updateComment()">\n      <ion-icon style="font-size: 20px" class="publication-icon" name="checkmark"></ion-icon>\n    </button>\n    <button class="publication-button" color="danger" ion-button clear (click)="toogleEditionMode()">\n      <ion-icon style="font-size: 20px" class="publication-icon" name="close"></ion-icon>\n    </button>\n  </p>\n  <button *ngIf="data.replies!=undefined && !editionMode"  item-right (click)="toogleReplies()" class="publication-button" color="secondary" ion-button clear>\n    <ion-icon style="font-size: 20px" class="publication-icon" name="{{showReplies? \'ios-arrow-dropdown\' : \'ios-arrow-dropright\'}}"></ion-icon>\n  </button>\n  <button *ngIf="checkEditionPermission() && !editionMode" item-right class="publication-button" color="primary" ion-button clear (click)="toogleEditionMode()">\n    <ion-icon style="font-size: 20px" class="publication-icon" name="create"></ion-icon>\n  </button>\n  <button *ngIf="checkDeletePermission() && !editionMode" item-right class="publication-button" color="danger" ion-button (click)="deleteComment()" clear>\n    <ion-icon style="font-size: 20px" class="publication-icon" name="ios-trash-outline"></ion-icon>\n  </button>\n</ion-item>\n<comment-list *ngIf="showReplies" [data]=data.replies [publicationId]=publicationId [publicationOwner]=publicationOwner [commentId]=data._id></comment-list>\n'/*ion-inline-end:"C:\Users\Matias\WebstormProjects\turinsta\src\components\comment\comment.html"*/,
+        selector: 'comment',template:/*ion-inline-start:"C:\Users\Matias\WebstormProjects\turinsta\src\components\comment\comment.html"*/'<!-- Generated template for the CommentComponent component -->\n<ion-item class="comment-content">\n  <ion-avatar class="comment-avatar" item-start>\n    <img src="{{data.user.avatar}}">\n  </ion-avatar>\n  <p *ngIf="!editionMode" item-left><b>{{data.user.name}}</b>&nbsp;{{data.content}}</p>\n  <p *ngIf="editionMode" item-left><b>{{data.user.name}}</b>\n    <input type="text" id="{{data.id!=undefined?data.id: data._id}}" item-left [(ngModel)]="data.content" />\n    <button class="publication-button" color="success" ion-button clear (click)="updateComment()">\n      <ion-icon style="font-size: 20px" class="publication-icon" name="checkmark"></ion-icon>\n    </button>\n    <button class="publication-button" color="danger" ion-button clear (click)="toogleEditionMode()">\n      <ion-icon style="font-size: 20px" class="publication-icon" name="close"></ion-icon>\n    </button>\n  </p>\n  <button *ngIf="data.replies!=undefined && !editionMode"  item-right (click)="toogleReplies()" class="publication-button" color="secondary" ion-button clear>\n    <ion-icon style="font-size: 20px" class="publication-icon" name="{{showReplies? \'ios-arrow-dropdown\' : \'ios-arrow-dropright\'}}"></ion-icon>\n  </button>\n  <button *ngIf="checkEditionPermission() && !editionMode" item-right class="publication-button" color="primary" ion-button clear (click)="toogleEditionMode()">\n    <ion-icon style="font-size: 20px" class="publication-icon" name="create"></ion-icon>\n  </button>\n  <button *ngIf="checkDeletePermission() && !editionMode" item-right class="publication-button" color="danger" ion-button (click)="deleteComment()" clear>\n    <ion-icon style="font-size: 20px" class="publication-icon" name="ios-trash-outline"></ion-icon>\n  </button>\n</ion-item>\n<comment-list *ngIf="showReplies" [data]=data.replies [publicationId]=publicationId [publicationOwner]=publicationOwner [commentId]=data._id></comment-list>\n'/*ion-inline-end:"C:\Users\Matias\WebstormProjects\turinsta\src\components\comment\comment.html"*/,
         changeDetection: __WEBPACK_IMPORTED_MODULE_0__angular_core__["j" /* ChangeDetectionStrategy */].OnPush
     }),
     __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__providers_storage_storage__["a" /* StorageProvider */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__providers_storage_storage__["a" /* StorageProvider */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_3__providers_commons_commons__["a" /* CommonsProvider */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__providers_commons_commons__["a" /* CommonsProvider */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_2__ngrx_store__["h" /* Store */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__ngrx_store__["h" /* Store */]) === "function" && _c || Object])
@@ -885,10 +885,10 @@ var CommentListComponent = (function () {
         console.log('Hello CommentListComponent Component');
         store.subscribe(function (state) {
             if ((state.publications.active == _this.publicationId) && _this.setFocus) {
-                if (Boolean(document.getElementById('comment'))) {
-                    document.getElementById('comment').getElementsByTagName('textarea')[0].blur();
-                    document.getElementById('comment').getElementsByTagName('textarea')[0].focus();
-                    document.getElementById('comment').getElementsByTagName('textarea')[0].blur();
+                if (Boolean(document.getElementById(_this.publicationId))) {
+                    document.getElementById(_this.publicationId).getElementsByTagName('textarea')[0].blur();
+                    document.getElementById(_this.publicationId).getElementsByTagName('textarea')[0].focus();
+                    document.getElementById(_this.publicationId).getElementsByTagName('textarea')[0].blur();
                     _this.commentValue = null;
                     _this.setFocus = false;
                     _this.store.dispatch(Object(__WEBPACK_IMPORTED_MODULE_4__providers_reducers_publication_reducer__["d" /* activePublication */])(null));
@@ -915,19 +915,19 @@ __decorate([
 ], CommentListComponent.prototype, "data", void 0);
 __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["E" /* Input */])(),
-    __metadata("design:type", Object)
+    __metadata("design:type", String)
 ], CommentListComponent.prototype, "publicationId", void 0);
 __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["E" /* Input */])(),
-    __metadata("design:type", Object)
+    __metadata("design:type", String)
 ], CommentListComponent.prototype, "publicationOwner", void 0);
 __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["E" /* Input */])(),
-    __metadata("design:type", Object)
+    __metadata("design:type", String)
 ], CommentListComponent.prototype, "commentId", void 0);
 CommentListComponent = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
-        selector: 'comment-list',template:/*ion-inline-start:"C:\Users\Matias\WebstormProjects\turinsta\src\components\comment-list\comment-list.html"*/'<!-- Generated template for the CommentListComponent component -->\n<ion-list class="comment-list">\n  <comment *ngFor="let comment of data" [data]=comment [publicationId]=publicationId [publicationOwner]=publicationOwner (commentDeleted)="commentDeleted($event)"></comment>\n  <ion-item no-padding>\n    <ion-textarea id="comment" [(ngModel)]="commentValue" item-start style="font-size: x-small" placeholder="Escribe un comentario..."></ion-textarea>\n    <button item-left ion-button clear (click)="sendComment()">\n      <ion-icon name="send"></ion-icon>\n    </button>\n  </ion-item>\n</ion-list>\n'/*ion-inline-end:"C:\Users\Matias\WebstormProjects\turinsta\src\components\comment-list\comment-list.html"*/,
+        selector: 'comment-list',template:/*ion-inline-start:"C:\Users\Matias\WebstormProjects\turinsta\src\components\comment-list\comment-list.html"*/'<!-- Generated template for the CommentListComponent component -->\n<ion-list class="comment-list">\n  <comment *ngFor="let comment of data" [data]=comment [publicationId]=publicationId [publicationOwner]=publicationOwner (commentDeleted)="commentDeleted($event)"></comment>\n  <ion-item no-padding>\n    <ion-textarea id="{{publicationId}}" [(ngModel)]="commentValue" item-start style="font-size: x-small" placeholder="Escribe un comentario..."></ion-textarea>\n    <button item-left ion-button clear (click)="sendComment()">\n      <ion-icon name="send"></ion-icon>\n    </button>\n  </ion-item>\n</ion-list>\n'/*ion-inline-end:"C:\Users\Matias\WebstormProjects\turinsta\src\components\comment-list\comment-list.html"*/,
         changeDetection: __WEBPACK_IMPORTED_MODULE_0__angular_core__["j" /* ChangeDetectionStrategy */].OnPush
     }),
     __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__providers_storage_storage__["a" /* StorageProvider */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__providers_storage_storage__["a" /* StorageProvider */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_3__providers_commons_commons__["a" /* CommonsProvider */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__providers_commons_commons__["a" /* CommonsProvider */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_2__ngrx_store__["h" /* Store */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__ngrx_store__["h" /* Store */]) === "function" && _c || Object])
