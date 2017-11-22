@@ -52,7 +52,7 @@ const CommentInterface = (function(){
     },
 
     update: (comment)=>{
-      if(comment.parent != null){
+      if(Boolean(comment.id)){ // Si tiene la propiedad "id" es porque es una respuesta
         console.log("comment.id: " + comment.id);
         return Commons.getOne(Comments,comment.id)
           .then((originalComment)=>{
