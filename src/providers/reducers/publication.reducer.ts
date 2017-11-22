@@ -3,7 +3,6 @@ export const GET_PUBLICATIONS = "GET_PUBLICATIONS";
 export const GET_PUBLICATIONS_SUCCESS = "GET_PUBLICATIONS_SUCCESS";
 export const GET_PUBLICATIONS_ERROR = "GET_PUBLICATIONS_ERROR";
 export const ACTIVE_PUBLICATION = "ACTIVE_PUBLICATION";
-export const OPEN_PUBLICATION = "OPEN_PUBLICATION";
 
 export function getPublications() {
   return {
@@ -18,17 +17,9 @@ export function activePublication(id){
   }
 }
 
-export function openPublication(id){
-  return {
-    type: OPEN_PUBLICATION,
-    payload: id
-  }
-}
-
 const initialState = {
   publications: [],
   active: null,
-  opened: null,
   pending: false,
   error: null
 };
@@ -104,20 +95,7 @@ export function publicationReducer(state = initialState, { type, payload } ) {
     case GET_PUBLICATIONS_ERROR:
       return tassign(state, {pending: false, error: "Error"});
     case ACTIVE_PUBLICATION:
-      // if(payload!=null){
-      //   let indexData = null;
-      //   state.publications.forEach((item, i) => {
-      //     if (item._id == state.active) {
-      //       indexData = i
-      //     }
-      //   });
-      //   let copyState = state.publications;
-      //   copyState[indexData] = {...state.publications[indexData]};
-      //   return tassign(state,{publications: copyState, active: payload}); //Cambio el id de objeto de la última publicación activa para que se actualice
-      // }
       return tassign(state,{active: payload}); //Reseteo la variable active para que la próxima vuelta se actualicen todos las publicaciones
-    case OPEN_PUBLICATION:
-      return tassign(state,{opened: payload});
     default:
       return state;
   }

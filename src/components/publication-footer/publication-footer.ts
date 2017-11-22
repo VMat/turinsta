@@ -2,7 +2,6 @@ import {ChangeDetectionStrategy, Component, Input} from '@angular/core';
 import {Events} from "ionic-angular";
 import {AppState} from "../../providers/models/publication.model";
 import {Store} from "@ngrx/store";
-import {activePublication} from "../../providers/reducers/publication.reducer";
 
 /**
  * Generated class for the PublicationFooterComponent component.
@@ -25,20 +24,13 @@ export class PublicationFooterComponent {
   }
 
   toggleSection(i) {
-    let alreadyActived = false;
     this.sections = this.sections.map((section,index)=>{
       if(index!=i){
-        if(section.show){
-          alreadyActived = true;
-        }
         section.show = false;
       }
       return section
     });
     this.sections[i].show = !this.sections[i].show;
-    if(!alreadyActived){
-      // this.sections[i].show ? this.store.dispatch(activePublication(this.data._id)) : this.store.dispatch(activePublication(null));
-    }
   };
 
 }
