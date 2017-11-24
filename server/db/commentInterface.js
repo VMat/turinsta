@@ -1,5 +1,6 @@
 const Comments = require('../models/comment');
 const Users = require('../models/user');
+const Publications = require('../models/publication');
 const Commons = require('./commons');
 const UserInterface = require('./userInterface');
 const PublicationInterface = require('./publicationInterface');
