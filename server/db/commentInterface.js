@@ -94,6 +94,7 @@ const CommentInterface = (function(){
               });
           }
           else{
+            console.log("comment id: " + id);
             return PublicationInterface.getOne(comment.publication)
               .then(publication=>{
                 publication.comments.splice(publication.comments.indexOf(comment._id), 1);
