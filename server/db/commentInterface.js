@@ -98,10 +98,7 @@ const CommentInterface = (function(){
 
             return Commons.getOne(Publications, comment.publication)
               .then(publication=>{
-                console.log("comment id: " + id);
-                console.log("indexOf comment: " + publication.comments.indexOf(comment._id));
                 publication.comments.splice(publication.comments.indexOf(comment._id), 1);
-                console.log("first element: " + publication.comments[0]);
                 return PublicationInterface.update(publication)
                   .then(()=>{
                     return Commons.removeOne(Comments, comment);
