@@ -1,4 +1,4 @@
-import {Component, Input, ChangeDetectionStrategy} from '@angular/core';
+import {Component, Input} from '@angular/core';
 
 /**
  * Generated class for the PublicationComponent component.
@@ -8,8 +8,7 @@ import {Component, Input, ChangeDetectionStrategy} from '@angular/core';
  */
 @Component({
   selector: 'publication',
-  templateUrl: 'publication.html',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  templateUrl: 'publication.html'
 })
 
 export class PublicationComponent {

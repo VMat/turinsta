@@ -1,10 +1,9 @@
-import {Component, Input, ChangeDetectionStrategy, Output, EventEmitter} from '@angular/core';
+import {Component, Input, Output, EventEmitter} from '@angular/core';
 import {StorageProvider} from "../../providers/storage/storage";
 import {Store} from "@ngrx/store";
 import {AppState} from "../../providers/models/publication.model";
 import {CommonsProvider} from "../../providers/commons/commons";
-import {activePublication} from "../../providers/reducers/publication.reducer";
-import {AlertController, ToastController} from "ionic-angular";
+import {AlertController} from "ionic-angular";
 
 /**
  * Generated class for the CommentComponent component.
@@ -14,8 +13,7 @@ import {AlertController, ToastController} from "ionic-angular";
  */
 @Component({
   selector: 'comment',
-  templateUrl: 'comment.html',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  templateUrl: 'comment.html'
 })
 export class CommentComponent{
 
@@ -25,20 +23,8 @@ export class CommentComponent{
   @Output() commentDeleted = new EventEmitter();
   showReplies: boolean = false;
   editionMode: boolean = false;
-  setFocus: boolean = false;
 
-  constructor(public storageService: StorageProvider, public commonsService: CommonsProvider, private store: Store<AppState>, public alertCtrl: AlertController) {
-    store.subscribe((state)=>{
-      if((state.publications.active == this.publicationId) && this.setFocus){
-        if(Boolean(document.getElementById(this.data.id!=undefined?this.data.id: this.data._id))){
-          document.getElementById(this.data.id!=undefined?this.data.id: this.data._id).focus();
-          document.getElementById(this.data.id!=undefined?this.data.id: this.data._id).blur();
-          this.editionMode = false;
-          this.setFocus = false;
-          this.store.dispatch(activePublication(null));
-        }
-      }
-    });
+  constructor(public storageService: StorageProvider, public commonsService: CommonsProvider, public alertCtrl: AlertController) {
   }
 
   toogleReplies(){
@@ -93,15 +79,13 @@ export class CommentComponent{
 
   updateComment(){
     this.storageService.updateComment(this.data).subscribe((updatedComment)=>{
-      this.store.dispatch(activePublication(this.publicationId));
-      this.setFocus = true;
       this.commonsService.presentToast("Comentario editado con éxito");
+      this.editionMode = false;
     });
   }
 
   deleteComment(){
     this.storageService.deleteComment(this.data).subscribe((deletedComment)=>{
-      this.store.dispatch(activePublication(this.publicationId));
       this.commentDeleted.emit();
       this.commonsService.presentToast("Comentario borrado con éxito");
     });

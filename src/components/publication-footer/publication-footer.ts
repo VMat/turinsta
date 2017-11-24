@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component, Input} from '@angular/core';
+import {Component, Input} from '@angular/core';
 import {Events} from "ionic-angular";
 import {AppState} from "../../providers/models/publication.model";
 import {Store} from "@ngrx/store";
@@ -11,8 +11,7 @@ import {Store} from "@ngrx/store";
  */
 @Component({
   selector: 'publication-footer',
-  templateUrl: 'publication-footer.html',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  templateUrl: 'publication-footer.html'
 })
 export class PublicationFooterComponent {
 

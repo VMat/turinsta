@@ -24,78 +24,85 @@ const initialState = {
   error: null
 };
 
+function findId(array, id){
+  let index = null;
+  array.forEach((item,i)=>{
+    if(item._id == id){
+      index = i;
+    }
+  });
+  return index;
+}
+
+function deleteOverItems(target, source){
+  target.forEach((targetItem,i)=>{
+    if(findId(source,targetItem._id)==null){
+      target.splice(i,1);
+    }
+  });
+}
+
+function updateItems(target, source, arrayProperties){
+  let index = null;
+  let arrayProperty = null;
+  let arrayPropertyCopy = [];
+
+  if(Boolean(arrayProperties)){
+    arrayPropertyCopy = [...arrayProperties];
+    if(arrayPropertyCopy.length>0){
+      arrayProperty = arrayPropertyCopy.splice(0,1);
+    }
+  }
+
+  target.forEach((targetItem)=>{
+    index = findId(source, targetItem._id);
+    if(index != null){
+      for(let property in targetItem){
+        if(property != arrayProperty){
+          targetItem[property] = source[index][property];
+        }
+        else{
+          execFullUpdate(targetItem[property], source[index][property], arrayPropertyCopy);
+        }
+      }
+    }
+  });
+}
+
+function appendItems(target, source){
+  source.forEach((sourceItem)=>{
+    if(findId(target, sourceItem._id) == null){
+      target.push(sourceItem);
+    }
+  });
+}
+
+function updatePublications(statePublications, updatedPublications){
+  execFullUpdate(statePublications, updatedPublications, ["comments","replies"]);
+}
+
+function execFullUpdate(target,source,arrayProperties){
+  deleteOverItems(target, source);
+  updateItems(target, source, arrayProperties);
+  appendItems(target, source);
+}
+
 export function publicationReducer(state = initialState, { type, payload } ) {
   switch( type ) {
     case GET_PUBLICATIONS:
       return tassign(state,{pending: true, error: null});
     case GET_PUBLICATIONS_SUCCESS:
-      if(Boolean(state.active)){
-        let indexPayload = null;
-        let indexData = null;
-        payload.forEach((publication, i) => {
-          if (publication._id == state.active){
-            indexPayload = i;
-          }
-        });
-        state.publications.forEach((item, i) => {
-          if(item._id == state.active){
-            indexData = i;
-          }
-        });
 
-        let updatedPublication = {...payload[indexPayload]};
-        payload = state.publications;
-
-      //Actualizo las propiedades de la publicación activa manteniendo el id del objeto publicación
-        for(let property in updatedPublication){
-
-            if(property!="comments"){
-              payload[indexData][property] = updatedPublication[property];
-            }
-      // Si si trata de comentarios itero sobre los mismos y actualizo cada uno para mantener el id del objeto comentario
-            else{
-                let commentIndex = null;
-                updatedPublication[property].forEach((updatedComment)=>{
-
-                  payload[indexData][property].forEach((comment,i)=>{
-
-                    if(comment._id==updatedComment._id){
-                      commentIndex = i;
-                    }
-                    else{
-                      if(!updatedPublication[property].some((item)=>{return item._id == comment._id})){
-      // No existe el comentario en payload, entonces borro el comentario de state
-                        payload[indexData][property].splice(i,1);
-                      }
-                    }
-                  });
-
-      // Existe el comentario en state y en payload, entonces actualizo las propiedades del mismo
-                  if(commentIndex != null){
-                    for(let subproperty in updatedComment){
-                      payload[indexData][property][commentIndex][subproperty] = updatedComment[subproperty];
-                    }
-                  }
-                  else{
-      // No existe el comentario en state, entonces lo agrego
-                    payload[indexData][property].push(updatedComment);
-                  }
-                  commentIndex = null;
-              });
-            }
-        }
-        return tassign(state, {publications: payload, pending: false});
+      if(state.publications.length > 0){
+        updatePublications(state.publications, payload);
+        return tassign(state, {pending: false});
       }
-      else{
-        if(state.publications.length == 0){
-          return tassign(state, {publications: payload, pending: false});
-        }
-      }
-      return state;
+
+      return tassign(state, {publications: payload, pending: false});
     case GET_PUBLICATIONS_ERROR:
       return tassign(state, {pending: false, error: "Error"});
     case ACTIVE_PUBLICATION:
-      return tassign(state,{active: payload}); //Reseteo la variable active para que la próxima vuelta se actualicen todos las publicaciones
+      return tassign(state,{active: payload});
     default:
       return state;
   }
