@@ -23,6 +23,7 @@ export class CommentComponent{
   @Output() commentDeleted = new EventEmitter();
   showReplies: boolean = false;
   editionMode: boolean = false;
+  commentValue: string = null;
 
   constructor(public storageService: StorageProvider, public commonsService: CommonsProvider, public alertCtrl: AlertController) {
   }
@@ -33,6 +34,7 @@ export class CommentComponent{
 
   toogleEditionMode(){
     this.editionMode = !this.editionMode;
+    this.commentValue = this.editionMode ? this.data.content : null;
   }
 
   confirmUpdate() {
@@ -78,9 +80,11 @@ export class CommentComponent{
   }
 
   updateComment(){
-    this.storageService.updateComment(this.data).subscribe((updatedComment)=>{
+    let dataCopy = {...this.data};
+    dataCopy.content = this.commentValue;
+    this.storageService.updateComment(dataCopy).subscribe((updatedComment)=>{
       this.commonsService.presentToast("Comentario editado con éxito");
-      this.editionMode = false;
+      this.toogleEditionMode();
     });
   }
 
