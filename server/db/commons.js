@@ -10,7 +10,7 @@ let Commons = (function(){
 
     getN: (Collection,n)=>{
       console.log("count: " + n);
-      new Promise((resolve, reject)=>{
+      return new Promise((resolve, reject)=>{
         Collection
           .find({})
           // .sort({'timestamps.created': -1})
