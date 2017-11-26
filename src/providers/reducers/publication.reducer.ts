@@ -2,7 +2,7 @@ import {tassign} from "tassign";
 export const GET_PUBLICATIONS = "GET_PUBLICATIONS";
 export const GET_PUBLICATIONS_SUCCESS = "GET_PUBLICATIONS_SUCCESS";
 export const GET_PUBLICATIONS_ERROR = "GET_PUBLICATIONS_ERROR";
-export const ACTIVE_PUBLICATION = "ACTIVE_PUBLICATION";
+export const INCREMENT_PUBLICATION_RANGE = "INCREMENT_PUBLICATION_RANGE";
 
 export function getPublications() {
   return {
@@ -10,16 +10,15 @@ export function getPublications() {
   }
 }
 
-export function activePublication(id){
+export function incrementPublicationRange(){
   return {
-    type: ACTIVE_PUBLICATION,
-    payload: id
+    type: INCREMENT_PUBLICATION_RANGE
   }
 }
 
 const initialState = {
   publications: [],
-  active: null,
+  range: 10,
   pending: false,
   error: null
 };
@@ -101,8 +100,8 @@ export function publicationReducer(state = initialState, { type, payload } ) {
       return tassign(state, {publications: payload, pending: false});
     case GET_PUBLICATIONS_ERROR:
       return tassign(state, {pending: false, error: "Error"});
-    case ACTIVE_PUBLICATION:
-      return tassign(state,{active: payload});
+    case INCREMENT_PUBLICATION_RANGE:
+      return tassign(state, {range: state.range + 10});
     default:
       return state;
   }

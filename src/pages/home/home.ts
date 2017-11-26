@@ -3,7 +3,7 @@ import {NavController} from 'ionic-angular';
 import {StorageProvider} from "../../providers/storage/storage";
 import {Observable} from "rxjs";
 import {Store} from "@ngrx/store";
-import {getPublications} from "../../providers/reducers/publication.reducer";
+import {getPublications, incrementPublicationRange} from "../../providers/reducers/publication.reducer";
 import {AppState} from "../../providers/models/publication.model";
 
 @Component({
@@ -18,5 +18,12 @@ export class HomePage{
   constructor(public storageService:StorageProvider, public navCtrl: NavController, private store: Store<AppState>) {
     this.store.dispatch(getPublications());
     this.publications = store.select("publications");
+  }
+
+  doInfinite(infiniteScroll){
+    setTimeout(() => {
+      this.store.dispatch(incrementPublicationRange());
+      infiniteScroll.complete();
+    }, 500);
   }
 }

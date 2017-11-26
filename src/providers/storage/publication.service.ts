@@ -9,8 +9,8 @@ export class PublicationService {
     console.log('Hello StorageProvider Provider');
   }
 
-  getPublications() {
-    return this.storageService.getPublications();
+  getPublications(range) {
+    return this.storageService.getPublications(range);
   }
 
   activePublication(id){

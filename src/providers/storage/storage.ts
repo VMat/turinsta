@@ -19,8 +19,8 @@ export class StorageProvider {
     StorageProvider.headers.append('Content-Type', 'application/json');
   }
 
-  getPublications() {
-    return this.http.get(StorageProvider.baseUrl + 'publications')
+  getPublications(range) {
+    return this.http.get(StorageProvider.baseUrl + 'publications/' + range)
       .map((res:Response) => res.json());
   }
 

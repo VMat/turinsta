@@ -7,31 +7,30 @@ webpackJsonp([3],{
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return GET_PUBLICATIONS; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return GET_PUBLICATIONS_SUCCESS; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return GET_PUBLICATIONS_ERROR; });
-/* unused harmony export ACTIVE_PUBLICATION */
+/* unused harmony export INCREMENT_PUBLICATION_RANGE */
 /* harmony export (immutable) */ __webpack_exports__["d"] = getPublications;
-/* unused harmony export activePublication */
-/* harmony export (immutable) */ __webpack_exports__["e"] = publicationReducer;
+/* harmony export (immutable) */ __webpack_exports__["e"] = incrementPublicationRange;
+/* harmony export (immutable) */ __webpack_exports__["f"] = publicationReducer;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_tassign__ = __webpack_require__(326);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_tassign___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_tassign__);
 
 var GET_PUBLICATIONS = "GET_PUBLICATIONS";
 var GET_PUBLICATIONS_SUCCESS = "GET_PUBLICATIONS_SUCCESS";
 var GET_PUBLICATIONS_ERROR = "GET_PUBLICATIONS_ERROR";
-var ACTIVE_PUBLICATION = "ACTIVE_PUBLICATION";
+var INCREMENT_PUBLICATION_RANGE = "INCREMENT_PUBLICATION_RANGE";
 function getPublications() {
     return {
         type: GET_PUBLICATIONS
     };
 }
-function activePublication(id) {
+function incrementPublicationRange() {
     return {
-        type: ACTIVE_PUBLICATION,
-        payload: id
+        type: INCREMENT_PUBLICATION_RANGE
     };
 }
 var initialState = {
     publications: [],
-    active: null,
+    range: 10,
     pending: false,
     error: null
 };
@@ -104,8 +103,8 @@ function publicationReducer(state, _a) {
             return Object(__WEBPACK_IMPORTED_MODULE_0_tassign__["tassign"])(state, { publications: payload, pending: false });
         case GET_PUBLICATIONS_ERROR:
             return Object(__WEBPACK_IMPORTED_MODULE_0_tassign__["tassign"])(state, { pending: false, error: "Error" });
-        case ACTIVE_PUBLICATION:
-            return Object(__WEBPACK_IMPORTED_MODULE_0_tassign__["tassign"])(state, { active: payload });
+        case INCREMENT_PUBLICATION_RANGE:
+            return Object(__WEBPACK_IMPORTED_MODULE_0_tassign__["tassign"])(state, { range: state.range + 10 });
         default:
             return state;
     }
@@ -466,16 +465,24 @@ var HomePage = (function () {
         this.store.dispatch(Object(__WEBPACK_IMPORTED_MODULE_4__providers_reducers_publication_reducer__["d" /* getPublications */])());
         this.publications = store.select("publications");
     }
+    HomePage.prototype.doInfinite = function (infiniteScroll) {
+        var _this = this;
+        setTimeout(function () {
+            _this.store.dispatch(Object(__WEBPACK_IMPORTED_MODULE_4__providers_reducers_publication_reducer__["e" /* incrementPublicationRange */])());
+            infiniteScroll.complete();
+        }, 500);
+    };
     return HomePage;
 }());
 HomePage = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
-        selector: 'page-home',template:/*ion-inline-start:"C:\Users\Matias\WebstormProjects\turinsta\src\pages\home\home.html"*/'<ion-content>\n  <publication-list [data]="publications | async"></publication-list>\n  <!--<ion-list [virtualScroll]="publications.publications | async">-->\n    <!--<ion-item *virtualItem="let publication">-->\n      <!--<publication [data]="publication"></publication>-->\n    <!--</ion-item>-->\n  <!--</ion-list>-->\n</ion-content>\n'/*ion-inline-end:"C:\Users\Matias\WebstormProjects\turinsta\src\pages\home\home.html"*/,
+        selector: 'page-home',template:/*ion-inline-start:"C:\Users\Matias\WebstormProjects\turinsta\src\pages\home\home.html"*/'<ion-content>\n  <publication-list [data]="publications | async"></publication-list>\n  <!--<ion-list [virtualScroll]="publications.publications | async">-->\n    <!--<ion-item *virtualItem="let publication">-->\n      <!--<publication [data]="publication"></publication>-->\n    <!--</ion-item>-->\n  <!--</ion-list>-->\n  <ion-infinite-scroll (ionInfinite)="doInfinite($event)">\n    <ion-infinite-scroll-content\n      loadingSpinner="bubbles"\n      loadingText="Obteniendo más información...">\n    </ion-infinite-scroll-content>\n  </ion-infinite-scroll>\n</ion-content>\n'/*ion-inline-end:"C:\Users\Matias\WebstormProjects\turinsta\src\pages\home\home.html"*/,
         changeDetection: __WEBPACK_IMPORTED_MODULE_0__angular_core__["j" /* ChangeDetectionStrategy */].OnPush
     }),
-    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_2__providers_storage_storage__["a" /* StorageProvider */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* NavController */], __WEBPACK_IMPORTED_MODULE_3__ngrx_store__["h" /* Store */]])
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_2__providers_storage_storage__["a" /* StorageProvider */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__providers_storage_storage__["a" /* StorageProvider */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* NavController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* NavController */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_3__ngrx_store__["h" /* Store */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__ngrx_store__["h" /* Store */]) === "function" && _c || Object])
 ], HomePage);
 
+var _a, _b, _c;
 //# sourceMappingURL=home.js.map
 
 /***/ }),
@@ -503,8 +510,8 @@ var PublicationService = (function () {
         this.storageService = storageService;
         console.log('Hello StorageProvider Provider');
     }
-    PublicationService.prototype.getPublications = function () {
-        return this.storageService.getPublications();
+    PublicationService.prototype.getPublications = function (range) {
+        return this.storageService.getPublications(range);
     };
     PublicationService.prototype.activePublication = function (id) {
         return id;
@@ -516,9 +523,10 @@ var PublicationService = (function () {
 }());
 PublicationService = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["B" /* Injectable */])(),
-    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__storage__["a" /* StorageProvider */]])
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__storage__["a" /* StorageProvider */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__storage__["a" /* StorageProvider */]) === "function" && _a || Object])
 ], PublicationService);
 
+var _a;
 //# sourceMappingURL=publication.service.js.map
 
 /***/ }),
@@ -642,7 +650,7 @@ AppModule = __decorate([
             __WEBPACK_IMPORTED_MODULE_13__angular_http__["c" /* HttpModule */],
             __WEBPACK_IMPORTED_MODULE_17__ngrx_store__["i" /* StoreModule */].forRoot({
                 // post: postReducer,
-                publications: __WEBPACK_IMPORTED_MODULE_18__providers_reducers_publication_reducer__["e" /* publicationReducer */]
+                publications: __WEBPACK_IMPORTED_MODULE_18__providers_reducers_publication_reducer__["f" /* publicationReducer */]
             }),
             __WEBPACK_IMPORTED_MODULE_19__ngrx_effects__["c" /* EffectsModule */].forRoot([
                 __WEBPACK_IMPORTED_MODULE_20__providers_storage_publication_effects__["a" /* PublicationEffects */]
@@ -1097,6 +1105,7 @@ CommentListComponent = __decorate([
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_rxjs__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__reducers_publication_reducer__ = __webpack_require__(137);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__publication_service__ = __webpack_require__(273);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__ngrx_store__ = __webpack_require__(44);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1111,31 +1120,37 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
+
 var PublicationEffects = (function () {
-    function PublicationEffects(actions$, publicationsService) {
+    function PublicationEffects(actions$, publicationsService, store$) {
         var _this = this;
         this.actions$ = actions$;
         this.publicationsService = publicationsService;
+        this.store$ = store$;
         this.getPublications$ = this.actions$
             .ofType(__WEBPACK_IMPORTED_MODULE_3__reducers_publication_reducer__["a" /* GET_PUBLICATIONS */])
             .switchMap(function () { return __WEBPACK_IMPORTED_MODULE_2_rxjs__["Observable"]
             .timer(0, 5000)
-            .switchMap(function () { return _this.publicationsService.getPublications()
-            .map(function (publications) { return ({ type: __WEBPACK_IMPORTED_MODULE_3__reducers_publication_reducer__["c" /* GET_PUBLICATIONS_SUCCESS */], payload: publications }); })
-            .catch(function () { return __WEBPACK_IMPORTED_MODULE_2_rxjs__["Observable"].of({ type: __WEBPACK_IMPORTED_MODULE_3__reducers_publication_reducer__["b" /* GET_PUBLICATIONS_ERROR */] }); }); }); });
+            .withLatestFrom(_this.store$)
+            .switchMap(function (_a) {
+            var action = _a[0], storeState = _a[1];
+            return _this.publicationsService.getPublications(storeState.range)
+                .map(function (publications) { return ({ type: __WEBPACK_IMPORTED_MODULE_3__reducers_publication_reducer__["c" /* GET_PUBLICATIONS_SUCCESS */], payload: publications }); })
+                .catch(function () { return __WEBPACK_IMPORTED_MODULE_2_rxjs__["Observable"].of({ type: __WEBPACK_IMPORTED_MODULE_3__reducers_publication_reducer__["b" /* GET_PUBLICATIONS_ERROR */] }); });
+        }); });
     }
     return PublicationEffects;
 }());
 __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_1__ngrx_effects__["b" /* Effect */])(),
-    __metadata("design:type", __WEBPACK_IMPORTED_MODULE_2_rxjs__["Observable"])
+    __metadata("design:type", typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_2_rxjs__["Observable"] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2_rxjs__["Observable"]) === "function" && _a || Object)
 ], PublicationEffects.prototype, "getPublications$", void 0);
 PublicationEffects = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["B" /* Injectable */])(),
-    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__ngrx_effects__["a" /* Actions */],
-        __WEBPACK_IMPORTED_MODULE_4__publication_service__["a" /* PublicationService */]])
+    __metadata("design:paramtypes", [typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1__ngrx_effects__["a" /* Actions */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__ngrx_effects__["a" /* Actions */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_4__publication_service__["a" /* PublicationService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_4__publication_service__["a" /* PublicationService */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_5__ngrx_store__["h" /* Store */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_5__ngrx_store__["h" /* Store */]) === "function" && _d || Object])
 ], PublicationEffects);
 
+var _a, _b, _c, _d;
 //# sourceMappingURL=publication.effects.js.map
 
 /***/ }),
@@ -1173,8 +1188,8 @@ var StorageProvider = StorageProvider_1 = (function () {
         console.log('Hello StorageProvider Provider');
         StorageProvider_1.headers.append('Content-Type', 'application/json');
     }
-    StorageProvider.prototype.getPublications = function () {
-        return this.http.get(StorageProvider_1.baseUrl + 'publications')
+    StorageProvider.prototype.getPublications = function (range) {
+        return this.http.get(StorageProvider_1.baseUrl + 'publications/' + range)
             .map(function (res) { return res.json(); });
     };
     StorageProvider.prototype.createComment = function (comment) {
@@ -1195,10 +1210,10 @@ StorageProvider.baseUrl = 'https://turinsta-staging.herokuapp.com/api/';
 StorageProvider.headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["a" /* Headers */]();
 StorageProvider = StorageProvider_1 = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["B" /* Injectable */])(),
-    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* Http */]])
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* Http */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* Http */]) === "function" && _a || Object])
 ], StorageProvider);
 
-var StorageProvider_1;
+var StorageProvider_1, _a;
 //# sourceMappingURL=storage.js.map
 
 /***/ }),

@@ -8,6 +8,14 @@ let Commons = (function(){
       return Collection.find()
     },
 
+    getN: (Collection,n)=>{
+      return Collection
+        .find()
+        .sort({'timestamps.created': -1})
+        .limit(n)
+        .exec();
+    },
+
     getOne: (Collection,id)=>{
       return Collection.findById(id);
     },
