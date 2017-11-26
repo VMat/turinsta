@@ -14,7 +14,9 @@ let Commons = (function(){
         .find({})
         // .sort({'timestamps.created': -1})
         // .limit(Number(n))
-        .exec();
+        .exec((err,result)=>{
+          return result;
+        });
     },
 
     getOne: (Collection,id)=>{
