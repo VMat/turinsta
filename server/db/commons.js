@@ -10,7 +10,8 @@ let Commons = (function(){
 
     getN: (Collection,n)=>{
       console.log("count: " + n);
-      return Collection.find();
+      return Collection.find({})
+              .limit(Number(n));
       //
       // return new Promise((resolve, reject)=>{
       //   Collection
