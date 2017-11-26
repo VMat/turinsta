@@ -1,7 +1,7 @@
 const router = require('express').Router();
 const publicationService = require('../services/publicationService');
 
-router.get('/:count',(req, res)=>{
+router.get('/count/:count',(req, res)=>{
   publicationService.getPublications(req.params.count)
     .then(publications=>{res.status(200).json(publications)})
     .catch(error=>{res.status(500).send(error)})

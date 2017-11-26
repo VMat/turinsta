@@ -1134,10 +1134,10 @@ var PublicationEffects = (function () {
             .withLatestFrom(_this.store$)
             .switchMap(function (_a) {
             var action = _a[0], storeState = _a[1];
-            return _this.publicationsService.getPublications(storeState.range)
-                .map(function (publications) { return ({ type: __WEBPACK_IMPORTED_MODULE_3__reducers_publication_reducer__["c" /* GET_PUBLICATIONS_SUCCESS */], payload: publications }); })
-                .catch(function () { return __WEBPACK_IMPORTED_MODULE_2_rxjs__["Observable"].of({ type: __WEBPACK_IMPORTED_MODULE_3__reducers_publication_reducer__["b" /* GET_PUBLICATIONS_ERROR */] }); });
-        }); });
+            return _this.publicationsService.getPublications(storeState.publications.range);
+        })
+            .map(function (publications) { return ({ type: __WEBPACK_IMPORTED_MODULE_3__reducers_publication_reducer__["c" /* GET_PUBLICATIONS_SUCCESS */], payload: publications }); })
+            .catch(function () { return __WEBPACK_IMPORTED_MODULE_2_rxjs__["Observable"].of({ type: __WEBPACK_IMPORTED_MODULE_3__reducers_publication_reducer__["b" /* GET_PUBLICATIONS_ERROR */] }); }); });
     }
     return PublicationEffects;
 }());
@@ -1189,7 +1189,7 @@ var StorageProvider = StorageProvider_1 = (function () {
         StorageProvider_1.headers.append('Content-Type', 'application/json');
     }
     StorageProvider.prototype.getPublications = function (range) {
-        return this.http.get(StorageProvider_1.baseUrl + 'publications/' + range)
+        return this.http.get(StorageProvider_1.baseUrl + 'publications/count/' + range)
             .map(function (res) { return res.json(); });
     };
     StorageProvider.prototype.createComment = function (comment) {

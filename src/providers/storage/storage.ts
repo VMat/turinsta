@@ -20,7 +20,7 @@ export class StorageProvider {
   }
 
   getPublications(range) {
-    return this.http.get(StorageProvider.baseUrl + 'publications/' + range)
+    return this.http.get(StorageProvider.baseUrl + 'publications/count/' + range)
       .map((res:Response) => res.json());
   }
 
