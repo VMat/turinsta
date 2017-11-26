@@ -12,7 +12,7 @@ let Commons = (function(){
       console.log("count: " + n);
       return Collection
         .find({})
-        .sort({'timestamps.created': -1})
+        // .sort({'timestamps.created': -1})
         .limit(Number(n))
         .exec();
     },

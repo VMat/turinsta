@@ -16,8 +16,8 @@ export class PublicationEffects {
     .switchMap(() => Observable
       .timer(0,5000)
       .withLatestFrom(this.store$)
-      .switchMap(([action, storeState]) => {return this.publicationsService.getPublications(storeState.publications.range)})
+      .switchMap(([action, storeState]) => this.publicationsService.getPublications(storeState.publications.range)
         .map(publications => ({type: GET_PUBLICATIONS_SUCCESS, payload: publications}))
-        .catch(() => Observable.of({type: GET_PUBLICATIONS_ERROR}))
+        .catch(() => Observable.of({type: GET_PUBLICATIONS_ERROR})))
     )
 }

@@ -1134,10 +1134,10 @@ var PublicationEffects = (function () {
             .withLatestFrom(_this.store$)
             .switchMap(function (_a) {
             var action = _a[0], storeState = _a[1];
-            return _this.publicationsService.getPublications(storeState.publications.range);
-        })
-            .map(function (publications) { return ({ type: __WEBPACK_IMPORTED_MODULE_3__reducers_publication_reducer__["c" /* GET_PUBLICATIONS_SUCCESS */], payload: publications }); })
-            .catch(function () { return __WEBPACK_IMPORTED_MODULE_2_rxjs__["Observable"].of({ type: __WEBPACK_IMPORTED_MODULE_3__reducers_publication_reducer__["b" /* GET_PUBLICATIONS_ERROR */] }); }); });
+            return _this.publicationsService.getPublications(storeState.publications.range)
+                .map(function (publications) { return ({ type: __WEBPACK_IMPORTED_MODULE_3__reducers_publication_reducer__["c" /* GET_PUBLICATIONS_SUCCESS */], payload: publications }); })
+                .catch(function () { return __WEBPACK_IMPORTED_MODULE_2_rxjs__["Observable"].of({ type: __WEBPACK_IMPORTED_MODULE_3__reducers_publication_reducer__["b" /* GET_PUBLICATIONS_ERROR */] }); });
+        }); });
     }
     return PublicationEffects;
 }());
