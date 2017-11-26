@@ -17,7 +17,7 @@ let Commons = (function(){
           // .limit(Number(n))
           .exec((err,result)=>{
             if(err){
-              reject(error);
+              reject(err);
             }
             resolve(result)
           })
