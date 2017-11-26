@@ -13,10 +13,8 @@ let Commons = (function(){
       return Collection
         .find({})
         // .sort({'timestamps.created': -1})
-        .limit(Number(n))
-        .exec((err,result)=>{
-          return result;
-        });
+        // .limit(Number(n))
+        .exec();
     },
 
     getOne: (Collection,id)=>{
