@@ -11,7 +11,7 @@ let Commons = (function(){
     getN: (Collection,n)=>{
       console.log("count: " + n);
       return Collection
-        .find()
+        .find({})
         .sort({'timestamps.created': -1})
         .limit(n)
         .exec();
