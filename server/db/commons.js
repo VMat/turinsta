@@ -8,9 +8,9 @@ let Commons = (function(){
       return Collection.find()
     },
 
-    getN: (Collection,n)=>{
+    getN: (Collection,searchParams,n)=>{
       console.log("count: " + n);
-      return Collection.find({})
+      return Collection.find(searchParams)
           .sort({'timestamps.created': -1})
           .limit(Number(n));
     },
