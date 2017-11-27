@@ -8,12 +8,6 @@ router.get('/count/:count',(req, res)=>{
     .catch(error=>{res.status(500).send(error)})
 });
 
-router.get('/:id',(req, res)=>{
-  publicationService.getPublication(req.params.id)
-    .then(publications=>{res.status(200).json(publications)})
-    .catch(error=>{res.status(500).send(error)})
-});
-
 router.post('/',(req, res)=>{
   publicationService.createPublication(req.body)
     .then(publication=>{res.status(200).json(publication)})
