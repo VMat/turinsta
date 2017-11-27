@@ -3,6 +3,7 @@ export const GET_PUBLICATIONS = "GET_PUBLICATIONS";
 export const GET_PUBLICATIONS_SUCCESS = "GET_PUBLICATIONS_SUCCESS";
 export const GET_PUBLICATIONS_ERROR = "GET_PUBLICATIONS_ERROR";
 export const INCREMENT_PUBLICATION_RANGE = "INCREMENT_PUBLICATION_RANGE";
+export const SET_FILTER = "SET_FILTER";
 
 export function getPublications() {
   return {
@@ -16,9 +17,17 @@ export function incrementPublicationRange(){
   }
 }
 
+export function setFilter(filter){
+  return {
+    type: SET_FILTER,
+    payload: filter
+  }
+}
+
 const initialState = {
   publications: [],
-  range: 10,
+  range: 2,
+  filter: null,
   pending: false,
   error: null
 };
@@ -101,7 +110,9 @@ export function publicationReducer(state = initialState, { type, payload } ) {
     case GET_PUBLICATIONS_ERROR:
       return tassign(state, {pending: false, error: "Error"});
     case INCREMENT_PUBLICATION_RANGE:
-      return tassign(state, {range: state.range + 10});
+      return tassign(state, {range: state.publications.length >= state.range ? state.range + 10 : state.range});
+    case SET_FILTER:
+      return tassign(state, {filter: payload});
     default:
       return state;
   }

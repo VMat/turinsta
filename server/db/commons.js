@@ -11,20 +11,8 @@ let Commons = (function(){
     getN: (Collection,n)=>{
       console.log("count: " + n);
       return Collection.find({})
-              .limit(Number(n));
-      //
-      // return new Promise((resolve, reject)=>{
-      //   Collection
-      //     .find({})
-      //     // .sort({'timestamps.created': -1})
-      //     // .limit(Number(n))
-      //     .exec((err,result)=>{
-      //       if(err){
-      //         reject(err);
-      //       }
-      //       resolve(result)
-      //     })
-      // });
+          .sort({'timestamps.created': -1})
+          .limit(Number(n));
     },
 
     getOne: (Collection,id)=>{

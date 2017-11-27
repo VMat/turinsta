@@ -8,8 +8,10 @@ webpackJsonp([3],{
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return GET_PUBLICATIONS_SUCCESS; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return GET_PUBLICATIONS_ERROR; });
 /* unused harmony export INCREMENT_PUBLICATION_RANGE */
+/* unused harmony export SET_FILTER */
 /* harmony export (immutable) */ __webpack_exports__["d"] = getPublications;
 /* harmony export (immutable) */ __webpack_exports__["e"] = incrementPublicationRange;
+/* unused harmony export setFilter */
 /* harmony export (immutable) */ __webpack_exports__["f"] = publicationReducer;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_tassign__ = __webpack_require__(326);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_tassign___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_tassign__);
@@ -18,6 +20,7 @@ var GET_PUBLICATIONS = "GET_PUBLICATIONS";
 var GET_PUBLICATIONS_SUCCESS = "GET_PUBLICATIONS_SUCCESS";
 var GET_PUBLICATIONS_ERROR = "GET_PUBLICATIONS_ERROR";
 var INCREMENT_PUBLICATION_RANGE = "INCREMENT_PUBLICATION_RANGE";
+var SET_FILTER = "SET_FILTER";
 function getPublications() {
     return {
         type: GET_PUBLICATIONS
@@ -28,9 +31,16 @@ function incrementPublicationRange() {
         type: INCREMENT_PUBLICATION_RANGE
     };
 }
+function setFilter(filter) {
+    return {
+        type: SET_FILTER,
+        payload: filter
+    };
+}
 var initialState = {
     publications: [],
-    range: 10,
+    range: 2,
+    filter: null,
     pending: false,
     error: null
 };
@@ -104,7 +114,9 @@ function publicationReducer(state, _a) {
         case GET_PUBLICATIONS_ERROR:
             return Object(__WEBPACK_IMPORTED_MODULE_0_tassign__["tassign"])(state, { pending: false, error: "Error" });
         case INCREMENT_PUBLICATION_RANGE:
-            return Object(__WEBPACK_IMPORTED_MODULE_0_tassign__["tassign"])(state, { range: state.range + 10 });
+            return Object(__WEBPACK_IMPORTED_MODULE_0_tassign__["tassign"])(state, { range: state.publications.length >= state.range ? state.range + 10 : state.range });
+        case SET_FILTER:
+            return Object(__WEBPACK_IMPORTED_MODULE_0_tassign__["tassign"])(state, { filter: payload });
         default:
             return state;
     }
@@ -462,26 +474,31 @@ var HomePage = (function () {
         this.storageService = storageService;
         this.navCtrl = navCtrl;
         this.store = store;
+        this.searchInput = null;
         this.store.dispatch(Object(__WEBPACK_IMPORTED_MODULE_4__providers_reducers_publication_reducer__["d" /* getPublications */])());
         this.publications = store.select("publications");
     }
-    HomePage.prototype.doInfinite = function (infiniteScroll) {
-        var _this = this;
-        setTimeout(function () {
-            _this.store.dispatch(Object(__WEBPACK_IMPORTED_MODULE_4__providers_reducers_publication_reducer__["e" /* incrementPublicationRange */])());
-            infiniteScroll.complete();
-        }, 500);
+    HomePage.prototype.onSearchInput = function (event) {
+        this.store.dispatch(Object(__WEBPACK_IMPORTED_MODULE_4__providers_reducers_publication_reducer__["d" /* getPublications */])());
+    };
+    HomePage.prototype.onSearchCancel = function (event) {
+        this.store.dispatch(Object(__WEBPACK_IMPORTED_MODULE_4__providers_reducers_publication_reducer__["d" /* getPublications */])());
+    };
+    HomePage.prototype.doInfinite = function (event) {
+        this.store.dispatch(Object(__WEBPACK_IMPORTED_MODULE_4__providers_reducers_publication_reducer__["e" /* incrementPublicationRange */])());
+        event.complete();
     };
     return HomePage;
 }());
 HomePage = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
-        selector: 'page-home',template:/*ion-inline-start:"C:\Users\Matias\WebstormProjects\turinsta\src\pages\home\home.html"*/'<ion-content>\n  <publication-list [data]="publications | async"></publication-list>\n  <!--<ion-list [virtualScroll]="publications.publications | async">-->\n    <!--<ion-item *virtualItem="let publication">-->\n      <!--<publication [data]="publication"></publication>-->\n    <!--</ion-item>-->\n  <!--</ion-list>-->\n  <ion-infinite-scroll (ionInfinite)="doInfinite($event)">\n    <ion-infinite-scroll-content\n      loadingSpinner="bubbles"\n      loadingText="Obteniendo más información...">\n    </ion-infinite-scroll-content>\n  </ion-infinite-scroll>\n</ion-content>\n'/*ion-inline-end:"C:\Users\Matias\WebstormProjects\turinsta\src\pages\home\home.html"*/,
+        selector: 'page-home',template:/*ion-inline-start:"C:\Users\Matias\WebstormProjects\turinsta\src\pages\home\home.html"*/'<ion-header>\n  <ion-navbar>\n    <ion-searchbar\n      [(ngModel)]="searchInput"\n      [animated]=true\n      [autocomplete]="on"\n      placeholder="Buscar"\n      (ionInput)="onSearchInput($event)"\n      (ionCancel)="onSearchCancel($event)">\n    </ion-searchbar>\n  </ion-navbar>\n</ion-header>\n<ion-content>\n  <publication-list [data]="publications | async"></publication-list>\n  <!--<ion-list [virtualScroll]="publications.publications | async">-->\n    <!--<ion-item *virtualItem="let publication">-->\n      <!--<publication [data]="publication"></publication>-->\n    <!--</ion-item>-->\n  <!--</ion-list>-->\n  <ion-infinite-scroll (ionInfinite)="doInfinite($event)">\n    <ion-infinite-scroll-content\n      loadingSpinner="bubbles"\n      loadingText="Obteniendo más información...">\n    </ion-infinite-scroll-content>\n  </ion-infinite-scroll>\n</ion-content>\n'/*ion-inline-end:"C:\Users\Matias\WebstormProjects\turinsta\src\pages\home\home.html"*/,
         changeDetection: __WEBPACK_IMPORTED_MODULE_0__angular_core__["j" /* ChangeDetectionStrategy */].OnPush
     }),
-    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_2__providers_storage_storage__["a" /* StorageProvider */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* NavController */], __WEBPACK_IMPORTED_MODULE_3__ngrx_store__["h" /* Store */]])
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_2__providers_storage_storage__["a" /* StorageProvider */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__providers_storage_storage__["a" /* StorageProvider */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* NavController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* NavController */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_3__ngrx_store__["h" /* Store */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__ngrx_store__["h" /* Store */]) === "function" && _c || Object])
 ], HomePage);
 
+var _a, _b, _c;
 //# sourceMappingURL=home.js.map
 
 /***/ }),

@@ -14,16 +14,23 @@ import {AppState} from "../../providers/models/publication.model";
 export class HomePage{
 
   publications : Observable<any>;
+  searchInput: string = null;
 
   constructor(public storageService:StorageProvider, public navCtrl: NavController, private store: Store<AppState>) {
     this.store.dispatch(getPublications());
     this.publications = store.select("publications");
   }
 
-  doInfinite(infiniteScroll){
-    setTimeout(() => {
-      this.store.dispatch(incrementPublicationRange());
-      infiniteScroll.complete();
-    }, 500);
+  onSearchInput(event){
+    this.store.dispatch(getPublications());
+  }
+
+  onSearchCancel(event){
+    this.store.dispatch(getPublications());
+  }
+
+  doInfinite(event){
+    this.store.dispatch(incrementPublicationRange());
+    event.complete();
   }
 }

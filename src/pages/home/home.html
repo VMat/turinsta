@@ -1,3 +1,15 @@
+<ion-header>
+  <ion-navbar>
+    <ion-searchbar
+      [(ngModel)]="searchInput"
+      [animated]=true
+      [autocomplete]="on"
+      placeholder="Buscar"
+      (ionInput)="onSearchInput($event)"
+      (ionCancel)="onSearchCancel($event)">
+    </ion-searchbar>
+  </ion-navbar>
+</ion-header>
 <ion-content>
   <publication-list [data]="publications | async"></publication-list>
   <!--<ion-list [virtualScroll]="publications.publications | async">-->
