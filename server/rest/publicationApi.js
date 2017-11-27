@@ -3,7 +3,7 @@ const publicationService = require('../services/publicationService');
 
 router.get('/count/:count',(req, res)=>{
   console.log("c: " + req.params.count);
-  publicationService.getPublications(req.params.count)
+  publicationService.getPublications(req.query,req.params.count)
     .then(publications=>{res.status(200).json(publications)})
     .catch(error=>{res.status(500).send(error)})
 });
