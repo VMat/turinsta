@@ -20,8 +20,8 @@ let db = (function(){
       });
     },
 
-    getPublications: (count)=>{
-      return publicationInterface.getN(count);
+    getPublications: (searchParams,count)=>{
+      return publicationInterface.getN(searchParams,count);
     },
 
     getPublication: (id)=>{
