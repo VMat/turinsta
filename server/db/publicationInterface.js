@@ -17,8 +17,8 @@ const PublicationInterface = (function(){
         .populate('comments');
     },
 
-    getN: (n)=>{
-      return Commons.getN(Publications,n)
+    getN: (searchParams,n)=>{
+      return Commons.getN(Publications,searchParams,n)
         .populate('user')
         .populate('experiences')
         .populate('comments');
