@@ -1,7 +1,7 @@
 export interface AppState {
   publications: any,
   range: number,
-  filter: string,
+  filters: Array<any>,
   pending: boolean,
   error: string
 }

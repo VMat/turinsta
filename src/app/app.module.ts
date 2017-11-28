@@ -23,7 +23,6 @@ import {publicationReducer} from "../providers/reducers/publication.reducer";
 import {EffectsModule} from "@ngrx/effects";
 import {PublicationEffects} from "../providers/storage/publication.effects";
 import {StoreDevtoolsModule} from "@ngrx/store-devtools";
-import {PublicationService} from "../providers/storage/publication.service";
 import {PublicationListComponent} from "../components/publication-list/publication-list";
 import {PublicationHeaderComponent} from "../components/publication-header/publication-header";
 import {PublicationBodyComponent} from "../components/publication-body/publication-body";
@@ -78,7 +77,6 @@ import { CommonsProvider } from '../providers/commons/commons';
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     StorageProvider,
-    PublicationService,
     CommonsProvider
   ]
 })

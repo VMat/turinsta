@@ -3,7 +3,9 @@ export const GET_PUBLICATIONS = "GET_PUBLICATIONS";
 export const GET_PUBLICATIONS_SUCCESS = "GET_PUBLICATIONS_SUCCESS";
 export const GET_PUBLICATIONS_ERROR = "GET_PUBLICATIONS_ERROR";
 export const INCREMENT_PUBLICATION_RANGE = "INCREMENT_PUBLICATION_RANGE";
-export const SET_FILTER = "SET_FILTER";
+export const ADD_FILTER = "ADD_FILTER";
+export const REMOVE_FILTER = "REMOVE_FILTER";
+export const CLEAN_FILTERS = "CLEAN_FILTERS";
 
 export function getPublications() {
   return {
@@ -17,17 +19,30 @@ export function incrementPublicationRange(){
   }
 }
 
-export function setFilter(filter){
+export function addFilter(filter){
   return {
-    type: SET_FILTER,
+    type: ADD_FILTER,
     payload: filter
+  }
+}
+
+export function removeFilter(filterKey){
+  return {
+    type: REMOVE_FILTER,
+    payload: filterKey
+  }
+}
+
+export function cleanFilters(){
+  return {
+    type: CLEAN_FILTERS
   }
 }
 
 const initialState = {
   publications: [],
   range: 2,
-  filter: null,
+  filters: [],
   pending: false,
   error: null
 };
@@ -97,22 +112,45 @@ function execFullUpdate(target,source,arrayProperties){
 
 export function publicationReducer(state = initialState, { type, payload } ) {
   switch( type ) {
-    case GET_PUBLICATIONS:
-      return tassign(state,{pending: true, error: null});
-    case GET_PUBLICATIONS_SUCCESS:
+    case GET_PUBLICATIONS:{
+      return tassign(state, {pending: true, error: null});
+    }
+    case GET_PUBLICATIONS_SUCCESS:{
 
-      if(state.publications.length > 0){
+      if (state.publications.length > 0) {
         updatePublications(state.publications, payload);
         return tassign(state, {pending: false});
       }
 
       return tassign(state, {publications: payload, pending: false});
-    case GET_PUBLICATIONS_ERROR:
+    }
+    case GET_PUBLICATIONS_ERROR:{
       return tassign(state, {pending: false, error: "Error"});
-    case INCREMENT_PUBLICATION_RANGE:
+    }
+    case INCREMENT_PUBLICATION_RANGE:{
       return tassign(state, {range: state.publications.length >= state.range ? state.range + 10 : state.range});
-    case SET_FILTER:
-      return tassign(state, {filter: payload});
+    }
+    case ADD_FILTER: {
+      let filtersCopy = [...state.filters];
+      filtersCopy.push(payload);
+      return tassign(state, {filters: filtersCopy});
+    }
+    case REMOVE_FILTER:{
+      let index = null;
+      state.filters.forEach((filter,i)=>{
+        if(filter.key == payload){
+          index = i;
+        }
+      });
+      let filtersCopy = [...state.filters];
+      if(Boolean(index)){
+        filtersCopy.splice(index,1);
+      }
+      return tassign(state, {filters: filtersCopy});
+    }
+    case CLEAN_FILTERS:{
+      return tassign(state, {filters: []})
+    }
     default:
       return state;
   }

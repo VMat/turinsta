@@ -3,7 +3,10 @@ import {NavController} from 'ionic-angular';
 import {StorageProvider} from "../../providers/storage/storage";
 import {Observable} from "rxjs";
 import {Store} from "@ngrx/store";
-import {getPublications, incrementPublicationRange} from "../../providers/reducers/publication.reducer";
+import {
+  getPublications, incrementPublicationRange, addFilter,
+  cleanFilters
+} from "../../providers/reducers/publication.reducer";
 import {AppState} from "../../providers/models/publication.model";
 
 @Component({
@@ -22,11 +25,12 @@ export class HomePage{
   }
 
   onSearchInput(event){
-    this.store.dispatch(getPublications());
+    alert(this.searchInput);
+    this.store.dispatch(addFilter({key:"places.name",value: this.searchInput}));
   }
 
   onSearchCancel(event){
-    this.store.dispatch(getPublications());
+    this.store.dispatch(cleanFilters());
   }
 
   doInfinite(event){

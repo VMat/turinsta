@@ -4,6 +4,7 @@
       [(ngModel)]="searchInput"
       [animated]=true
       [autocomplete]="on"
+      [debounce]=1000
       placeholder="Buscar"
       (ionInput)="onSearchInput($event)"
       (ionCancel)="onSearchCancel($event)">

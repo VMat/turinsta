@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {Http, Response, Headers} from '@angular/http';
+import {Http, Response, Headers, URLSearchParams} from '@angular/http';
 import 'rxjs/add/operator/map';
 
 /*
@@ -19,8 +19,13 @@ export class StorageProvider {
     StorageProvider.headers.append('Content-Type', 'application/json');
   }
 
-  getPublications(range) {
-    return this.http.get(StorageProvider.baseUrl + 'publications/count/' + range)
+  getPublications(range,filters) {
+    let params = new URLSearchParams();
+    filters.forEach((filter)=>{
+      params.set(filter.key, filter.value);
+    });
+
+    return this.http.get(StorageProvider.baseUrl + 'publications/count/' + range, {params: params})
       .map((res:Response) => res.json());
   }
 
