@@ -1,0 +1,16 @@
+<!--
+  Generated template for the PublicationOrderByPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-content no-padding>
+  <ion-list>
+    <ion-list-header>Ordenar por</ion-list-header>
+    <button ion-item (click)="close('-date')" style="font-size: small">Más recientes</button>
+    <button ion-item (click)="close('-followers')" style="font-size: small">Más populares</button>
+    <button ion-item (click)="close('-score')" style="font-size: small">Mejor calificadas</button>
+    <button ion-item (click)="close('-user.followers')" style="font-size: small">Usuarios más populares</button>
+    <button ion-item (click)="close('-user.score')" style="font-size: small">Usuarios mejor calificados</button>
+  </ion-list>
+</ion-content>

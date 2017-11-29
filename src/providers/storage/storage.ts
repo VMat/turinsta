@@ -19,7 +19,7 @@ export class StorageProvider {
     StorageProvider.headers.append('Content-Type', 'application/json');
   }
 
-  getPublications(range,filters) {
+  getPublications(range,filters,orderBy) {
     let params = new URLSearchParams();
     filters.forEach((filter)=>{
       params.set(filter.key, filter.value);

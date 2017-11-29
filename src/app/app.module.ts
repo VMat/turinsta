@@ -29,6 +29,8 @@ import {PublicationBodyComponent} from "../components/publication-body/publicati
 import {PublicationFooterComponent} from "../components/publication-footer/publication-footer";
 import {ExperienceListComponent} from "../components/experience-list/experience-list";
 import { CommonsProvider } from '../providers/commons/commons';
+import {ContainsFilterPipe} from "../pipes/contains-filter/contains-filter";
+import {PublicationOrderByPage} from "../pages/publication-order-by/publication-order-by";
 
 @NgModule({
   declarations: [
@@ -38,6 +40,7 @@ import { CommonsProvider } from '../providers/commons/commons';
     AccountPage,
     HomePage,
     TabsPage,
+    PublicationOrderByPage,
     PublicationHeaderComponent,
     PublicationBodyComponent,
     PublicationFooterComponent,
@@ -46,7 +49,8 @@ import { CommonsProvider } from '../providers/commons/commons';
     ExperienceListComponent,
     ExperienceComponent,
     CommentComponent,
-    CommentListComponent
+    CommentListComponent,
+    ContainsFilterPipe
   ],
   imports: [
     BrowserModule,
@@ -70,7 +74,8 @@ import { CommonsProvider } from '../providers/commons/commons';
     ActivitiesPage,
     AccountPage,
     HomePage,
-    TabsPage
+    TabsPage,
+    PublicationOrderByPage
   ],
   providers: [
     StatusBar,

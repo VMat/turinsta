@@ -6,6 +6,7 @@ export const INCREMENT_PUBLICATION_RANGE = "INCREMENT_PUBLICATION_RANGE";
 export const ADD_FILTER = "ADD_FILTER";
 export const REMOVE_FILTER = "REMOVE_FILTER";
 export const CLEAN_FILTERS = "CLEAN_FILTERS";
+export const SET_ORDER_BY = "SET_ORDER_BY";
 
 export function getPublications() {
   return {
@@ -39,10 +40,18 @@ export function cleanFilters(){
   }
 }
 
+export function setOrderBy(orderBy){
+  return {
+    type: SET_ORDER_BY,
+    payload: orderBy
+  }
+}
+
 const initialState = {
   publications: [],
   range: 2,
   filters: [],
+  orderBy: null,
   pending: false,
   error: null
 };
@@ -150,6 +159,9 @@ export function publicationReducer(state = initialState, { type, payload } ) {
     }
     case CLEAN_FILTERS:{
       return tassign(state, {filters: []})
+    }
+    case SET_ORDER_BY:{
+      return tassign(state, {orderBy: payload})
     }
     default:
       return state;
