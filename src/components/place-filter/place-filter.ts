@@ -28,7 +28,7 @@ export class PlaceFilterComponent {
   setPlaceFilter(){
     this.searchInput = this.placeFilter;
     this.showAutocomplete = false;
-    this.store.dispatch(addFilter({key:"places.name",value: this.placeFilter}));
+    this.store.dispatch(addFilter({key:"places.name", value: this.placeFilter, operation: "EQUAL"}));
   }
 
   onSearchInput(event){

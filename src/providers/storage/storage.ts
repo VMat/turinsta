@@ -22,10 +22,10 @@ export class StorageProvider {
   getPublications(range,filters,orderBy) {
     let params = new URLSearchParams();
     filters.forEach((filter)=>{
-      params.set(filter.key, filter.value);
+      params.set(filter.key, JSON.stringify({value: filter.value, operation: filter.operation}));
     });
 
-    return this.http.get(StorageProvider.baseUrl + 'publications/count/' + range, {params: params})
+    return this.http.get(StorageProvider.baseUrl + 'publications/count/' + range + '/sort/' + 'timestamps.created/' + '-1', {params: params})
       .map((res:Response) => res.json());
   }
 
