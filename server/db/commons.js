@@ -36,19 +36,14 @@ let Commons = (function(){
 
     processParams: (params) => {
       let filters = {};
-      let paramDetail = {};
-
-      console.log("params: " + JSON.stringify(params));
 
       for(let i in params){
 
-        paramDetail = JSON.parse(params[i]);
-
-        switch(paramDetail.operation){
+        switch(params[i].operation){
 
             case 'EQUAL':{
-              console.log("Equal value: " + paramDetail.value);
-              filters[i] = paramDetail.value;
+              console.log("Equal value: " + params[i].value);
+              filters[i] = params[i].value;
               break;
             }
             case 'LIKE':{
