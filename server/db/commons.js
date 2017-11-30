@@ -11,7 +11,7 @@ let Commons = (function(){
     getN: (Collection,searchParams,n,order)=>{
       console.log("count: " + n + " order: " + order);
       return Collection.find(searchParams)
-          .sort({order: -1})
+          .sort({[order]: -1})
           .limit(Number(n));
     },
 
