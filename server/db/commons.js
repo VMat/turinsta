@@ -8,10 +8,10 @@ let Commons = (function(){
       return Collection.find()
     },
 
-    getN: (Collection,searchParams,n)=>{
-      console.log("count: " + n);
+    getN: (Collection,searchParams,n,order)=>{
+      console.log("count: " + n + " order: " + order);
       return Collection.find(searchParams)
-          .sort({'timestamps.created': -1})
+          .sort({order: -1})
           .limit(Number(n));
     },
 
