@@ -3,6 +3,7 @@ const publicationService = require('../services/publicationService');
 
 router.get('/count/:count/sort/:field/:way',(req, res)=>{
   let searchParams = JSON.parse(decodeURI(JSON.stringify(req.query)));
+  console.log(JSON.stringify(searchParams));
   let orderBy = {...{[req.params.field]: req.params.way}, ...{"timestamps.created": -1}};
   publicationService.getPublications(searchParams,req.params.count,orderBy)
     .then(publications=>{res.status(200).json(publications)})
