@@ -42,6 +42,7 @@ let Commons = (function(){
         switch(params[i].operation){
       
             case 'EQUAL':{
+              console.log("Equal value: " + params[i].value);
               filters[i] = params[i].value;
               break;
             }
