@@ -10,8 +10,8 @@ const storageService = (function(){
       db.connect();
     },
 
-    getPublications: (searchParams,count)=>{
-      return db.getPublications(searchParams,count);
+    getPublications: (searchParams,count,order)=>{
+      return db.getPublications(searchParams,count,order);
     },
 
     getPublication: (id)=>{
