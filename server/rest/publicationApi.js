@@ -1,10 +1,10 @@
 const router = require('express').Router();
 const publicationService = require('../services/publicationService');
 
-router.get('/count/:count',(req, res)=>{
+router.get('/count/:count/order/:order',(req, res)=>{
   console.log("c: " + req.params.count);
   let searchParams = JSON.parse(decodeURI(JSON.stringify(req.query)))
-  publicationService.getPublications(searchParams,req.params.count)
+  publicationService.getPublications(searchParams,req.params.count,req.params.order)
     .then(publications=>{res.status(200).json(publications)})
     .catch(error=>{res.status(500).send(error)})
 });
