@@ -1,0 +1,16 @@
+<!-- Generated template for the PlaceFilterComponent component -->
+<ion-item no-padding no-lines>
+  <ion-searchbar item-start
+                 [(ngModel)]="searchInput"
+                 [animated]=true
+                 [autocomplete]="on"
+                 [autocorrect]="on"
+                 [debounce]=500
+                 placeholder="Buscar"
+                 (ionInput)="onSearchInput($event)"
+                 (ionClear)="onSearchClear($event)">
+  </ion-searchbar>
+  <ion-select no-padding no-margin item-end [disabled]="!showAutocomplete" [(ngModel)]="placeFilter" interface="action-sheet" (ionChange)="setPlaceFilter()" cancelText="Cancelar" style="width: 2%">
+    <ion-option *ngFor="let place of places | containsFilter:{key: 'name', value: searchInput}" value="{{place.name}}">{{place.name}}</ion-option>
+  </ion-select>
+</ion-item>

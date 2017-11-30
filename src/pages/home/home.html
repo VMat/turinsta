@@ -1,26 +1,5 @@
 <ion-header>
-  <ion-navbar>
-    <ion-item>
-      <ion-searchbar item-start
-        [(ngModel)]="searchInput"
-        [animated]=true
-        [autocomplete]="on"
-        [autocorrect]="on"
-        [debounce]=500
-        placeholder="Buscar"
-        (ionInput)="onSearchInput($event)"
-        (ionClear)="onSearchClear($event)">
-      </ion-searchbar>
-      <ion-item item-left [hidden]="!showAutocomplete">
-        <ion-select [(ngModel)]="placeFilter" interface="action-sheet" (ionChange)="setPlaceFilter()" cancelText="Cancelar">
-          <ion-option *ngFor="let place of places | containsFilter:{key: 'name', value: searchInput}" value="{{place.name}}">{{place.name}}</ion-option>
-        </ion-select>
-      </ion-item>
-      <button item-end ion-button icon-only (click)="presentPopover($event)">
-        <ion-icon name="more"></ion-icon>
-      </button>
-    </ion-item>
-  </ion-navbar>
+  <filters-bar></filters-bar>
 </ion-header>
 <ion-content>
   <publication-list [data]="publications | async"></publication-list>

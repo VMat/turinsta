@@ -8,6 +8,10 @@ import { PublicationHeaderComponent } from './publication-header/publication-hea
 import { PublicationBodyComponent } from './publication-body/publication-body';
 import { PublicationFooterComponent } from './publication-footer/publication-footer';
 import { ExperienceListComponent } from './experience-list/experience-list';
+import { FiltersBarComponent } from './filters-bar/filters-bar';
+import { PlaceFilterComponent } from './place-filter/place-filter';
+import { UserFilterComponent } from './user-filter/user-filter';
+import { OrderingCriterionComponent } from './ordering-criterion/ordering-criterion';
 @NgModule({
 	declarations: [PublicationComponent,
     ExperienceComponent,
@@ -17,7 +21,11 @@ import { ExperienceListComponent } from './experience-list/experience-list';
     PublicationHeaderComponent,
     PublicationBodyComponent,
     PublicationFooterComponent,
-    ExperienceListComponent],
+    ExperienceListComponent,
+    FiltersBarComponent,
+    PlaceFilterComponent,
+    UserFilterComponent,
+    OrderingCriterionComponent],
 	imports: [],
 	exports: [PublicationComponent,
     ExperienceComponent,
@@ -27,6 +35,10 @@ import { ExperienceListComponent } from './experience-list/experience-list';
     PublicationHeaderComponent,
     PublicationBodyComponent,
     PublicationFooterComponent,
-    ExperienceListComponent]
+    ExperienceListComponent,
+    FiltersBarComponent,
+    PlaceFilterComponent,
+    UserFilterComponent,
+    OrderingCriterionComponent]
 })
 export class ComponentsModule {}

@@ -27806,6 +27806,18 @@ ion-navbar.toolbar {
   min-height: calc(46px + constant(safe-area-inset-top));
 }
 
+place-filter .select-md .select-icon {
+  position: absolute;
+}
+
+place-filter #select-1-0 {
+  width: 0 !important;
+}
+
+place-filter .select-md .select-text {
+  display: none;
+}
+
 .publication-card-header {
   width: 100%;
   margin: 0 auto;

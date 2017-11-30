@@ -1,14 +1,14 @@
 webpackJsonp([1],{
 
-/***/ 595:
+/***/ 601:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "PlacesPageModule", function() { return PlacesPageModule; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "PublicationOrderByPageModule", function() { return PublicationOrderByPageModule; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(24);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__places__ = __webpack_require__(146);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(19);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__publication_order_by__ = __webpack_require__(147);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -18,23 +18,23 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 
 
 
-var PlacesPageModule = (function () {
-    function PlacesPageModule() {
+var PublicationOrderByPageModule = (function () {
+    function PublicationOrderByPageModule() {
     }
-    return PlacesPageModule;
+    return PublicationOrderByPageModule;
 }());
-PlacesPageModule = __decorate([
+PublicationOrderByPageModule = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["L" /* NgModule */])({
         declarations: [
-            __WEBPACK_IMPORTED_MODULE_2__places__["a" /* PlacesPage */],
+            __WEBPACK_IMPORTED_MODULE_2__publication_order_by__["a" /* PublicationOrderByPage */],
         ],
         imports: [
-            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["f" /* IonicPageModule */].forChild(__WEBPACK_IMPORTED_MODULE_2__places__["a" /* PlacesPage */]),
+            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["f" /* IonicPageModule */].forChild(__WEBPACK_IMPORTED_MODULE_2__publication_order_by__["a" /* PublicationOrderByPage */]),
         ],
     })
-], PlacesPageModule);
+], PublicationOrderByPageModule);
 
-//# sourceMappingURL=places.module.js.map
+//# sourceMappingURL=publication-order-by.module.js.map
 
 /***/ })
 

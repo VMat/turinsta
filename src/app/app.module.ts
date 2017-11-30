@@ -31,6 +31,11 @@ import {ExperienceListComponent} from "../components/experience-list/experience-
 import { CommonsProvider } from '../providers/commons/commons';
 import {ContainsFilterPipe} from "../pipes/contains-filter/contains-filter";
 import {PublicationOrderByPage} from "../pages/publication-order-by/publication-order-by";
+import {PublicationUserFilterPage} from "../pages/publication-user-filter/publication-user-filter";
+import {FiltersBarComponent} from "../components/filters-bar/filters-bar";
+import {PlaceFilterComponent} from "../components/place-filter/place-filter";
+import {UserFilterComponent} from "../components/user-filter/user-filter";
+import {OrderingCriterionComponent} from "../components/ordering-criterion/ordering-criterion";
 
 @NgModule({
   declarations: [
@@ -41,6 +46,7 @@ import {PublicationOrderByPage} from "../pages/publication-order-by/publication-
     HomePage,
     TabsPage,
     PublicationOrderByPage,
+    PublicationUserFilterPage,
     PublicationHeaderComponent,
     PublicationBodyComponent,
     PublicationFooterComponent,
@@ -50,6 +56,10 @@ import {PublicationOrderByPage} from "../pages/publication-order-by/publication-
     ExperienceComponent,
     CommentComponent,
     CommentListComponent,
+    FiltersBarComponent,
+    PlaceFilterComponent,
+    UserFilterComponent,
+    OrderingCriterionComponent,
     ContainsFilterPipe
   ],
   imports: [
@@ -75,7 +85,8 @@ import {PublicationOrderByPage} from "../pages/publication-order-by/publication-
     AccountPage,
     HomePage,
     TabsPage,
-    PublicationOrderByPage
+    PublicationOrderByPage,
+    PublicationUserFilterPage
   ],
   providers: [
     StatusBar,
