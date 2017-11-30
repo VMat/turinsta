@@ -9,8 +9,18 @@ let Commons = (function(){
     },
 
     getN: (Collection,searchParams,n,order)=>{
-      console.log("count: " + n + " order: " + order);
-      return Collection.find(searchParams)
+      let filters = {};
+      
+      for(let i in searchParams){
+        if(Array.isArray(searchParams[i])){
+          filters[i] = {$in: searchParams[i]}
+        }
+        else{
+          filters[i] = searchParams[i]
+        }
+      }
+      
+      return Collection.find(filters)
           .sort(order)
           .limit(Number(n));
     },
