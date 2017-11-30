@@ -37,6 +37,8 @@ let Commons = (function(){
     processParams: (params) => {
       let filters = {};
 
+      console.log("params: " + JSON.stringify(params));
+
       for(let i in params){
 
         switch(params[i].operation){
