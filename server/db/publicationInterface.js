@@ -23,7 +23,7 @@ const PublicationInterface = (function(){
       return /*Publications.find(filters)*/
 //          .populate('user')
           Publications.aggregate([
-            {
+            /*{
               $lookup:
                 {
                   from: "Users",
@@ -31,7 +31,7 @@ const PublicationInterface = (function(){
                   foreignField: "_id",
                   as: "userData"
                 }
-            }
+            }*/
           ]);
           //.populate('experiences')
           //.populate('comments');
