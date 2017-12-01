@@ -241,23 +241,29 @@ var PublicationOrderByPage = (function () {
         this.navParams = navParams;
         this.viewCtrl = viewCtrl;
         this.store = store;
+        this.sortValue = null;
     }
     PublicationOrderByPage.prototype.ionViewDidLoad = function () {
+        var _this = this;
         console.log('ionViewDidLoad PublicationOrderByPage');
+        this.store.select("publications").subscribe(function (state) {
+            _this.sortValue = state.sort.field;
+        });
     };
     PublicationOrderByPage.prototype.close = function (order) {
-        this.store.dispatch(Object(__WEBPACK_IMPORTED_MODULE_3__providers_reducers_publication_reducer__["i" /* setOrderBy */])(order));
+        this.store.dispatch(Object(__WEBPACK_IMPORTED_MODULE_3__providers_reducers_publication_reducer__["j" /* setSort */])(order));
         this.viewCtrl.dismiss();
     };
     return PublicationOrderByPage;
 }());
 PublicationOrderByPage = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
-        selector: 'page-publication-order-by',template:/*ion-inline-start:"C:\Users\Matias\WebstormProjects\turinsta\src\pages\publication-order-by\publication-order-by.html"*/'<!--\n  Generated template for the PublicationOrderByPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-content no-padding>\n  <ion-list>\n    <ion-list-header>Ordenar por</ion-list-header>\n    <button ion-item (click)="close(\'-date\')" style="font-size: small">Más recientes</button>\n    <button ion-item (click)="close(\'-followers\')" style="font-size: small">Más populares</button>\n    <button ion-item (click)="close(\'-score\')" style="font-size: small">Mejor calificadas</button>\n    <button ion-item (click)="close(\'-user.followers\')" style="font-size: small">Usuarios más populares</button>\n    <button ion-item (click)="close(\'-user.score\')" style="font-size: small">Usuarios mejor calificados</button>\n  </ion-list>\n</ion-content>\n'/*ion-inline-end:"C:\Users\Matias\WebstormProjects\turinsta\src\pages\publication-order-by\publication-order-by.html"*/,
+        selector: 'page-publication-order-by',template:/*ion-inline-start:"C:\Users\Matias\WebstormProjects\turinsta\src\pages\publication-order-by\publication-order-by.html"*/'<!--\n  Generated template for the PublicationOrderByPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-content no-padding>\n  <ion-list radio-group [(ngModel)]="sortValue">\n    <ion-list-header>Ordenar por</ion-list-header>\n    <ion-item>\n      <ion-label>Más recientes</ion-label>\n      <ion-radio value="timestamps.created" (click)="close({field: \'timestamps.created\', way: -1})"></ion-radio>\n    </ion-item>\n    <ion-item>\n      <ion-label>Más populares</ion-label>\n      <ion-radio value="followers.count" (click)="close({field: \'followers.count\', way: -1})"></ion-radio>\n    </ion-item>\n    <ion-item>\n      <ion-label>Mejor calificadas</ion-label>\n      <ion-radio value="score" (click)="close({field: \'score\', way: -1})"></ion-radio>\n    </ion-item>\n    <ion-item>\n      <ion-label>Usuarios más populares</ion-label>\n      <ion-radio value="user.followers.count" (click)="close({field: \'user.followers.count\', way: -1})"></ion-radio>\n    </ion-item>\n    <ion-item>\n      <ion-label>Usuarios mejor calificados</ion-label>\n      <ion-radio value="user.score" (click)="close({field: \'user.score\', way: -1})"></ion-radio>\n    </ion-item>\n  </ion-list>\n</ion-content>\n'/*ion-inline-end:"C:\Users\Matias\WebstormProjects\turinsta\src\pages\publication-order-by\publication-order-by.html"*/,
     }),
-    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* NavParams */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* ViewController */], __WEBPACK_IMPORTED_MODULE_2__ngrx_store__["h" /* Store */]])
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* NavController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* NavController */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* NavParams */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* NavParams */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* ViewController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* ViewController */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_2__ngrx_store__["h" /* Store */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__ngrx_store__["h" /* Store */]) === "function" && _d || Object])
 ], PublicationOrderByPage);
 
+var _a, _b, _c, _d;
 //# sourceMappingURL=publication-order-by.js.map
 
 /***/ }),
@@ -269,6 +275,8 @@ PublicationOrderByPage = __decorate([
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return PublicationUserFilterPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(19);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__ngrx_store__ = __webpack_require__(28);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_reducers_publication_reducer__ = __webpack_require__(57);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -280,6 +288,8 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 
 
+
+
 /**
  * Generated class for the PublicationUserFilterPage page.
  *
@@ -287,22 +297,43 @@ var __metadata = (this && this.__metadata) || function (k, v) {
  * Ionic pages and navigation.
  */
 var PublicationUserFilterPage = (function () {
-    function PublicationUserFilterPage(navCtrl, navParams) {
+    function PublicationUserFilterPage(navCtrl, navParams, viewCtrl, store) {
+        var _this = this;
         this.navCtrl = navCtrl;
         this.navParams = navParams;
+        this.viewCtrl = viewCtrl;
+        this.store = store;
+        this.userFilter = null;
+        this.customUser = null;
+        this.store.select("publications").subscribe(function (state) {
+            var userFilter = state.filters.filter(function (filter) { return filter.key == "user"; });
+            if (userFilter.length > 0) {
+                _this.userFilter = userFilter[0].value;
+            }
+        });
     }
     PublicationUserFilterPage.prototype.ionViewDidLoad = function () {
         console.log('ionViewDidLoad PublicationUserFilterPage');
+    };
+    PublicationUserFilterPage.prototype.close = function (filter) {
+        if (Boolean(filter)) {
+            this.store.dispatch(Object(__WEBPACK_IMPORTED_MODULE_3__providers_reducers_publication_reducer__["d" /* addFilter */])(filter));
+        }
+        else {
+            this.store.dispatch(Object(__WEBPACK_IMPORTED_MODULE_3__providers_reducers_publication_reducer__["i" /* removeFilter */])("user"));
+        }
+        this.viewCtrl.dismiss();
     };
     return PublicationUserFilterPage;
 }());
 PublicationUserFilterPage = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
-        selector: 'page-publication-user-filter',template:/*ion-inline-start:"C:\Users\Matias\WebstormProjects\turinsta\src\pages\publication-user-filter\publication-user-filter.html"*/'<!--\n  Generated template for the PublicationUserFilterPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n\n<ion-content no-padding>\n  <ion-list radio-group>\n    <ion-list-header>Visualizar</ion-list-header>\n    <ion-item>\n      <ion-label>Todos</ion-label>\n      <ion-radio value="all"></ion-radio>\n    </ion-item>\n    <ion-item>\n      <ion-label>Seguidos</ion-label>\n      <ion-radio value="followed"></ion-radio>\n    </ion-item>\n    <ion-item>\n      <ion-label>Buscar</ion-label>\n      <ion-radio value="custom"></ion-radio>\n    </ion-item>\n  </ion-list>\n</ion-content>\n'/*ion-inline-end:"C:\Users\Matias\WebstormProjects\turinsta\src\pages\publication-user-filter\publication-user-filter.html"*/,
+        selector: 'page-publication-user-filter',template:/*ion-inline-start:"C:\Users\Matias\WebstormProjects\turinsta\src\pages\publication-user-filter\publication-user-filter.html"*/'<!--\n  Generated template for the PublicationUserFilterPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n\n<ion-content no-padding>\n  <ion-list radio-group [(ngModel)]="userFilter">\n    <ion-list-header>Visualizar</ion-list-header>\n    <ion-item>\n      <ion-label>Todos</ion-label>\n      <ion-radio value="{{null}}" (click)="close()"></ion-radio>\n    </ion-item>\n    <ion-item>\n      <ion-label>Seguidos</ion-label>\n      <ion-radio value="FOLLOWED" (click)="close({key: \'user\', value: userFilter, operation: \'IN\'})"></ion-radio>\n    </ion-item>\n    <ion-item>\n      <ion-label>Buscar</ion-label>\n      <ion-input [(ngModel)]="customUser"></ion-input>\n      <ion-radio value="CUSTOM" (click)="close({key: \'user\', value: customUser, operation: \'LIKE\'})"></ion-radio>\n    </ion-item>\n  </ion-list>\n</ion-content>\n'/*ion-inline-end:"C:\Users\Matias\WebstormProjects\turinsta\src\pages\publication-user-filter\publication-user-filter.html"*/,
     }),
-    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* NavParams */]])
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* NavController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* NavController */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* NavParams */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* NavParams */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* ViewController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* ViewController */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_2__ngrx_store__["h" /* Store */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__ngrx_store__["h" /* Store */]) === "function" && _d || Object])
 ], PublicationUserFilterPage);
 
+var _a, _b, _c, _d;
 //# sourceMappingURL=publication-user-filter.js.map
 
 /***/ }),
@@ -1104,7 +1135,7 @@ var PublicationEffects = (function () {
             .withLatestFrom(_this.store$)
             .switchMap(function (_a) {
             var action = _a[0], storeState = _a[1];
-            return _this.storageService.getPublications(storeState.publications.range, storeState.publications.filters, storeState.publications.orderBy)
+            return _this.storageService.getPublications(storeState.publications.range, storeState.publications.filters, storeState.publications.sort)
                 .map(function (publications) { return ({ type: __WEBPACK_IMPORTED_MODULE_3__reducers_publication_reducer__["c" /* GET_PUBLICATIONS_SUCCESS */], payload: publications }); })
                 .catch(function () { return __WEBPACK_IMPORTED_MODULE_2_rxjs__["Observable"].of({ type: __WEBPACK_IMPORTED_MODULE_3__reducers_publication_reducer__["b" /* GET_PUBLICATIONS_ERROR */] }); });
         }); });
@@ -1113,13 +1144,14 @@ var PublicationEffects = (function () {
 }());
 __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_1__ngrx_effects__["b" /* Effect */])(),
-    __metadata("design:type", __WEBPACK_IMPORTED_MODULE_2_rxjs__["Observable"])
+    __metadata("design:type", typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_2_rxjs__["Observable"] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2_rxjs__["Observable"]) === "function" && _a || Object)
 ], PublicationEffects.prototype, "getPublications$", void 0);
 PublicationEffects = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["B" /* Injectable */])(),
-    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__ngrx_effects__["a" /* Actions */], __WEBPACK_IMPORTED_MODULE_5__storage__["a" /* StorageProvider */], __WEBPACK_IMPORTED_MODULE_4__ngrx_store__["h" /* Store */]])
+    __metadata("design:paramtypes", [typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1__ngrx_effects__["a" /* Actions */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__ngrx_effects__["a" /* Actions */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_5__storage__["a" /* StorageProvider */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_5__storage__["a" /* StorageProvider */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_4__ngrx_store__["h" /* Store */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_4__ngrx_store__["h" /* Store */]) === "function" && _d || Object])
 ], PublicationEffects);
 
+var _a, _b, _c, _d;
 //# sourceMappingURL=publication.effects.js.map
 
 /***/ }),
@@ -1135,13 +1167,13 @@ PublicationEffects = __decorate([
 /* unused harmony export ADD_FILTER */
 /* unused harmony export REMOVE_FILTER */
 /* unused harmony export CLEAN_FILTERS */
-/* unused harmony export SET_ORDER_BY */
+/* unused harmony export SET_SORT */
 /* harmony export (immutable) */ __webpack_exports__["f"] = getPublications;
 /* harmony export (immutable) */ __webpack_exports__["g"] = incrementPublicationRange;
 /* harmony export (immutable) */ __webpack_exports__["d"] = addFilter;
-/* unused harmony export removeFilter */
+/* harmony export (immutable) */ __webpack_exports__["i"] = removeFilter;
 /* harmony export (immutable) */ __webpack_exports__["e"] = cleanFilters;
-/* harmony export (immutable) */ __webpack_exports__["i"] = setOrderBy;
+/* harmony export (immutable) */ __webpack_exports__["j"] = setSort;
 /* harmony export (immutable) */ __webpack_exports__["h"] = publicationReducer;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_tassign__ = __webpack_require__(303);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_tassign___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_tassign__);
@@ -1153,7 +1185,7 @@ var INCREMENT_PUBLICATION_RANGE = "INCREMENT_PUBLICATION_RANGE";
 var ADD_FILTER = "ADD_FILTER";
 var REMOVE_FILTER = "REMOVE_FILTER";
 var CLEAN_FILTERS = "CLEAN_FILTERS";
-var SET_ORDER_BY = "SET_ORDER_BY";
+var SET_SORT = "SET_SORT";
 function getPublications() {
     return {
         type: GET_PUBLICATIONS
@@ -1181,17 +1213,17 @@ function cleanFilters() {
         type: CLEAN_FILTERS
     };
 }
-function setOrderBy(orderBy) {
+function setSort(sort) {
     return {
-        type: SET_ORDER_BY,
-        payload: orderBy
+        type: SET_SORT,
+        payload: sort
     };
 }
 var initialState = {
     publications: [],
     range: 2,
     filters: [],
-    orderBy: null,
+    sort: { field: "timestamps.created", way: -1 },
     pending: false,
     error: null
 };
@@ -1271,28 +1303,37 @@ function publicationReducer(state, _a) {
             return Object(__WEBPACK_IMPORTED_MODULE_0_tassign__["tassign"])(state, { range: state.publications.length >= state.range ? state.range + 10 : state.range });
         }
         case ADD_FILTER: {
-            var filtersCopy = state.filters.slice();
-            filtersCopy.push(payload);
-            return Object(__WEBPACK_IMPORTED_MODULE_0_tassign__["tassign"])(state, { filters: filtersCopy });
-        }
-        case REMOVE_FILTER: {
             var index_1 = null;
             state.filters.forEach(function (filter, i) {
-                if (filter.key == payload) {
+                if (filter.key == payload.key) {
                     index_1 = i;
                 }
             });
             var filtersCopy = state.filters.slice();
-            if (Boolean(index_1)) {
+            if (index_1 != null) {
                 filtersCopy.splice(index_1, 1);
+            }
+            filtersCopy.push(payload);
+            return Object(__WEBPACK_IMPORTED_MODULE_0_tassign__["tassign"])(state, { filters: filtersCopy });
+        }
+        case REMOVE_FILTER: {
+            var index_2 = null;
+            state.filters.forEach(function (filter, i) {
+                if (filter.key == payload) {
+                    index_2 = i;
+                }
+            });
+            var filtersCopy = state.filters.slice();
+            if (index_2 != null) {
+                filtersCopy.splice(index_2, 1);
             }
             return Object(__WEBPACK_IMPORTED_MODULE_0_tassign__["tassign"])(state, { filters: filtersCopy });
         }
         case CLEAN_FILTERS: {
             return Object(__WEBPACK_IMPORTED_MODULE_0_tassign__["tassign"])(state, { filters: [] });
         }
-        case SET_ORDER_BY: {
-            return Object(__WEBPACK_IMPORTED_MODULE_0_tassign__["tassign"])(state, { orderBy: payload });
+        case SET_SORT: {
+            return Object(__WEBPACK_IMPORTED_MODULE_0_tassign__["tassign"])(state, { sort: payload });
         }
         default:
             return state;
@@ -1335,12 +1376,12 @@ var StorageProvider = StorageProvider_1 = (function () {
         console.log('Hello StorageProvider Provider');
         StorageProvider_1.headers.append('Content-Type', 'application/json');
     }
-    StorageProvider.prototype.getPublications = function (range, filters, orderBy) {
+    StorageProvider.prototype.getPublications = function (range, filters, sort) {
         var params = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["d" /* URLSearchParams */]();
         filters.forEach(function (filter) {
             params.set(filter.key, JSON.stringify({ value: filter.value, operation: filter.operation }));
         });
-        return this.http.get(StorageProvider_1.baseUrl + 'publications/count/' + range + '/sort/' + 'timestamps.created/' + '-1', { params: params })
+        return this.http.get(StorageProvider_1.baseUrl + 'publications/count/' + range + '/sort/' + sort.field + '/' + sort.way, { params: params })
             .map(function (res) { return res.json(); });
     };
     StorageProvider.prototype.createComment = function (comment) {

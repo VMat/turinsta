@@ -2,7 +2,7 @@ export interface AppState {
   publications: any,
   range: number,
   filters: Array<any>,
-  orderBy: string,
+  sort: {},
   pending: boolean,
   error: string
 }

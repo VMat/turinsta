@@ -19,13 +19,13 @@ export class StorageProvider {
     StorageProvider.headers.append('Content-Type', 'application/json');
   }
 
-  getPublications(range,filters,orderBy) {
+  getPublications(range,filters,sort) {
     let params = new URLSearchParams();
     filters.forEach((filter)=>{
       params.set(filter.key, JSON.stringify({value: filter.value, operation: filter.operation}));
     });
 
-    return this.http.get(StorageProvider.baseUrl + 'publications/count/' + range + '/sort/' + 'timestamps.created/' + '-1', {params: params})
+    return this.http.get(StorageProvider.baseUrl + 'publications/count/' + range + '/sort/' + sort.field + '/' + sort.way, {params: params})
       .map((res:Response) => res.json());
   }
 

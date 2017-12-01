@@ -6,19 +6,20 @@
 -->
 
 <ion-content no-padding>
-  <ion-list radio-group>
+  <ion-list radio-group [(ngModel)]="userFilter">
     <ion-list-header>Visualizar</ion-list-header>
     <ion-item>
       <ion-label>Todos</ion-label>
-      <ion-radio value="all"></ion-radio>
+      <ion-radio value="{{null}}" (click)="close()"></ion-radio>
     </ion-item>
     <ion-item>
       <ion-label>Seguidos</ion-label>
-      <ion-radio value="followed"></ion-radio>
+      <ion-radio value="FOLLOWED" (click)="close({key: 'user', value: userFilter, operation: 'IN'})"></ion-radio>
     </ion-item>
     <ion-item>
       <ion-label>Buscar</ion-label>
-      <ion-radio value="custom"></ion-radio>
+      <ion-input [(ngModel)]="customUser"></ion-input>
+      <ion-radio value="CUSTOM" (click)="close({key: 'user', value: customUser, operation: 'LIKE'})"></ion-radio>
     </ion-item>
   </ion-list>
 </ion-content>
