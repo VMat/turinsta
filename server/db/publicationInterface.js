@@ -19,10 +19,18 @@ const PublicationInterface = (function(){
 
     getN: (searchParams,n,order)=>{      
       let filters = Commons.processParams(searchParams);
-      return Commons.getN(Publications,filters,n,order)
-        .populate('user')
-        .populate('experiences')
-        .populate('comments');
+      
+      Publications.find(filters)
+          .populate('user')
+          .populate('experiences')
+          .populate('comments')
+          .sort(order)
+          .limit(Number(n));
+      
+      //return Commons.getN(Publications,filters,n,order)
+      //  .populate('user')
+      //  .populate('experiences')
+      //  .populate('comments');
     },
 
     getOne: (id)=>{
