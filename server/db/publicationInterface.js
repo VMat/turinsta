@@ -22,7 +22,7 @@ const PublicationInterface = (function(){
       
       Publications.find(filters)
 //          .populate('user')
-          .aggregate([
+          /*.aggregate([
             {
               $lookup:
                 {
@@ -32,7 +32,7 @@ const PublicationInterface = (function(){
                   as: "userData"
                 }
             }
-          ])
+          ])*/
           .populate('experiences')
           .populate('comments')
 //          .sort(order)
