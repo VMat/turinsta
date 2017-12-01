@@ -20,7 +20,7 @@ const PublicationInterface = (function(){
     getN: (searchParams,n,order)=>{      
       let filters = Commons.processParams(searchParams);
       
-      Publications.find(filters)
+      return Publications.find(filters)
 //          .populate('user')
           /*.aggregate([
             {
@@ -34,11 +34,11 @@ const PublicationInterface = (function(){
             }
           ])*/
           .populate('experiences')
-          .populate('comments')
+          .populate('comments');
 //          .sort(order)
 //          .limit(Number(n));
       
-      db.orders.aggregate([
+      /*db.orders.aggregate([
         {
           $lookup:
             {
@@ -48,7 +48,7 @@ const PublicationInterface = (function(){
               as: "inventory_docs"
           }
         }
-      ])
+      ])*/
       
       //return Commons.getN(Publications,filters,n,order)
       //  .populate('user')
