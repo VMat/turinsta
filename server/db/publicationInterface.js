@@ -20,9 +20,9 @@ const PublicationInterface = (function(){
     getN: (searchParams,n,order)=>{      
       let filters = Commons.processParams(searchParams);
       
-      return Publications.find(filters)
+      return /*Publications.find(filters)*/
 //          .populate('user')
-          .aggregate([
+          Publications.aggregate([
             {
               $lookup:
                 {
@@ -32,9 +32,9 @@ const PublicationInterface = (function(){
                   as: "userData"
                 }
             }
-          ])
-          .populate('experiences')
-          .populate('comments');
+          ]);
+          //.populate('experiences')
+          //.populate('comments');
 //          .sort(order)
 //          .limit(Number(n));
       
