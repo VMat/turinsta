@@ -19,7 +19,7 @@ const PublicationInterface = (function(){
 
     getN: (searchParams,n,order)=>{      
       let filters = Commons.processParams(searchParams);
-      return Publications.aggregate({}).exec();      
+      return Publications.aggregate.lookup({ from: 'Users', localField: 'user', foreignField: '_id', as: 'UserData' }).exec();   
     },
       /*Publications.find(filters)*/
 //          .populate('user')
