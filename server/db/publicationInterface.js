@@ -19,7 +19,8 @@ const PublicationInterface = (function(){
 
     getN: (searchParams,n,order)=>{      
       let filters = Commons.processParams(searchParams);
-      return Publications.aggregate.lookup({ from: 'Users', localField: 'user', foreignField: '_id', as: 'UserData' }).exec();   
+      return Publications.aggregate({ $match: {_id: '59f8d0eb9e46160012027790'}});
+      //return Publications.aggregate({ from: 'Users', localField: 'user', foreignField: '_id', as: 'UserData' }).exec();   
     },
       /*Publications.find(filters)*/
 //          .populate('user')
