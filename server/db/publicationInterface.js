@@ -19,10 +19,11 @@ const PublicationInterface = (function(){
 
     getN: (searchParams,n,order)=>{      
       let filters = Commons.processParams(searchParams);
-      
-      return /*Publications.find(filters)*/
+      return Publications.aggregate({}).exec();      
+    },
+      /*Publications.find(filters)*/
 //          .populate('user')
-          Publications.aggregate([
+        
             /*{
               $lookup:
                 {
@@ -32,7 +33,7 @@ const PublicationInterface = (function(){
                   as: "userData"
                 }
             }*/
-          ]).exec();
+
           //.populate('experiences')
           //.populate('comments');
 //          .sort(order)
@@ -54,7 +55,7 @@ const PublicationInterface = (function(){
       //  .populate('user')
       //  .populate('experiences')
       //  .populate('comments');
-    },
+
 
     getOne: (id)=>{
       return Commons.getOne(Publications, id)
