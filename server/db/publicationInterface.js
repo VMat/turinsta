@@ -32,9 +32,7 @@ const PublicationInterface = (function(){
                   as: "userData"
                 }
             }*/
-          ],(result)=>{
-            console.log(result);
-          });
+          ]).exec();
           //.populate('experiences')
           //.populate('comments');
 //          .sort(order)
