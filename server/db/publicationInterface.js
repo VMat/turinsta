@@ -23,20 +23,20 @@ const PublicationInterface = (function(){
       let filters = Commons.processParams(searchParams);
       let match = Publications.aggregate([{ $match: {_id: mongoose.Types.ObjectId('59f8d0eb9e46160012027790')}},
         {
-          $lookup: [
-            {
-              from: "Users",
-              localField: "user",
-              foreignField: "_id",
-              as: "userData"
-            },
-            {
-              from: "Experiences",
-              localField: "experiences",
-              foreignField: "_id",
-              as: "experiencesData"
-            }
-          ]
+          $lookup: {
+            from: "Users",
+            localField: "user",
+            foreignField: "_id",
+            as: "userData"
+          }
+        },
+        {
+          $lookup: {
+            from: "Experiences",
+            localField: "experiences",
+            foreignField: "_id",
+            as: "experiencesData"
+          }
         }
       ]);
       return match.exec();
