@@ -38,6 +38,7 @@ const PublicationInterface = (function(){
             as: "experiences"
           }
         },
+        { $unwind: "experiences" },
         {
           $lookup: {
             from: "Comments",
@@ -45,7 +46,8 @@ const PublicationInterface = (function(){
             foreignField: "_id",
             as: "comments"
           }
-        }
+        },
+        { $unwind: "comments" },
       ]);
       return match.exec();
     },
