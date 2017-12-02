@@ -21,25 +21,25 @@ const PublicationInterface = (function(){
 
     getN: (searchParams,n,order)=>{
       let filters = Commons.processParams(searchParams);
-      console.log("entry");
-      // let aggregate =  new aggregate();
-      // console.log("aggregate");
-      // let Model = Aggregate.model(Publications);
-      // console.log("model");
       let match = Publications.aggregate([{ $match: {_id: mongoose.Types.ObjectId('59f8d0eb9e46160012027790')}},
         {
-          $lookup: {
-            from: "Users",
-            localField: "user",
-            foreignField: "_id",
-            as: "userData"
-          }
+          $lookup: [
+            {
+              from: "Users",
+              localField: "user",
+              foreignField: "_id",
+              as: "userData"
+            },
+            {
+              from: "Experiences",
+              localField: "experiences",
+              foreignField: "_id",
+              as: "experiencesData"
+            }
+          ]
         }
-        ]);
-      // let match = Publications.aggregate();
-      console.log("match");
+      ]);
       return match.exec();
-      //return Publications.aggregate({ from: 'Users', localField: 'user', foreignField: '_id', as: 'UserData' }).exec();
     },
       /*Publications.find(filters)*/
 //          .populate('user')
