@@ -39,7 +39,9 @@ const PublicationInterface = (function(){
           }
         }
       ]);
-      return match.exec().populate('experiences');
+      return match.exec((err,result)=>{
+        result.populate('experiences');
+      });
     },
       /*Publications.find(filters)*/
 //          .populate('user')
