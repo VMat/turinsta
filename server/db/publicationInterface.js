@@ -22,14 +22,14 @@ const PublicationInterface = (function(){
     getN: (searchParams,n,order)=>{
       let filters = Commons.processParams(searchParams);
       let match = Publications.aggregate([
-        {
-          $lookup: {
-            from: "Users",
-            localField: "user",
-            foreignField: "_id",
-            as: "userData"
-          }
-        },
+        // {
+        //   $lookup: {
+        //     from: "Users",
+        //     localField: "user",
+        //     foreignField: "_id",
+        //     as: "userData"
+        //   }
+        // },
         { $unwind: "$experienceIds" },
         {
           $lookup: {
@@ -39,17 +39,17 @@ const PublicationInterface = (function(){
             as: "experiences"
           }
         },
-        { $unwind: "$experiences" },
-        { $unwind: "$commentIds" },
-        {
-          $lookup: {
-            from: "Comments",
-            localField: "commentIds",
-            foreignField: "_id",
-            as: "comments"
-          }
-        },
-        { $unwind: "$comments" },
+        // { $unwind: "$experiences" },
+        // { $unwind: "$commentIds" },
+        // {
+        //   $lookup: {
+        //     from: "Comments",
+        //     localField: "commentIds",
+        //     foreignField: "_id",
+        //     as: "comments"
+        //   }
+        // },
+        // { $unwind: "$comments" },
       ]);
       return match.exec();
     },
