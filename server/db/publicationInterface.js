@@ -38,7 +38,7 @@ const PublicationInterface = (function(){
             as: "experiences"
           }
         },
-        { $unwind: "experiences" },
+        { $unwind: "$experiences" },
         {
           $lookup: {
             from: "Comments",
@@ -47,7 +47,7 @@ const PublicationInterface = (function(){
             as: "comments"
           }
         },
-        { $unwind: "comments" },
+        { $unwind: "$comments" },
       ]);
       return match.exec();
     },
