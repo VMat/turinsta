@@ -66,6 +66,17 @@ const PublicationInterface = (function(){
             as: "comments"
           }
         },
+        {
+          $group: {
+            _id: "$_id",
+            experiences: {
+              $addToSet: "$experiences"
+            },
+            comments: {
+              $addToSet: "$commentIds"
+            }
+          }
+        }
         // { $unwind: "$comments" },
       ]);
       return match.exec();
