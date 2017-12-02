@@ -40,7 +40,7 @@ const PublicationInterface = (function(){
         }
       ]);
       return match.exec((err,result)=>{
-        return result.populate('experiences');
+        return Experiences.populate(result, {path: '_id'});
       });
     },
       /*Publications.find(filters)*/
