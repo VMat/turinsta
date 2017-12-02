@@ -21,7 +21,7 @@ const PublicationInterface = (function(){
 
     getN: (searchParams,n,order)=>{
       let filters = Commons.processParams(searchParams);
-      let match = Publications.aggregate([{ $match: {_id: mongoose.Types.ObjectId('59f8d0eb9e46160012027790')}},
+      let match = Publications.aggregate([
         {
           $lookup: {
             from: "Users",
