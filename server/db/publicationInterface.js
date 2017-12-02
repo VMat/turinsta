@@ -4,6 +4,7 @@ const Experiences = require('../models/experience');
 const Comments = require('../models/comment');
 const Commons = require('./commons');
 const aggregate = require('mongoose/lib/aggregate');
+const Aggregate = require('mongoose').Aggregate;
 
 const PublicationInterface = (function(){
 
