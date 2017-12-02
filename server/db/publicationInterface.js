@@ -21,9 +21,9 @@ const PublicationInterface = (function(){
     getN: (searchParams,n,order)=>{
       let filters = Commons.processParams(searchParams);
       console.log("entry");
-      let aggregate =  new aggregate();
-      console.log("aggregate");
-      let Model = aggregate.model(Publications);
+      // let aggregate =  new aggregate();
+      // console.log("aggregate");
+      let Model = Aggregate.model(Publications);
       console.log("model");
       let match = Model.aggregate({ $match: {_id: '59f8d0eb9e46160012027790'}});
       console.log("match");
