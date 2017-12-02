@@ -39,7 +39,15 @@ const PublicationInterface = (function(){
             as: "experiences"
           }
         },
-        // { $unwind: "$experiences" },
+        { $unwind: "$experiences" },
+        {
+          $group: {
+            "_id": "$_id",
+            "experienceIds": { "$push": "$experienceIds" },
+            "experiences": { "$push": "$experiences" }
+          }
+        },
+
         // { $unwind: "$commentIds" },
         // {
         //   $lookup: {
