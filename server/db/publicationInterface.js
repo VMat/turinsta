@@ -38,7 +38,7 @@ const PublicationInterface = (function(){
             as: "experiencesData"
           }
         }
-      ]);
+      ]).populate('experiences');
       return match.exec();
     },
       /*Publications.find(filters)*/
