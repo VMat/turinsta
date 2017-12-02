@@ -61,7 +61,7 @@ const PublicationInterface = (function(){
         {
           $group: {
             _id: "$_id",
-            user: "$user",
+            // user: "$user",
             publications: { $push : "$$ROOT" },
             experiences: {
               $addToSet: "$experiences"
