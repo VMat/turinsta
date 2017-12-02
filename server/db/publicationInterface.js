@@ -63,6 +63,7 @@ const PublicationInterface = (function(){
             _id: "$_id",
             // user: "$user",
             publications: { $push : "$$ROOT" },
+            user: "$user",
             experiences: {
               $addToSet: "$experiences"
             },
