@@ -38,8 +38,8 @@ const PublicationInterface = (function(){
             as: "experiencesData"
           }
         }
-      ]).populate('experiences');
-      return match.exec();
+      ]);
+      return match.exec().populate('experiences');
     },
       /*Publications.find(filters)*/
 //          .populate('user')
