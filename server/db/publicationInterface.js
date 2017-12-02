@@ -21,8 +21,12 @@ const PublicationInterface = (function(){
     getN: (searchParams,n,order)=>{
       let filters = Commons.processParams(searchParams);
       let aggregate = new Aggregate();
+      console.log("aggregate");
       let Model = aggregate.model(Publications);
-      Model.aggregate({ $match: {_id: '59f8d0eb9e46160012027790'}}).exec();
+      console.log("model");
+      let match = Model.aggregate({ $match: {_id: '59f8d0eb9e46160012027790'}});
+      console.log("match");
+      return match.exec();
       //return Publications.aggregate({ from: 'Users', localField: 'user', foreignField: '_id', as: 'UserData' }).exec();
     },
       /*Publications.find(filters)*/
