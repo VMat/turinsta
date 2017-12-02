@@ -43,8 +43,8 @@ const PublicationInterface = (function(){
         {
           $group: {
             "_id": "$_id",
-            "experienceIds": { "$push": "$experienceIds" },
-            "experiences": { "$push": "$experiences" }
+            "experienceIds": { $push: "$experienceIds" },
+            "experiences": { $push: "$experiences" }
           }
         },
 
