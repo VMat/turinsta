@@ -20,6 +20,7 @@ const PublicationInterface = (function(){
 
     getN: (searchParams,n,order)=>{
       let filters = Commons.processParams(searchParams);
+      console.log("entry");
       let aggregate = new Aggregate();
       console.log("aggregate");
       let Model = aggregate.model(Publications);
