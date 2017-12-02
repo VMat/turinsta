@@ -3,8 +3,8 @@ const Users = require('../models/user');
 const Experiences = require('../models/experience');
 const Comments = require('../models/comment');
 const Commons = require('./commons');
-const aggregate = require('mongoose/lib/aggregate');
-const Aggregate = require('mongoose').Aggregate;
+// const aggregate = require('mongoose/lib/aggregate');
+const mongoose = require('mongoose');
 
 const PublicationInterface = (function(){
 
@@ -26,7 +26,7 @@ const PublicationInterface = (function(){
       // console.log("aggregate");
       // let Model = Aggregate.model(Publications);
       // console.log("model");
-      let match = Publications.aggregate([{ $match: {_id: '59f8d0eb9e46160012027790'}}]);
+      let match = Publications.aggregate([{ $match: {_id: mongoose.Types.ObjectId('59f8d0eb9e46160012027790')}}]);
       // let match = Publications.aggregate();
       console.log("match");
       return match.exec();
