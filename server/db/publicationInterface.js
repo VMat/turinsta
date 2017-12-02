@@ -24,9 +24,10 @@ const PublicationInterface = (function(){
       console.log("entry");
       // let aggregate =  new aggregate();
       // console.log("aggregate");
-      let Model = Aggregate.model(Publications);
-      console.log("model");
-      let match = Model.aggregate({ $match: {_id: '59f8d0eb9e46160012027790'}});
+      // let Model = Aggregate.model(Publications);
+      // console.log("model");
+      // let match = Publications.aggregate({ $match: {_id: '59f8d0eb9e46160012027790'}});
+      let match = Publications.aggregate();
       console.log("match");
       return match.exec();
       //return Publications.aggregate({ from: 'Users', localField: 'user', foreignField: '_id', as: 'UserData' }).exec();
