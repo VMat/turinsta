@@ -44,14 +44,6 @@ const PublicationInterface = (function(){
             as: "experiences"
           }
         },
-        // { $unwind: "$experiences" },
-        // {
-        //   $group: {
-        //     "_id": "$_id",
-        //     "experienceIds": { $push: "$experienceIds" },
-        //     "experiences": { $push: "$experiences" }
-        //   }
-        // },
         {
           $unwind: {
             path: "$commentIds",
@@ -69,15 +61,16 @@ const PublicationInterface = (function(){
         {
           $group: {
             _id: "$_id",
+            user: "$user",
+            publications: { $push : "$$ROOT" },
             experiences: {
               $addToSet: "$experiences"
             },
             comments: {
-              $addToSet: "$commentIds"
+              $addToSet: "$comments"
             }
           }
         }
-        // { $unwind: "$comments" },
       ]);
       return match.exec();
     },
