@@ -30,7 +30,7 @@ const PublicationInterface = (function(){
             as: "userData"
           }
         },
-        { $unwind: "experienceIds" },
+        { $unwind: "$experienceIds" },
         {
           $lookup: {
             from: "Experiences",
@@ -40,7 +40,7 @@ const PublicationInterface = (function(){
           }
         },
         { $unwind: "$experiences" },
-        { $unwind: "commentIds" },
+        { $unwind: "$commentIds" },
         {
           $lookup: {
             from: "Comments",
