@@ -33,15 +33,21 @@ const PublicationInterface = (function(){
         {
           $lookup: {
             from: "Experiences",
-            localField: "experiences",
+            localField: "experienceIds",
             foreignField: "_id",
-            as: "experiencesData"
+            as: "experiences"
+          }
+        },
+        {
+          $lookup: {
+            from: "Comments",
+            localField: "commentIds",
+            foreignField: "_id",
+            as: "comments"
           }
         }
       ]);
-      return match.exec((err,result)=>{
-        return Users.populate(result, {path: 'user'});
-      });
+      return match.exec();
     },
       /*Publications.find(filters)*/
 //          .populate('user')

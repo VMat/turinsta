@@ -7,13 +7,13 @@ const publicationSchema = new schema({
 		type: schema.Types.ObjectId, ref: 'Users'
 	},
 	places:[{
-    name: String  
+    name: String
   }],
 	images:[{
 		url: String
 	}],
-	experiences:[{type: schema.Types.ObjectId, ref: 'Experiences'}],
-	comments:[{type: schema.Types.ObjectId, ref: 'Comments'}],
+	experienceIds:[{type: schema.Types.ObjectId, ref: 'Experiences'}],
+	commentIds:[{type: schema.Types.ObjectId, ref: 'Comments'}],
 	timestamps: {
     created: String,
     modified: String
