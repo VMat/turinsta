@@ -3,6 +3,7 @@ const Users = require('../models/user');
 const Experiences = require('../models/experience');
 const Comments = require('../models/comment');
 const Commons = require('./commons');
+const aggregate = require('mongoose/lib/aggregate');
 
 const PublicationInterface = (function(){
 
@@ -17,14 +18,16 @@ const PublicationInterface = (function(){
         .populate('comments');
     },
 
-    getN: (searchParams,n,order)=>{      
+    getN: (searchParams,n,order)=>{
       let filters = Commons.processParams(searchParams);
-      return Publications.aggregate({ $match: {_id: '59f8d0eb9e46160012027790'}}).exec();
-      //return Publications.aggregate({ from: 'Users', localField: 'user', foreignField: '_id', as: 'UserData' }).exec();   
+      let aggregate = new Aggregate();
+      let Model = aggregate.model(Publications);
+      Model.aggregate({ $match: {_id: '59f8d0eb9e46160012027790'}}).exec();
+      //return Publications.aggregate({ from: 'Users', localField: 'user', foreignField: '_id', as: 'UserData' }).exec();
     },
       /*Publications.find(filters)*/
 //          .populate('user')
-        
+
             /*{
               $lookup:
                 {
@@ -39,7 +42,7 @@ const PublicationInterface = (function(){
           //.populate('comments');
 //          .sort(order)
 //          .limit(Number(n));
-      
+
       /*db.orders.aggregate([
         {
           $lookup:
@@ -51,7 +54,7 @@ const PublicationInterface = (function(){
           }
         }
       ])*/
-      
+
       //return Commons.getN(Publications,filters,n,order)
       //  .populate('user')
       //  .populate('experiences')
