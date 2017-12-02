@@ -30,7 +30,12 @@ const PublicationInterface = (function(){
             as: "userData"
           }
         },
-        { $unwind: "$experienceIds" },
+        {
+          $unwind: {
+            path: "$experienceIds",
+            preserveNullAndEmptyArrays: true
+          }
+        },
         {
           $lookup: {
             from: "Experiences",
@@ -47,8 +52,12 @@ const PublicationInterface = (function(){
         //     "experiences": { $push: "$experiences" }
         //   }
         // },
-
-        { $unwind: "$commentIds" },
+        {
+          $unwind: {
+            path: "$commentIds",
+            preserveNullAndEmptyArrays: true
+          }
+        },
         {
           $lookup: {
             from: "Comments",
