@@ -60,18 +60,17 @@ const PublicationInterface = (function(){
         },
         {
           $group: {
-            _id: "$_id",
-            // user: "$user",
-            publications: { $push : "$$ROOT" },
-            user: {
-              $addToSet: "$userData"
-            },
-            experiences: {
-              $addToSet: "$experiences"
-            },
-            comments: {
-              $addToSet: "$comments"
-            }
+            // _id: "$_id",
+            publication: { $push : "$$ROOT" },
+            // user: {
+            //   $addToSet: "$userData"
+            // },
+            // experiences: {
+            //   $addToSet: "$experiences"
+            // },
+            // comments: {
+            //   $addToSet: "$comments"
+            // }
           }
         }
       ]);
