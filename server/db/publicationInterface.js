@@ -31,6 +31,9 @@ const PublicationInterface = (function(){
           }
         },
         {
+          $unwind: "$userData"
+        },
+        {
           $unwind: {
             path: "$experienceIds",
             preserveNullAndEmptyArrays: true
