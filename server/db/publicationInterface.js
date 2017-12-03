@@ -75,6 +75,7 @@ const PublicationInterface = (function(){
           }
         },
         { $unwind: "$followers"},
+        {$sortByCount: "$followers"},
         {
           $group: {
             _id: "$_id",
@@ -90,7 +91,7 @@ const PublicationInterface = (function(){
             }
           }
         },
-        {$sortByCount: "$followers"},
+
         // {$sort: order},
         {$limit: Number(n)}
       ]).exec();
