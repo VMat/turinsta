@@ -46,6 +46,12 @@ const PublicationInterface = (function(){
         },
         {
           $unwind: {
+            path: "$experiences",
+            preserveNullAndEmptyArrays: true
+          }
+        },
+        {
+          $unwind: {
             path: "$commentIds",
             preserveNullAndEmptyArrays: true
           }
@@ -59,17 +65,23 @@ const PublicationInterface = (function(){
           }
         },
         {
+          $unwind: {
+            path: "$comments",
+            preserveNullAndEmptyArrays: true
+          }
+        },
+        {
           $group: {
             _id: "$_id",
             publication: { $first : "$$ROOT" },
             user: {
-              $addToSet: "$userData"
+              $first: "$userData"
             },
             experiences: {
-              $first: "$experiences"
+              $addToSet: "$experiences"
             },
             comments: {
-              $first: "$comments"
+              $addToSet: "$comments"
             }
           }
         }
