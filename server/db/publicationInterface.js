@@ -66,10 +66,10 @@ const PublicationInterface = (function(){
               $addToSet: "$userData"
             },
             experiences: {
-              $addToSet: "$experiences"
+              $first: "$experiences"
             },
             comments: {
-              $addToSet: "$comments"
+              $first: "$comments"
             }
           }
         }
