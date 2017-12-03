@@ -1,17 +1,17 @@
 <!-- Generated template for the PublicationFooterComponent component -->
 <ion-list>
   <ion-item class="publication-buttons-item">
-    <button item-start *ngIf="data.experiences.length >0" class="publication-button" (click)="toggleSection(0)" ion-button clear>
+    <button item-start *ngIf="experiences.length >0" class="publication-button" (click)="toggleSection(0)" ion-button clear>
       <ion-icon class="publication-icon" name="ios-paper" color="secondary" isActive="{{sections[0].show}}">
-        <ion-badge class="publication-badge">{{data.experiences.length}}</ion-badge>
+        <ion-badge class="publication-badge">{{experiences.length}}</ion-badge>
       </ion-icon>
     </button>
     <button item-left class="publication-button" (click)="toggleSection(1)" ion-button clear>
       <ion-icon class="publication-icon" name="ios-text" color="secondary" isActive="{{sections[1].show}}">
-        <ion-badge *ngIf="data.comments.length >0" class="publication-badge">{{data.comments.length}}</ion-badge>
+        <ion-badge *ngIf="comments.length >0" class="publication-badge">{{comments.length}}</ion-badge>
       </ion-icon>
     </button>
   </ion-item>
 </ion-list>
-<experience-list *ngIf="sections[0].show" [data]=data.experiences [publicationId]=data._id></experience-list>
-<comment-list *ngIf="sections[1].show" [data]=data.comments [publicationId]=data._id [publicationOwner]=data.user._id></comment-list>
+<experience-list *ngIf="sections[0].show" [experiences]=experiences [publicationId]=publicationId></experience-list>
+<comment-list *ngIf="sections[1].show" [comments]=comments [publicationId]=publicationId [publicationOwner]=userId></comment-list>

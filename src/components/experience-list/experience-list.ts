@@ -12,7 +12,7 @@ import {Component, Input} from '@angular/core';
 })
 export class ExperienceListComponent {
 
-  @Input() data: any = null;
+  @Input() experiences: any = null;
   @Input() publicationId: String = null;
 
   constructor() {

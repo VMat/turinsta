@@ -16,7 +16,7 @@ import {CommonsProvider} from "../../providers/commons/commons";
 })
 export class CommentListComponent{
 
-  @Input() data: any = null;
+  @Input() comments: any = null;
   @Input() publicationId: string = null;
   @Input() publicationOwner: string = null;
   @Input() commentId: string = null;

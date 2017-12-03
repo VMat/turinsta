@@ -15,7 +15,10 @@ import {Store} from "@ngrx/store";
 })
 export class PublicationFooterComponent {
 
-  @Input() data: any = null;
+  @Input() publicationId: any = null;
+  @Input() userId: any = null;
+  @Input() experiences: any = null;
+  @Input() comments: any = null;
   sections: any = [{name: "Experiences", show: false}, {name: "Comments", show: false}];
 
   constructor(public events: Events, private store: Store<AppState>) {

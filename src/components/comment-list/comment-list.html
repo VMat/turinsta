@@ -1,6 +1,6 @@
 <!-- Generated template for the CommentListComponent component -->
 <ion-list class="comment-list">
-  <comment *ngFor="let comment of data" [data]=comment [publicationId]=publicationId [publicationOwner]=publicationOwner (commentDeleted)="commentDeleted($event)"></comment>
+  <comment *ngFor="let comment of comments" [comment]=comment [publicationId]=publicationId [publicationOwner]=publicationOwner (commentDeleted)="commentDeleted($event)"></comment>
   <ion-item no-padding>
     <ion-textarea [(ngModel)]="commentValue" item-start style="font-size: x-small" placeholder="Escribe un comentario..."></ion-textarea>
     <button item-left ion-button clear (click)="sendComment()">

@@ -12,7 +12,8 @@ import {Component, Input} from '@angular/core';
 })
 export class PublicationBodyComponent {
 
-  @Input() data: any = null;
+  @Input() user: any = null;
+  @Input() publication: any = null;
 
   constructor() {
     console.log('Hello PublicationBodyComponent Component');

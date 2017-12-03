@@ -17,7 +17,7 @@ import {AlertController} from "ionic-angular";
 })
 export class CommentComponent{
 
-  @Input() data: any = null;
+  @Input() comment: any = null;
   @Input() publicationId: any = null;
   @Input() publicationOwner: any = null;
   @Output() commentDeleted = new EventEmitter();
@@ -34,7 +34,7 @@ export class CommentComponent{
 
   toogleEditionMode(){
     this.editionMode = !this.editionMode;
-    this.commentValue = this.editionMode ? this.data.content : null;
+    this.commentValue = this.editionMode ? this.comment.content : null;
   }
 
   confirmUpdate() {
@@ -80,7 +80,7 @@ export class CommentComponent{
   }
 
   updateComment(){
-    let dataCopy = {...this.data};
+    let dataCopy = {...this.comment};
     dataCopy.content = this.commentValue;
     this.storageService.updateComment(dataCopy).subscribe((updatedComment)=>{
       this.commonsService.presentToast("Comentario editado con éxito");
@@ -89,19 +89,19 @@ export class CommentComponent{
   }
 
   deleteComment(){
-    this.storageService.deleteComment(this.data).subscribe((deletedComment)=>{
+    this.storageService.deleteComment(this.comment).subscribe((deletedComment)=>{
       this.commentDeleted.emit();
       this.commonsService.presentToast("Comentario borrado con éxito");
     });
   }
 
   checkEditionPermission(){
-    return this.data.user.id == this.commonsService.getUserId();
+    return this.publicationOwner == this.commonsService.getUserId();
   }
 
   checkDeletePermission(){
     let loggedUser = this.commonsService.getUserId();
-    return (this.publicationOwner == loggedUser) || (this.data.user.id == loggedUser);
+    return (this.publicationOwner == loggedUser) || (this.publicationOwner == loggedUser);
   }
 
 }

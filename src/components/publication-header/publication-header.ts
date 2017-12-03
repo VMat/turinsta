@@ -12,7 +12,8 @@ import {Component, Input} from '@angular/core';
 })
 export class PublicationHeaderComponent {
 
-  @Input() data: any = null;
+  @Input() user: any = null;
+  @Input() publication: any = null;
 
   constructor() {
     console.log('Hello PublicationHeaderComponent Component');

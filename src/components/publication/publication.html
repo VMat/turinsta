@@ -1,10 +1,10 @@
 <!-- Generated template for the PublicationComponent component -->
 <ion-card text-wrap>
   <ion-card-header class="publication-card-header">
-    <publication-header [data]=data></publication-header>
+    <publication-header [user]=data.user [publication]=data.publication></publication-header>
   </ion-card-header>
   <ion-card-content>
-    <publication-body [data]=data></publication-body>
-    <publication-footer [data]=data></publication-footer>
+    <publication-body [user]=data.user [publication]=data.publication></publication-body>
+    <publication-footer [publicationId]=data._id [userId]=data.user._id [experiences]=data.experiences [comments]=data.comments></publication-footer>
   </ion-card-content>
 </ion-card>

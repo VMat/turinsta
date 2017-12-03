@@ -1,11 +1,11 @@
 <!-- Generated template for the CommentComponent component -->
 <ion-item class="comment-content">
   <ion-avatar class="comment-avatar" item-start>
-    <img src="{{data.user.avatar}}">
+    <img src="{{comment.user.avatar}}">
   </ion-avatar>
-  <p *ngIf="!editionMode"><b>{{data.user.name}}</b>&nbsp;{{data.content}}</p>
+  <p *ngIf="!editionMode"><b>{{comment.user.name}}</b>&nbsp;{{comment.content}}</p>
   <ion-item class="comment-edition" item-left *ngIf="editionMode">
-    <p item-start><b>{{data.user.name}}</b></p>
+    <p item-start><b>{{comment.user.name}}</b></p>
     <ion-textarea [(ngModel)]="commentValue"></ion-textarea>
     <div class="comment-button-list" item-end>
       <button class="publication-button" color="success" ion-button clear (click)="confirmUpdate()">
@@ -17,7 +17,7 @@
     </div>
   </ion-item>
   <div class="comment-button-list" item-end>
-    <button *ngIf="data.replies!=undefined && !editionMode" (click)="toogleReplies()" class="publication-button" color="secondary" ion-button clear>
+    <button *ngIf="comment.replies!=undefined && !editionMode" (click)="toogleReplies()" class="publication-button" color="secondary" ion-button clear>
       <ion-icon style="font-size: 20px" class="publication-icon" name="{{showReplies? 'ios-arrow-dropdown' : 'ios-arrow-dropright'}}"></ion-icon>
     </button>
     <button *ngIf="checkEditionPermission() && !editionMode" class="publication-button" color="primary" ion-button clear (click)="toogleEditionMode()">
@@ -28,4 +28,4 @@
     </button>
   </div>
 </ion-item>
-<comment-list *ngIf="showReplies" [data]=data.replies [publicationId]=publicationId [publicationOwner]=publicationOwner [commentId]=data._id></comment-list>
+<comment-list *ngIf="showReplies" [comments]=comment.replies [publicationId]=publicationId [publicationOwner]=publicationOwner [commentId]=comment._id></comment-list>
