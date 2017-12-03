@@ -74,6 +74,7 @@ const PublicationInterface = (function(){
             preserveNullAndEmptyArrays: true
           }
         },
+        { $unwind: "$followers"},
         {
           $group: {
             _id: "$_id",
@@ -87,10 +88,10 @@ const PublicationInterface = (function(){
             comments: {
               $addToSet: "$comments"
             },
-            count: { $size : "$followers" }
+            count: { $followers: 1 }
           }
         },
-        { $sort: { count: -1 } },
+        {$sortByCount: "$followers"},
         // {$sort: order},
         {$limit: Number(n)}
       ]).exec();
