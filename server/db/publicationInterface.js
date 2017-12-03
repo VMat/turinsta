@@ -89,7 +89,8 @@ const PublicationInterface = (function(){
             }
           }
         },
-        {$sort: order},
+        {$sortByCount: "$followers"},
+        // {$sort: order},
         {$limit: Number(n)}
       ]).exec();
     },
