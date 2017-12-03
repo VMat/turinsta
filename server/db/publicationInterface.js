@@ -78,7 +78,7 @@ const PublicationInterface = (function(){
             _id: "$_id",
             publication: { $first : "$$ROOT" },
             user: {
-              $first: "$userData"
+              $addToSet: "$userData"
             },
             experiences: {
               $addToSet: "$experiences"
