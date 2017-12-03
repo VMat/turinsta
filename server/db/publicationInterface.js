@@ -87,8 +87,7 @@ const PublicationInterface = (function(){
             },
             comments: {
               $addToSet: "$comments"
-            },
-            count: { $followers: 1 }
+            }
           }
         },
         {$sortByCount: "$followers"},
