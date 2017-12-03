@@ -32,9 +32,6 @@ const PublicationInterface = (function(){
           }
         },
         {
-          $unwind: "$userData"
-        },
-        {
           $unwind: {
             path: "$experienceIds",
             preserveNullAndEmptyArrays: true
@@ -79,7 +76,7 @@ const PublicationInterface = (function(){
             _id: "$_id",
             publication: { $first : "$$ROOT"},
             user: {
-              $addToSet: "$userData"
+              $first: "$userData"
             },
             experiences: {
               $addToSet: "$experiences"
