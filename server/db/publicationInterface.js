@@ -86,10 +86,11 @@ const PublicationInterface = (function(){
             },
             comments: {
               $addToSet: "$comments"
-            }
+            },
+            count: { $followers: 1 }
           }
         },
-        {$sortByCount: "$followers"},
+        { $sort: { count: -1 } },
         // {$sort: order},
         {$limit: Number(n)}
       ]).exec();
