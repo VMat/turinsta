@@ -61,7 +61,7 @@ const PublicationInterface = (function(){
         {
           $group: {
             _id: "$_id",
-            publication: { $addToSet : "$$ROOT" },
+            publication: { $first : "$$ROOT" },
             user: {
               $addToSet: "$userData"
             },
