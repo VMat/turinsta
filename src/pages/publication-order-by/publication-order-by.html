@@ -9,19 +9,19 @@
     <ion-list-header>Ordenar por</ion-list-header>
     <ion-item>
       <ion-label>Más recientes</ion-label>
-      <ion-radio value="timestamps.created" (click)="close({field: 'timestamps.created', way: -1})"></ion-radio>
+      <ion-radio value="timestamps.created" (click)="close({field: 'publication.timestamps.created', way: -1})"></ion-radio>
     </ion-item>
     <ion-item>
       <ion-label>Más populares</ion-label>
-      <ion-radio value="followers.count" (click)="close({field: 'followers', way: -1})"></ion-radio>
+      <ion-radio value="followers.count" (click)="close({field: 'publication.followers', way: -1})"></ion-radio>
     </ion-item>
     <ion-item>
       <ion-label>Mejor calificadas</ion-label>
-      <ion-radio value="score" (click)="close({field: 'score', way: -1})"></ion-radio>
+      <ion-radio value="score" (click)="close({field: 'publication.score', way: -1})"></ion-radio>
     </ion-item>
     <ion-item>
       <ion-label>Usuarios más populares</ion-label>
-      <ion-radio value="user.followers.count" (click)="close({field: 'user.followers.count', way: -1})"></ion-radio>
+      <ion-radio value="user.followers.count" (click)="close({field: 'user.followers', way: -1})"></ion-radio>
     </ion-item>
     <ion-item>
       <ion-label>Usuarios mejor calificados</ion-label>

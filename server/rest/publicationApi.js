@@ -8,7 +8,7 @@ router.get('/count/:count/sort/:field/:way',(req, res)=>{
     searchParams[i] = JSON.parse(rowSearchParams[i]);
   }
   console.log(JSON.stringify(searchParams));
-  let orderBy = {...{[req.params.field]: Number(req.params.way)}, ...{"timestamps.created": -1}};
+  let orderBy = {...{[req.params.field]: Number(req.params.way)}, ...{"publication.timestamps.created": -1}};
   publicationService.getPublications(searchParams,req.params.count,orderBy)
     .then(publications=>{res.status(200).json(publications)})
     .catch(error=>{res.status(500).send(error)})
