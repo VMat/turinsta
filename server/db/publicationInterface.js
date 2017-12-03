@@ -20,8 +20,9 @@ const PublicationInterface = (function(){
     },
 
     getN: (searchParams,n,order)=>{
-      let filters = Commons.processParams(searchParams);
-      let match = Publications.aggregate([
+      let filters = Commons.processAggregateParams(searchParams);
+      return Publications.aggregate([
+        ...filters,
         {
           $lookup: {
             from: "Users",
@@ -76,7 +77,7 @@ const PublicationInterface = (function(){
         {
           $group: {
             _id: "$_id",
-            publication: { $first : "$$ROOT" },
+            publication: { $first : "$$ROOT", $addToSet: "$experiences" },
             user: {
               $addToSet: "$userData"
             },
@@ -87,45 +88,11 @@ const PublicationInterface = (function(){
               $addToSet: "$comments"
             }
           }
-        }
-      ]);
-      return match.exec();
+        },
+        {$sort: order},
+        {$limit: Number(n)}
+      ]).exec();
     },
-      /*Publications.find(filters)*/
-//          .populate('user')
-
-            /*{
-              $lookup:
-                {
-                  from: "Users",
-                  localField: "user",
-                  foreignField: "_id",
-                  as: "userData"
-                }
-            }*/
-
-          //.populate('experiences')
-          //.populate('comments');
-//          .sort(order)
-//          .limit(Number(n));
-
-      /*db.orders.aggregate([
-        {
-          $lookup:
-            {
-              from: "inventory",
-              localField: "item",
-              foreignField: "sku",
-              as: "inventory_docs"
-          }
-        }
-      ])*/
-
-      //return Commons.getN(Publications,filters,n,order)
-      //  .populate('user')
-      //  .populate('experiences')
-      //  .populate('comments');
-
 
     getOne: (id)=>{
       return Commons.getOne(Publications, id)

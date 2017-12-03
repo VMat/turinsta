@@ -27944,6 +27944,14 @@ ion-card-content {
   padding: 0 !important;
 }
 
+page-publication-order-by * {
+  font-size: x-small;
+}
+
+page-publication-user-filter * {
+  font-size: x-small;
+}
+
 .toolbar-title-md {
   color: #ffffff;
   font-weight: bolder;

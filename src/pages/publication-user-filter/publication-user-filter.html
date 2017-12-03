@@ -17,9 +17,8 @@
       <ion-radio value="FOLLOWED" (click)="close({key: 'user', value: userFilter, operation: 'IN'})"></ion-radio>
     </ion-item>
     <ion-item>
-      <ion-label>Buscar</ion-label>
-      <ion-input [(ngModel)]="customUser"></ion-input>
-      <ion-radio value="CUSTOM" (click)="close({key: 'user', value: customUser, operation: 'LIKE'})"></ion-radio>
+      <ion-input item-start [(ngModel)]="customUser" placeholder="Buscar"></ion-input>
+      <button item-end ion-button (click)="close({key: 'user', value: customUser, operation: 'LIKE'})" clear><ion-icon name="ios-arrow-dropright"></ion-icon></button>
     </ion-item>
   </ion-list>
 </ion-content>
