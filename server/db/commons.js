@@ -85,7 +85,7 @@ let Commons = (function(){
               break;
             }
             case 'LIKE':{
-              filters[i] = {"$regex": params[i].value, "$options": "i"};
+              filters.push({$match: {[i]: {$regex: params[i].value, $options: "i"}}});
               break;
             }
             case 'HIGHER_THAN':{

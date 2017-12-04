@@ -14,11 +14,11 @@
     </ion-item>
     <ion-item>
       <ion-label>Seguidos</ion-label>
-      <ion-radio value="FOLLOWED" (click)="close({key: 'user', value: userFilter, operation: 'IN'})"></ion-radio>
+      <ion-radio value="FOLLOWED" (click)="close({key: 'user.username', value: userFilter, operation: 'IN'})"></ion-radio>
     </ion-item>
     <ion-item>
       <ion-input item-start [(ngModel)]="customUser" placeholder="Buscar"></ion-input>
-      <button item-end ion-button (click)="close({key: 'user', value: customUser, operation: 'LIKE'})" clear><ion-icon name="ios-arrow-dropright"></ion-icon></button>
+      <button item-end ion-button (click)="close({key: 'user.username', value: customUser, operation: 'LIKE'})" clear><ion-icon name="ios-arrow-dropright"></ion-icon></button>
     </ion-item>
   </ion-list>
 </ion-content>
