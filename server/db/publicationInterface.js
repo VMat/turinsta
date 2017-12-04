@@ -22,12 +22,18 @@ const PublicationInterface = (function(){
       let followedFilter = searchParams.filter(param=>{
         return param.value == "FOLLOWED" && param.operation == "IN"
       });
+      let filters = [];
+      
       if(followedFilter.length > 0){
-        Users.find({"_id" : new mongoose.Types.ObjectId(userId)}).exec(user=>{
+        Users.findById(userId).exec(user=>{
           followedFilter[0].value = user.followedes;
+          filters = Commons.processAggregateParams(searchParams);
         });
       }
-      let filters = Commons.processAggregateParams(searchParams);
+      else{
+          filters = Commons.processAggregateParams(searchParams);
+      }
+
       return Publications.aggregate([
         {
           $lookup: {
