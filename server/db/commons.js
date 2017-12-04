@@ -1,3 +1,5 @@
+const mongoose = require('mongoose');
+
 let Commons = (function(){
 
   function oCommons(){}
@@ -101,7 +103,7 @@ let Commons = (function(){
               break;
             }
             case 'IN':{
-              filters.push({$match: {[i]: {$in: params[i].value}}});
+              filters.push({$match: {[i]: {$in: params[i].value.map(id=> new mongoose.Types.ObjectId(id))}}});
               break;
             }
         }
