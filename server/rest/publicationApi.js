@@ -9,7 +9,7 @@ router.get('/count/:count/sort/:field/:way',(req, res)=>{
   }
   console.log(JSON.stringify(searchParams));
   let orderBy = {...{[req.params.field]: Number(req.params.way)}, ...{"publication.timestamps.created": -1}};
-  publicationService.getPublications(searchParams,req.params.count,orderBy)
+  publicationService.getPublications("59f7562af36d282363087270",searchParams,req.params.count,orderBy)
     .then(publications=>{res.status(200).json(publications)})
     .catch(error=>{res.status(500).send(error)})
 });
