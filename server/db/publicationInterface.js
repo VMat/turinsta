@@ -18,7 +18,7 @@ const PublicationInterface = (function(){
         .populate('comments');
     },
 
-    getN: (userId,searchParams,n,order)=>{      
+    getN: (searchParams,n,order)=>{      
       let filters = Commons.processAggregateParams(searchParams);
       return Publications.aggregate([
         {
