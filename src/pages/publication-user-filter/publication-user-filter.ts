@@ -23,7 +23,7 @@ export class PublicationUserFilterPage {
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public viewCtrl: ViewController, public store: Store<AppState>) {
     this.store.select("publications").subscribe((state)=>{
-      let userFilter = state.filters.filter(filter => filter.key == "user");
+      let userFilter = state.filters.filter(filter => filter.key == "user.username");
       if(userFilter.length > 0){
         this.userFilter = userFilter[0].value;
       }
@@ -39,7 +39,7 @@ export class PublicationUserFilterPage {
       this.store.dispatch(addFilter(filter));
     }
     else{
-      this.store.dispatch(removeFilter("user"));
+      this.store.dispatch(removeFilter("user.username"));
     }
 
     this.viewCtrl.dismiss();

@@ -22,7 +22,6 @@ const PublicationInterface = (function(){
     getN: (searchParams,n,order)=>{
       let filters = Commons.processAggregateParams(searchParams);
       return Publications.aggregate([
-        ...filters,
         {
           $lookup: {
             from: "Users",
@@ -89,6 +88,7 @@ const PublicationInterface = (function(){
             }
           }
         },
+        ...filters,
         {$sort: order},
         {$limit: Number(n)}
       ]).exec();
