@@ -18,34 +18,8 @@ const PublicationInterface = (function(){
         .populate('comments');
     },
 
-    getN: (userId,searchParams,n,order)=>{
-      /*let followersFilterProperty = null;
-      for(let i in searchParams){
-        if(searchParams[i].value == "FOLLOWED" && searchParams[i].operation == "IN"){
-          followersFilterProperty = i;
-          break;
-        }
-      }
-      
-      let filters = [];
-      
-      if(followersFilterProperty != null){
-        console.log("userId",userId);
-        Users.findById(userId).exec((err,user)=>{
-          if(err){
-            next()
-          }
-          console.log("userFound",JSON.stringify(user));
-          searchParams[followersFilterProperty].value = user.followedes;
-          filters = Commons.processAggregateParams(searchParams);
-        });
-      }
-      else{
-          filters = Commons.processAggregateParams(searchParams);
-      }*/
-      
-      filters = Commons.processAggregateParams(searchParams);
-
+    getN: (userId,searchParams,n,order)=>{      
+      let filters = Commons.processAggregateParams(searchParams);
       return Publications.aggregate([
         {
           $lookup: {
