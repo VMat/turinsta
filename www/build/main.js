@@ -307,7 +307,13 @@ var PublicationUserFilterPage = (function () {
         this.store.select("publications").subscribe(function (state) {
             var userFilter = state.filters.filter(function (filter) { return filter.key == "user.username"; });
             if (userFilter.length > 0) {
-                _this.userFilter = userFilter[0].value;
+                if (userFilter[0].operation == "LIKE") {
+                    _this.customUser = userFilter[0].value;
+                    _this.userFilter = userFilter[0].value;
+                }
+                else {
+                    _this.userFilter = userFilter[0].value;
+                }
             }
         });
     }

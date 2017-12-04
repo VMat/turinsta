@@ -3,8 +3,6 @@ const Users = require('../models/user');
 const Experiences = require('../models/experience');
 const Comments = require('../models/comment');
 const Commons = require('./commons');
-// const aggregate = require('mongoose/lib/aggregate');
-const mongoose = require('mongoose');
 
 const PublicationInterface = (function(){
 

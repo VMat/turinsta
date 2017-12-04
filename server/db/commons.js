@@ -89,19 +89,19 @@ let Commons = (function(){
               break;
             }
             case 'HIGHER_THAN':{
-              filters[i] = { $gt: params[i].value };
+              filters.push({$match: {[i]: {$gt: params[i].value}}});
               break;
             }
             case 'LOWER_THAN':{
-              filters[i] = { $lt: params[i].value };
+              filters.push({$match: {[i]: {$lt: params[i].value}}});
               break;
             }
             case 'BETWEEN':{
-              filters[i] = { $gt: params[i].value[0], $lt: params[i].value[1] };
+              filters.push({$match: {[i]: {$gt: params[i].value[0], $lt: params[i].value[1]}}});
               break;
             }
             case 'IN':{
-              filters[i] = {$in: params[i].value};
+              filters.push({$match: {[i]: {$in: params[i].value}}});
               break;
             }
         }

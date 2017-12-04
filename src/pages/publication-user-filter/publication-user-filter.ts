@@ -25,7 +25,13 @@ export class PublicationUserFilterPage {
     this.store.select("publications").subscribe((state)=>{
       let userFilter = state.filters.filter(filter => filter.key == "user.username");
       if(userFilter.length > 0){
-        this.userFilter = userFilter[0].value;
+        if(userFilter[0].operation == "LIKE"){
+          this.customUser = userFilter[0].value;
+          this.userFilter = userFilter[0].value;
+        }
+        else{
+          this.userFilter = userFilter[0].value;
+        }
       }
     });
   }
