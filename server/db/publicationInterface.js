@@ -19,7 +19,7 @@ const PublicationInterface = (function(){
     },
 
     getN: (userId,searchParams,n,order)=>{
-      let followersFilterProperty = null;
+      /*let followersFilterProperty = null;
       for(let i in searchParams){
         if(searchParams[i].value == "FOLLOWED" && searchParams[i].operation == "IN"){
           followersFilterProperty = i;
@@ -42,7 +42,9 @@ const PublicationInterface = (function(){
       }
       else{
           filters = Commons.processAggregateParams(searchParams);
-      }
+      }*/
+      
+      filters = Commons.processAggregateParams(searchParams);
 
       return Publications.aggregate([
         {
