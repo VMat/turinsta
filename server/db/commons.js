@@ -103,7 +103,7 @@ let Commons = (function(){
               break;
             }
             case 'IN':{
-              filters.push({$match: {[i]: {$in: params[i].value.map(id=> new mongoose.Types.ObjectId(id))}}});
+              filters.push({$match: {[i]: {$in: params[i].value}}});
               break;
             }
         }
