@@ -23,7 +23,7 @@ const PublicationInterface = (function(){
         return param.value == "FOLLOWED" && param.operation == "IN"
       });
       if(followedFilter.length > 0){
-        Users.find({"_id" : mongoose.types.ObjectId(userId)}).exec(user=>{
+        Users.find({"_id" : new mongoose.Types.ObjectId(userId)}).exec(user=>{
           followedFilter[0].value = user.followedes;
         });
       }
