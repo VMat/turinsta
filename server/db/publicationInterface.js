@@ -30,7 +30,12 @@ const PublicationInterface = (function(){
       let filters = [];
       
       if(followersFilterProperty != null){
-        Users.findById(userId).exec(user=>{
+        console.log("userId",userId);
+        Users.findById(userId).exec((err,user)=>{
+          if(err){
+            next()
+          }
+          console.log("userFound",JSON.stringify(user));
           searchParams[followersFilterProperty].value = user.followedes;
           filters = Commons.processAggregateParams(searchParams);
         });
