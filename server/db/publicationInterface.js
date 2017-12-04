@@ -3,6 +3,7 @@ const Users = require('../models/user');
 const Experiences = require('../models/experience');
 const Comments = require('../models/comment');
 const Commons = require('./commons');
+const mongoose = require('mongoose');
 
 const PublicationInterface = (function(){
 
@@ -17,7 +18,15 @@ const PublicationInterface = (function(){
         .populate('comments');
     },
 
-    getN: (searchParams,n,order)=>{
+    getN: (userId,searchParams,n,order)=>{
+      let followedFilter = searchParams.filter(param=>{
+        return param.value == "FOLLOWED" && param.operation == "IN"
+      });
+      if(followedFilter.length > 0){
+        Users.find({"_id" : mongoose.types.ObjectId(userId)}).exec(user=>{
+          followedFilter[0].value = user.followedes;
+        });
+      }
       let filters = Commons.processAggregateParams(searchParams);
       return Publications.aggregate([
         {
