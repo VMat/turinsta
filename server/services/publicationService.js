@@ -6,9 +6,9 @@ const publicationService = (function(){
 
   oPublicationService.prototype = {
 
-    getPublications: (userId,searchParams,count,order)=>{
+    getPublications: (searchParams,count,order)=>{
       return new Promise((resolve, reject)=>{
-        storageService.getPublications(userId,searchParams,count,order).
+        storageService.getPublications(searchParams,count,order).
           then(publications=>resolve(publications)).
           catch(error=>reject(error))
       })
