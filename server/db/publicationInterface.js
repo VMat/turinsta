@@ -19,14 +19,19 @@ const PublicationInterface = (function(){
     },
 
     getN: (userId,searchParams,n,order)=>{
-      let followedFilter = searchParams.filter(param=>{
-        return param.value == "FOLLOWED" && param.operation == "IN"
-      });
+      let followersFilterProperty = null;
+      for(let i in searchParams){
+        if(searchParams[i].value == "FOLLOWED" && searchParams[i].operation == "IN"){
+          followersFilterProperty = i;
+          break;
+        }
+      }
+      
       let filters = [];
       
-      if(followedFilter.length > 0){
+      if(followersFilterProperty != null){
         Users.findById(userId).exec(user=>{
-          followedFilter[0].value = user.followedes;
+          searchParams[followersFilterProperty].value = user.followedes;
           filters = Commons.processAggregateParams(searchParams);
         });
       }
