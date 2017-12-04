@@ -103,7 +103,8 @@ let Commons = (function(){
               break;
             }
             case 'IN':{
-              filters.push({$match: {[i]: {$in: params[i].value}}});
+              //filters.push({$match: {[i]: {$in: params[i].value}}});
+              filters.push({$match: {[i]: {$elemMatch: {$eq: params[i].value}}}});
               break;
             }
         }
