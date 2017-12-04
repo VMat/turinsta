@@ -51,7 +51,7 @@ const initialState = {
   publications: [],
   range: 2,
   filters: [],
-  sort: {field: "timestamps.created", way: -1},
+  sort: {field: "publication.timestamps.created", way: -1},
   pending: false,
   error: null
 };
@@ -110,13 +110,25 @@ function appendItems(target, source){
 }
 
 function updatePublications(statePublications, updatedPublications){
-  execFullUpdate(statePublications, updatedPublications, ["comments","replies"]);
+  return execFullUpdate(statePublications, updatedPublications, ["comments","replies"]);
+}
+
+function orderItems(target, source){
+  let index = null;
+  let aux = [];
+  source.forEach((sourceItem)=>{
+    index = findId(target,sourceItem._id);
+    aux.push(target[index]);
+  });
+
+  return aux;
 }
 
 function execFullUpdate(target,source,arrayProperties){
   deleteOverItems(target, source);
   updateItems(target, source, arrayProperties);
   appendItems(target, source);
+  return orderItems(target, source);
 }
 
 export function publicationReducer(state = initialState, { type, payload } ) {
@@ -127,7 +139,7 @@ export function publicationReducer(state = initialState, { type, payload } ) {
     case GET_PUBLICATIONS_SUCCESS:{
 
       if (state.publications.length > 0) {
-        updatePublications(state.publications, payload);
+        state.publications = updatePublications(state.publications, payload);
         return tassign(state, {pending: false});
       }
 
