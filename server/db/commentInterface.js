@@ -44,7 +44,7 @@ const CommentInterface = (function(){
               else{
                 return PublicationInterface.getOne(insertedComment.publication)
                 .then(publication=>{
-                  publication.comments.push(insertedComment._id);
+                  publication.commentIds.push(insertedComment._id);
                   return PublicationInterface.update(publication)
                 })
               }
@@ -98,7 +98,7 @@ const CommentInterface = (function(){
 
             return Commons.getOne(Publications, comment.publication)
               .then(publication=>{
-                publication.comments.splice(publication.comments.indexOf(comment._id), 1);
+                publication.commentIds.splice(publication.comments.indexOf(comment._id), 1);
                 return PublicationInterface.update(publication)
                   .then(()=>{
                     return Commons.removeOne(Comments, comment);
