@@ -13,6 +13,7 @@ const ExperienceInterface = (function(){
     },
 
     insert: (experience)=>{
+      experience.score = 0;
       return Commons.insert(new Experiences(experience))
         .then(insertedExperience=>{
           return PublicationInterface.getOne(insertedExperience.publication)
