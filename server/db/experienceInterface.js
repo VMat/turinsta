@@ -19,7 +19,7 @@ const ExperienceInterface = (function(){
         .then(insertedExperience=>{
           return PublicationInterface.getOne(insertedExperience.publication)
             .then(publication=>{
-              publication.experiences.push(insertedExperience._id);
+              publication.experienceIds.push(insertedExperience._id);
               return PublicationInterface.update(publication)
             })
         });
@@ -34,7 +34,7 @@ const ExperienceInterface = (function(){
         .then(experience=>{
           return Commons.getOne(Publications, experience.publication)
             .then(publication=>{
-              publication.experiences.splice(publication.experiences.indexOf(experience._id), 1);
+              publication.experienceIds.splice(publication.experienceIds.indexOf(experience._id), 1);
               return PublicationInterface.update(publication)
                 .then(()=>{
                   return Commons.removeOne(Experiences, experience);
