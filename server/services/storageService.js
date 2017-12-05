@@ -66,6 +66,22 @@ const storageService = (function(){
       return db.deleteComment(id);
     },
 
+    getExperience: (id)=>{
+      return db.getExperience(id);
+    },
+
+    createExperience: (experience)=>{
+      return db.createExperience(experience);
+    },
+
+    updateExperience: (experience)=>{
+      return db.updateExperience(experience);
+    },
+
+    deleteExperience: (id)=>{
+      return db.deleteExperience(id);
+    },
+    
     getUsers: ()=>{
       return db.getUsers();
     },
