@@ -14,7 +14,7 @@
     </ion-item>
     <ion-item>
       <ion-label>Seguidos</ion-label>
-      <ion-radio value="FOLLOWED" (click)="close({key: 'user.username', value: userFilter, operation: 'IN'})"></ion-radio>
+      <ion-radio value="{{loggedUser}}" (click)="close({key: 'user.followers', value: loggedUser, operation: 'CONTAINS'})"></ion-radio>
     </ion-item>
     <ion-item>
       <ion-input item-start [(ngModel)]="customUser" placeholder="Buscar"></ion-input>

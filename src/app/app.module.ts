@@ -36,6 +36,7 @@ import {FiltersBarComponent} from "../components/filters-bar/filters-bar";
 import {PlaceFilterComponent} from "../components/place-filter/place-filter";
 import {UserFilterComponent} from "../components/user-filter/user-filter";
 import {OrderingCriterionComponent} from "../components/ordering-criterion/ordering-criterion";
+import {IonicStorageModule, Storage} from "@ionic/storage";
 
 @NgModule({
   declarations: [
@@ -67,7 +68,6 @@ import {OrderingCriterionComponent} from "../components/ordering-criterion/order
     IonicModule.forRoot(MyApp),
     HttpModule,
     StoreModule.forRoot({
-      // post: postReducer,
       publications: publicationReducer
     }),
     EffectsModule.forRoot([
@@ -75,7 +75,8 @@ import {OrderingCriterionComponent} from "../components/ordering-criterion/order
     ]),
     StoreDevtoolsModule.instrument({
       maxAge: 10 // number of states to retain
-    })
+    }),
+    IonicStorageModule.forRoot()
   ],
   bootstrap: [IonicApp],
   entryComponents: [

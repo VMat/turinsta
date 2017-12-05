@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
 import 'rxjs/add/operator/map';
 import {ToastController, AlertController} from "ionic-angular";
+import {Storage} from '@ionic/storage';
 
 /*
   Generated class for the CommonsProvider provider.
@@ -12,7 +13,7 @@ import {ToastController, AlertController} from "ionic-angular";
 @Injectable()
 export class CommonsProvider {
 
-  constructor(public http: Http, public toastCtrl: ToastController, public alertCtrl: AlertController) {
+  constructor(public http: Http, public toastCtrl: ToastController, public alertCtrl: AlertController, private localStorage: Storage) {
     console.log('Hello CommonsProvider Provider');
     this.setUserId("59f7562af36d282363087270"); //Pedro
     // this.setUserId("59f7588ef36d282363087491"); //Laura
@@ -42,6 +43,37 @@ export class CommonsProvider {
       buttons: [{text,handler}]
     });
     confirm.present();
+  }
+
+  savePublicationCache(publications){
+    let publicationsCopy = [...publications];
+    publicationsCopy.forEach((publication,i)=>{
+      let publicationCopy = {...publication};
+      let publicationItemCopy = {...publicationCopy.publication};
+      let publicationImagesCopy = [...publicationItemCopy.images];
+      publicationImagesCopy.forEach((image,j)=>{
+        let imageCopy =  {...image};
+        this.toDataUrl(imageCopy);
+        publicationImagesCopy[j] = imageCopy;
+        publicationItemCopy.images = publicationImagesCopy;
+        publicationCopy.publication = publicationItemCopy;
+        publicationsCopy[i] = publicationCopy;
+      });
+    });
+    this.localStorage.set("publications",publicationsCopy).then((cachedPublications)=>{
+      sessionStorage.setItem("publicationsCached", JSON.stringify(cachedPublications));
+    });
+  }
+
+  toDataUrl(image){
+    let canvas = document.createElement("canvas");
+    let context = canvas.getContext('2d');
+    let base_image = new Image();
+    base_image.src = image.url;
+    base_image.onload = function(){
+      context.drawImage(base_image, 100, 100);
+    };
+    image.url =  canvas.toDataURL(); // PNG is the default
   }
 
 }

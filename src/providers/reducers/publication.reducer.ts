@@ -152,17 +152,7 @@ export function publicationReducer(state = initialState, { type, payload } ) {
       return tassign(state, {range: state.publications.length >= state.range ? state.range + 10 : state.range});
     }
     case ADD_FILTER: {
-      let index = null;
-      state.filters.forEach((filter,i)=>{
-        if(filter.key == payload.key){
-          index = i;
-        }
-      });
       let filtersCopy = [...state.filters];
-      if(index!=null){
-        filtersCopy.splice(index,1);
-      }
-
       filtersCopy.push(payload);
       return tassign(state, {filters: filtersCopy});
     }
