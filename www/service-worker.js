@@ -8,7 +8,8 @@
 importScripts('./build/sw-toolbox.js');
 
 self.toolbox.options.cache = {
-  name: 'ionic-cache'
+  name: 'turinsta-cache',
+  maxEntries: 5
 };
 
 // pre-cache our key assets
