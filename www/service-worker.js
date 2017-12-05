@@ -9,7 +9,7 @@ importScripts('./build/sw-toolbox.js');
 
 self.toolbox.options.cache = {
   name: 'turinsta-cache',
-  maxEntries: 5
+  maxEntries: 1
 };
 
 // pre-cache our key assets
