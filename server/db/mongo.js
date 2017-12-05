@@ -3,6 +3,7 @@ const publicationInterface = require('./publicationInterface');
 const activityInterface = require('./activityInterface');
 const commentInterface = require('./commentInterface');
 const userInterface = require('./userInterface');
+const experienceInterface = require('./experienceInterface');
 
 let db = (function(){
 
@@ -78,6 +79,22 @@ let db = (function(){
 
     deleteComment: (id)=>{
       return commentInterface.deleteOne(id);
+    },
+    
+    getExperience: (id)=>{
+      return experienceInterface.getOne(id);
+    },
+
+    createExperience: (experience)=>{
+      return experienceInterface.insert(experience);
+    },
+
+    updateExperience: (experience)=>{
+      return experienceInterface.update(experience);
+    },
+
+    deleteExperience: (id)=>{
+      return experienceInterface.deleteOne(id);
     },
 
     getUsers: ()=>{
