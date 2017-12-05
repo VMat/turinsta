@@ -7,10 +7,10 @@
 'use strict';
 importScripts('./build/sw-toolbox.js');
 
-self.toolbox.options.cache = {
+/*self.toolbox.options.cache = {
   name: 'turinsta-cache',
   maxEntries: 1
-};
+};*/
 
 // pre-cache our key assets
 self.toolbox.precache(
@@ -125,5 +125,10 @@ self.toolbox.router.get('/*', (request, values, options)=> {
     else {
       return self.toolbox.fastest(request, values, options);
     }
+  },
+  cache = {
+    name: 'turinsta-cache',
+    maxEntries: 1
   }
+}                      
 );
