@@ -53,7 +53,7 @@ self.toolbox.precache(
 // as the cache could end up containing large responses that might not end up ever being accessed.
 // Other approaches, like selectively caching based on response headers or only caching
 // responses served from a specific domain, might be more appropriate for those use cases.
-self.addEventListener('fetch', function(event) {
+/*self.addEventListener('fetch', function(event) {
   console.log('Handling fetch event for', event.request.url);
 
   event.respondWith(
@@ -106,7 +106,7 @@ self.addEventListener('fetch', function(event) {
       });
     })
   );
-});
+});*/
 
 
 // dynamically cache any other local assets
@@ -115,3 +115,4 @@ self.addEventListener('fetch', function(event) {
 // for any other requests go to the network, cache,
 // and then only use that cached resource if your user goes offline
 //self.toolbox.router.default = self.toolbox.networkFirst;
+self.toolbox.router.get('/*', self.toolbox.networkFirst);
