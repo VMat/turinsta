@@ -40,7 +40,6 @@ const ExperienceInterface = (function(){
                   return Commons.removeOne(Experiences, experience);
                 })
             })
-          }
         })
     }
   };
