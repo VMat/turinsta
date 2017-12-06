@@ -93,8 +93,8 @@ let db = (function(){
       return experienceInterface.update(experience);
     },
 
-    deleteExperience: (id)=>{
-      return experienceInterface.deleteOne(id);
+    deleteExperience: (experience)=>{
+      return experienceInterface.deleteOne(experience);
     },
 
     getUsers: ()=>{
