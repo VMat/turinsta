@@ -108,6 +108,10 @@ const storageService = (function(){
 
     updateUser: (user)=>{
       return db.updateUser(user);
+    },
+    
+    addFavoritePublication: (favorite)=>{
+      return db.addFavoritePublication(favorite);
     }
 
   };
