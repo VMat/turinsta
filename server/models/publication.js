@@ -19,6 +19,7 @@ const publicationSchema = new schema({
     modified: String
   },
   followers: [{type: schema.Types.ObjectId, "ref": 'Users'}],
+  assessments: [{user:{type: schema.Types.ObjectId, "ref": 'Users'}, value: Number}],
 	score: Number,
   description: String
 });
