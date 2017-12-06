@@ -32,19 +32,19 @@ router.delete('/',(req, res)=>{
     .catch(error=>{res.status(500).send(error)})
 });
 
-router.post('/assessment',(req, res)=>{
+router.post('/assessments',(req, res)=>{
   publicationService.addPublicationAssessment(req.body)
     .then(publication=>{res.status(200).json(publication)})
     .catch(error=>{res.status(500).send(error)})
 });
 
-router.put('/assessment',(req, res)=>{
+router.put('/assessments',(req, res)=>{
   publicationService.modifyPublicationAssessment(req.body)
     .then(publication=>{res.status(200).json(publication)})
     .catch(error=>{res.status(500).send(error)})
 });
 
-router.delete('/assessment',(req, res)=>{
+router.delete('/assessments',(req, res)=>{
   publicationService.deletePublicationAssessment(req.body)
     .then(publication=>{res.status(200).json(publication)})
     .catch(error=>{res.status(500).send(error)})
