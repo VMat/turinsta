@@ -48,6 +48,14 @@ let db = (function(){
     addPublicationAssessment: (assessment)=>{
       return publicationInterface.addPublicationAssessment(assessment);
     },
+    
+    modifyPublicationAssessment: (assessment)=>{
+      return publicationInterface.modifyPublicationAssessment(assessment);
+    },
+    
+    deletePublicationAssessment: (assessment)=>{
+      return publicationInterface.deletePublicationAssessment(assessment);
+    },
 
     getActivities: ()=>{
       return activityInterface.getAll();
