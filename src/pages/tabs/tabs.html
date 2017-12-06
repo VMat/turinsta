@@ -1,18 +1,15 @@
 <ion-header>
-  <ion-navbar>
-    <ion-title align="center">TurInsta</ion-title>
+  <ion-navbar style="padding: 0 !important;">
+    <!--<ion-item no-lines>-->
+      <ion-title align="center">TurInsta</ion-title>
+      <!--<button item-end ion-button (click)="toogleFilters()" clear><ion-icon name="{{showFilters? 'ios-arrow-dropdown' : 'ios-arrow-dropright'}}" color="secondary"></ion-icon></button>-->
+    <!--</ion-item>-->
+    <!--<ion-item no-lines *ngIf="showFilters">-->
+      <!--<filters-bar></filters-bar>-->
+    <!--</ion-item>-->
   </ion-navbar>
 </ion-header>
 <ion-content>
-  <!--<div *ngIf="post | async as p">-->
-    <!--<h2>{{ p.text }}</h2>-->
-    <!--<h4>Votes: {{ p.likes }}</h4>-->
-    <!--<button (click)="upvote()">Upvote</button>-->
-    <!--<button (click)="downvote()">Downvote</button>-->
-    <!--<button (click)="resetPost()">Reset</button>-->
-    <!--<input [(ngModel)]="text">-->
-    <!--<button (click)="editText()" >Change Title</button>-->
-  <!--</div>-->
   <ion-tabs>
     <ion-tab [root]="tab1Root" tabIcon="home"></ion-tab>
     <ion-tab [root]="tab2Root" tabIcon="globe"></ion-tab>

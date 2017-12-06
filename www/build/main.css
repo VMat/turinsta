@@ -27806,6 +27806,10 @@ ion-navbar.toolbar {
   min-height: calc(46px + constant(safe-area-inset-top));
 }
 
+filters-bar ion-searchbar {
+  margin: 0 !important;
+}
+
 place-filter .select-md .select-icon {
   position: absolute;
 }
@@ -27957,6 +27961,6 @@ page-publication-user-filter * {
   font-weight: bolder;
   -webkit-text-stroke: 1px deeppink;
   text-shadow: 2px  2px 0 lightgrey, -1px -1px 0 lightgrey, 1px -1px 0 lightgrey, -1px  1px 0 lightgrey, 1px  1px 0 lightgrey;
-  font-size: xx-large;
+  font-size: x-large;
   font-family: 'Chiller', cursive;
 }
