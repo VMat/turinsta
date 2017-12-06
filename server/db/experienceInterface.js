@@ -29,17 +29,14 @@ const ExperienceInterface = (function(){
       return Commons.update(Experiences, experience);
     },
 
-    deleteOne: (id)=>{
-      return Commons.getOne(Experiences,id)
-        .then(experience=>{
-          return Commons.getOne(Publications, experience.publication)
-            .then(publication=>{
-              publication.experienceIds.splice(publication.experienceIds.indexOf(experience._id), 1);
-              return PublicationInterface.update(publication)
-                .then(()=>{
-                  return Commons.removeOne(Experiences, experience);
-                })
-            })
+    deleteOne: (experience)=>{
+      return Commons.getOne(Publications, experience.publication)
+        .then(publication=>{
+          publication.experienceIds.splice(publication.experienceIds.indexOf(experience._id), 1);
+            return PublicationInterface.update(publication)
+              .then(()=>{
+                return Commons.removeOne(Experiences, experience);
+              })
         })
     }
   };
