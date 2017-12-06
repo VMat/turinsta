@@ -36,6 +36,14 @@ const userService = (function(){
           then(updatedUser=>resolve(updatedUser)).
           catch(error=>reject(error))  
       })
+    },
+    
+    addFavoritePublication: (favorite)=>{
+          return new Promise((resolve, reject)=>{
+        storageService.addFavoritePublication(favorite).
+          then(updatedUser=>resolve(updatedUser)).
+          catch(error=>reject(error))  
+      })    
     }
     
   };
