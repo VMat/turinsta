@@ -10,7 +10,7 @@ const ExperienceInterface = (function(){
   oExperienceInterface.prototype = {
 
     getOne: (id)=>{
-      return Commons.getOne(Comments, id);
+      return Commons.getOne(Experiences, id);
     },
 
     insert: (experience)=>{
