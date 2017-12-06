@@ -1,6 +1,7 @@
 const Users = require('../models/user');
 const Publications = require('../models/publication');
 const Commons = require('./commons');
+const PublicationInterface = require('./publicationInterface');
 
 const UserInterface = (function(){
 
@@ -23,6 +24,17 @@ const UserInterface = (function(){
 
     update: (user)=>{
       return Commons.update(Users, user);
+    },
+    
+    addFavoritePublication: (favorite)=>{
+      return Commons.getOne(Users, favorite.user)
+        .then((user)=>{
+          user.favorites.push(favorite.publication);
+          return Commons.update(Users, user)
+            .then((updatedUser)=>{
+              return PublicationInterface.addPublicationFollower(favorite.publication, favorite.user);
+            })
+        });
     }
     
   }
