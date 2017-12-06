@@ -44,6 +44,14 @@ const publicationService = (function(){
         then(deletedPublication=>resolve(deletedPublication)).
         catch(error=>reject(error))
       })
+    },
+    
+    addPublicationAssessment: (assessment)=>{
+      return new Promise((resolve, reject)=>{
+      storageService.addPublicationAssessment(assessment).
+        then(updatedPublication=>resolve(updatedPublication)).
+        catch(error=>reject(error))
+      })
     }
   };
 
