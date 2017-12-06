@@ -39,11 +39,19 @@ const userService = (function(){
     },
     
     addFavoritePublication: (favorite)=>{
-          return new Promise((resolve, reject)=>{
+      return new Promise((resolve, reject)=>{
         storageService.addFavoritePublication(favorite).
           then(updatedUser=>resolve(updatedUser)).
           catch(error=>reject(error))  
       })    
+    },
+    
+    removeFavoritePublication: (favorite)=>{
+      return new Promise((resolve, reject)=>{
+        storageService.removeFavoritePublication(favorite).
+          then(updatedUser=>resolve(updatedUser)).
+          catch(error=>reject(error))  
+      })   
     }
     
   };
