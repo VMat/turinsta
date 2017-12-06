@@ -109,6 +109,15 @@ const PublicationInterface = (function(){
 
     deleteOne: (publication)=>{
       return Commons.removeOne(Publications,publication);
+    },
+    
+    addPublicationAssessment: (assessment)=>{
+      return Commons.getOne(Publications, assessment.publication)
+        .then((publication)=> {
+          publication.assessments.push({user: assessment.user, value: assessment.value});
+          publication.score = (publication.score*(publication.assessments.length-1) + assessment.value)/publication.assessments.length;
+          return Commons.update(Publications,publication);
+        });
     }
 
   };
