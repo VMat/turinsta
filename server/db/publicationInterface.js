@@ -154,6 +154,14 @@ const PublicationInterface = (function(){
           publication.followers.push(user);
           return Commons.update(Publications,publication);
         });
+    },
+    
+    removePublicationFollower: (publication, user)=>{
+      return Commons.getOne(Publications, publication)
+        .then((publication)=>{
+          publication.followers.splice(publication.followers.indexOf(user),1);
+          return Commons.update(Publications,publication);
+        });
     }
 
   };
