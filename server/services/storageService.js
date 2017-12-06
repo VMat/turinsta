@@ -78,8 +78,8 @@ const storageService = (function(){
       return db.updateExperience(experience);
     },
 
-    deleteExperience: (id)=>{
-      return db.deleteExperience(id);
+    deleteExperience: (experience)=>{
+      return db.deleteExperience(experience);
     },
     
     getUsers: ()=>{
