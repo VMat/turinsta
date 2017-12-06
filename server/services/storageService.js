@@ -34,6 +34,10 @@ const storageService = (function(){
       return db.addPublicationAssessment(assessment);
     },
     
+    modifyPublicationAssessment: (assessment)=>{
+      return db.modifyPublicationAssessment(assessment)
+    },
+    
     getActivities: ()=>{
       return db.getActivities();
     },
