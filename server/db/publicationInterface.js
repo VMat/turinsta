@@ -143,7 +143,7 @@ const PublicationInterface = (function(){
               publication.assessments.splice(i,1);
             }
           });
-          publication.score = (publication.score*(publication.assessments.length+1) - assessment.value)/publication.assessments.length;
+          publication.score = publication.assessments.length > 0 ? (publication.score*(publication.assessments.length+1) - assessment.value)/publication.assessments.length : 0;
           return Commons.update(Publications,publication);
         });
     }
