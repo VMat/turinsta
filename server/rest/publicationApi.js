@@ -20,12 +20,6 @@ router.post('/',(req, res)=>{
     .catch(error=>{res.status(500).send(error)})
 });
 
-router.post('/assessment',(req, res)=>{
-  publicationService.addPublicationAssessment(req.body)
-    .then(publication=>{res.status(200).json(publication)})
-    .catch(error=>{res.status(500).send(error)})
-});
-
 router.put('/',(req, res)=>{
   publicationService.updatePublication(req.body)
     .then(publication=>{res.status(200).json(publication)})
@@ -34,6 +28,18 @@ router.put('/',(req, res)=>{
 
 router.delete('/',(req, res)=>{
   publicationService.deletePublication(req.body)
+    .then(publication=>{res.status(200).json(publication)})
+    .catch(error=>{res.status(500).send(error)})
+});
+
+router.post('/assessment',(req, res)=>{
+  publicationService.addPublicationAssessment(req.body)
+    .then(publication=>{res.status(200).json(publication)})
+    .catch(error=>{res.status(500).send(error)})
+});
+
+router.put('/assessment',(req, res)=>{
+  publicationService.modifyPublicationAssessment(req.body)
     .then(publication=>{res.status(200).json(publication)})
     .catch(error=>{res.status(500).send(error)})
 });
