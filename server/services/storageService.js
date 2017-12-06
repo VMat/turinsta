@@ -30,6 +30,10 @@ const storageService = (function(){
       return db.deletePublication(publication);
     },
 
+    addPublicationAssessment: (assessment)=>{
+      return db.addPublicationAssessment(assessment);
+    },
+    
     getActivities: ()=>{
       return db.getActivities();
     },
