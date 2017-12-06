@@ -123,6 +123,14 @@ let db = (function(){
 
     updateUser: (user)=>{
       return userInterface.update(user);
+    },
+    
+    addFavoritePublication: (favorite)=>{
+      return userInterface.addFavoritePublication(favorite);
+    },
+    
+    removeFavoritePublication: (favorite)=>{
+      return userInterface.removeFavoritePublication(favorite);
     }
 
   };
