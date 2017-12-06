@@ -38,6 +38,10 @@ const storageService = (function(){
       return db.modifyPublicationAssessment(assessment)
     },
     
+    deletePublicationAssessment: (assessment)=>{
+      return db.deletePublicationAssessment(assessment)
+    },
+    
     getActivities: ()=>{
       return db.getActivities();
     },
