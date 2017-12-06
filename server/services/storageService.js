@@ -112,6 +112,10 @@ const storageService = (function(){
     
     addFavoritePublication: (favorite)=>{
       return db.addFavoritePublication(favorite);
+    },
+    
+    removeFavoritePublication: (favorite)=>{
+      return db.removeFavoritePublication(favorite);
     }
 
   };
