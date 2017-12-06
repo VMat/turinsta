@@ -118,6 +118,34 @@ const PublicationInterface = (function(){
           publication.score = (publication.score*(publication.assessments.length-1) + assessment.value)/publication.assessments.length;
           return Commons.update(Publications,publication);
         });
+    },
+    
+    modifyPublicationAssessment: (assessment)=>{
+      return Commons.getOne(Publications, assessment.publication)
+        .then((publication)=> {
+          let oldValue = null;
+          publication.assessments.map((assessmentItem)=>{
+            if(assessmentItem.user == assessment.user){
+              oldValue = assessmentItem.value;
+              assessmentItem.value = assessment.value
+            }
+          });
+          publication.score = (publication.score*publication.assessments.length - oldValue + assessment.value)/publication.assessments.length;
+          return Commons.update(Publications,publication);
+        });
+    },
+    
+    deletePublicationAssessment: (assessment)=>{
+      return Commons.getOne(Publications, assessment.publication)
+        .then((publication)=> {
+          publication.assessments.map((assessmentItem,i)=>{
+            if(assessmentItem.user == assessment.user){
+              publication.assessments.splice(i,1);
+            }
+          });
+          publication.score = (publication.score*(publication.assessments.length+1) - assessment.value)/publication.assessments.length;
+          return Commons.update(Publications,publication);
+        });
     }
 
   };
