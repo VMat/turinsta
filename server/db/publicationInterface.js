@@ -146,6 +146,14 @@ const PublicationInterface = (function(){
           publication.score = publication.assessments.length > 0 ? (publication.score*(publication.assessments.length+1) - assessment.value)/publication.assessments.length : 0;
           return Commons.update(Publications,publication);
         });
+    },
+    
+    addPublicationFollower: (publication, user)=>{
+      return Commons.getOne(Publications, publication)
+        .then((publication)=>{
+          publication.followers.push(user);
+          return Commons.update(Publications,publication);
+        });
     }
 
   };
