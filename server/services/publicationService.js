@@ -52,6 +52,14 @@ const publicationService = (function(){
         then(updatedPublication=>resolve(updatedPublication)).
         catch(error=>reject(error))
       })
+    },
+    
+    modifyPublicationAssessment: (assessment)=>{
+      return new Promise((resolve, reject)=>{
+      storageService.modifyPublicationAssessment(assessment).
+        then(updatedPublication=>resolve(updatedPublication)).
+        catch(error=>reject(error))
+      })
     }
   };
 
