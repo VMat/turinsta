@@ -35,6 +35,17 @@ const UserInterface = (function(){
               return PublicationInterface.addPublicationFollower(favorite.publication, favorite.user);
             })
         });
+    },
+    
+    removeFavoritePublication: (favorite)=>{
+      return Commons.getOne(Users, favorite.user)
+        .then((user)=>{
+          user.favorites.splice(user.favorites.indexOf(favorite.publication),1);
+          return Commons.update(Users, user)
+            .then((updatedUser)=>{
+              return PublicationInterface.removePublicationFollower(favorite.publication, favorite.user);
+            })
+        });
     }
     
   }
