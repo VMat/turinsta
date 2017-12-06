@@ -44,6 +44,10 @@ let db = (function(){
     deletePublication: (id)=>{
       return publicationInterface.deleteOne(id);
     },
+    
+    addPublicationAssessment: (assessment)=>{
+      return publicationInterface.addPublicationAssessment(assessment);
+    },
 
     getActivities: ()=>{
       return activityInterface.getAll();
