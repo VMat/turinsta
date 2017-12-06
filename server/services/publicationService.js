@@ -60,6 +60,14 @@ const publicationService = (function(){
         then(updatedPublication=>resolve(updatedPublication)).
         catch(error=>reject(error))
       })
+    },
+    
+    deletePublicationAssessment: (assessment)=>{
+      return new Promise((resolve, reject)=>{
+      storageService.deletePublicationAssessment(assessment).
+        then(updatedPublication=>resolve(updatedPublication)).
+        catch(error=>reject(error))
+      })
     }
   };
 
