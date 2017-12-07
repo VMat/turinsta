@@ -46,8 +46,38 @@ const UserInterface = (function(){
               return PublicationInterface.removePublicationFollower(favorite.publication, favorite.user);
             })
         });
-    }
+    },
     
+    addUserFollower: (follower)=>{
+      return Commons.getOne(Users, follower.follower)
+        .then((user)=>{
+          user.followedes.push(follower.followed);
+          return Commons.update(Users, user)
+            .then((updatedUser)=>{
+              return Commons.getOne(Users, follower.followed)
+                .then((followedUser)=>{
+                  followedUser.followers.push(follower.follower);
+                  return Commons.update(Users, followedUser)
+                });
+            })
+        });
+    },
+    
+    removeUserFollower: (follower)=>{
+      return Commons.getOne(Users, follower.follower)
+        .then((followerUser)=>{
+          followerUser.followedes.splice(followerUser.followedes.indexOf(follower.followed),1);
+          return Commons.update(Users, followerUser)
+            .then((updatedUser)=>{
+              return Commons.getOne(Users, follower.followed)
+                .then((followedUser)=>{
+                  followedUser.followers.splice(followedUser.followers.indexOf(follower.follower));
+                  return Commons.update(Users, followedUser)
+                });
+            })
+        });
+    }
+            
   }
 
   return oUserInterface;
