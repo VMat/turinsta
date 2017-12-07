@@ -131,6 +131,14 @@ let db = (function(){
     
     removeFavoritePublication: (favorite)=>{
       return userInterface.removeFavoritePublication(favorite);
+    },
+    
+    addUserFollower: (follower)=>{
+      return userInterface.addUserFollower(follower);
+    },
+    
+    removeUserFollower: (follower)=>{
+      return userInterface.removeUserFollower(follower);
     }
 
   };
