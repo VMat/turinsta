@@ -18,4 +18,8 @@ export class ExperienceComponent {
     console.log('Hello ExperienceComponent Component');
   }
 
+  removeExperience(){
+
+  }
+
 }

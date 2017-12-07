@@ -27964,3 +27964,7 @@ page-publication-user-filter * {
   font-size: x-large;
   font-family: 'Chiller', cursive;
 }
+
+ion-navbar {
+  padding: 0 !important;
+}

@@ -36,7 +36,8 @@ import {FiltersBarComponent} from "../components/filters-bar/filters-bar";
 import {PlaceFilterComponent} from "../components/place-filter/place-filter";
 import {UserFilterComponent} from "../components/user-filter/user-filter";
 import {OrderingCriterionComponent} from "../components/ordering-criterion/ordering-criterion";
-import {IonicStorageModule, Storage} from "@ionic/storage";
+import {IonicStorageModule} from "@ionic/storage";
+import {Network} from "@ionic-native/network";
 
 @NgModule({
   declarations: [
@@ -94,7 +95,8 @@ import {IonicStorageModule, Storage} from "@ionic/storage";
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     StorageProvider,
-    CommonsProvider
+    CommonsProvider,
+    Network
   ]
 })
 export class AppModule {}
