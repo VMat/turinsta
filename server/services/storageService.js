@@ -116,6 +116,14 @@ const storageService = (function(){
     
     removeFavoritePublication: (favorite)=>{
       return db.removeFavoritePublication(favorite);
+    },
+    
+    addUserFollower: (follower)=>{
+      return db.addUserFollower(follower);
+    },
+    
+    removeUserFollower: (follower)=>{
+      return db.removeUserFollower(follower);
     }
 
   };
