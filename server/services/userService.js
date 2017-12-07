@@ -52,6 +52,22 @@ const userService = (function(){
           then(updatedUser=>resolve(updatedUser)).
           catch(error=>reject(error))  
       })   
+    },
+    
+    addUserFollower: (follower)=>{
+      return new Promise((resolve, reject)=>{
+        storageService.addUserFollower(follower).
+          then(updatedUser=>resolve(updatedUser)).
+          catch(error=>reject(error))  
+      })    
+    },
+    
+    removeUserFollower: (follower)=>{
+      return new Promise((resolve, reject)=>{
+        storageService.removeUserFollower(follower).
+          then(updatedUser=>resolve(updatedUser)).
+          catch(error=>reject(error))  
+      })   
     }
     
   };
