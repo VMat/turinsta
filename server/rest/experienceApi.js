@@ -19,8 +19,8 @@ router.put('/',(req, res)=>{
     .catch(error=>{res.status(500).send(error)})
 });
 
-router.delete('/',(req, res)=>{
-  experienceService.deleteExperience(req.body)
+router.delete('/:id',(req, res)=>{
+  experienceService.deleteExperience(req.params.id)
     .then(experience=>{res.status(200).json(experience)})
     .catch(error=>{res.status(500).send(error)})
 });
