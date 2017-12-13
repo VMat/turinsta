@@ -30,7 +30,4 @@ export class CommentListComponent{
       this.commentValue = null;
     });
   }
-
-  commentDeleted(event){
-  }
 }

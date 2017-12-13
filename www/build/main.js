@@ -714,6 +714,9 @@ PublicationComponent = __decorate([
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ExperienceComponent; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__providers_storage_storage__ = __webpack_require__(59);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_ionic_angular__ = __webpack_require__(19);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_commons_commons__ = __webpack_require__(58);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -724,6 +727,9 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 
+
+
+
 /**
  * Generated class for the ExperienceComponent component.
  *
@@ -731,11 +737,83 @@ var __metadata = (this && this.__metadata) || function (k, v) {
  * Components.
  */
 var ExperienceComponent = (function () {
-    function ExperienceComponent() {
+    function ExperienceComponent(storage, alertCtrl, commonsService) {
+        this.storage = storage;
+        this.alertCtrl = alertCtrl;
+        this.commonsService = commonsService;
         this.data = null;
+        this.publicationOwner = null;
+        this.editionMode = false;
+        this.categoryInput = null;
+        this.contentInput = null;
         console.log('Hello ExperienceComponent Component');
     }
+    ExperienceComponent.prototype.toogleEditionMode = function () {
+        this.editionMode = !this.editionMode;
+        this.categoryInput = this.editionMode ? this.data.category : null;
+        this.contentInput = this.editionMode ? this.data.content : null;
+    };
+    ExperienceComponent.prototype.confirmUpdate = function () {
+        var _this = this;
+        var confirm = this.alertCtrl.create({
+            title: 'Confirmar operación',
+            message: '¿Está seguro que desea editar la experiencia?',
+            buttons: [
+                {
+                    text: 'Aceptar',
+                    handler: function () {
+                        _this.updateExperience();
+                    }
+                },
+                {
+                    text: 'Cancelar',
+                    handler: function () {
+                    }
+                }
+            ]
+        });
+        confirm.present();
+    };
+    ExperienceComponent.prototype.confirmDelete = function () {
+        var _this = this;
+        var confirm = this.alertCtrl.create({
+            title: 'Confirmar operación',
+            message: '¿Está seguro que desea borrar la experiencia?',
+            buttons: [
+                {
+                    text: 'Aceptar',
+                    handler: function () {
+                        _this.removeExperience();
+                    }
+                },
+                {
+                    text: 'Cancelar',
+                    handler: function () {
+                    }
+                }
+            ]
+        });
+        confirm.present();
+    };
+    ExperienceComponent.prototype.updateExperience = function () {
+        var _this = this;
+        this.storage.updateExperience(this.data).subscribe(function (updatedExperience) {
+            _this.commonsService.presentToast("Experiencia editada con éxito");
+            _this.toogleEditionMode();
+        });
+    };
     ExperienceComponent.prototype.removeExperience = function () {
+        var _this = this;
+        this.storage.deleteExperience(this.data).subscribe(function (deletedExperience) {
+            _this.commonsService.presentToast("Experiencia borrada con éxito");
+        });
+    };
+    ExperienceComponent.prototype.checkEditionPermission = function () {
+        return this.publicationOwner == this.commonsService.getUserId();
+    };
+    ExperienceComponent.prototype.checkDeletePermission = function () {
+        var loggedUser = this.commonsService.getUserId();
+        return (this.publicationOwner == loggedUser) || (this.publicationOwner == loggedUser);
     };
     return ExperienceComponent;
 }());
@@ -743,13 +821,18 @@ __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["E" /* Input */])(),
     __metadata("design:type", Object)
 ], ExperienceComponent.prototype, "data", void 0);
+__decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["E" /* Input */])(),
+    __metadata("design:type", Object)
+], ExperienceComponent.prototype, "publicationOwner", void 0);
 ExperienceComponent = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
-        selector: 'experience',template:/*ion-inline-start:"C:\Users\Matias\WebstormProjects\turinsta\src\components\experience\experience.html"*/'<!-- Generated template for the ExperienceComponent component -->\n<ion-list>\n  <ion-card>\n    <ion-card-header ion-item>\n      <p item-start style="font-size: xx-large">\n        {{data.category}}\n      </p>\n      <button item-right ion-button (click)="toogleEditionMode()" clear><ion-icon name="create"></ion-icon></button>\n      <button item-end ion-button (click)="removeExperience()" clear><ion-icon name="trash" color="danger"></ion-icon></button>\n    </ion-card-header>\n    <ion-card-content>\n      <p>{{data.content}}</p>\n    </ion-card-content>\n  </ion-card>\n</ion-list>\n'/*ion-inline-end:"C:\Users\Matias\WebstormProjects\turinsta\src\components\experience\experience.html"*/
+        selector: 'experience',template:/*ion-inline-start:"C:\Users\Matias\WebstormProjects\turinsta\src\components\experience\experience.html"*/'<!-- Generated template for the ExperienceComponent component -->\n<ion-list>\n  <ion-card>\n    <ion-card-header ion-item>\n      <p *ngIf="!editionMode" item-start style="font-size: xx-large">\n        {{data.category}}\n      </p>\n      <ion-input *ngIf="editionMode" item-start [(ngModel)]="categoryInput" style="font-size: xx-large"></ion-input>\n      <button *ngIf="checkEditionPermission() && !editionMode" item-right ion-button (click)="toogleEditionMode()" clear><ion-icon name="create"></ion-icon></button>\n      <button *ngIf="checkDeletePermission() && !editionMode" item-end ion-button (click)="removeExperience()" clear><ion-icon name="trash" color="danger"></ion-icon></button>\n    </ion-card-header>\n    <ion-card-content>\n      <p *ngIf="!editionMode">{{data.content}}</p>\n      <ion-textarea *ngIf="editionMode" [(ngModel)]="contentInput"></ion-textarea>\n    </ion-card-content>\n  </ion-card>\n</ion-list>\n'/*ion-inline-end:"C:\Users\Matias\WebstormProjects\turinsta\src\components\experience\experience.html"*/
     }),
-    __metadata("design:paramtypes", [])
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__providers_storage_storage__["a" /* StorageProvider */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__providers_storage_storage__["a" /* StorageProvider */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["a" /* AlertController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["a" /* AlertController */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_3__providers_commons_commons__["a" /* CommonsProvider */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__providers_commons_commons__["a" /* CommonsProvider */]) === "function" && _c || Object])
 ], ExperienceComponent);
 
+var _a, _b, _c;
 //# sourceMappingURL=experience.js.map
 
 /***/ }),
@@ -798,7 +881,6 @@ var CommentComponent = (function () {
         this.comment = null;
         this.publicationId = null;
         this.publicationOwner = null;
-        this.commentDeleted = new __WEBPACK_IMPORTED_MODULE_0__angular_core__["w" /* EventEmitter */]();
         this.showReplies = false;
         this.editionMode = false;
         this.commentValue = null;
@@ -864,7 +946,6 @@ var CommentComponent = (function () {
     CommentComponent.prototype.deleteComment = function () {
         var _this = this;
         this.storageService.deleteComment(this.comment).subscribe(function (deletedComment) {
-            _this.commentDeleted.emit();
             _this.commonsService.presentToast("Comentario borrado con éxito");
         });
     };
@@ -889,17 +970,14 @@ __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["E" /* Input */])(),
     __metadata("design:type", Object)
 ], CommentComponent.prototype, "publicationOwner", void 0);
-__decorate([
-    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["S" /* Output */])(),
-    __metadata("design:type", Object)
-], CommentComponent.prototype, "commentDeleted", void 0);
 CommentComponent = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
         selector: 'comment',template:/*ion-inline-start:"C:\Users\Matias\WebstormProjects\turinsta\src\components\comment\comment.html"*/'<!-- Generated template for the CommentComponent component -->\n<ion-item class="comment-content">\n  <ion-avatar class="comment-avatar" item-start>\n    <img src="{{comment.user.avatar}}">\n  </ion-avatar>\n  <p *ngIf="!editionMode"><b>{{comment.user.name}}</b>&nbsp;{{comment.content}}</p>\n  <ion-item class="comment-edition" item-left *ngIf="editionMode">\n    <p item-start><b>{{comment.user.name}}</b></p>\n    <ion-textarea [(ngModel)]="commentValue"></ion-textarea>\n    <div class="comment-button-list" item-end>\n      <button class="publication-button" color="success" ion-button clear (click)="confirmUpdate()">\n        <ion-icon style="font-size: 20px" class="publication-icon" name="checkmark"></ion-icon>\n      </button>\n      <button class="publication-button" color="danger" ion-button clear (click)="toogleEditionMode()">\n        <ion-icon style="font-size: 20px" class="publication-icon" name="close"></ion-icon>\n      </button>\n    </div>\n  </ion-item>\n  <div class="comment-button-list" item-end>\n    <button *ngIf="comment.replies!=undefined && !editionMode" (click)="toogleReplies()" class="publication-button" color="secondary" ion-button clear>\n      <ion-icon style="font-size: 20px" class="publication-icon" name="{{showReplies? \'ios-arrow-dropdown\' : \'ios-arrow-dropright\'}}"></ion-icon>\n    </button>\n    <button *ngIf="checkEditionPermission() && !editionMode" class="publication-button" color="primary" ion-button clear (click)="toogleEditionMode()">\n      <ion-icon style="font-size: 20px" class="publication-icon" name="create"></ion-icon>\n    </button>\n    <button *ngIf="checkDeletePermission() && !editionMode" class="publication-button" color="danger" ion-button (click)="confirmDelete()" clear>\n      <ion-icon style="font-size: 20px" class="publication-icon" name="ios-trash-outline"></ion-icon>\n    </button>\n  </div>\n</ion-item>\n<comment-list *ngIf="showReplies" [comments]=comment.replies [publicationId]=publicationId [publicationOwner]=publicationOwner [commentId]=comment._id></comment-list>\n'/*ion-inline-end:"C:\Users\Matias\WebstormProjects\turinsta\src\components\comment\comment.html"*/
     }),
-    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__providers_storage_storage__["a" /* StorageProvider */], __WEBPACK_IMPORTED_MODULE_2__providers_commons_commons__["a" /* CommonsProvider */], __WEBPACK_IMPORTED_MODULE_3_ionic_angular__["a" /* AlertController */]])
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__providers_storage_storage__["a" /* StorageProvider */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__providers_storage_storage__["a" /* StorageProvider */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_2__providers_commons_commons__["a" /* CommonsProvider */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__providers_commons_commons__["a" /* CommonsProvider */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_3_ionic_angular__["a" /* AlertController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3_ionic_angular__["a" /* AlertController */]) === "function" && _c || Object])
 ], CommentComponent);
 
+var _a, _b, _c;
 //# sourceMappingURL=comment.js.map
 
 /***/ }),
@@ -950,8 +1028,6 @@ var CommentListComponent = (function () {
             _this.commentValue = null;
         });
     };
-    CommentListComponent.prototype.commentDeleted = function (event) {
-    };
     return CommentListComponent;
 }());
 __decorate([
@@ -972,11 +1048,12 @@ __decorate([
 ], CommentListComponent.prototype, "commentId", void 0);
 CommentListComponent = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
-        selector: 'comment-list',template:/*ion-inline-start:"C:\Users\Matias\WebstormProjects\turinsta\src\components\comment-list\comment-list.html"*/'<!-- Generated template for the CommentListComponent component -->\n<ion-list class="comment-list">\n  <comment *ngFor="let comment of comments" [comment]=comment [publicationId]=publicationId [publicationOwner]=publicationOwner (commentDeleted)="commentDeleted($event)"></comment>\n  <ion-item no-padding>\n    <ion-textarea [(ngModel)]="commentValue" item-start style="font-size: x-small" placeholder="Escribe un comentario..."></ion-textarea>\n    <button item-left ion-button clear (click)="sendComment()">\n      <ion-icon name="send"></ion-icon>\n    </button>\n  </ion-item>\n</ion-list>\n'/*ion-inline-end:"C:\Users\Matias\WebstormProjects\turinsta\src\components\comment-list\comment-list.html"*/
+        selector: 'comment-list',template:/*ion-inline-start:"C:\Users\Matias\WebstormProjects\turinsta\src\components\comment-list\comment-list.html"*/'<!-- Generated template for the CommentListComponent component -->\n<ion-list class="comment-list">\n  <comment *ngFor="let comment of comments" [comment]=comment [publicationId]=publicationId [publicationOwner]=publicationOwner></comment>\n  <ion-item no-padding>\n    <ion-textarea [(ngModel)]="commentValue" item-start style="font-size: x-small" placeholder="Escribe un comentario..."></ion-textarea>\n    <button item-left ion-button clear (click)="sendComment()">\n      <ion-icon name="send"></ion-icon>\n    </button>\n  </ion-item>\n</ion-list>\n'/*ion-inline-end:"C:\Users\Matias\WebstormProjects\turinsta\src\components\comment-list\comment-list.html"*/
     }),
-    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__providers_storage_storage__["a" /* StorageProvider */], __WEBPACK_IMPORTED_MODULE_3__providers_commons_commons__["a" /* CommonsProvider */], __WEBPACK_IMPORTED_MODULE_2__ngrx_store__["h" /* Store */]])
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__providers_storage_storage__["a" /* StorageProvider */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__providers_storage_storage__["a" /* StorageProvider */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_3__providers_commons_commons__["a" /* CommonsProvider */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__providers_commons_commons__["a" /* CommonsProvider */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_2__ngrx_store__["h" /* Store */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__ngrx_store__["h" /* Store */]) === "function" && _c || Object])
 ], CommentListComponent);
 
+var _a, _b, _c;
 //# sourceMappingURL=comment-list.js.map
 
 /***/ }),
@@ -1430,16 +1507,28 @@ var StorageProvider = StorageProvider_1 = (function () {
         return this.http.delete(StorageProvider_1.baseUrl + 'comments/' + (Boolean(comment.id) ? comment.id : comment._id))
             .map(function (res) { return res.json(); });
     };
+    StorageProvider.prototype.createExperience = function (experience) {
+        return this.http.post(StorageProvider_1.baseUrl + 'experiences', experience, { headers: StorageProvider_1.headers })
+            .map(function (res) { return res.json(); });
+    };
+    StorageProvider.prototype.updateExperience = function (experience) {
+        return this.http.put(StorageProvider_1.baseUrl + 'experiences', experience, { headers: StorageProvider_1.headers })
+            .map(function (res) { return res.json(); });
+    };
+    StorageProvider.prototype.deleteExperience = function (experience) {
+        return this.http.delete(StorageProvider_1.baseUrl + 'experiences/' + experience._id)
+            .map(function (res) { return res.json(); });
+    };
     return StorageProvider;
 }());
 StorageProvider.baseUrl = 'https://turinsta-staging.herokuapp.com/api/';
 StorageProvider.headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["a" /* Headers */]();
 StorageProvider = StorageProvider_1 = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["B" /* Injectable */])(),
-    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* Http */]])
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* Http */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* Http */]) === "function" && _a || Object])
 ], StorageProvider);
 
-var StorageProvider_1;
+var StorageProvider_1, _a;
 //# sourceMappingURL=storage.js.map
 
 /***/ }),
@@ -1667,7 +1756,7 @@ __decorate([
 ], PublicationFooterComponent.prototype, "comments", void 0);
 PublicationFooterComponent = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
-        selector: 'publication-footer',template:/*ion-inline-start:"C:\Users\Matias\WebstormProjects\turinsta\src\components\publication-footer\publication-footer.html"*/'<!-- Generated template for the PublicationFooterComponent component -->\n<ion-list>\n  <ion-item class="publication-buttons-item">\n    <button item-start *ngIf="experiences.length >0" class="publication-button" (click)="toggleSection(0)" ion-button clear>\n      <ion-icon class="publication-icon" name="ios-paper" color="secondary" isActive="{{sections[0].show}}">\n        <ion-badge class="publication-badge">{{experiences.length}}</ion-badge>\n      </ion-icon>\n    </button>\n    <button item-left class="publication-button" (click)="toggleSection(1)" ion-button clear>\n      <ion-icon class="publication-icon" name="ios-text" color="secondary" isActive="{{sections[1].show}}">\n        <ion-badge *ngIf="comments.length >0" class="publication-badge">{{comments.length}}</ion-badge>\n      </ion-icon>\n    </button>\n  </ion-item>\n</ion-list>\n<experience-list *ngIf="sections[0].show" [experiences]=experiences [publicationId]=publicationId></experience-list>\n<comment-list *ngIf="sections[1].show" [comments]=comments [publicationId]=publicationId [publicationOwner]=userId></comment-list>\n'/*ion-inline-end:"C:\Users\Matias\WebstormProjects\turinsta\src\components\publication-footer\publication-footer.html"*/
+        selector: 'publication-footer',template:/*ion-inline-start:"C:\Users\Matias\WebstormProjects\turinsta\src\components\publication-footer\publication-footer.html"*/'<!-- Generated template for the PublicationFooterComponent component -->\n<ion-list>\n  <ion-item class="publication-buttons-item">\n    <button item-start *ngIf="experiences.length >0" class="publication-button" (click)="toggleSection(0)" ion-button clear>\n      <ion-icon class="publication-icon" name="ios-paper" color="secondary" isActive="{{sections[0].show}}">\n        <ion-badge class="publication-badge">{{experiences.length}}</ion-badge>\n      </ion-icon>\n    </button>\n    <button item-left class="publication-button" (click)="toggleSection(1)" ion-button clear>\n      <ion-icon class="publication-icon" name="ios-text" color="secondary" isActive="{{sections[1].show}}">\n        <ion-badge *ngIf="comments.length >0" class="publication-badge">{{comments.length}}</ion-badge>\n      </ion-icon>\n    </button>\n  </ion-item>\n</ion-list>\n<experience-list *ngIf="sections[0].show" [experiences]=experiences [publicationId]=publicationId [publicationOwner]=userId></experience-list>\n<comment-list *ngIf="sections[1].show" [comments]=comments [publicationId]=publicationId [publicationOwner]=userId></comment-list>\n'/*ion-inline-end:"C:\Users\Matias\WebstormProjects\turinsta\src\components\publication-footer\publication-footer.html"*/
     }),
     __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["b" /* Events */], __WEBPACK_IMPORTED_MODULE_2__ngrx_store__["h" /* Store */]])
 ], PublicationFooterComponent);
@@ -1702,6 +1791,7 @@ var ExperienceListComponent = (function () {
     function ExperienceListComponent() {
         this.experiences = null;
         this.publicationId = null;
+        this.publicationOwner = null;
         console.log('Hello ExperienceListComponent Component');
     }
     return ExperienceListComponent;
@@ -1712,11 +1802,15 @@ __decorate([
 ], ExperienceListComponent.prototype, "experiences", void 0);
 __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["E" /* Input */])(),
-    __metadata("design:type", String)
+    __metadata("design:type", Object)
 ], ExperienceListComponent.prototype, "publicationId", void 0);
+__decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["E" /* Input */])(),
+    __metadata("design:type", String)
+], ExperienceListComponent.prototype, "publicationOwner", void 0);
 ExperienceListComponent = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
-        selector: 'experience-list',template:/*ion-inline-start:"C:\Users\Matias\WebstormProjects\turinsta\src\components\experience-list\experience-list.html"*/'<!-- Generated template for the ExperienceListComponent component -->\n<ion-list>\n  <experience *ngFor="let experience of experiences" [data]=experience></experience>\n  <ion-item>\n    <button item-left class="publication-button" color="success" ion-button clear>\n      <ion-icon style="font-size: 20px" class="publication-icon" name="ios-add-circle"></ion-icon>\n    </button>\n  </ion-item>\n</ion-list>\n\n'/*ion-inline-end:"C:\Users\Matias\WebstormProjects\turinsta\src\components\experience-list\experience-list.html"*/
+        selector: 'experience-list',template:/*ion-inline-start:"C:\Users\Matias\WebstormProjects\turinsta\src\components\experience-list\experience-list.html"*/'<!-- Generated template for the ExperienceListComponent component -->\n<ion-list>\n  <experience *ngFor="let experience of experiences" [data]=experience [publicationOwner]="publicationOwner"></experience>\n  <ion-item>\n    <button item-left class="publication-button" color="success" ion-button clear>\n      <ion-icon style="font-size: 20px" class="publication-icon" name="ios-add-circle"></ion-icon>\n    </button>\n  </ion-item>\n</ion-list>\n\n'/*ion-inline-end:"C:\Users\Matias\WebstormProjects\turinsta\src\components\experience-list\experience-list.html"*/
     }),
     __metadata("design:paramtypes", [])
 ], ExperienceListComponent);

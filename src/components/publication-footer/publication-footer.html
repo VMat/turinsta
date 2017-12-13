@@ -13,5 +13,5 @@
     </button>
   </ion-item>
 </ion-list>
-<experience-list *ngIf="sections[0].show" [experiences]=experiences [publicationId]=publicationId></experience-list>
+<experience-list *ngIf="sections[0].show" [experiences]=experiences [publicationId]=publicationId [publicationOwner]=userId></experience-list>
 <comment-list *ngIf="sections[1].show" [comments]=comments [publicationId]=publicationId [publicationOwner]=userId></comment-list>

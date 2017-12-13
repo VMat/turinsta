@@ -20,7 +20,6 @@ export class CommentComponent{
   @Input() comment: any = null;
   @Input() publicationId: any = null;
   @Input() publicationOwner: any = null;
-  @Output() commentDeleted = new EventEmitter();
   showReplies: boolean = false;
   editionMode: boolean = false;
   commentValue: string = null;
@@ -90,7 +89,6 @@ export class CommentComponent{
 
   deleteComment(){
     this.storageService.deleteComment(this.comment).subscribe((deletedComment)=>{
-      this.commentDeleted.emit();
       this.commonsService.presentToast("Comentario borrado con éxito");
     });
   }

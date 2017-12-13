@@ -14,6 +14,7 @@ export class ExperienceListComponent {
 
   @Input() experiences: any = null;
   @Input() publicationId: String = null;
+  @Input() publicationOwner: string = null;
 
   constructor() {
     console.log('Hello ExperienceListComponent Component');

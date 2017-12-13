@@ -43,4 +43,19 @@ export class StorageProvider {
     return this.http.delete(StorageProvider.baseUrl + 'comments/' + (Boolean(comment.id) ? comment.id : comment._id))
       .map((res:Response) => res.json());
   }
+
+  createExperience(experience){
+    return this.http.post(StorageProvider.baseUrl + 'experiences',experience,{headers: StorageProvider.headers})
+      .map((res:Response) => res.json());
+  }
+
+  updateExperience(experience){
+    return this.http.put(StorageProvider.baseUrl + 'experiences',experience,{headers: StorageProvider.headers})
+      .map((res:Response) => res.json());
+  }
+
+  deleteExperience(experience){
+    return this.http.delete(StorageProvider.baseUrl + 'experiences/' + experience._id)
+      .map((res:Response) => res.json());
+  }
 }
