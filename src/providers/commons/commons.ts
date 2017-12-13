@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
-import { Http } from '@angular/http';
+import {Http} from '@angular/http';
 import 'rxjs/add/operator/map';
 import {ToastController, AlertController} from "ionic-angular";
 import {Storage} from '@ionic/storage';
+import {ImgcacheService} from "../imgcache/imgcache";
 
 /*
   Generated class for the CommonsProvider provider.
@@ -45,35 +46,11 @@ export class CommonsProvider {
     confirm.present();
   }
 
-  savePublicationCache(publications){
-    let publicationsCopy = [...publications];
-    publicationsCopy.forEach((publication,i)=>{
-      let publicationCopy = {...publication};
-      let publicationItemCopy = {...publicationCopy.publication};
-      let publicationImagesCopy = [...publicationItemCopy.images];
-      publicationImagesCopy.forEach((image,j)=>{
-        let imageCopy =  {...image};
-        this.toDataUrl(imageCopy);
-        publicationImagesCopy[j] = imageCopy;
-        publicationItemCopy.images = publicationImagesCopy;
-        publicationCopy.publication = publicationItemCopy;
-        publicationsCopy[i] = publicationCopy;
-      });
-    });
-    this.localStorage.set("publications",publicationsCopy).then((cachedPublications)=>{
-      sessionStorage.setItem("publicationsCached", JSON.stringify(cachedPublications));
-    });
+  cachePublications(publications){
+    this.localStorage.set("publications",publications);
   }
 
-  toDataUrl(image){
-    let canvas = document.createElement("canvas");
-    let context = canvas.getContext('2d');
-    let base_image = new Image();
-    base_image.src = image.url;
-    base_image.onload = function(){
-      context.drawImage(base_image, 100, 100);
-    };
-    image.url =  canvas.toDataURL(); // PNG is the default
+  getCachedPublications(){
+    return this.localStorage.get("publications");
   }
-
 }

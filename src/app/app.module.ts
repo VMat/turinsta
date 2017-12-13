@@ -37,7 +37,9 @@ import {PlaceFilterComponent} from "../components/place-filter/place-filter";
 import {UserFilterComponent} from "../components/user-filter/user-filter";
 import {OrderingCriterionComponent} from "../components/ordering-criterion/ordering-criterion";
 import {IonicStorageModule} from "@ionic/storage";
-import {Network} from "@ionic-native/network";
+import {ImgcacheService} from '../providers/imgcache/imgcache';
+import {PublicationImageComponent} from "../components/publication-image/publication-image";
+
 
 @NgModule({
   declarations: [
@@ -62,6 +64,7 @@ import {Network} from "@ionic-native/network";
     PlaceFilterComponent,
     UserFilterComponent,
     OrderingCriterionComponent,
+    PublicationImageComponent,
     ContainsFilterPipe
   ],
   imports: [
@@ -96,7 +99,7 @@ import {Network} from "@ionic-native/network";
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     StorageProvider,
     CommonsProvider,
-    Network
+    ImgcacheService
   ]
 })
 export class AppModule {}

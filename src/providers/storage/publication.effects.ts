@@ -7,10 +7,15 @@ import {AppState} from "../models/publication.model";
 import {StorageProvider} from "./storage";
 import {CommonsProvider} from "../commons/commons";
 
+
+
 @Injectable()
 export class PublicationEffects {
+  alreadyCached = false;
+  offlineMode = false;
 
-  constructor(private actions$ : Actions, private storageService : StorageProvider, private store$: Store<AppState>, private commons: CommonsProvider){}
+  constructor(private actions$ : Actions, private storageService : StorageProvider, private store$: Store<AppState>, public commons: CommonsProvider){
+  }
 
   @Effect() getPublications$: Observable<Action> = this.actions$
     .ofType(GET_PUBLICATIONS)
@@ -19,9 +24,25 @@ export class PublicationEffects {
       .withLatestFrom(this.store$)
       .switchMap(([action, storeState]) => this.storageService.getPublications(storeState.publications.range,storeState.publications.filters,storeState.publications.sort)
         .map(publications => {
-          this.commons.savePublicationCache(publications.slice(0,9));
+
+          if(!this.alreadyCached){
+            this.offlineMode = false;
+            this.commons.cachePublications(publications);
+            this.alreadyCached = true;
+          }
+
           return ({type: GET_PUBLICATIONS_SUCCESS, payload: publications})
         })
-        .catch(() => Observable.of({type: GET_PUBLICATIONS_ERROR})))
+        .catch(async()=>{
+          let cachedPublications = null;
+          if(!this.offlineMode){
+            cachedPublications = await this.commons.getCachedPublications().then((cachedPublications)=>{return cachedPublications});
+            this.commons.presentToast("Error al actualizar las publicaciones");
+            this.offlineMode = true;
+            this.alreadyCached = false;
+          }
+          return {type: GET_PUBLICATIONS_ERROR, payload: cachedPublications};
+        })
+      )
     )
 }

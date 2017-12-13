@@ -1,4 +1,5 @@
 import {tassign} from "tassign";
+import {CommonsProvider} from "../commons/commons";
 export const GET_PUBLICATIONS = "GET_PUBLICATIONS";
 export const GET_PUBLICATIONS_SUCCESS = "GET_PUBLICATIONS_SUCCESS";
 export const GET_PUBLICATIONS_ERROR = "GET_PUBLICATIONS_ERROR";
@@ -146,6 +147,9 @@ export function publicationReducer(state = initialState, { type, payload } ) {
       return tassign(state, {publications: payload, pending: false});
     }
     case GET_PUBLICATIONS_ERROR:{
+      if(Boolean(payload)){
+        return tassign(state, {pending: false, error: "Error", publications: payload});
+      }
       return tassign(state, {pending: false, error: "Error"});
     }
     case INCREMENT_PUBLICATION_RANGE:{

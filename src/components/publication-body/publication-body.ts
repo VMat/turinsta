@@ -1,5 +1,6 @@
 import {Component, Input} from '@angular/core';
 
+
 /**
  * Generated class for the PublicationBodyComponent component.
  *

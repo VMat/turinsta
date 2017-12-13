@@ -12,6 +12,7 @@ import { FiltersBarComponent } from './filters-bar/filters-bar';
 import { PlaceFilterComponent } from './place-filter/place-filter';
 import { UserFilterComponent } from './user-filter/user-filter';
 import { OrderingCriterionComponent } from './ordering-criterion/ordering-criterion';
+import { PublicationImageComponent } from './publication-image/publication-image';
 @NgModule({
 	declarations: [PublicationComponent,
     ExperienceComponent,
@@ -25,7 +26,8 @@ import { OrderingCriterionComponent } from './ordering-criterion/ordering-criter
     FiltersBarComponent,
     PlaceFilterComponent,
     UserFilterComponent,
-    OrderingCriterionComponent],
+    OrderingCriterionComponent,
+    PublicationImageComponent],
 	imports: [],
 	exports: [PublicationComponent,
     ExperienceComponent,
@@ -39,6 +41,7 @@ import { OrderingCriterionComponent } from './ordering-criterion/ordering-criter
     FiltersBarComponent,
     PlaceFilterComponent,
     UserFilterComponent,
-    OrderingCriterionComponent]
+    OrderingCriterionComponent,
+    PublicationImageComponent]
 })
 export class ComponentsModule {}
