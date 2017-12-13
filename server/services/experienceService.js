@@ -30,9 +30,9 @@ const experienceService = (function(){
       })
     },
 
-    deleteExperience: (experience)=>{
+    deleteExperience: (id)=>{
       return new Promise((resolve, reject)=>{
-      storageService.deleteExperience(experience).
+      storageService.deleteExperience(id).
         then(deletedExperience=>resolve(deletedExperience)).
         catch(error=>reject(error))
       })
