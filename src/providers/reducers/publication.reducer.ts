@@ -78,24 +78,24 @@ function deleteOverItems(target, source){
 function updateItems(target, source, arrayProperties){
   let index = null;
   let arrayProperty = null;
-  let arrayPropertyCopy = [];
 
-  if(Boolean(arrayProperties)){
+  /*if(Boolean(arrayProperties)){
     arrayPropertyCopy = [...arrayProperties];
     if(arrayPropertyCopy.length>0){
       arrayProperty = arrayPropertyCopy.splice(0,1);
     }
-  }
+  }*/
 
   target.forEach((targetItem)=>{
     index = findId(source, targetItem._id);
     if(index != null){
       for(let property in targetItem){
-        if(property != arrayProperty){
+        arrayProperty = arrayProperties.filter((currentProperty)=>{return currentProperty.property==property});
+        if(arrayProperty == 0){
           targetItem[property] = source[index][property];
         }
         else{
-          execFullUpdate(targetItem[property], source[index][property], arrayPropertyCopy);
+          execFullUpdate(targetItem[property], source[index][property], [{"property": arrayProperty.subproperty,"subproperty":""}]);
         }
       }
     }
@@ -111,7 +111,7 @@ function appendItems(target, source){
 }
 
 function updatePublications(statePublications, updatedPublications){
-  return execFullUpdate(statePublications, updatedPublications, ["comments","replies"]);
+  return execFullUpdate(statePublications, updatedPublications, [{"property": "experiences", "subproperty":""},{"property":"comments","subproperty":"replies"}]);
 }
 
 function orderItems(target, source){
