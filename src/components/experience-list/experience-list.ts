@@ -1,4 +1,5 @@
 import {Component, Input} from '@angular/core';
+import {CommonsProvider} from "../../providers/commons/commons";
 
 /**
  * Generated class for the ExperienceListComponent component.
@@ -16,8 +17,12 @@ export class ExperienceListComponent {
   @Input() publicationId: String = null;
   @Input() publicationOwner: string = null;
 
-  constructor() {
+  constructor(private commonsService: CommonsProvider) {
     console.log('Hello ExperienceListComponent Component');
+  }
+
+  checkUserPermission(){
+    return this.publicationOwner == this.commonsService.getUserId();
   }
 
 }

@@ -1,9 +1,9 @@
 <!-- Generated template for the PublicationFooterComponent component -->
 <ion-list>
   <ion-item class="publication-buttons-item">
-    <button item-start *ngIf="experiences.length >0" class="publication-button" (click)="toggleSection(0)" ion-button clear>
+    <button item-start class="publication-button" (click)="toggleSection(0)" ion-button clear>
       <ion-icon class="publication-icon" name="ios-paper" color="secondary" isActive="{{sections[0].show}}">
-        <ion-badge class="publication-badge">{{experiences.length}}</ion-badge>
+        <ion-badge *ngIf="experiences.length >0" class="publication-badge">{{experiences.length}}</ion-badge>
       </ion-icon>
     </button>
     <button item-left class="publication-button" (click)="toggleSection(1)" ion-button clear>

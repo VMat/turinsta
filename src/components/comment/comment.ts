@@ -94,12 +94,12 @@ export class CommentComponent{
   }
 
   checkEditionPermission(){
-    return this.publicationOwner == this.commonsService.getUserId();
+    return this.comment.user._id == this.commonsService.getUserId();
   }
 
   checkDeletePermission(){
     let loggedUser = this.commonsService.getUserId();
-    return (this.publicationOwner == loggedUser) || (this.publicationOwner == loggedUser);
+    return (this.publicationOwner == loggedUser) || (this.comment.user._id == loggedUser);
   }
 
 }

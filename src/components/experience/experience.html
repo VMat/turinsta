@@ -6,8 +6,18 @@
         {{data.category}}
       </p>
       <ion-input *ngIf="editionMode" item-start [(ngModel)]="categoryInput" style="font-size: xx-large"></ion-input>
-      <button *ngIf="checkEditionPermission() && !editionMode" item-right ion-button (click)="toogleEditionMode()" clear><ion-icon name="create"></ion-icon></button>
-      <button *ngIf="checkDeletePermission() && !editionMode" item-end ion-button (click)="removeExperience()" clear><ion-icon name="trash" color="danger"></ion-icon></button>
+      <div *ngIf="editionMode" item-end>
+        <button color="success" ion-button clear (click)="confirmUpdate()">
+          <ion-icon style="font-size: 20px" name="checkmark"></ion-icon>
+        </button>
+        <button color="danger" ion-button clear (click)="toogleEditionMode()">
+          <ion-icon style="font-size: 20px" name="close"></ion-icon>
+        </button>
+      </div>
+      <div *ngIf="checkEditionPermission() && !editionMode" item-end>
+        <button ion-button (click)="toogleEditionMode()" clear><ion-icon name="create"></ion-icon></button>
+        <button ion-button (click)="confirmDelete()" clear><ion-icon name="trash" color="danger"></ion-icon></button>
+      </div>
     </ion-card-header>
     <ion-card-content>
       <p *ngIf="!editionMode">{{data.content}}</p>

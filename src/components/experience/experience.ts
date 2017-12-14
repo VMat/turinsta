@@ -74,7 +74,10 @@ export class ExperienceComponent {
   }
 
   updateExperience(){
-    this.storage.updateExperience(this.data).subscribe((updatedExperience)=>{
+    let dataCopy = {...this.data};
+    dataCopy.category = this.contentInput;
+    dataCopy.content = this.contentInput;
+    this.storage.updateExperience(dataCopy).subscribe((updatedExperience)=>{
       this.commonsService.presentToast("Experiencia editada con éxito");
       this.toogleEditionMode();
     });
@@ -88,11 +91,6 @@ export class ExperienceComponent {
 
   checkEditionPermission(){
     return this.publicationOwner == this.commonsService.getUserId();
-  }
-
-  checkDeletePermission(){
-    let loggedUser = this.commonsService.getUserId();
-    return (this.publicationOwner == loggedUser) || (this.publicationOwner == loggedUser);
   }
 
 }
