@@ -2,7 +2,7 @@
 <ion-list>
   <experience *ngFor="let experience of experiences" [data]=experience [publicationOwner]="publicationOwner"></experience>
   <ion-item *ngIf="checkUserPermission()">
-    <button item-left class="publication-button" color="success" ion-button clear>
+    <button item-left class="publication-button" color="success" ion-button clear (click)="presentExperienceWritingModal()">
       <ion-icon style="font-size: 20px" class="publication-icon" name="ios-add-circle"></ion-icon>
     </button>
   </ion-item>

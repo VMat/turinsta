@@ -1,5 +1,7 @@
 import {Component, Input} from '@angular/core';
 import {CommonsProvider} from "../../providers/commons/commons";
+import {ModalController} from "ionic-angular";
+import {ExperienceWritingPage} from "../../pages/experience-writing/experience-writing";
 
 /**
  * Generated class for the ExperienceListComponent component.
@@ -17,12 +19,17 @@ export class ExperienceListComponent {
   @Input() publicationId: String = null;
   @Input() publicationOwner: string = null;
 
-  constructor(private commonsService: CommonsProvider) {
+  constructor(private modalCtrl: ModalController,private commonsService: CommonsProvider) {
     console.log('Hello ExperienceListComponent Component');
   }
 
   checkUserPermission(){
     return this.publicationOwner == this.commonsService.getUserId();
+  }
+
+  presentExperienceWritingModal(){
+    let experienceWritingModal = this.modalCtrl.create(ExperienceWritingPage);
+    experienceWritingModal.present();
   }
 
 }

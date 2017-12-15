@@ -1,7 +1,8 @@
 import {Component, Input} from '@angular/core';
 import {StorageProvider} from "../../providers/storage/storage";
-import {AlertController} from "ionic-angular";
+import {AlertController, ModalController} from "ionic-angular";
 import {CommonsProvider} from "../../providers/commons/commons";
+import {ExperienceWritingPage} from "../../pages/experience-writing/experience-writing";
 
 /**
  * Generated class for the ExperienceComponent component.
@@ -21,7 +22,7 @@ export class ExperienceComponent {
   categoryInput: string = null;
   contentInput: string = null;
 
-  constructor(private storage: StorageProvider, private alertCtrl: AlertController, private commonsService: CommonsProvider) {
+  constructor(private storage: StorageProvider, private alertCtrl: AlertController, private commonsService: CommonsProvider, private modalCtrl: ModalController) {
     console.log('Hello ExperienceComponent Component');
   }
 
@@ -39,7 +40,8 @@ export class ExperienceComponent {
         {
           text: 'Aceptar',
           handler: () => {
-            this.updateExperience();
+            // this.updateExperience();
+            this.presentExperienceWritingModal();
           }
         },
         {
@@ -81,6 +83,11 @@ export class ExperienceComponent {
       this.commonsService.presentToast("Experiencia editada con éxito");
       this.toogleEditionMode();
     });
+  }
+
+  presentExperienceWritingModal(){
+    let experienceWritingModal = this.modalCtrl.create(ExperienceWritingPage,this.data);
+    experienceWritingModal.present();
   }
 
   removeExperience(){

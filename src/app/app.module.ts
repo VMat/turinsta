@@ -39,6 +39,7 @@ import {OrderingCriterionComponent} from "../components/ordering-criterion/order
 import {IonicStorageModule} from "@ionic/storage";
 import {ImgcacheService} from '../providers/imgcache/imgcache';
 import {PublicationImageComponent} from "../components/publication-image/publication-image";
+import {ExperienceWritingPage} from "../pages/experience-writing/experience-writing";
 
 
 @NgModule({
@@ -51,6 +52,7 @@ import {PublicationImageComponent} from "../components/publication-image/publica
     TabsPage,
     PublicationOrderByPage,
     PublicationUserFilterPage,
+    ExperienceWritingPage,
     PublicationHeaderComponent,
     PublicationBodyComponent,
     PublicationFooterComponent,
@@ -91,7 +93,8 @@ import {PublicationImageComponent} from "../components/publication-image/publica
     HomePage,
     TabsPage,
     PublicationOrderByPage,
-    PublicationUserFilterPage
+    PublicationUserFilterPage,
+    ExperienceWritingPage
   ],
   providers: [
     StatusBar,
