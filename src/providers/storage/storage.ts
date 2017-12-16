@@ -40,7 +40,7 @@ export class StorageProvider {
   }
 
   deleteComment(comment){
-    return this.http.delete(StorageProvider.baseUrl + 'comments/' + (Boolean(comment.id) ? comment.id : comment._id))
+    return this.http.delete(StorageProvider.baseUrl + 'comments/' + comment._id)
       .map((res:Response) => res.json());
   }
 

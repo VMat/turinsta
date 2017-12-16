@@ -40,6 +40,7 @@ import {IonicStorageModule} from "@ionic/storage";
 import {ImgcacheService} from '../providers/imgcache/imgcache';
 import {PublicationImageComponent} from "../components/publication-image/publication-image";
 import {ExperienceWritingPage} from "../pages/experience-writing/experience-writing";
+import {CommentWritingPage} from "../pages/comment-writing/comment-writing";
 
 
 @NgModule({
@@ -53,6 +54,7 @@ import {ExperienceWritingPage} from "../pages/experience-writing/experience-writ
     PublicationOrderByPage,
     PublicationUserFilterPage,
     ExperienceWritingPage,
+    CommentWritingPage,
     PublicationHeaderComponent,
     PublicationBodyComponent,
     PublicationFooterComponent,
@@ -94,7 +96,8 @@ import {ExperienceWritingPage} from "../pages/experience-writing/experience-writ
     TabsPage,
     PublicationOrderByPage,
     PublicationUserFilterPage,
-    ExperienceWritingPage
+    ExperienceWritingPage,
+    CommentWritingPage
   ],
   providers: [
     StatusBar,

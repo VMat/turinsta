@@ -18,40 +18,9 @@ export class ExperienceComponent {
 
   @Input() data: any = null;
   @Input() publicationOwner: any = null;
-  editionMode: boolean = false;
-  categoryInput: string = null;
-  contentInput: string = null;
 
   constructor(private storage: StorageProvider, private alertCtrl: AlertController, private commonsService: CommonsProvider, private modalCtrl: ModalController) {
     console.log('Hello ExperienceComponent Component');
-  }
-
-  toogleEditionMode(){
-    this.editionMode = !this.editionMode;
-    this.categoryInput = this.editionMode ? this.data.category : null;
-    this.contentInput = this.editionMode ? this.data.content : null;
-  }
-
-  confirmUpdate() {
-    let confirm = this.alertCtrl.create({
-      title: 'Confirmar operación',
-      message: '¿Está seguro que desea editar la experiencia?',
-      buttons: [
-        {
-          text: 'Aceptar',
-          handler: () => {
-            // this.updateExperience();
-            this.presentExperienceWritingModal();
-          }
-        },
-        {
-          text: 'Cancelar',
-          handler: () => {
-          }
-        }
-      ]
-    });
-    confirm.present();
   }
 
   confirmDelete(){
@@ -75,18 +44,8 @@ export class ExperienceComponent {
     confirm.present();
   }
 
-  updateExperience(){
-    let dataCopy = {...this.data};
-    dataCopy.category = this.contentInput;
-    dataCopy.content = this.contentInput;
-    this.storage.updateExperience(dataCopy).subscribe((updatedExperience)=>{
-      this.commonsService.presentToast("Experiencia editada con éxito");
-      this.toogleEditionMode();
-    });
-  }
-
   presentExperienceWritingModal(){
-    let experienceWritingModal = this.modalCtrl.create(ExperienceWritingPage,this.data);
+    let experienceWritingModal = this.modalCtrl.create(ExperienceWritingPage,{experience: this.data});
     experienceWritingModal.present();
   }
 

@@ -5,7 +5,7 @@
   </ion-avatar>
   <p *ngIf="!editionMode"><b>{{comment.user.name}}</b>&nbsp;{{comment.content}}</p>
   <ion-item class="comment-edition" item-left *ngIf="editionMode">
-    <p item-start><b>{{comment.user.name}}</b></p>
+    <p item-start><b>{{comment.user.username}}</b></p>
     <ion-textarea [(ngModel)]="commentValue"></ion-textarea>
     <div class="comment-button-list" item-end>
       <button class="publication-button" color="success" ion-button clear (click)="confirmUpdate()">

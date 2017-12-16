@@ -7,13 +7,14 @@
 <ion-header>
   <ion-navbar>
     <ion-item style="text-align: center">
-    <button item-start ion-button clear (click)="dismissExperience()">
-      <ion-icon name="close"></ion-icon>
-    </button>
-    <ion-title>Nueva experiencia</ion-title>
-    <button item-end ion-button clear (click)="saveExperience()">
-      <ion-icon name="checkmark" color="success"></ion-icon>
-    </button>
+      <button item-start ion-button clear (click)="dismissExperience()">
+        <ion-icon name="close"></ion-icon>
+      </button>
+      <ion-title *ngIf="!experience._id">Nueva experiencia</ion-title>
+      <ion-title *ngIf="experience._id">Editar experiencia</ion-title>
+      <button item-end ion-button clear (click)="confirmSave()">
+        <ion-icon name="checkmark" color="success"></ion-icon>
+      </button>
     </ion-item>
   </ion-navbar>
 </ion-header>

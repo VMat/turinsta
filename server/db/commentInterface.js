@@ -20,8 +20,8 @@ const CommentInterface = (function(){
         .then(user=>{
           let oComment = {};
           oComment.user = {
-            id: user._id,
-            name: user.username,
+            _id: user._id,
+            username: user.username,
             avatar: user.avatar
           };
           oComment.publication = comment.publication;
@@ -33,7 +33,7 @@ const CommentInterface = (function(){
                 return Commons.getOne(Comments,comment.parent)
                 .then(comment=>{
                   comment.replies.push({
-                    id: insertedComment._id,
+                    _id: insertedComment._id,
                     user: insertedComment.user,
                     date: insertedComment.date,
                     content: insertedComment.content
@@ -53,20 +53,15 @@ const CommentInterface = (function(){
     },
 
     update: (comment)=>{
-      if(Boolean(comment.id)){ // Si tiene la propiedad "id" es porque es una respuesta
-        return Commons.getOne(Comments,comment.id)
-          .then((originalComment)=>{
-            return Commons.getOne(Comments,originalComment.parent)
-              .then(parent=>{
-                parent.replies.filter((reply)=>{
-                  return reply.id.equals(originalComment._id);
-                })[0].content = comment.content;
-
-                return Commons.update(Comments,parent)
-                  .then(()=>{
-                    originalComment.content = comment.content;
-                    return Commons.update(Comments, originalComment);
-                  })
+      if(Boolean(comment.parent)){
+        return Commons.getOne(Comments,comment.parent)
+          .then(parent=>{
+            parent.replies.filter((reply)=>{
+              return reply._id.equals(comment._id);
+            })[0].content = comment.content;
+            return Commons.update(Comments,parent)
+              .then(()=>{
+                return Commons.update(Comments, comment);
               })
           });
       }
@@ -81,13 +76,11 @@ const CommentInterface = (function(){
           if(comment.parent != null){
             return Commons.getOne(Comments,comment.parent)
               .then(parent=>{
-
                 parent.replies.filter((reply,i)=>{
-                  if(reply.id.equals(comment._id)){
+                  if(reply._id.equals(comment._id)){
                     parent.replies.splice(i,1);
                   }
                 });
-
                 return Commons.update(Comments,parent)
                   .then(()=>{
                     return Commons.removeOne(Comments, comment);
@@ -95,7 +88,6 @@ const CommentInterface = (function(){
               });
           }
           else{
-
             return Commons.getOne(Publications, comment.publication)
               .then(publication=>{
                 publication.commentIds.splice(publication.comments.indexOf(comment._id), 1);

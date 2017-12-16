@@ -28,7 +28,7 @@ export class ExperienceListComponent {
   }
 
   presentExperienceWritingModal(){
-    let experienceWritingModal = this.modalCtrl.create(ExperienceWritingPage);
+    let experienceWritingModal = this.modalCtrl.create(ExperienceWritingPage,{experience: {publication: this.publicationId}});
     experienceWritingModal.present();
   }
 

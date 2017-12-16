@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import {IonicPage, NavController, NavParams, ViewController} from 'ionic-angular';
+import {IonicPage, NavController, NavParams, ViewController, AlertController} from 'ionic-angular';
 import {StorageProvider} from "../../providers/storage/storage";
 import {CommonsProvider} from "../../providers/commons/commons";
 
@@ -19,7 +19,7 @@ export class ExperienceWritingPage {
 
   experience: any = {};
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private viewCtrl: ViewController, private storageService: StorageProvider, private commons: CommonsProvider) {}
+  constructor(public navCtrl: NavController, public navParams: NavParams, private viewCtrl: ViewController, private storageService: StorageProvider, private commons: CommonsProvider, private alertCtrl: AlertController) {}
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad ExperienceWritingPage');
@@ -32,9 +32,34 @@ export class ExperienceWritingPage {
     this.viewCtrl.dismiss();
   }
 
+  confirmSave() {
+    let confirm = this.alertCtrl.create({
+      title: 'Confirmar operación',
+      message: '¿Está seguro que desea guardar la experiencia?',
+      buttons: [
+        {
+          text: 'Aceptar',
+          handler: () => {
+            this.saveExperience();
+          }
+        },
+        {
+          text: 'Cancelar',
+          handler: () => {
+          }
+        }
+      ]
+    });
+    confirm.present();
+  }
+
   saveExperience(){
+    sessionStorage.setItem("this.experience",JSON.stringify(this.experience));
     if(Boolean(this.experience._id)){
-      this.storageService.updateExperience(this.experience);
+      this.storageService.updateExperience(this.experience).subscribe((editedExperience)=>{
+        this.commons.presentToast("La experiencia ha sido actualizada con éxito");
+        this.viewCtrl.dismiss();
+      });
     }
     else{
       this.storageService.createExperience(this.experience).subscribe((newExperience)=>{
