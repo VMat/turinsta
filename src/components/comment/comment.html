@@ -3,27 +3,15 @@
   <ion-avatar class="comment-avatar" item-start>
     <img src="{{comment.user.avatar}}">
   </ion-avatar>
-  <p *ngIf="!editionMode"><b>{{comment.user.name}}</b>&nbsp;{{comment.content}}</p>
-  <ion-item class="comment-edition" item-left *ngIf="editionMode">
-    <p item-start><b>{{comment.user.username}}</b></p>
-    <ion-textarea [(ngModel)]="commentValue"></ion-textarea>
-    <div class="comment-button-list" item-end>
-      <button class="publication-button" color="success" ion-button clear (click)="confirmUpdate()">
-        <ion-icon style="font-size: 20px" class="publication-icon" name="checkmark"></ion-icon>
-      </button>
-      <button class="publication-button" color="danger" ion-button clear (click)="toogleEditionMode()">
-        <ion-icon style="font-size: 20px" class="publication-icon" name="close"></ion-icon>
-      </button>
-    </div>
-  </ion-item>
+  <p><b>{{comment.user.name}}</b>&nbsp;{{comment.content}}</p>
   <div class="comment-button-list" item-end>
-    <button *ngIf="comment.replies!=undefined && !editionMode" (click)="toogleReplies()" class="publication-button" color="secondary" ion-button clear>
+    <button *ngIf="comment.replies!=undefined" (click)="toogleReplies()" class="publication-button" color="secondary" ion-button clear>
       <ion-icon style="font-size: 20px" class="publication-icon" name="{{showReplies? 'ios-arrow-dropdown' : 'ios-arrow-dropright'}}"></ion-icon>
     </button>
-    <button *ngIf="checkEditionPermission() && !editionMode" class="publication-button" color="primary" ion-button clear (click)="toogleEditionMode()">
+    <button *ngIf="checkEditionPermission()" class="publication-button" color="primary" ion-button clear (click)="presentCommentWritingModal()">
       <ion-icon style="font-size: 20px" class="publication-icon" name="create"></ion-icon>
     </button>
-    <button *ngIf="checkDeletePermission() && !editionMode" class="publication-button" color="danger" ion-button (click)="confirmDelete()" clear>
+    <button *ngIf="checkDeletePermission()" class="publication-button" color="danger" ion-button (click)="confirmDelete()" clear>
       <ion-icon style="font-size: 20px" class="publication-icon" name="ios-trash-outline"></ion-icon>
     </button>
   </div>

@@ -3,7 +3,8 @@ import {StorageProvider} from "../../providers/storage/storage";
 import {Store} from "@ngrx/store";
 import {AppState} from "../../providers/models/publication.model";
 import {CommonsProvider} from "../../providers/commons/commons";
-import {AlertController} from "ionic-angular";
+import {AlertController, ModalController} from "ionic-angular";
+import {CommentWritingPage} from "../../pages/comment-writing/comment-writing";
 
 /**
  * Generated class for the CommentComponent component.
@@ -21,40 +22,12 @@ export class CommentComponent{
   @Input() publicationId: any = null;
   @Input() publicationOwner: any = null;
   showReplies: boolean = false;
-  editionMode: boolean = false;
-  commentValue: string = null;
 
-  constructor(public storageService: StorageProvider, public commonsService: CommonsProvider, public alertCtrl: AlertController) {
+  constructor(public storageService: StorageProvider, public commonsService: CommonsProvider, public alertCtrl: AlertController, private modalCtrl: ModalController) {
   }
 
   toogleReplies(){
     this.showReplies = !this.showReplies;
-  }
-
-  toogleEditionMode(){
-    this.editionMode = !this.editionMode;
-    this.commentValue = this.editionMode ? this.comment.content : null;
-  }
-
-  confirmUpdate() {
-    let confirm = this.alertCtrl.create({
-      title: 'Confirmar operación',
-      message: '¿Está seguro que desea editar el comentario?',
-      buttons: [
-        {
-          text: 'Aceptar',
-          handler: () => {
-            this.updateComment();
-          }
-        },
-        {
-          text: 'Cancelar',
-          handler: () => {
-          }
-        }
-      ]
-    });
-    confirm.present();
   }
 
   confirmDelete(){
@@ -78,13 +51,9 @@ export class CommentComponent{
     confirm.present();
   }
 
-  updateComment(){
-    let dataCopy = {...this.comment};
-    dataCopy.content = this.commentValue;
-    this.storageService.updateComment(dataCopy).subscribe((updatedComment)=>{
-      this.commonsService.presentToast("Comentario editado con éxito");
-      this.toogleEditionMode();
-    });
+  presentCommentWritingModal(){
+    let experienceWritingModal = this.modalCtrl.create(CommentWritingPage,{experience: this.comment});
+    experienceWritingModal.present();
   }
 
   deleteComment(){
