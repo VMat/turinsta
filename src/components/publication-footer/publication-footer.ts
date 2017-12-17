@@ -1,7 +1,7 @@
 import {Component, Input} from '@angular/core';
 import {Events} from "ionic-angular";
-import {AppState} from "../../providers/models/publication.model";
-import {Store} from "@ngrx/store";
+import {CommonsProvider} from "../../providers/commons/commons";
+import {StorageProvider} from "../../providers/storage/storage";
 
 /**
  * Generated class for the PublicationFooterComponent component.
@@ -19,10 +19,20 @@ export class PublicationFooterComponent {
   @Input() userId: any = null;
   @Input() experiences: any = null;
   @Input() comments: any = null;
-  sections: any = [{name: "Experiences", show: false}, {name: "Comments", show: false}];
+  @Input() scoreGivenFromUser: number = null;
 
-  constructor(public events: Events, private store: Store<AppState>) {
+  currentUserScore: any = null;
+  initialValue: number = null;
+  sections: any = [{name: "Experiences", show: false}, {name: "Comments", show: false}];
+  scoreInputShowed: boolean = false;
+
+  constructor(public events: Events, private storageService: StorageProvider, private commons: CommonsProvider){
     console.log('Hello PublicationFooterComponent Component');
+  }
+
+  ngOnInit(){
+    this.initialValue = this.scoreGivenFromUser;
+    this.currentUserScore = {publication: this.publicationId, user: this.commons.getUserId(), value: this.initialValue}
   }
 
   toggleSection(i) {
@@ -35,4 +45,32 @@ export class PublicationFooterComponent {
     this.sections[i].show = !this.sections[i].show;
   };
 
+  toogleScoreInput(){
+
+    if(this.scoreInputShowed){
+      if(this.currentUserScore.value != this.initialValue){
+        if(this.initialValue == null){
+          this.storageService.addPublicationAssessment(this.currentUserScore).subscribe((assessmentAdded)=>{
+            this.scoreInputShowed = false;
+            this.initialValue = this.currentUserScore.value;
+          });
+        }
+        else{
+          if(this.currentUserScore.value >0){
+            this.storageService.modifyPublicationAssessment(this.currentUserScore).subscribe((assessmentModified)=>{
+              this.scoreInputShowed = false;
+            });
+          }
+          else{
+            this.storageService.deletePublicationAssessment(this.currentUserScore.user,this.currentUserScore.publication).subscribe((assessmentDeleted)=>{
+              this.scoreInputShowed = false;
+            });
+          }
+        }
+      }
+    }
+    else{
+      this.scoreInputShowed = true;
+    }
+  }
 }

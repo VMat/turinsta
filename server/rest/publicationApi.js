@@ -44,8 +44,8 @@ router.put('/assessments',(req, res)=>{
     .catch(error=>{res.status(500).send(error)})
 });
 
-router.delete('/assessments',(req, res)=>{
-  publicationService.deletePublicationAssessment(req.body)
+router.delete('/assessments/user/:user/publication/:publication',(req, res)=>{
+  publicationService.deletePublicationAssessment({user: req.params.user, publication: req.params.publication})
     .then(publication=>{res.status(200).json(publication)})
     .catch(error=>{res.status(500).send(error)})
 });

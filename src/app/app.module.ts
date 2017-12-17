@@ -43,6 +43,7 @@ import {PublicationImageComponent} from "../components/publication-image/publica
 import {ExperienceWritingPage} from "../pages/experience-writing/experience-writing";
 import {CommentWritingPage} from "../pages/comment-writing/comment-writing";
 import {MyEmojiPickerComponent} from "../components/my-emoji-picker/my-emoji-picker";
+import {ScoreInputComponent} from "../components/score-input/score-input";
 
 
 @NgModule({
@@ -72,6 +73,7 @@ import {MyEmojiPickerComponent} from "../components/my-emoji-picker/my-emoji-pic
     OrderingCriterionComponent,
     PublicationImageComponent,
     MyEmojiPickerComponent,
+    ScoreInputComponent,
     ContainsFilterPipe
   ],
   imports: [

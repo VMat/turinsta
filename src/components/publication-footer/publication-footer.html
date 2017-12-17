@@ -1,5 +1,6 @@
 <!-- Generated template for the PublicationFooterComponent component -->
-<ion-list>
+<ion-list style="position: relative">
+  <score-input *ngIf="scoreInputShowed" [score]="currentUserScore"></score-input>
   <ion-item class="publication-buttons-item">
     <button item-start class="publication-button" (click)="toggleSection(0)" ion-button clear>
       <ion-icon class="publication-icon" name="ios-paper" color="secondary" isActive="{{sections[0].show}}">
@@ -10,6 +11,9 @@
       <ion-icon class="publication-icon" name="ios-text" color="secondary" isActive="{{sections[1].show}}">
         <ion-badge *ngIf="comments.length >0" class="publication-badge">{{comments.length}}</ion-badge>
       </ion-icon>
+    </button>
+    <button item-left ion-button clear>
+      <ion-icon class="publication-icon" name="ios-star" color="secondary" isActive="{{scoreInputShowed}}" (tap)="toogleScoreInput()"></ion-icon>
     </button>
   </ion-item>
 </ion-list>

@@ -1,4 +1,5 @@
 import {Component, Input} from '@angular/core';
+import {CommonsProvider} from "../../providers/commons/commons";
 
 /**
  * Generated class for the PublicationComponent component.
@@ -14,8 +15,15 @@ import {Component, Input} from '@angular/core';
 export class PublicationComponent {
 
   @Input() data: any = null;
+  scoreGivenFromUser: number = null;
 
-  constructor() {
+  constructor(private commons: CommonsProvider) {
     console.log('Hello PublicationComponent Component');
+  }
+
+  ngOnInit(){
+    let loggedUser = this.commons.getUserId();
+    let targetAssessment = this.data.publication.assessments.filter((assessment)=>{return assessment.user == loggedUser});
+    this.scoreGivenFromUser = targetAssessment.length > 0 ? targetAssessment[0].value : null;
   }
 }

@@ -58,4 +58,16 @@ export class StorageProvider {
     return this.http.delete(StorageProvider.baseUrl + 'experiences/' + experience._id)
       .map((res:Response) => res.json());
   }
+
+  addPublicationAssessment(assessment){
+    return this.http.post(StorageProvider.baseUrl + 'publications/assessments', assessment, {headers: StorageProvider.headers})
+  }
+
+  modifyPublicationAssessment(assessment){
+    return this.http.put(StorageProvider.baseUrl + 'publications/assessments', assessment, {headers: StorageProvider.headers})
+  }
+
+  deletePublicationAssessment(user,publication){
+    return this.http.delete(StorageProvider.baseUrl + 'publications/assessments/user/' + user + '/publication/' + publication,{headers: StorageProvider.headers})
+  }
 }
