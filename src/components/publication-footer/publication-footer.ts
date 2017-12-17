@@ -64,6 +64,7 @@ export class PublicationFooterComponent {
           else{
             this.storageService.deletePublicationAssessment(this.currentUserScore.user,this.currentUserScore.publication).subscribe((assessmentDeleted)=>{
               this.scoreInputShowed = false;
+              this.initialValue = null;
             });
           }
         }
