@@ -18,10 +18,11 @@
     </ion-item>
   </ion-navbar>
 </ion-header>
-<ion-content padding>
-  <ion-item>
-    <ion-label floating>Comentario</ion-label>
+<ion-content padding style="height: 100%">
+  <ion-item vertical-align-top style="height: 100%">
+    <!--<ion-label floating>Comentario</ion-label>-->
     <ion-textarea [(ngModel)]="comment.content"></ion-textarea>
+    <my-emoji-picker item-left [direction]="'bottom'" (emojiSelected)="getEmoji($event)"></my-emoji-picker>
   </ion-item>
 </ion-content>
 

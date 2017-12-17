@@ -19,13 +19,18 @@ export class CommentWritingPage {
 
   comment: any = {};
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private viewCtrl: ViewController, private storageService: StorageProvider, private commons: CommonsProvider, private alertCtrl: AlertController) {}
+  constructor(public navCtrl: NavController, public navParams: NavParams, private viewCtrl: ViewController, private storageService: StorageProvider, private commons: CommonsProvider, private alertCtrl: AlertController) {
+  }
 
   ionViewDidLoad(){
     console.log('ionViewDidLoad CommentWritingPage');
     if(Boolean(this.navParams.get("comment"))){
-      this.comment = this.navParams.get("comment")
+      this.comment = {...this.navParams.get("comment")}
     }
+  }
+
+  getEmoji(event){
+    this.comment.content += event.char;
   }
 
   dismissComment(){

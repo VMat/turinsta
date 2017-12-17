@@ -37,10 +37,12 @@ import {PlaceFilterComponent} from "../components/place-filter/place-filter";
 import {UserFilterComponent} from "../components/user-filter/user-filter";
 import {OrderingCriterionComponent} from "../components/ordering-criterion/ordering-criterion";
 import {IonicStorageModule} from "@ionic/storage";
+import {EmojiPickerModule} from "@ionic-tools/emoji-picker";
 import {ImgcacheService} from '../providers/imgcache/imgcache';
 import {PublicationImageComponent} from "../components/publication-image/publication-image";
 import {ExperienceWritingPage} from "../pages/experience-writing/experience-writing";
 import {CommentWritingPage} from "../pages/comment-writing/comment-writing";
+import {MyEmojiPickerComponent} from "../components/my-emoji-picker/my-emoji-picker";
 
 
 @NgModule({
@@ -69,6 +71,7 @@ import {CommentWritingPage} from "../pages/comment-writing/comment-writing";
     UserFilterComponent,
     OrderingCriterionComponent,
     PublicationImageComponent,
+    MyEmojiPickerComponent,
     ContainsFilterPipe
   ],
   imports: [
@@ -84,7 +87,8 @@ import {CommentWritingPage} from "../pages/comment-writing/comment-writing";
     StoreDevtoolsModule.instrument({
       maxAge: 10 // number of states to retain
     }),
-    IonicStorageModule.forRoot()
+    IonicStorageModule.forRoot(),
+    EmojiPickerModule.forRoot()
   ],
   bootstrap: [IonicApp],
   entryComponents: [

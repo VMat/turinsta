@@ -18,13 +18,15 @@
     </ion-item>
   </ion-navbar>
 </ion-header>
-<ion-content padding>
-  <ion-item>
+<ion-content padding style="height: 100%">
+  <ion-item style="height: 20%">
     <ion-label floating>Categoría</ion-label>
     <ion-input [(ngModel)]="experience.category"></ion-input>
   </ion-item>
-  <ion-item>
-    <ion-label floating>Contenido</ion-label>
+  <p>Contenido</p>
+  <ion-item style="height: 70%">
+    <!--<ion-label floating>Contenido</ion-label>-->
     <ion-textarea [(ngModel)]="experience.content"></ion-textarea>
+    <my-emoji-picker item-left [direction]="'bottom'" (emojiSelected)="getEmoji($event)"></my-emoji-picker>
   </ion-item>
 </ion-content>

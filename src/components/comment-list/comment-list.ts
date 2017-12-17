@@ -3,6 +3,8 @@ import {StorageProvider} from "../../providers/storage/storage";
 import {Store} from "@ngrx/store";
 import {AppState} from "../../providers/models/publication.model";
 import {CommonsProvider} from "../../providers/commons/commons";
+import {CommentWritingPage} from "../../pages/comment-writing/comment-writing";
+import {ModalController} from "ionic-angular";
 
 /**
  * Generated class for the CommentListComponent component.
@@ -20,14 +22,19 @@ export class CommentListComponent{
   @Input() publicationId: string = null;
   @Input() publicationOwner: string = null;
   @Input() commentId: string = null;
-  commentValue: string = null;
+  // commentValue: string = null;
 
-  constructor(public storageService: StorageProvider, public commonsService: CommonsProvider, public store: Store<AppState>) {}
+  constructor(public storageService: StorageProvider, public commonsService: CommonsProvider, public store: Store<AppState>, private modalCtrl: ModalController) {}
 
-  sendComment(){
-    this.storageService.createComment({user: this.commonsService.getUserId(), publication: this.publicationId, parent: this.commentId, content: this.commentValue}).subscribe(comment => {
-      this.commonsService.presentToast("Comentario grabado con éxito");
-      this.commentValue = null;
-    });
+  presentCommentWritingModal(){
+    let experienceWritingModal = this.modalCtrl.create(CommentWritingPage,{comment: {user: this.commonsService.getUserId(),publication: this.publicationId, parent: this.commentId}});
+    experienceWritingModal.present();
   }
+
+  // sendComment(){
+  //   this.storageService.createComment({user: this.commonsService.getUserId(), publication: this.publicationId, parent: this.commentId, content: this.commentValue}).subscribe(comment => {
+  //     this.commonsService.presentToast("Comentario grabado con éxito");
+  //     this.commentValue = null;
+  //   });
+  // }
 }

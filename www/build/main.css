@@ -27948,6 +27948,10 @@ ion-card-content {
   padding: 0 !important;
 }
 
+page-comment-writing emoji-content {
+  margin-left: 5% !important;
+}
+
 page-publication-order-by * {
   font-size: x-small;
 }

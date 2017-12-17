@@ -24,8 +24,12 @@ export class ExperienceWritingPage {
   ionViewDidLoad() {
     console.log('ionViewDidLoad ExperienceWritingPage');
     if(Boolean(this.navParams.get("experience"))){
-      this.experience = this.navParams.get("experience")
+      this.experience = {...this.navParams.get("experience")}
     }
+  }
+
+  getEmoji(event){
+    this.experience.content += event.char;
   }
 
   dismissExperience(){

@@ -13,6 +13,7 @@ import { PlaceFilterComponent } from './place-filter/place-filter';
 import { UserFilterComponent } from './user-filter/user-filter';
 import { OrderingCriterionComponent } from './ordering-criterion/ordering-criterion';
 import { PublicationImageComponent } from './publication-image/publication-image';
+import { MyEmojiPickerComponent } from './my-emoji-picker/my-emoji-picker';
 @NgModule({
 	declarations: [PublicationComponent,
     ExperienceComponent,
@@ -27,7 +28,8 @@ import { PublicationImageComponent } from './publication-image/publication-image
     PlaceFilterComponent,
     UserFilterComponent,
     OrderingCriterionComponent,
-    PublicationImageComponent],
+    PublicationImageComponent,
+    MyEmojiPickerComponent],
 	imports: [],
 	exports: [PublicationComponent,
     ExperienceComponent,
@@ -42,6 +44,7 @@ import { PublicationImageComponent } from './publication-image/publication-image
     PlaceFilterComponent,
     UserFilterComponent,
     OrderingCriterionComponent,
-    PublicationImageComponent]
+    PublicationImageComponent,
+    MyEmojiPickerComponent]
 })
 export class ComponentsModule {}

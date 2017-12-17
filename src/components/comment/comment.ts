@@ -52,7 +52,7 @@ export class CommentComponent{
   }
 
   presentCommentWritingModal(){
-    let experienceWritingModal = this.modalCtrl.create(CommentWritingPage,{experience: this.comment});
+    let experienceWritingModal = this.modalCtrl.create(CommentWritingPage,{comment: this.comment});
     experienceWritingModal.present();
   }
 
