@@ -18,28 +18,28 @@ import {CommonsProvider} from "../../providers/commons/commons";
 export class PublicationActionsMenuPage {
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private viewCtrl: ViewController, private storageService: StorageProvider, private commons: CommonsProvider) {}
-  favoritePublication: boolean = null;
+  followedPublication: boolean = null;
   followedUser: boolean = null;
   publication: string = null;
   user: string = null;
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad PublicationActionsMenuPage');
-    this.favoritePublication = this.navParams.get("favoritePublication");
+    this.followedPublication = this.navParams.get("followedPublication");
     this.followedUser = this.navParams.get("followedUser");
     this.publication = this.navParams.get("publication");
     this.user = this.navParams.get("user");
   }
 
   handleFavorite(){
-    if(this.favoritePublication){
+    if(!this.followedPublication){
       this.storageService.addPublicationFollower({publication: this.publication, user: this.commons.getUserId()}).subscribe((favoriteAdded)=>{
         this.commons.presentToast("Se ha guardado la publicación en favoritos con éxito");
         this.viewCtrl.dismiss();
       })
     }
     else{
-      this.storageService.removePublicationFollower(this.publication, this.commons.getUserId()).subscribe((favoriteRemoved)=>{
+      this.storageService.removePublicationFollower(this.commons.getUserId(),this.publication).subscribe((favoriteRemoved)=>{
         this.commons.presentToast("Se ha quitado la publicación de favoritos con éxito");
         this.viewCtrl.dismiss();
       });
@@ -47,7 +47,7 @@ export class PublicationActionsMenuPage {
   }
 
   handleUser(){
-    if(this.followedUser){
+    if(!this.followedUser){
       this.storageService.addFollower({followed: this.user, follower: this.commons.getUserId()}).subscribe((followerAdded)=>{
         this.commons.presentToast("Se ha empezado a seguir al usuario con éxito");
         this.viewCtrl.dismiss();

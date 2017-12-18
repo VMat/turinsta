@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import {Component, Input} from '@angular/core';
 import {PopoverController} from "ionic-angular";
 import {PublicationActionsMenuPage} from "../../pages/publication-actions-menu/publication-actions-menu";
+import {CommonsProvider} from "../../providers/commons/commons";
 
 /**
  * Generated class for the PublicationActionsComponent component.
@@ -14,12 +15,23 @@ import {PublicationActionsMenuPage} from "../../pages/publication-actions-menu/p
 })
 export class PublicationActionsComponent {
 
-  constructor(public popoverCtrl: PopoverController){
+  @Input() publication: any = null;
+  @Input() user: any = null;
+  followedPublication: boolean = null;
+  followedUser: boolean = null;
+
+  constructor(public popoverCtrl: PopoverController, private commons: CommonsProvider){
     console.log('Hello PublicationActionsComponent Component');
   }
 
+  ngOnInit(){
+    let loggedUser = this.commons.getUserId();
+    this.followedPublication = this.publication.followers.indexOf(loggedUser)!=-1;
+    this.followedUser =  this.user.followers.indexOf(loggedUser)!=-1;
+  }
+
   popoverActionsMenu(myEvent) {
-    let popover = this.popoverCtrl.create(PublicationActionsMenuPage);
+    let popover = this.popoverCtrl.create(PublicationActionsMenuPage, {publication: this.publication._id, user: this.user._id, followedPublication: this.followedPublication, followedUser: this.followedUser});
     popover.present({
       ev: myEvent
     });

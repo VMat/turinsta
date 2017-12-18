@@ -8,8 +8,8 @@
   <ion-list>
     <ion-item (click)="handleFavorite()">
       <ion-icon item-start name="heart"></ion-icon>
-      <p *ngIf="!favoritePublication">Agregar a favoritos</p>
-      <p *ngIf="favoritePublication">Quitar de favoritos</p>
+      <p *ngIf="!followedPublication">Agregar a favoritos</p>
+      <p *ngIf="followedPublication">Quitar de favoritos</p>
     </ion-item>
     <ion-item (click)="handleUser()">
       <ion-icon item-start name="person-add"></ion-icon>
