@@ -1,5 +1,6 @@
 <!-- Generated template for the PublicationBodyComponent component -->
 <ion-slides align="center">
+  <publication-actions></publication-actions>
   <ion-slide *ngFor="let image of publication.images">
     <publication-image [id]=image._id [url]=image.url></publication-image>
     <!--<img id="{{image.url}}" class="publication-image" src='{{image.url}}'/>-->

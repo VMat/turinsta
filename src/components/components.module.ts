@@ -15,6 +15,7 @@ import { OrderingCriterionComponent } from './ordering-criterion/ordering-criter
 import { PublicationImageComponent } from './publication-image/publication-image';
 import { MyEmojiPickerComponent } from './my-emoji-picker/my-emoji-picker';
 import { ScoreInputComponent } from './score-input/score-input';
+import { PublicationActionsComponent } from './publication-actions/publication-actions';
 @NgModule({
 	declarations: [PublicationComponent,
     ExperienceComponent,
@@ -31,7 +32,8 @@ import { ScoreInputComponent } from './score-input/score-input';
     OrderingCriterionComponent,
     PublicationImageComponent,
     MyEmojiPickerComponent,
-    ScoreInputComponent],
+    ScoreInputComponent,
+    PublicationActionsComponent],
 	imports: [],
 	exports: [PublicationComponent,
     ExperienceComponent,
@@ -48,6 +50,7 @@ import { ScoreInputComponent } from './score-input/score-input';
     OrderingCriterionComponent,
     PublicationImageComponent,
     MyEmojiPickerComponent,
-    ScoreInputComponent]
+    ScoreInputComponent,
+    PublicationActionsComponent]
 })
 export class ComponentsModule {}

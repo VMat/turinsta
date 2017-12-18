@@ -30506,6 +30506,21 @@ ion-card-content {
   padding: 0 !important;
 }
 
+publication-actions {
+  position: absolute;
+  right: 0;
+  top: 0;
+  z-index: 100;
+}
+
+publication-actions ion-icon {
+  font-size: large !important;
+}
+
+publication-body {
+  position: relative;
+}
+
 score-input {
   position: absolute;
   top: -50px;

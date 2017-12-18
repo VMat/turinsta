@@ -70,4 +70,20 @@ export class StorageProvider {
   deletePublicationAssessment(user,publication){
     return this.http.delete(StorageProvider.baseUrl + 'publications/assessments/user/' + user + '/publication/' + publication,{headers: StorageProvider.headers})
   }
+
+  addPublicationFollower(favorite){
+    return this.http.post(StorageProvider.baseUrl + 'users/favorites', favorite, {headers: StorageProvider.headers})
+  }
+
+  removePublicationFollower(user,publication){
+    return this.http.delete(StorageProvider.baseUrl + 'users/favorites/user/' + user + '/publication/' + publication,{headers: StorageProvider.headers})
+  }
+
+  addFollower(follower){
+    return this.http.post(StorageProvider.baseUrl + 'users/followers', follower, {headers: StorageProvider.headers})
+  }
+
+  removeFollower(followed,follower){
+    return this.http.delete(StorageProvider.baseUrl + 'users/followers/' + followed + '/' + follower,{headers: StorageProvider.headers});
+  }
 }

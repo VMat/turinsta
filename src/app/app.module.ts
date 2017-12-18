@@ -44,6 +44,8 @@ import {ExperienceWritingPage} from "../pages/experience-writing/experience-writ
 import {CommentWritingPage} from "../pages/comment-writing/comment-writing";
 import {MyEmojiPickerComponent} from "../components/my-emoji-picker/my-emoji-picker";
 import {ScoreInputComponent} from "../components/score-input/score-input";
+import {PublicationActionsComponent} from "../components/publication-actions/publication-actions";
+import {PublicationActionsMenuPage} from "../pages/publication-actions-menu/publication-actions-menu";
 
 
 @NgModule({
@@ -58,6 +60,7 @@ import {ScoreInputComponent} from "../components/score-input/score-input";
     PublicationUserFilterPage,
     ExperienceWritingPage,
     CommentWritingPage,
+    PublicationActionsMenuPage,
     PublicationHeaderComponent,
     PublicationBodyComponent,
     PublicationFooterComponent,
@@ -74,6 +77,7 @@ import {ScoreInputComponent} from "../components/score-input/score-input";
     PublicationImageComponent,
     MyEmojiPickerComponent,
     ScoreInputComponent,
+    PublicationActionsComponent,
     ContainsFilterPipe
   ],
   imports: [
@@ -103,7 +107,8 @@ import {ScoreInputComponent} from "../components/score-input/score-input";
     PublicationOrderByPage,
     PublicationUserFilterPage,
     ExperienceWritingPage,
-    CommentWritingPage
+    CommentWritingPage,
+    PublicationActionsMenuPage
   ],
   providers: [
     StatusBar,
