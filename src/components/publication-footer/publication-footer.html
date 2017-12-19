@@ -12,8 +12,8 @@
         <ion-badge *ngIf="comments.length >0" class="publication-badge">{{comments.length}}</ion-badge>
       </ion-icon>
     </button>
-    <button item-left ion-button clear>
-      <ion-icon class="publication-icon" name="ios-star" color="secondary" isActive="{{scoreInputShowed}}" (tap)="toogleScoreInput()"></ion-icon>
+    <button item-left (click)="toogleScoreInput()" ion-button clear>
+      <ion-icon class="publication-icon" name="ios-star" color="secondary" isActive="{{scoreInputShowed}}"></ion-icon>
     </button>
   </ion-item>
 </ion-list>

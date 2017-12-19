@@ -30368,6 +30368,22 @@ filters-bar ion-searchbar {
   margin: 0 !important;
 }
 
+my-emoji-picker {
+  margin: 0 !important;
+}
+
+my-emoji-picker emoji-picker {
+  z-index: 999999999 !important;
+}
+
+my-emoji-picker emoji-content {
+  z-index: 999999999 !important;
+}
+
+my-emoji-picker emoji-list {
+  z-index: 999999999 !important;
+}
+
 place-filter .select-md .select-icon {
   position: absolute;
 }
@@ -30537,8 +30553,12 @@ score-input ion-icon {
   vertical-align: middle;
 }
 
-page-comment-writing emoji-content {
-  margin-left: 5% !important;
+page-comment-writing {
+  width: 100%;
+}
+
+page-experience-writing my-emoji-picker {
+  z-index: 999999999 !important;
 }
 
 page-publication-order-by * {

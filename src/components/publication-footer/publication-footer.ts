@@ -13,7 +13,7 @@ import {StorageProvider} from "../../providers/storage/storage";
   selector: 'publication-footer',
   templateUrl: 'publication-footer.html'
 })
-export class PublicationFooterComponent {
+export class PublicationFooterComponent{
 
   @Input() publicationId: any = null;
   @Input() userId: any = null;
@@ -68,6 +68,9 @@ export class PublicationFooterComponent {
             });
           }
         }
+      }
+      else{
+        this.scoreInputShowed = false;
       }
     }
     else{
