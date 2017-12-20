@@ -212,6 +212,12 @@ var PublicationActionsMenuPage = (function () {
             });
         }
     };
+    PublicationActionsMenuPage.prototype.locatePlace = function () {
+        alert("Ubicando destino en mapa...");
+    };
+    PublicationActionsMenuPage.prototype.sharePublication = function () {
+        alert("Compartiendo publicación...");
+    };
     PublicationActionsMenuPage.prototype.viewUser = function () {
         alert("Ver usuario");
         this.viewCtrl.dismiss();
@@ -224,7 +230,7 @@ var PublicationActionsMenuPage = (function () {
 }());
 PublicationActionsMenuPage = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
-        selector: 'page-publication-actions-menu',template:/*ion-inline-start:"C:\Users\Matias\WebstormProjects\turinsta\src\pages\publication-actions-menu\publication-actions-menu.html"*/'<!--\n  Generated template for the PublicationActionsMenuPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-content no-padding>\n  <ion-list>\n    <ion-item (click)="handleFavorite()">\n      <ion-icon item-start name="heart"></ion-icon>\n      <p *ngIf="!followedPublication">Agregar a favoritos</p>\n      <p *ngIf="followedPublication">Quitar de favoritos</p>\n    </ion-item>\n    <ion-item (click)="handleUser()">\n      <ion-icon item-start name="person-add"></ion-icon>\n      <p *ngIf="!followedUser">Seguir usuario</p>\n      <p *ngIf="followedUser">Dejar de seguir usuario</p>\n    </ion-item>\n    <ion-item (click)="viewUser()">\n      <ion-icon item-start name="contact"></ion-icon>\n      <p>Ver perfil de usuario</p>\n    </ion-item>\n    <ion-item (click)="denunciate()">\n      <ion-icon item-start name="alert"></ion-icon>\n      <p>Denunciar</p>\n    </ion-item>\n  </ion-list>\n</ion-content>\n'/*ion-inline-end:"C:\Users\Matias\WebstormProjects\turinsta\src\pages\publication-actions-menu\publication-actions-menu.html"*/,
+        selector: 'page-publication-actions-menu',template:/*ion-inline-start:"C:\Users\Matias\WebstormProjects\turinsta\src\pages\publication-actions-menu\publication-actions-menu.html"*/'<!--\n  Generated template for the PublicationActionsMenuPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-content no-padding>\n  <ion-list>\n    <ion-item (click)="handleFavorite()">\n      <ion-icon item-start name="heart"></ion-icon>\n      <p *ngIf="!followedPublication">Agregar a favoritos</p>\n      <p *ngIf="followedPublication">Quitar de favoritos</p>\n    </ion-item>\n    <ion-item (click)="locatePlace()">\n      <ion-icon item-start class="publication-icon" name="pin" color="secondary"></ion-icon>\n      <p>Ubicar en mapa</p>\n    </ion-item>\n    <ion-item (click)="sharePublication()">\n      <ion-icon item-start class="publication-icon" name="share" color="secondary"></ion-icon>\n      <p>Compartir</p>\n    </ion-item>\n    <ion-item (click)="handleUser()">\n      <ion-icon item-start name="person-add"></ion-icon>\n      <p *ngIf="!followedUser">Seguir usuario</p>\n      <p *ngIf="followedUser">Dejar de seguir usuario</p>\n    </ion-item>\n    <ion-item (click)="viewUser()">\n      <ion-icon item-start name="contact"></ion-icon>\n      <p>Ver perfil de usuario</p>\n    </ion-item>\n    <ion-item (click)="denunciate()">\n      <ion-icon item-start name="alert"></ion-icon>\n      <p>Denunciar</p>\n    </ion-item>\n  </ion-list>\n</ion-content>\n'/*ion-inline-end:"C:\Users\Matias\WebstormProjects\turinsta\src\pages\publication-actions-menu\publication-actions-menu.html"*/,
     }),
     __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* NavParams */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["n" /* ViewController */], __WEBPACK_IMPORTED_MODULE_2__providers_storage_storage__["a" /* StorageProvider */], __WEBPACK_IMPORTED_MODULE_3__providers_commons_commons__["a" /* CommonsProvider */]])
 ], PublicationActionsMenuPage);
@@ -614,7 +620,7 @@ var HomePage = (function () {
 }());
 HomePage = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
-        selector: 'page-home',template:/*ion-inline-start:"C:\Users\Matias\WebstormProjects\turinsta\src\pages\home\home.html"*/'<ion-header no-margin no-padding>\n  <filters-bar></filters-bar>\n</ion-header>\n<ion-content>\n  <publication-list [data]="publications | async"></publication-list>\n  <!--<ion-list [virtualScroll]="publications.publications | async">-->\n    <!--<ion-item *virtualItem="let publication">-->\n      <!--<publication [data]="publication"></publication>-->\n    <!--</ion-item>-->\n  <!--</ion-list>-->\n  <ion-infinite-scroll (ionInfinite)="doInfinite($event)">\n    <ion-infinite-scroll-content\n      loadingSpinner="bubbles"\n      loadingText="Obteniendo más información...">\n    </ion-infinite-scroll-content>\n  </ion-infinite-scroll>\n</ion-content>\n'/*ion-inline-end:"C:\Users\Matias\WebstormProjects\turinsta\src\pages\home\home.html"*/,
+        selector: 'page-home',template:/*ion-inline-start:"C:\Users\Matias\WebstormProjects\turinsta\src\pages\home\home.html"*/'<ion-header no-margin no-padding>\n  <filters-bar></filters-bar>\n</ion-header>\n<ion-content>\n  <publication-list [data]="publications | async"></publication-list>\n  <!--<ion-list [virtualScroll]="publications.publications | async">-->\n    <!--<ion-item *virtualItem="let publication">-->\n      <!--<publication [data]="publication"></publication>-->\n    <!--</ion-item>-->\n  <!--</ion-list>-->\n  <ion-fab bottom right>\n    <button ion-fab mini color="success"><ion-icon name="add"></ion-icon></button>\n    <ion-fab-list side="left">\n      <button ion-fab><ion-icon name="camera"></ion-icon></button>\n      <button ion-fab><ion-icon name="image"></ion-icon></button>\n      <button ion-fab><ion-icon name="create"></ion-icon></button>\n    </ion-fab-list>\n  </ion-fab>\n  <ion-infinite-scroll (ionInfinite)="doInfinite($event)">\n    <ion-infinite-scroll-content\n      loadingSpinner="bubbles"\n      loadingText="Obteniendo más información...">\n    </ion-infinite-scroll-content>\n  </ion-infinite-scroll>\n</ion-content>\n'/*ion-inline-end:"C:\Users\Matias\WebstormProjects\turinsta\src\pages\home\home.html"*/,
         changeDetection: __WEBPACK_IMPORTED_MODULE_0__angular_core__["j" /* ChangeDetectionStrategy */].OnPush
     }),
     __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_2__providers_storage_storage__["a" /* StorageProvider */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* NavController */], __WEBPACK_IMPORTED_MODULE_3__ngrx_store__["h" /* Store */]])
@@ -1029,7 +1035,7 @@ __decorate([
 ], PublicationComponent.prototype, "data", void 0);
 PublicationComponent = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
-        selector: 'publication',template:/*ion-inline-start:"C:\Users\Matias\WebstormProjects\turinsta\src\components\publication\publication.html"*/'<!-- Generated template for the PublicationComponent component -->\n<ion-card text-wrap>\n  <ion-card-header class="publication-card-header">\n    <publication-header [user]=data.user [publication]=data.publication></publication-header>\n  </ion-card-header>\n  <ion-card-content>\n    <publication-body [user]=data.user [publication]=data.publication></publication-body>\n    <publication-footer [publicationId]=data._id [userId]=data.user._id [experiences]=data.experiences [comments]=data.comments [scoreGivenFromUser]="scoreGivenFromUser"></publication-footer>\n  </ion-card-content>\n</ion-card>\n'/*ion-inline-end:"C:\Users\Matias\WebstormProjects\turinsta\src\components\publication\publication.html"*/
+        selector: 'publication',template:/*ion-inline-start:"C:\Users\Matias\WebstormProjects\turinsta\src\components\publication\publication.html"*/'<!-- Generated template for the PublicationComponent component -->\n<ion-card text-wrap>\n  <ion-card-header class="publication-card-header">\n    <publication-header [user]=data.user [publication]=data.publication></publication-header>\n  </ion-card-header>\n  <ion-card-content>\n    <publication-body [user]=data.user [publication]=data.publication></publication-body>\n    <publication-footer [publication]=data.publication [comments]=data.comments [experiences]=data.experiences [userId]=data.user._id [scoreGivenFromUser]="scoreGivenFromUser"></publication-footer>\n  </ion-card-content>\n</ion-card>\n'/*ion-inline-end:"C:\Users\Matias\WebstormProjects\turinsta\src\components\publication\publication.html"*/
     }),
     __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__providers_commons_commons__["a" /* CommonsProvider */]])
 ], PublicationComponent);
@@ -1732,7 +1738,7 @@ __decorate([
 ], PublicationHeaderComponent.prototype, "publication", void 0);
 PublicationHeaderComponent = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
-        selector: 'publication-header',template:/*ion-inline-start:"C:\Users\Matias\WebstormProjects\turinsta\src\components\publication-header\publication-header.html"*/'<!-- Generated template for the PublicationHeaderComponent component -->\n<ion-item>\n  <ion-avatar item-start>\n    <img [src]="user.avatar" (error)="getCachedAvatar()">\n  </ion-avatar>\n  <div>\n    <p class="publication-important-text">{{publication.places[0].name}}</p>\n    <p>{{publication.score}}<ion-icon name="star"></ion-icon></p>\n  </div>\n  <div item-end>\n    <p class="publication-important-text">{{user.username}}</p>\n    <p align="right">{{user.score}}<ion-icon name="star"></ion-icon></p>\n  </div>\n</ion-item>\n'/*ion-inline-end:"C:\Users\Matias\WebstormProjects\turinsta\src\components\publication-header\publication-header.html"*/
+        selector: 'publication-header',template:/*ion-inline-start:"C:\Users\Matias\WebstormProjects\turinsta\src\components\publication-header\publication-header.html"*/'<!-- Generated template for the PublicationHeaderComponent component -->\n<ion-item>\n  <ion-avatar item-start>\n    <img [src]="user.avatar" (error)="getCachedAvatar()">\n  </ion-avatar>\n  <div>\n    <p class="publication-important-text">{{publication.places[0].name}}</p>\n    <p>{{publication.score}}<ion-icon name="star" color="star"></ion-icon> / {{publication.assessments.length}}<ion-icon name="eye" color="primary"></ion-icon></p>\n  </div>\n  <div item-end>\n    <p class="publication-important-text">{{user.username}}</p>\n    <p align="right">{{user.score}}<ion-icon name="star" color="star"></ion-icon> / {{user.publications.length}}<ion-icon name="image" color="secondary"></ion-icon></p>\n  </div>\n</ion-item>\n'/*ion-inline-end:"C:\Users\Matias\WebstormProjects\turinsta\src\components\publication-header\publication-header.html"*/
     }),
     __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__providers_imgcache_imgcache__["a" /* ImgcacheService */]])
 ], PublicationHeaderComponent);
@@ -1781,7 +1787,7 @@ __decorate([
 ], PublicationBodyComponent.prototype, "publication", void 0);
 PublicationBodyComponent = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
-        selector: 'publication-body',template:/*ion-inline-start:"C:\Users\Matias\WebstormProjects\turinsta\src\components\publication-body\publication-body.html"*/'<!-- Generated template for the PublicationBodyComponent component -->\n<ion-slides align="center">\n  <publication-actions [publication]="publication" [user]="user"></publication-actions>\n  <ion-slide *ngFor="let image of publication.images">\n    <publication-image [id]=image._id [url]=image.url></publication-image>\n    <!--<img id="{{image.url}}" class="publication-image" src=\'{{image.url}}\'/>-->\n  </ion-slide>\n</ion-slides>\n<p *ngIf="publication.description" class="publication-description"><b>{{user.username}}</b>&nbsp;{{publication.description}}</p>\n'/*ion-inline-end:"C:\Users\Matias\WebstormProjects\turinsta\src\components\publication-body\publication-body.html"*/
+        selector: 'publication-body',template:/*ion-inline-start:"C:\Users\Matias\WebstormProjects\turinsta\src\components\publication-body\publication-body.html"*/'<!-- Generated template for the PublicationBodyComponent component -->\n<ion-slides align="center">\n  <publication-actions [publication]="publication" [user]="user"></publication-actions>\n  <ion-slide *ngFor="let image of publication.images">\n    <publication-image [id]=image._id [url]=image.url></publication-image>\n    <!--<img id="{{image.url}}" class="publication-image" src=\'{{image.url}}\'/>-->\n  </ion-slide>\n</ion-slides>\n<p *ngIf="publication.description" item-start class="publication-description"><b>{{user.username}}</b>&nbsp;{{publication.description}}</p>\n\n\n'/*ion-inline-end:"C:\Users\Matias\WebstormProjects\turinsta\src\components\publication-body\publication-body.html"*/
     }),
     __metadata("design:paramtypes", [])
 ], PublicationBodyComponent);
@@ -1823,10 +1829,10 @@ var PublicationFooterComponent = (function () {
         this.events = events;
         this.storageService = storageService;
         this.commons = commons;
-        this.publicationId = null;
-        this.userId = null;
-        this.experiences = null;
+        this.publication = null;
         this.comments = null;
+        this.experiences = null;
+        this.userId = null;
         this.scoreGivenFromUser = null;
         this.currentUserScore = null;
         this.initialValue = null;
@@ -1836,7 +1842,7 @@ var PublicationFooterComponent = (function () {
     }
     PublicationFooterComponent.prototype.ngOnInit = function () {
         this.initialValue = this.scoreGivenFromUser;
-        this.currentUserScore = { publication: this.publicationId, user: this.commons.getUserId(), value: this.initialValue };
+        this.currentUserScore = { publication: this.publication._id, user: this.commons.getUserId(), value: this.initialValue };
     };
     PublicationFooterComponent.prototype.toggleSection = function (i) {
         this.sections = this.sections.map(function (section, index) {
@@ -1880,16 +1886,19 @@ var PublicationFooterComponent = (function () {
             this.scoreInputShowed = true;
         }
     };
+    PublicationFooterComponent.prototype.openPublication = function () {
+        alert("Abriendo publicación...");
+    };
     return PublicationFooterComponent;
 }());
 __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["E" /* Input */])(),
     __metadata("design:type", Object)
-], PublicationFooterComponent.prototype, "publicationId", void 0);
+], PublicationFooterComponent.prototype, "publication", void 0);
 __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["E" /* Input */])(),
     __metadata("design:type", Object)
-], PublicationFooterComponent.prototype, "userId", void 0);
+], PublicationFooterComponent.prototype, "comments", void 0);
 __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["E" /* Input */])(),
     __metadata("design:type", Object)
@@ -1897,14 +1906,14 @@ __decorate([
 __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["E" /* Input */])(),
     __metadata("design:type", Object)
-], PublicationFooterComponent.prototype, "comments", void 0);
+], PublicationFooterComponent.prototype, "userId", void 0);
 __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["E" /* Input */])(),
     __metadata("design:type", Number)
 ], PublicationFooterComponent.prototype, "scoreGivenFromUser", void 0);
 PublicationFooterComponent = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
-        selector: 'publication-footer',template:/*ion-inline-start:"C:\Users\Matias\WebstormProjects\turinsta\src\components\publication-footer\publication-footer.html"*/'<!-- Generated template for the PublicationFooterComponent component -->\n<ion-list style="position: relative">\n  <score-input *ngIf="scoreInputShowed" [score]="currentUserScore"></score-input>\n  <ion-item class="publication-buttons-item">\n    <button item-start class="publication-button" (click)="toggleSection(0)" ion-button clear>\n      <ion-icon class="publication-icon" name="ios-paper" color="secondary" isActive="{{sections[0].show}}">\n        <ion-badge *ngIf="experiences.length >0" class="publication-badge">{{experiences.length}}</ion-badge>\n      </ion-icon>\n    </button>\n    <button item-left class="publication-button" (click)="toggleSection(1)" ion-button clear>\n      <ion-icon class="publication-icon" name="ios-text" color="secondary" isActive="{{sections[1].show}}">\n        <ion-badge *ngIf="comments.length >0" class="publication-badge">{{comments.length}}</ion-badge>\n      </ion-icon>\n    </button>\n    <button item-left (click)="toogleScoreInput()" ion-button clear>\n      <ion-icon class="publication-icon" name="ios-star" color="secondary" isActive="{{scoreInputShowed}}"></ion-icon>\n    </button>\n  </ion-item>\n</ion-list>\n<experience-list *ngIf="sections[0].show" [experiences]=experiences [publicationId]=publicationId [publicationOwner]=userId></experience-list>\n<comment-list *ngIf="sections[1].show" [comments]=comments [publicationId]=publicationId [publicationOwner]=userId></comment-list>\n'/*ion-inline-end:"C:\Users\Matias\WebstormProjects\turinsta\src\components\publication-footer\publication-footer.html"*/
+        selector: 'publication-footer',template:/*ion-inline-start:"C:\Users\Matias\WebstormProjects\turinsta\src\components\publication-footer\publication-footer.html"*/'<!-- Generated template for the PublicationFooterComponent component -->\n<ion-list style="position: relative">\n  <score-input *ngIf="scoreInputShowed" [score]="currentUserScore"></score-input>\n  <ion-item class="publication-buttons-item">\n    <button item-start class="publication-button" (click)="toggleSection(0)" ion-button clear>\n      <ion-icon class="publication-icon" name="ios-paper" color="secondary" isActive="{{sections[0].show}}">\n        <ion-badge *ngIf="experiences.length >0" class="publication-badge">{{experiences.length}}</ion-badge>\n      </ion-icon>\n    </button>\n    <button item-left class="publication-button" (click)="toggleSection(1)" ion-button clear>\n      <ion-icon class="publication-icon" name="ios-text" color="secondary" isActive="{{sections[1].show}}">\n        <ion-badge *ngIf="comments.length >0" class="publication-badge">{{comments.length}}</ion-badge>\n      </ion-icon>\n    </button>\n    <button item-left (click)="toogleScoreInput()" ion-button clear>\n      <ion-icon class="publication-icon" name="ios-star" color="secondary" isActive="{{scoreInputShowed}}"></ion-icon>\n    </button>\n    <ion-note item-right>{{publication.timestamps.created}}</ion-note>\n    <button item-end (click)="openPublication()" ion-button clear>\n      <ion-icon class="publication-icon" name="share-alt" color="secondary"></ion-icon>\n    </button>\n  </ion-item>\n</ion-list>\n<experience-list *ngIf="sections[0].show" [experiences]=experiences [publicationId]=publication._id [publicationOwner]=userId></experience-list>\n<comment-list *ngIf="sections[1].show" [comments]=comments [publicationId]=publication._id [publicationOwner]=userId></comment-list>\n'/*ion-inline-end:"C:\Users\Matias\WebstormProjects\turinsta\src\components\publication-footer\publication-footer.html"*/
     }),
     __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["b" /* Events */], __WEBPACK_IMPORTED_MODULE_3__providers_storage_storage__["a" /* StorageProvider */], __WEBPACK_IMPORTED_MODULE_2__providers_commons_commons__["a" /* CommonsProvider */]])
 ], PublicationFooterComponent);

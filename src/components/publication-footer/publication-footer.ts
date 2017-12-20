@@ -15,10 +15,10 @@ import {StorageProvider} from "../../providers/storage/storage";
 })
 export class PublicationFooterComponent{
 
-  @Input() publicationId: any = null;
-  @Input() userId: any = null;
-  @Input() experiences: any = null;
+  @Input() publication: any = null;
   @Input() comments: any = null;
+  @Input() experiences: any = null;
+  @Input() userId: any = null;
   @Input() scoreGivenFromUser: number = null;
 
   currentUserScore: any = null;
@@ -32,7 +32,7 @@ export class PublicationFooterComponent{
 
   ngOnInit(){
     this.initialValue = this.scoreGivenFromUser;
-    this.currentUserScore = {publication: this.publicationId, user: this.commons.getUserId(), value: this.initialValue}
+    this.currentUserScore = {publication: this.publication._id, user: this.commons.getUserId(), value: this.initialValue}
   }
 
   toggleSection(i) {
@@ -77,4 +77,9 @@ export class PublicationFooterComponent{
       this.scoreInputShowed = true;
     }
   }
+
+  openPublication(){
+    alert("Abriendo publicación...");
+  }
+
 }

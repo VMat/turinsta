@@ -61,6 +61,14 @@ export class PublicationActionsMenuPage {
     }
   }
 
+  locatePlace(){
+    alert("Ubicando destino en mapa...");
+  }
+
+  sharePublication(){
+    alert("Compartiendo publicación...");
+  }
+
   viewUser(){
     alert("Ver usuario");
     this.viewCtrl.dismiss();

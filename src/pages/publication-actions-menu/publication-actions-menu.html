@@ -11,6 +11,14 @@
       <p *ngIf="!followedPublication">Agregar a favoritos</p>
       <p *ngIf="followedPublication">Quitar de favoritos</p>
     </ion-item>
+    <ion-item (click)="locatePlace()">
+      <ion-icon item-start class="publication-icon" name="pin" color="secondary"></ion-icon>
+      <p>Ubicar en mapa</p>
+    </ion-item>
+    <ion-item (click)="sharePublication()">
+      <ion-icon item-start class="publication-icon" name="share" color="secondary"></ion-icon>
+      <p>Compartir</p>
+    </ion-item>
     <ion-item (click)="handleUser()">
       <ion-icon item-start name="person-add"></ion-icon>
       <p *ngIf="!followedUser">Seguir usuario</p>
