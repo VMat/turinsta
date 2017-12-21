@@ -28,10 +28,6 @@ export class ExperienceWritingPage {
     }
   }
 
-  getEmoji(event){
-    this.experience.content += event.char;
-  }
-
   dismissExperience(){
     this.viewCtrl.dismiss();
   }

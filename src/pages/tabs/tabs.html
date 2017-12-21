@@ -1,20 +1,21 @@
-<ion-header>
-  <ion-navbar>
-    <!--<ion-item no-lines>-->
+<ion-header class="tabs-header">
+  <ion-navbar [ngSwitch]="activeTab">
+    <ion-item no-lines *ngSwitchCase="'home'">
+      <user-filter item-start></user-filter>
       <ion-title align="center">TurInsta</ion-title>
-      <!--<button item-end ion-button (click)="toogleFilters()" clear><ion-icon name="{{showFilters? 'ios-arrow-dropdown' : 'ios-arrow-dropright'}}" color="secondary"></ion-icon></button>-->
-    <!--</ion-item>-->
-    <!--<ion-item no-lines *ngIf="showFilters">-->
-      <!--<filters-bar></filters-bar>-->
-    <!--</ion-item>-->
+      <ordering-criterion item-end></ordering-criterion>
+    </ion-item>
+    <ion-item no-lines *ngSwitchDefault>
+      <ion-title align="center">TurInsta</ion-title>
+    </ion-item>
   </ion-navbar>
 </ion-header>
 <ion-content>
   <ion-tabs>
-    <ion-tab [root]="tab1Root" tabIcon="home"></ion-tab>
-    <ion-tab [root]="tab2Root" tabIcon="globe"></ion-tab>
-    <ion-tab [root]="tab3Root" tabIcon="eye"></ion-tab>
-    <ion-tab [root]="tab4Root" tabIcon="contact"></ion-tab>
+    <ion-tab [root]="tab1Root" tabIcon="home" (ionSelect)="setActiveTab('home')"></ion-tab>
+    <ion-tab [root]="tab2Root" tabIcon="globe" (ionSelect)="setActiveTab('places')"></ion-tab>
+    <ion-tab [root]="tab3Root" tabIcon="eye" (ionSelect)="setActiveTab('activities')"></ion-tab>
+    <ion-tab [root]="tab4Root" tabIcon="contact" (ionSelect)="setActiveTab('account')"></ion-tab>
   </ion-tabs>
 </ion-content>
 

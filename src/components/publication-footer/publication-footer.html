@@ -2,7 +2,7 @@
 <ion-list style="position: relative">
   <score-input *ngIf="scoreInputShowed" [score]="currentUserScore"></score-input>
   <ion-item class="publication-buttons-item">
-    <button item-start class="publication-button" (click)="toggleSection(0)" ion-button clear>
+    <button item-start class="start-button" (click)="toggleSection(0)" ion-button clear>
       <ion-icon class="publication-icon" name="ios-paper" color="secondary" isActive="{{sections[0].show}}">
         <ion-badge *ngIf="experiences.length >0" class="publication-badge">{{experiences.length}}</ion-badge>
       </ion-icon>
@@ -12,11 +12,11 @@
         <ion-badge *ngIf="comments.length >0" class="publication-badge">{{comments.length}}</ion-badge>
       </ion-icon>
     </button>
-    <button item-left (click)="toogleScoreInput()" ion-button clear>
+    <button item-left class="publication-button" (click)="toogleScoreInput()" ion-button clear>
       <ion-icon class="publication-icon" name="ios-star" color="secondary" isActive="{{scoreInputShowed}}"></ion-icon>
     </button>
-    <ion-note item-right>{{publication.timestamps.created}}</ion-note>
-    <button item-end (click)="openPublication()" ion-button clear>
+    <ion-note item-right>{{getAntiquity(publication.timestamps.created)}}</ion-note>
+    <button item-end class="end-button" (click)="openPublication()" ion-button clear>
       <ion-icon class="publication-icon" name="share-alt" color="secondary"></ion-icon>
     </button>
   </ion-item>

@@ -1,16 +1,23 @@
-.toolbar-title-md{
-  color: #ffffff;
-  font-weight: bolder;
-  -webkit-text-stroke: 1px deeppink;
-  text-shadow: 2px  2px 0 lightgrey,
-              -1px -1px 0 lightgrey,
-               1px -1px 0 lightgrey,
-              -1px  1px 0 lightgrey,
-               1px  1px 0 lightgrey;
-  font-size: x-large;
-  font-family: 'Chiller', cursive
-}
+ .tabs-header{
+   .toolbar-title-md{
+     color: #ffffff;
+     font-weight: bolder;
+     -webkit-text-stroke: 1px deeppink;
+     text-shadow: 2px  2px 0 lightgrey,
+     -1px -1px 0 lightgrey,
+     1px -1px 0 lightgrey,
+     -1px  1px 0 lightgrey,
+     1px  1px 0 lightgrey;
+     font-size: x-large;
+     font-family: 'Chiller', cursive
+   }
 
-ion-navbar{
-  padding: 0 !important;
-}
+   ion-navbar{
+     padding: 0 !important;
+   }
+
+   ion-navbar button{
+     font-size: x-small;margin-bottom: 0;
+   }
+ }
+

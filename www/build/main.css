@@ -33190,22 +33190,6 @@ filters-bar ion-searchbar {
   margin: 0 !important;
 }
 
-my-emoji-picker {
-  margin: 0 !important;
-}
-
-my-emoji-picker emoji-picker {
-  z-index: 999999999 !important;
-}
-
-my-emoji-picker emoji-content {
-  z-index: 999999999 !important;
-}
-
-my-emoji-picker emoji-list {
-  z-index: 999999999 !important;
-}
-
 place-filter .select-md .select-icon {
   position: absolute;
 }
@@ -33359,6 +33343,23 @@ publication-body {
   position: relative;
 }
 
+publication-footer .start-button {
+  padding-left: 0 !important;
+}
+
+publication-footer .end-button {
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+publication-footer .item-inner {
+  padding: 0 !important;
+}
+
+publication-footer ion-note {
+  font-size: xx-small !important;
+}
+
 score-input {
   position: absolute;
   top: -50px;
@@ -33379,8 +33380,19 @@ page-comment-writing {
   width: 100%;
 }
 
-page-experience-writing my-emoji-picker {
-  z-index: 999999999 !important;
+page-my-emoji-picker emoji-picker {
+  -webkit-transform: translate(-500px, 0px) !important;
+  transform: translate(-500px, 0px) !important;
+}
+
+page-my-emoji-picker ion-content {
+  height: 300px;
+  width: 500px;
+}
+
+page-my-emoji-picker button {
+  height: 300px;
+  width: 100%;
 }
 
 page-publication-actions-menu ion-item {
@@ -33395,7 +33407,7 @@ page-publication-user-filter * {
   font-size: x-small;
 }
 
-.toolbar-title-md {
+.tabs-header .toolbar-title-md {
   color: #ffffff;
   font-weight: bolder;
   -webkit-text-stroke: 1px deeppink;
@@ -33404,6 +33416,11 @@ page-publication-user-filter * {
   font-family: 'Chiller', cursive;
 }
 
-ion-navbar {
+.tabs-header ion-navbar {
   padding: 0 !important;
+}
+
+.tabs-header ion-navbar button {
+  font-size: x-small;
+  margin-bottom: 0;
 }

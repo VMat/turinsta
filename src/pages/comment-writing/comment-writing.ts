@@ -29,10 +29,6 @@ export class CommentWritingPage {
     }
   }
 
-  getEmoji(event){
-    this.comment.content += event.char;
-  }
-
   dismissComment(){
     this.viewCtrl.dismiss();
   }

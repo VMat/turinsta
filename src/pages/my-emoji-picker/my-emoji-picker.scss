@@ -1,0 +1,16 @@
+page-my-emoji-picker {
+
+  emoji-picker{
+    transform: translate(-500px, 0px) !important;
+  }
+
+  ion-content{
+    height: 300px;
+    width: 500px
+  }
+
+  button{
+    height: 300px;
+    width: 100%
+  }
+}

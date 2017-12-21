@@ -6,7 +6,7 @@
 -->
 <ion-header>
   <ion-navbar>
-    <ion-item style="text-align: center">
+    <ion-item no-lines style="text-align: center">
       <button item-start ion-button clear (click)="dismissExperience()">
         <ion-icon name="close"></ion-icon>
       </button>
@@ -29,7 +29,7 @@
         <ion-textarea class="form-control" [(ngModel)]="experience.content" style="width: 100%"></ion-textarea>
     </ion-item>
     <ion-item style="height: 15%">
-      <my-emoji-picker item-end [direction]="'bottom'" (emojiSelected)="getEmoji($event)"></my-emoji-picker>
+      <my-emoji-picker item-end [data]=experience></my-emoji-picker>
     </ion-item>
   </ion-list>
 </ion-content>

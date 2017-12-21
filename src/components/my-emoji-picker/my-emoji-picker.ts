@@ -1,5 +1,7 @@
 import {Component, Input, EventEmitter, Output} from '@angular/core';
 import {EmitterVisitorContext} from "@angular/compiler";
+import {PopoverController} from "ionic-angular";
+import {MyEmojiPickerPage} from "../../pages/my-emoji-picker/my-emoji-picker";
 
 /**
  * Generated class for the MyEmojiPickerComponent component.
@@ -13,19 +15,17 @@ import {EmitterVisitorContext} from "@angular/compiler";
 })
 export class MyEmojiPickerComponent {
 
-  showEmojiPicker: boolean = false;
-  @Input() direction: string = 'bottom';
-  @Output() emojiSelected = new EventEmitter();
+  @Input() data: any = null;
+  input: any = {value: null};
 
-  constructor() {
+  constructor(private popoverCtrl: PopoverController) {
     console.log('Hello MyEmojiPickerComponent Component');
   }
 
-  toogleEmojiPicker(){
-    this.showEmojiPicker = !this.showEmojiPicker
-  }
-
-  handleSelection($event){
-    this.emojiSelected.emit($event);
+  toogleEmojiPicker(myEvent) {
+    let popover = this.popoverCtrl.create(MyEmojiPickerPage, {data: this.data});
+    popover.present({
+      ev: myEvent
+    });
   }
 }

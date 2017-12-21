@@ -78,6 +78,10 @@ export class PublicationFooterComponent{
     }
   }
 
+  getAntiquity(date){
+    return this.commons.getAntiquity(date);
+  }
+
   openPublication(){
     alert("Abriendo publicación...");
   }

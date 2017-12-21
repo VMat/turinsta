@@ -15,13 +15,14 @@ export class TabsPage {
   tab2Root = PlacesPage;
   tab3Root = ActivitiesPage;
   tab4Root = AccountPage;
+  activeTab: string = null;
 
   showFilters: boolean = false;
 
   constructor(){}
 
-  toogleFilters(){
-    this.showFilters = !this.showFilters;
+  setActiveTab(tab){
+    this.activeTab = tab;
   }
 
 }

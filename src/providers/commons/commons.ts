@@ -13,6 +13,18 @@ import {Storage} from '@ionic/storage';
 @Injectable()
 export class CommonsProvider {
 
+  glosary: any = {
+    timeUnits: {
+                      YEAR: {SINGULAR: "AÑO", PLURAL: 'AÑOS'},
+                      MONTH: {SINGULAR: "MES", PLURAL: 'MESES'},
+                      DAY: {SINGULAR: "DÍA", PLURAL: 'DÍAS'},
+                      HOUR: {SINGULAR: "HORA", PLURAL: 'HORAS'},
+                      MINUTE: {SINGULAR: "MINUTO", PLURAL: 'MINUTOS'},
+                      SECOND: {SINGULAR: "SEGUNDO", PLURAL: 'SEGUNDOS'}
+    },
+    antiquitySentence: "Hace :x :timeUnit"
+  };
+
   constructor(public http: Http, public toastCtrl: ToastController, public alertCtrl: AlertController, private localStorage: Storage) {
     console.log('Hello CommonsProvider Provider');
     // this.setUserId("59f7562af36d282363087270"); //Pedro
@@ -51,5 +63,55 @@ export class CommonsProvider {
 
   getCachedPublications(){
     return this.localStorage.get("publications");
+  }
+
+  dateDiff(dateSince, dateUntil){
+    let diffInMs: number = Date.parse(dateUntil) - Date.parse(dateSince);
+    let diffInSeconds: number = diffInMs / 1000;
+
+    return diffInSeconds;
+  }
+
+  getAntiquity(dateSince){
+    let diffInSeconds = this.dateDiff(dateSince,(new Date()));
+
+    if(diffInSeconds/31104000 >=1){
+      let years = Math.floor(diffInSeconds/31104000);
+      return this.glosary.antiquitySentence.replace(':x',years).
+      replace(':timeUnit',years > 1 ? this.glosary.timeUnits.YEAR.PLURAL.toLowerCase() : this.glosary.timeUnits.YEAR.SINGULAR.toLowerCase());
+    }
+    else{
+      if(diffInSeconds/2592000 >=1){
+        let months = Math.floor(diffInSeconds/2592000);
+        return this.glosary.antiquitySentence.replace(':x',months).
+        replace(':timeUnit',months > 1 ? this.glosary.timeUnits.MONTH.PLURAL.toLowerCase() : this.glosary.timeUnits.MONTH.SINGULAR.toLowerCase());
+      }
+      else{
+        if(diffInSeconds/86400 >=1){
+          let days = Math.floor(diffInSeconds/86400);
+          return this.glosary.antiquitySentence.replace(':x',days).
+          replace(':timeUnit',days > 1 ? this.glosary.timeUnits.DAY.PLURAL.toLowerCase() : this.glosary.timeUnits.DAY.SINGULAR.toLowerCase());
+        }
+        else{
+          if(diffInSeconds/3600>=1){
+            let hours = Math.floor(diffInSeconds/3600);
+            return this.glosary.antiquitySentence.replace(':x',hours).
+            replace(':timeUnit',hours > 1 ? this.glosary.timeUnits.HOUR.PLURAL.toLowerCase() : this.glosary.timeUnits.HOUR.SINGULAR.toLowerCase());
+          }
+          else{
+            if(diffInSeconds/60>=1){
+              let minutes = Math.floor(diffInSeconds/60);
+              return this.glosary.antiquitySentence.replace(':x',minutes).
+              replace(':timeUnit',minutes > 1 ? this.glosary.timeUnits.MINUTE.PLURAL.toLowerCase() : this.glosary.timeUnits.MINUTE.SINGULAR.toLowerCase());
+            }
+            else{
+              let seconds = Math.floor(diffInSeconds);
+              return this.glosary.antiquitySentence.replace(':x',seconds).
+              replace(':timeUnit',seconds > 1 ? this.glosary.timeUnits.SECOND.PLURAL.toLowerCase() : this.glosary.timeUnits.SECOND.SINGULAR.toLowerCase());
+            }
+          }
+        }
+      }
+    }
   }
 }

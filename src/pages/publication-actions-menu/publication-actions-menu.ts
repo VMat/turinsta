@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import {IonicPage, NavController, NavParams, ViewController} from 'ionic-angular';
+import {IonicPage, NavController, NavParams, ViewController, ActionSheetController} from 'ionic-angular';
 import {StorageProvider} from "../../providers/storage/storage";
 import {CommonsProvider} from "../../providers/commons/commons";
 
@@ -17,7 +17,7 @@ import {CommonsProvider} from "../../providers/commons/commons";
 })
 export class PublicationActionsMenuPage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private viewCtrl: ViewController, private storageService: StorageProvider, private commons: CommonsProvider) {}
+  constructor(public navCtrl: NavController, public navParams: NavParams, private viewCtrl: ViewController, private storageService: StorageProvider, private commons: CommonsProvider, private actionSheetCtrl: ActionSheetController) {}
   followedPublication: boolean = null;
   followedUser: boolean = null;
   publication: string = null;
@@ -63,6 +63,44 @@ export class PublicationActionsMenuPage {
 
   locatePlace(){
     alert("Ubicando destino en mapa...");
+  }
+
+  presentShareActionSheet() {
+    let actionSheet = this.actionSheetCtrl.create({
+      title: 'Compartir con...',
+      buttons: [
+        {
+          text: 'Instagram',
+          icon: 'logo-instagram',
+          handler: () => {
+            this.sharePublication();
+          }
+        },
+        {
+          text: 'Facebook',
+          icon: 'logo-facebook',
+          handler: () => {
+            this.sharePublication();
+          }
+        },
+        {
+          text: 'Twitter',
+          icon: 'logo-twitter',
+          handler: () => {
+            this.sharePublication();
+          }
+        },
+        {
+          text: 'Cancelar',
+          role: 'cancel',
+          handler: () => {
+            console.log('Cancel clicked');
+          }
+        }
+      ]
+    });
+
+    actionSheet.present();
   }
 
   sharePublication(){
