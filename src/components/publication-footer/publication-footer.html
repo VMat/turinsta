@@ -16,10 +16,10 @@
       <ion-icon class="publication-icon" name="ios-star" color="secondary" isActive="{{scoreInputShowed}}"></ion-icon>
     </button>
     <ion-note item-right>{{getAntiquity(publication.timestamps.created)}}</ion-note>
-    <button item-end class="end-button" (click)="openPublication()" ion-button clear>
+    <button item-end class="end-button" (click)="presentPublicationWritingModal()" ion-button clear>
       <ion-icon class="publication-icon" name="share-alt" color="secondary"></ion-icon>
     </button>
   </ion-item>
 </ion-list>
-<experience-list *ngIf="sections[0].show" [experiences]=experiences [publicationId]=publication._id [publicationOwner]=userId></experience-list>
-<comment-list *ngIf="sections[1].show" [comments]=comments [publicationId]=publication._id [publicationOwner]=userId></comment-list>
+<experience-list *ngIf="sections[0].show" [experiences]=experiences [publicationId]=publication._id [publicationOwner]=user._id></experience-list>
+<comment-list *ngIf="sections[1].show" [comments]=comments [publicationId]=publication._id [publicationOwner]=user._id></comment-list>

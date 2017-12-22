@@ -1,4 +1,4 @@
-webpackJsonp([9],{
+webpackJsonp([10],{
 
 /***/ 153:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
@@ -193,8 +193,8 @@ PlacesPage = __decorate([
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return PublicationActionsMenuPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(11);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_storage_storage__ = __webpack_require__(30);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_commons_commons__ = __webpack_require__(22);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_storage_storage__ = __webpack_require__(27);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_commons_commons__ = __webpack_require__(21);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -397,7 +397,7 @@ PublicationOrderByPage = __decorate([
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(11);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__ngrx_store__ = __webpack_require__(36);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_reducers_publication_reducer__ = __webpack_require__(50);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__providers_commons_commons__ = __webpack_require__(22);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__providers_commons_commons__ = __webpack_require__(21);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -471,7 +471,157 @@ PublicationUserFilterPage = __decorate([
 
 /***/ }),
 
-/***/ 167:
+/***/ 160:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return PublicationWritingPage; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(11);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_storage_storage__ = __webpack_require__(27);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_commons_commons__ = __webpack_require__(21);
+var __assign = (this && this.__assign) || Object.assign || function(t) {
+    for (var s, i = 1, n = arguments.length; i < n; i++) {
+        s = arguments[i];
+        for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+            t[p] = s[p];
+    }
+    return t;
+};
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+
+/**
+ * Generated class for the PublicationWritingPage page.
+ *
+ * See https://ionicframework.com/docs/components/#navigation for more info on
+ * Ionic pages and navigation.
+ */
+var PublicationWritingPage = (function () {
+    function PublicationWritingPage(navCtrl, navParams, viewCtrl, alertCtrl, storageService, commons) {
+        this.navCtrl = navCtrl;
+        this.navParams = navParams;
+        this.viewCtrl = viewCtrl;
+        this.alertCtrl = alertCtrl;
+        this.storageService = storageService;
+        this.commons = commons;
+        this.publication = {};
+        this.user = {};
+        this.loggedUser = null;
+        this.editionMode = false;
+    }
+    PublicationWritingPage.prototype.ionViewWillLoad = function () {
+        if (Boolean(this.navParams.get("publication"))) {
+            this.publication = __assign({}, this.navParams.get("publication"));
+            this.user = __assign({}, this.navParams.get("user"));
+            sessionStorage.setItem("this.user", JSON.stringify(this.user));
+        }
+        this.loggedUser = this.commons.getUserId();
+    };
+    PublicationWritingPage.prototype.ionViewDidLoad = function () {
+        console.log('ionViewDidLoad PublicationWritingPage');
+    };
+    PublicationWritingPage.prototype.toogleEditMode = function (value) {
+        this.editionMode = value;
+    };
+    PublicationWritingPage.prototype.checkEditPermission = function () {
+        if (Boolean(this.publication._id)) {
+            return this.loggedUser == this.publication.user;
+        }
+        return false;
+    };
+    PublicationWritingPage.prototype.dismissPublication = function () {
+        this.viewCtrl.dismiss();
+    };
+    PublicationWritingPage.prototype.confirmSave = function () {
+        var _this = this;
+        var confirm = this.alertCtrl.create({
+            title: 'Confirmar operación',
+            message: '¿Está seguro que desea guardar la publicación?',
+            buttons: [
+                {
+                    text: 'Aceptar',
+                    handler: function () {
+                        _this.savePublication();
+                    }
+                },
+                {
+                    text: 'Cancelar',
+                    handler: function () {
+                    }
+                }
+            ]
+        });
+        confirm.present();
+    };
+    PublicationWritingPage.prototype.confirmDelete = function () {
+        var _this = this;
+        var confirm = this.alertCtrl.create({
+            title: 'Confirmar operación',
+            message: '¿Está seguro que desea eliminar la publicación?',
+            buttons: [
+                {
+                    text: 'Aceptar',
+                    handler: function () {
+                        _this.deletePublication();
+                    }
+                },
+                {
+                    text: 'Cancelar',
+                    handler: function () {
+                    }
+                }
+            ]
+        });
+        confirm.present();
+    };
+    PublicationWritingPage.prototype.savePublication = function () {
+        var _this = this;
+        sessionStorage.setItem("this.publication", JSON.stringify(this.publication));
+        if (Boolean(this.publication._id)) {
+            this.storageService.updatePublication(this.publication).subscribe(function (editedPublication) {
+                _this.commons.presentToast("La publicación ha sido actualizada con éxito");
+                _this.viewCtrl.dismiss();
+            });
+        }
+        else {
+            this.storageService.createPublication(this.publication).subscribe(function (newPublication) {
+                _this.commons.presentToast("La publicación ha sido grabada con éxito");
+                _this.viewCtrl.dismiss();
+            });
+        }
+    };
+    PublicationWritingPage.prototype.deletePublication = function () {
+        var _this = this;
+        this.storageService.deletePublication(this.publication).subscribe(function (deletedPublication) {
+            _this.commons.presentToast("La publicación ha sido eliminada con éxito");
+            _this.viewCtrl.dismiss();
+        });
+    };
+    return PublicationWritingPage;
+}());
+PublicationWritingPage = __decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
+        selector: 'page-publication-writing',template:/*ion-inline-start:"C:\Users\Matias\WebstormProjects\turinsta\src\pages\publication-writing\publication-writing.html"*/'<!--\n  Generated template for the PublicationWritingPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-header>\n  <ion-navbar>\n    <ion-item no-lines style="text-align: center">\n      <button item-start ion-button clear (click)="dismissPublication()">\n        <ion-icon name="close"></ion-icon>\n      </button>\n      <ion-title *ngIf="!publication._id">Nueva publicación</ion-title>\n      <ion-title *ngIf="publication._id">Ver publicación</ion-title>\n      <div *ngIf="checkEditPermission() && !editionMode" item-end>\n        <button ion-button clear (click)="toogleEditMode(true)">\n          <ion-icon name="create" isActive="{{editionMode}}" color="primary"></ion-icon>\n        </button>\n        <button ion-button clear (click)="confirmDelete()">\n          <ion-icon name="trash" color="danger"></ion-icon>\n        </button>\n      </div>\n      <div *ngIf="checkEditPermission() && editionMode" item-end>\n        <button ion-button clear (click)="toogleEditMode(false)">\n          <ion-icon name="undo" isActive="{{editionMode}}"></ion-icon>\n        </button>\n        <button ion-button clear (click)="confirmSave()">\n          <ion-icon name="checkmark" color="success"></ion-icon>\n        </button>\n      </div>\n    </ion-item>\n  </ion-navbar>\n</ion-header>\n<ion-content padding>\n  <publication-header [user]=user [publication]=publication></publication-header>\n  <ion-slides>\n    <ion-slide style="align-items: start" *ngFor="let image of publication.images">\n      <publication-image [id]=image._id [url]=image.url></publication-image>\n    </ion-slide>\n  </ion-slides>\n  <p *ngIf="publication.description" item-start class="publication-description"><b>{{user.username}}</b>&nbsp;{{publication.description}}</p>\n</ion-content>\n'/*ion-inline-end:"C:\Users\Matias\WebstormProjects\turinsta\src\pages\publication-writing\publication-writing.html"*/,
+    }),
+    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* NavParams */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["o" /* ViewController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["b" /* AlertController */], __WEBPACK_IMPORTED_MODULE_2__providers_storage_storage__["a" /* StorageProvider */], __WEBPACK_IMPORTED_MODULE_3__providers_commons_commons__["a" /* CommonsProvider */]])
+], PublicationWritingPage);
+
+//# sourceMappingURL=publication-writing.js.map
+
+/***/ }),
+
+/***/ 168:
 /***/ (function(module, exports) {
 
 function webpackEmptyAsyncContext(req) {
@@ -484,68 +634,11 @@ function webpackEmptyAsyncContext(req) {
 webpackEmptyAsyncContext.keys = function() { return []; };
 webpackEmptyAsyncContext.resolve = webpackEmptyAsyncContext;
 module.exports = webpackEmptyAsyncContext;
-webpackEmptyAsyncContext.id = 167;
+webpackEmptyAsyncContext.id = 168;
 
 /***/ }),
 
-/***/ 211:
-/***/ (function(module, exports, __webpack_require__) {
-
-var map = {
-	"../pages/account/account.module": [
-		656,
-		8
-	],
-	"../pages/activities/activities.module": [
-		657,
-		7
-	],
-	"../pages/comment-writing/comment-writing.module": [
-		658,
-		6
-	],
-	"../pages/experience-writing/experience-writing.module": [
-		659,
-		5
-	],
-	"../pages/my-emoji-picker/my-emoji-picker.module": [
-		660,
-		4
-	],
-	"../pages/places/places.module": [
-		661,
-		3
-	],
-	"../pages/publication-actions-menu/publication-actions-menu.module": [
-		662,
-		2
-	],
-	"../pages/publication-order-by/publication-order-by.module": [
-		663,
-		1
-	],
-	"../pages/publication-user-filter/publication-user-filter.module": [
-		664,
-		0
-	]
-};
-function webpackAsyncContext(req) {
-	var ids = map[req];
-	if(!ids)
-		return Promise.reject(new Error("Cannot find module '" + req + "'."));
-	return __webpack_require__.e(ids[1]).then(function() {
-		return __webpack_require__(ids[0]);
-	});
-};
-webpackAsyncContext.keys = function webpackAsyncContextKeys() {
-	return Object.keys(map);
-};
-webpackAsyncContext.id = 211;
-module.exports = webpackAsyncContext;
-
-/***/ }),
-
-/***/ 22:
+/***/ 21:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -555,7 +648,7 @@ module.exports = webpackAsyncContext;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_add_operator_map__ = __webpack_require__(118);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_add_operator_map___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_rxjs_add_operator_map__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_ionic_angular__ = __webpack_require__(11);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__ionic_storage__ = __webpack_require__(212);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__ionic_storage__ = __webpack_require__(213);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -683,13 +776,74 @@ CommonsProvider = __decorate([
 
 /***/ }),
 
-/***/ 259:
+/***/ 212:
+/***/ (function(module, exports, __webpack_require__) {
+
+var map = {
+	"../pages/account/account.module": [
+		657,
+		9
+	],
+	"../pages/activities/activities.module": [
+		658,
+		8
+	],
+	"../pages/comment-writing/comment-writing.module": [
+		659,
+		7
+	],
+	"../pages/experience-writing/experience-writing.module": [
+		660,
+		6
+	],
+	"../pages/my-emoji-picker/my-emoji-picker.module": [
+		661,
+		5
+	],
+	"../pages/places/places.module": [
+		662,
+		4
+	],
+	"../pages/publication-actions-menu/publication-actions-menu.module": [
+		663,
+		3
+	],
+	"../pages/publication-order-by/publication-order-by.module": [
+		664,
+		2
+	],
+	"../pages/publication-user-filter/publication-user-filter.module": [
+		665,
+		1
+	],
+	"../pages/publication-writing/publication-writing.module": [
+		666,
+		0
+	]
+};
+function webpackAsyncContext(req) {
+	var ids = map[req];
+	if(!ids)
+		return Promise.reject(new Error("Cannot find module '" + req + "'."));
+	return __webpack_require__.e(ids[1]).then(function() {
+		return __webpack_require__(ids[0]);
+	});
+};
+webpackAsyncContext.keys = function webpackAsyncContextKeys() {
+	return Object.keys(map);
+};
+webpackAsyncContext.id = 212;
+module.exports = webpackAsyncContext;
+
+/***/ }),
+
+/***/ 260:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return TabsPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__home_home__ = __webpack_require__(260);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__home_home__ = __webpack_require__(261);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__places_places__ = __webpack_require__(156);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__activities_activities__ = __webpack_require__(154);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__account_account__ = __webpack_require__(153);
@@ -731,14 +885,14 @@ TabsPage = __decorate([
 
 /***/ }),
 
-/***/ 260:
+/***/ 261:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return HomePage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(11);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_storage_storage__ = __webpack_require__(30);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_storage_storage__ = __webpack_require__(27);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ngrx_store__ = __webpack_require__(36);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__providers_reducers_publication_reducer__ = __webpack_require__(50);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -781,221 +935,7 @@ HomePage = __decorate([
 
 /***/ }),
 
-/***/ 293:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__ = __webpack_require__(294);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__app_module__ = __webpack_require__(298);
-
-
-Object(__WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__["a" /* platformBrowserDynamic */])().bootstrapModule(__WEBPACK_IMPORTED_MODULE_1__app_module__["a" /* AppModule */]);
-//# sourceMappingURL=main.js.map
-
-/***/ }),
-
-/***/ 298:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AppModule; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_platform_browser__ = __webpack_require__(38);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_ionic_angular__ = __webpack_require__(11);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__app_component__ = __webpack_require__(342);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__pages_home_home__ = __webpack_require__(260);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__pages_places_places__ = __webpack_require__(156);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__pages_activities_activities__ = __webpack_require__(154);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__pages_account_account__ = __webpack_require__(153);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__pages_tabs_tabs__ = __webpack_require__(259);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__components_publication_publication__ = __webpack_require__(350);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__ionic_native_status_bar__ = __webpack_require__(253);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__ionic_native_splash_screen__ = __webpack_require__(258);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__providers_storage_storage__ = __webpack_require__(30);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__angular_http__ = __webpack_require__(117);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__components_experience_experience__ = __webpack_require__(351);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__components_comment_comment__ = __webpack_require__(352);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__components_comment_list_comment_list__ = __webpack_require__(353);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__ngrx_store__ = __webpack_require__(36);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__providers_reducers_publication_reducer__ = __webpack_require__(50);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_19__ngrx_effects__ = __webpack_require__(261);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_20__providers_storage_publication_effects__ = __webpack_require__(357);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_21__ngrx_store_devtools__ = __webpack_require__(605);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_22__components_publication_list_publication_list__ = __webpack_require__(606);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_23__components_publication_header_publication_header__ = __webpack_require__(607);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_24__components_publication_body_publication_body__ = __webpack_require__(608);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_25__components_publication_footer_publication_footer__ = __webpack_require__(609);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_26__components_experience_list_experience_list__ = __webpack_require__(610);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_27__providers_commons_commons__ = __webpack_require__(22);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_28__pipes_contains_filter_contains_filter__ = __webpack_require__(611);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_29__pages_publication_order_by_publication_order_by__ = __webpack_require__(158);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_30__pages_publication_user_filter_publication_user_filter__ = __webpack_require__(159);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_31__components_filters_bar_filters_bar__ = __webpack_require__(612);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_32__components_place_filter_place_filter__ = __webpack_require__(613);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_33__components_user_filter_user_filter__ = __webpack_require__(614);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_34__components_ordering_criterion_ordering_criterion__ = __webpack_require__(615);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_35__ionic_storage__ = __webpack_require__(212);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_36__ionic_tools_emoji_picker__ = __webpack_require__(616);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_37__providers_imgcache_imgcache__ = __webpack_require__(83);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_38__components_publication_image_publication_image__ = __webpack_require__(652);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_39__pages_experience_writing_experience_writing__ = __webpack_require__(90);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_40__pages_comment_writing_comment_writing__ = __webpack_require__(89);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_41__components_my_emoji_picker_my_emoji_picker__ = __webpack_require__(653);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_42__components_score_input_score_input__ = __webpack_require__(654);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_43__components_publication_actions_publication_actions__ = __webpack_require__(655);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_44__pages_publication_actions_menu_publication_actions_menu__ = __webpack_require__(157);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_45__pages_my_emoji_picker_my_emoji_picker__ = __webpack_require__(155);
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-var AppModule = (function () {
-    function AppModule() {
-    }
-    return AppModule;
-}());
-AppModule = __decorate([
-    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["L" /* NgModule */])({
-        declarations: [
-            __WEBPACK_IMPORTED_MODULE_3__app_component__["a" /* MyApp */],
-            __WEBPACK_IMPORTED_MODULE_5__pages_places_places__["a" /* PlacesPage */],
-            __WEBPACK_IMPORTED_MODULE_6__pages_activities_activities__["a" /* ActivitiesPage */],
-            __WEBPACK_IMPORTED_MODULE_7__pages_account_account__["a" /* AccountPage */],
-            __WEBPACK_IMPORTED_MODULE_4__pages_home_home__["a" /* HomePage */],
-            __WEBPACK_IMPORTED_MODULE_8__pages_tabs_tabs__["a" /* TabsPage */],
-            __WEBPACK_IMPORTED_MODULE_29__pages_publication_order_by_publication_order_by__["a" /* PublicationOrderByPage */],
-            __WEBPACK_IMPORTED_MODULE_30__pages_publication_user_filter_publication_user_filter__["a" /* PublicationUserFilterPage */],
-            __WEBPACK_IMPORTED_MODULE_39__pages_experience_writing_experience_writing__["a" /* ExperienceWritingPage */],
-            __WEBPACK_IMPORTED_MODULE_40__pages_comment_writing_comment_writing__["a" /* CommentWritingPage */],
-            __WEBPACK_IMPORTED_MODULE_44__pages_publication_actions_menu_publication_actions_menu__["a" /* PublicationActionsMenuPage */],
-            __WEBPACK_IMPORTED_MODULE_45__pages_my_emoji_picker_my_emoji_picker__["a" /* MyEmojiPickerPage */],
-            __WEBPACK_IMPORTED_MODULE_23__components_publication_header_publication_header__["a" /* PublicationHeaderComponent */],
-            __WEBPACK_IMPORTED_MODULE_24__components_publication_body_publication_body__["a" /* PublicationBodyComponent */],
-            __WEBPACK_IMPORTED_MODULE_25__components_publication_footer_publication_footer__["a" /* PublicationFooterComponent */],
-            __WEBPACK_IMPORTED_MODULE_9__components_publication_publication__["a" /* PublicationComponent */],
-            __WEBPACK_IMPORTED_MODULE_22__components_publication_list_publication_list__["a" /* PublicationListComponent */],
-            __WEBPACK_IMPORTED_MODULE_26__components_experience_list_experience_list__["a" /* ExperienceListComponent */],
-            __WEBPACK_IMPORTED_MODULE_14__components_experience_experience__["a" /* ExperienceComponent */],
-            __WEBPACK_IMPORTED_MODULE_15__components_comment_comment__["a" /* CommentComponent */],
-            __WEBPACK_IMPORTED_MODULE_16__components_comment_list_comment_list__["a" /* CommentListComponent */],
-            __WEBPACK_IMPORTED_MODULE_31__components_filters_bar_filters_bar__["a" /* FiltersBarComponent */],
-            __WEBPACK_IMPORTED_MODULE_32__components_place_filter_place_filter__["a" /* PlaceFilterComponent */],
-            __WEBPACK_IMPORTED_MODULE_33__components_user_filter_user_filter__["a" /* UserFilterComponent */],
-            __WEBPACK_IMPORTED_MODULE_34__components_ordering_criterion_ordering_criterion__["a" /* OrderingCriterionComponent */],
-            __WEBPACK_IMPORTED_MODULE_38__components_publication_image_publication_image__["a" /* PublicationImageComponent */],
-            __WEBPACK_IMPORTED_MODULE_41__components_my_emoji_picker_my_emoji_picker__["a" /* MyEmojiPickerComponent */],
-            __WEBPACK_IMPORTED_MODULE_42__components_score_input_score_input__["a" /* ScoreInputComponent */],
-            __WEBPACK_IMPORTED_MODULE_43__components_publication_actions_publication_actions__["a" /* PublicationActionsComponent */],
-            __WEBPACK_IMPORTED_MODULE_28__pipes_contains_filter_contains_filter__["a" /* ContainsFilterPipe */]
-        ],
-        imports: [
-            __WEBPACK_IMPORTED_MODULE_1__angular_platform_browser__["a" /* BrowserModule */],
-            __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["f" /* IonicModule */].forRoot(__WEBPACK_IMPORTED_MODULE_3__app_component__["a" /* MyApp */], {}, {
-                links: [
-                    { loadChildren: '../pages/account/account.module#AccountPageModule', name: 'AccountPage', segment: 'account', priority: 'low', defaultHistory: [] },
-                    { loadChildren: '../pages/activities/activities.module#ActivitiesPageModule', name: 'ActivitiesPage', segment: 'activities', priority: 'low', defaultHistory: [] },
-                    { loadChildren: '../pages/comment-writing/comment-writing.module#CommentWritingPageModule', name: 'CommentWritingPage', segment: 'comment-writing', priority: 'low', defaultHistory: [] },
-                    { loadChildren: '../pages/experience-writing/experience-writing.module#ExperienceWritingPageModule', name: 'ExperienceWritingPage', segment: 'experience-writing', priority: 'low', defaultHistory: [] },
-                    { loadChildren: '../pages/my-emoji-picker/my-emoji-picker.module#MyEmojiPickerPageModule', name: 'MyEmojiPickerPage', segment: 'my-emoji-picker', priority: 'low', defaultHistory: [] },
-                    { loadChildren: '../pages/places/places.module#PlacesPageModule', name: 'PlacesPage', segment: 'places', priority: 'low', defaultHistory: [] },
-                    { loadChildren: '../pages/publication-actions-menu/publication-actions-menu.module#PublicationActionsMenuPageModule', name: 'PublicationActionsMenuPage', segment: 'publication-actions-menu', priority: 'low', defaultHistory: [] },
-                    { loadChildren: '../pages/publication-order-by/publication-order-by.module#PublicationOrderByPageModule', name: 'PublicationOrderByPage', segment: 'publication-order-by', priority: 'low', defaultHistory: [] },
-                    { loadChildren: '../pages/publication-user-filter/publication-user-filter.module#PublicationUserFilterPageModule', name: 'PublicationUserFilterPage', segment: 'publication-user-filter', priority: 'low', defaultHistory: [] }
-                ]
-            }),
-            __WEBPACK_IMPORTED_MODULE_13__angular_http__["c" /* HttpModule */],
-            __WEBPACK_IMPORTED_MODULE_17__ngrx_store__["i" /* StoreModule */].forRoot({
-                publications: __WEBPACK_IMPORTED_MODULE_18__providers_reducers_publication_reducer__["h" /* publicationReducer */]
-            }),
-            __WEBPACK_IMPORTED_MODULE_19__ngrx_effects__["c" /* EffectsModule */].forRoot([
-                __WEBPACK_IMPORTED_MODULE_20__providers_storage_publication_effects__["a" /* PublicationEffects */]
-            ]),
-            __WEBPACK_IMPORTED_MODULE_21__ngrx_store_devtools__["a" /* StoreDevtoolsModule */].instrument({
-                maxAge: 10 // number of states to retain
-            }),
-            __WEBPACK_IMPORTED_MODULE_35__ionic_storage__["a" /* IonicStorageModule */].forRoot(),
-            __WEBPACK_IMPORTED_MODULE_36__ionic_tools_emoji_picker__["a" /* EmojiPickerModule */].forRoot()
-        ],
-        bootstrap: [__WEBPACK_IMPORTED_MODULE_2_ionic_angular__["d" /* IonicApp */]],
-        entryComponents: [
-            __WEBPACK_IMPORTED_MODULE_3__app_component__["a" /* MyApp */],
-            __WEBPACK_IMPORTED_MODULE_5__pages_places_places__["a" /* PlacesPage */],
-            __WEBPACK_IMPORTED_MODULE_6__pages_activities_activities__["a" /* ActivitiesPage */],
-            __WEBPACK_IMPORTED_MODULE_7__pages_account_account__["a" /* AccountPage */],
-            __WEBPACK_IMPORTED_MODULE_4__pages_home_home__["a" /* HomePage */],
-            __WEBPACK_IMPORTED_MODULE_8__pages_tabs_tabs__["a" /* TabsPage */],
-            __WEBPACK_IMPORTED_MODULE_29__pages_publication_order_by_publication_order_by__["a" /* PublicationOrderByPage */],
-            __WEBPACK_IMPORTED_MODULE_30__pages_publication_user_filter_publication_user_filter__["a" /* PublicationUserFilterPage */],
-            __WEBPACK_IMPORTED_MODULE_39__pages_experience_writing_experience_writing__["a" /* ExperienceWritingPage */],
-            __WEBPACK_IMPORTED_MODULE_40__pages_comment_writing_comment_writing__["a" /* CommentWritingPage */],
-            __WEBPACK_IMPORTED_MODULE_44__pages_publication_actions_menu_publication_actions_menu__["a" /* PublicationActionsMenuPage */],
-            __WEBPACK_IMPORTED_MODULE_45__pages_my_emoji_picker_my_emoji_picker__["a" /* MyEmojiPickerPage */]
-        ],
-        providers: [
-            __WEBPACK_IMPORTED_MODULE_10__ionic_native_status_bar__["a" /* StatusBar */],
-            __WEBPACK_IMPORTED_MODULE_11__ionic_native_splash_screen__["a" /* SplashScreen */],
-            { provide: __WEBPACK_IMPORTED_MODULE_0__angular_core__["v" /* ErrorHandler */], useClass: __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["e" /* IonicErrorHandler */] },
-            __WEBPACK_IMPORTED_MODULE_12__providers_storage_storage__["a" /* StorageProvider */],
-            __WEBPACK_IMPORTED_MODULE_27__providers_commons_commons__["a" /* CommonsProvider */],
-            __WEBPACK_IMPORTED_MODULE_37__providers_imgcache_imgcache__["a" /* ImgcacheService */]
-        ]
-    })
-], AppModule);
-
-//# sourceMappingURL=app.module.js.map
-
-/***/ }),
-
-/***/ 30:
+/***/ 27:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1081,6 +1021,15 @@ var StorageProvider = StorageProvider_1 = (function () {
     StorageProvider.prototype.removeFollower = function (followed, follower) {
         return this.http.delete(StorageProvider_1.baseUrl + 'users/followers/' + followed + '/' + follower, { headers: StorageProvider_1.headers });
     };
+    StorageProvider.prototype.createPublication = function (publication) {
+        return this.http.post(StorageProvider_1.baseUrl + 'publications/', publication, { headers: StorageProvider_1.headers });
+    };
+    StorageProvider.prototype.updatePublication = function (publication) {
+        return this.http.put(StorageProvider_1.baseUrl + 'publications/', publication, { headers: StorageProvider_1.headers });
+    };
+    StorageProvider.prototype.deletePublication = function (publication) {
+        return this.http.delete(StorageProvider_1.baseUrl + 'publications/' + publication, { headers: StorageProvider_1.headers });
+    };
     return StorageProvider;
 }());
 StorageProvider.baseUrl = 'https://turinsta-staging.herokuapp.com/api/';
@@ -1095,16 +1044,235 @@ var StorageProvider_1;
 
 /***/ }),
 
-/***/ 342:
+/***/ 294:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__ = __webpack_require__(295);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__app_module__ = __webpack_require__(299);
+
+
+Object(__WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__["a" /* platformBrowserDynamic */])().bootstrapModule(__WEBPACK_IMPORTED_MODULE_1__app_module__["a" /* AppModule */]);
+//# sourceMappingURL=main.js.map
+
+/***/ }),
+
+/***/ 299:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AppModule; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_platform_browser__ = __webpack_require__(38);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_ionic_angular__ = __webpack_require__(11);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__app_component__ = __webpack_require__(343);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__pages_home_home__ = __webpack_require__(261);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__pages_places_places__ = __webpack_require__(156);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__pages_activities_activities__ = __webpack_require__(154);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__pages_account_account__ = __webpack_require__(153);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__pages_tabs_tabs__ = __webpack_require__(260);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__components_publication_publication__ = __webpack_require__(351);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__ionic_native_status_bar__ = __webpack_require__(254);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__ionic_native_splash_screen__ = __webpack_require__(259);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__providers_storage_storage__ = __webpack_require__(27);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__angular_http__ = __webpack_require__(117);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__components_experience_experience__ = __webpack_require__(352);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__components_comment_comment__ = __webpack_require__(353);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__components_comment_list_comment_list__ = __webpack_require__(354);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__ngrx_store__ = __webpack_require__(36);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__providers_reducers_publication_reducer__ = __webpack_require__(50);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_19__ngrx_effects__ = __webpack_require__(262);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_20__providers_storage_publication_effects__ = __webpack_require__(358);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_21__ngrx_store_devtools__ = __webpack_require__(606);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_22__components_publication_list_publication_list__ = __webpack_require__(607);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_23__components_publication_header_publication_header__ = __webpack_require__(608);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_24__components_publication_body_publication_body__ = __webpack_require__(609);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_25__components_publication_footer_publication_footer__ = __webpack_require__(610);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_26__components_experience_list_experience_list__ = __webpack_require__(611);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_27__providers_commons_commons__ = __webpack_require__(21);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_28__pipes_contains_filter_contains_filter__ = __webpack_require__(612);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_29__pages_publication_order_by_publication_order_by__ = __webpack_require__(158);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_30__pages_publication_user_filter_publication_user_filter__ = __webpack_require__(159);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_31__components_filters_bar_filters_bar__ = __webpack_require__(613);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_32__components_place_filter_place_filter__ = __webpack_require__(614);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_33__components_user_filter_user_filter__ = __webpack_require__(615);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_34__components_ordering_criterion_ordering_criterion__ = __webpack_require__(616);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_35__ionic_storage__ = __webpack_require__(213);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_36__ionic_tools_emoji_picker__ = __webpack_require__(617);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_37__providers_imgcache_imgcache__ = __webpack_require__(83);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_38__components_publication_image_publication_image__ = __webpack_require__(653);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_39__pages_experience_writing_experience_writing__ = __webpack_require__(90);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_40__pages_comment_writing_comment_writing__ = __webpack_require__(89);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_41__components_my_emoji_picker_my_emoji_picker__ = __webpack_require__(654);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_42__components_score_input_score_input__ = __webpack_require__(655);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_43__components_publication_actions_publication_actions__ = __webpack_require__(656);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_44__pages_publication_actions_menu_publication_actions_menu__ = __webpack_require__(157);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_45__pages_my_emoji_picker_my_emoji_picker__ = __webpack_require__(155);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_46__pages_publication_writing_publication_writing__ = __webpack_require__(160);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+var AppModule = (function () {
+    function AppModule() {
+    }
+    return AppModule;
+}());
+AppModule = __decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["L" /* NgModule */])({
+        declarations: [
+            __WEBPACK_IMPORTED_MODULE_3__app_component__["a" /* MyApp */],
+            __WEBPACK_IMPORTED_MODULE_5__pages_places_places__["a" /* PlacesPage */],
+            __WEBPACK_IMPORTED_MODULE_6__pages_activities_activities__["a" /* ActivitiesPage */],
+            __WEBPACK_IMPORTED_MODULE_7__pages_account_account__["a" /* AccountPage */],
+            __WEBPACK_IMPORTED_MODULE_4__pages_home_home__["a" /* HomePage */],
+            __WEBPACK_IMPORTED_MODULE_8__pages_tabs_tabs__["a" /* TabsPage */],
+            __WEBPACK_IMPORTED_MODULE_29__pages_publication_order_by_publication_order_by__["a" /* PublicationOrderByPage */],
+            __WEBPACK_IMPORTED_MODULE_30__pages_publication_user_filter_publication_user_filter__["a" /* PublicationUserFilterPage */],
+            __WEBPACK_IMPORTED_MODULE_39__pages_experience_writing_experience_writing__["a" /* ExperienceWritingPage */],
+            __WEBPACK_IMPORTED_MODULE_40__pages_comment_writing_comment_writing__["a" /* CommentWritingPage */],
+            __WEBPACK_IMPORTED_MODULE_44__pages_publication_actions_menu_publication_actions_menu__["a" /* PublicationActionsMenuPage */],
+            __WEBPACK_IMPORTED_MODULE_45__pages_my_emoji_picker_my_emoji_picker__["a" /* MyEmojiPickerPage */],
+            __WEBPACK_IMPORTED_MODULE_46__pages_publication_writing_publication_writing__["a" /* PublicationWritingPage */],
+            __WEBPACK_IMPORTED_MODULE_23__components_publication_header_publication_header__["a" /* PublicationHeaderComponent */],
+            __WEBPACK_IMPORTED_MODULE_24__components_publication_body_publication_body__["a" /* PublicationBodyComponent */],
+            __WEBPACK_IMPORTED_MODULE_25__components_publication_footer_publication_footer__["a" /* PublicationFooterComponent */],
+            __WEBPACK_IMPORTED_MODULE_9__components_publication_publication__["a" /* PublicationComponent */],
+            __WEBPACK_IMPORTED_MODULE_22__components_publication_list_publication_list__["a" /* PublicationListComponent */],
+            __WEBPACK_IMPORTED_MODULE_26__components_experience_list_experience_list__["a" /* ExperienceListComponent */],
+            __WEBPACK_IMPORTED_MODULE_14__components_experience_experience__["a" /* ExperienceComponent */],
+            __WEBPACK_IMPORTED_MODULE_15__components_comment_comment__["a" /* CommentComponent */],
+            __WEBPACK_IMPORTED_MODULE_16__components_comment_list_comment_list__["a" /* CommentListComponent */],
+            __WEBPACK_IMPORTED_MODULE_31__components_filters_bar_filters_bar__["a" /* FiltersBarComponent */],
+            __WEBPACK_IMPORTED_MODULE_32__components_place_filter_place_filter__["a" /* PlaceFilterComponent */],
+            __WEBPACK_IMPORTED_MODULE_33__components_user_filter_user_filter__["a" /* UserFilterComponent */],
+            __WEBPACK_IMPORTED_MODULE_34__components_ordering_criterion_ordering_criterion__["a" /* OrderingCriterionComponent */],
+            __WEBPACK_IMPORTED_MODULE_38__components_publication_image_publication_image__["a" /* PublicationImageComponent */],
+            __WEBPACK_IMPORTED_MODULE_41__components_my_emoji_picker_my_emoji_picker__["a" /* MyEmojiPickerComponent */],
+            __WEBPACK_IMPORTED_MODULE_42__components_score_input_score_input__["a" /* ScoreInputComponent */],
+            __WEBPACK_IMPORTED_MODULE_43__components_publication_actions_publication_actions__["a" /* PublicationActionsComponent */],
+            __WEBPACK_IMPORTED_MODULE_28__pipes_contains_filter_contains_filter__["a" /* ContainsFilterPipe */]
+        ],
+        imports: [
+            __WEBPACK_IMPORTED_MODULE_1__angular_platform_browser__["a" /* BrowserModule */],
+            __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["f" /* IonicModule */].forRoot(__WEBPACK_IMPORTED_MODULE_3__app_component__["a" /* MyApp */], {}, {
+                links: [
+                    { loadChildren: '../pages/account/account.module#AccountPageModule', name: 'AccountPage', segment: 'account', priority: 'low', defaultHistory: [] },
+                    { loadChildren: '../pages/activities/activities.module#ActivitiesPageModule', name: 'ActivitiesPage', segment: 'activities', priority: 'low', defaultHistory: [] },
+                    { loadChildren: '../pages/comment-writing/comment-writing.module#CommentWritingPageModule', name: 'CommentWritingPage', segment: 'comment-writing', priority: 'low', defaultHistory: [] },
+                    { loadChildren: '../pages/experience-writing/experience-writing.module#ExperienceWritingPageModule', name: 'ExperienceWritingPage', segment: 'experience-writing', priority: 'low', defaultHistory: [] },
+                    { loadChildren: '../pages/my-emoji-picker/my-emoji-picker.module#MyEmojiPickerPageModule', name: 'MyEmojiPickerPage', segment: 'my-emoji-picker', priority: 'low', defaultHistory: [] },
+                    { loadChildren: '../pages/places/places.module#PlacesPageModule', name: 'PlacesPage', segment: 'places', priority: 'low', defaultHistory: [] },
+                    { loadChildren: '../pages/publication-actions-menu/publication-actions-menu.module#PublicationActionsMenuPageModule', name: 'PublicationActionsMenuPage', segment: 'publication-actions-menu', priority: 'low', defaultHistory: [] },
+                    { loadChildren: '../pages/publication-order-by/publication-order-by.module#PublicationOrderByPageModule', name: 'PublicationOrderByPage', segment: 'publication-order-by', priority: 'low', defaultHistory: [] },
+                    { loadChildren: '../pages/publication-user-filter/publication-user-filter.module#PublicationUserFilterPageModule', name: 'PublicationUserFilterPage', segment: 'publication-user-filter', priority: 'low', defaultHistory: [] },
+                    { loadChildren: '../pages/publication-writing/publication-writing.module#PublicationWritingPageModule', name: 'PublicationWritingPage', segment: 'publication-writing', priority: 'low', defaultHistory: [] }
+                ]
+            }),
+            __WEBPACK_IMPORTED_MODULE_13__angular_http__["c" /* HttpModule */],
+            __WEBPACK_IMPORTED_MODULE_17__ngrx_store__["i" /* StoreModule */].forRoot({
+                publications: __WEBPACK_IMPORTED_MODULE_18__providers_reducers_publication_reducer__["h" /* publicationReducer */]
+            }),
+            __WEBPACK_IMPORTED_MODULE_19__ngrx_effects__["c" /* EffectsModule */].forRoot([
+                __WEBPACK_IMPORTED_MODULE_20__providers_storage_publication_effects__["a" /* PublicationEffects */]
+            ]),
+            __WEBPACK_IMPORTED_MODULE_21__ngrx_store_devtools__["a" /* StoreDevtoolsModule */].instrument({
+                maxAge: 10 // number of states to retain
+            }),
+            __WEBPACK_IMPORTED_MODULE_35__ionic_storage__["a" /* IonicStorageModule */].forRoot(),
+            __WEBPACK_IMPORTED_MODULE_36__ionic_tools_emoji_picker__["a" /* EmojiPickerModule */].forRoot()
+        ],
+        bootstrap: [__WEBPACK_IMPORTED_MODULE_2_ionic_angular__["d" /* IonicApp */]],
+        entryComponents: [
+            __WEBPACK_IMPORTED_MODULE_3__app_component__["a" /* MyApp */],
+            __WEBPACK_IMPORTED_MODULE_5__pages_places_places__["a" /* PlacesPage */],
+            __WEBPACK_IMPORTED_MODULE_6__pages_activities_activities__["a" /* ActivitiesPage */],
+            __WEBPACK_IMPORTED_MODULE_7__pages_account_account__["a" /* AccountPage */],
+            __WEBPACK_IMPORTED_MODULE_4__pages_home_home__["a" /* HomePage */],
+            __WEBPACK_IMPORTED_MODULE_8__pages_tabs_tabs__["a" /* TabsPage */],
+            __WEBPACK_IMPORTED_MODULE_29__pages_publication_order_by_publication_order_by__["a" /* PublicationOrderByPage */],
+            __WEBPACK_IMPORTED_MODULE_30__pages_publication_user_filter_publication_user_filter__["a" /* PublicationUserFilterPage */],
+            __WEBPACK_IMPORTED_MODULE_39__pages_experience_writing_experience_writing__["a" /* ExperienceWritingPage */],
+            __WEBPACK_IMPORTED_MODULE_40__pages_comment_writing_comment_writing__["a" /* CommentWritingPage */],
+            __WEBPACK_IMPORTED_MODULE_44__pages_publication_actions_menu_publication_actions_menu__["a" /* PublicationActionsMenuPage */],
+            __WEBPACK_IMPORTED_MODULE_45__pages_my_emoji_picker_my_emoji_picker__["a" /* MyEmojiPickerPage */],
+            __WEBPACK_IMPORTED_MODULE_46__pages_publication_writing_publication_writing__["a" /* PublicationWritingPage */]
+        ],
+        providers: [
+            __WEBPACK_IMPORTED_MODULE_10__ionic_native_status_bar__["a" /* StatusBar */],
+            __WEBPACK_IMPORTED_MODULE_11__ionic_native_splash_screen__["a" /* SplashScreen */],
+            { provide: __WEBPACK_IMPORTED_MODULE_0__angular_core__["v" /* ErrorHandler */], useClass: __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["e" /* IonicErrorHandler */] },
+            __WEBPACK_IMPORTED_MODULE_12__providers_storage_storage__["a" /* StorageProvider */],
+            __WEBPACK_IMPORTED_MODULE_27__providers_commons_commons__["a" /* CommonsProvider */],
+            __WEBPACK_IMPORTED_MODULE_37__providers_imgcache_imgcache__["a" /* ImgcacheService */]
+        ]
+    })
+], AppModule);
+
+//# sourceMappingURL=app.module.js.map
+
+/***/ }),
+
+/***/ 343:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return MyApp; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(11);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__ionic_native_status_bar__ = __webpack_require__(253);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ionic_native_splash_screen__ = __webpack_require__(258);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__pages_tabs_tabs__ = __webpack_require__(259);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__ionic_native_status_bar__ = __webpack_require__(254);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ionic_native_splash_screen__ = __webpack_require__(259);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__pages_tabs_tabs__ = __webpack_require__(260);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__providers_imgcache_imgcache__ = __webpack_require__(83);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -1147,13 +1315,13 @@ MyApp = __decorate([
 
 /***/ }),
 
-/***/ 350:
+/***/ 351:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return PublicationComponent; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__providers_commons_commons__ = __webpack_require__(22);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__providers_commons_commons__ = __webpack_require__(21);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1191,7 +1359,7 @@ __decorate([
 ], PublicationComponent.prototype, "data", void 0);
 PublicationComponent = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
-        selector: 'publication',template:/*ion-inline-start:"C:\Users\Matias\WebstormProjects\turinsta\src\components\publication\publication.html"*/'<!-- Generated template for the PublicationComponent component -->\n<ion-card text-wrap>\n  <ion-card-header class="publication-card-header">\n    <publication-header [user]=data.user [publication]=data.publication></publication-header>\n  </ion-card-header>\n  <ion-card-content>\n    <publication-body [user]=data.user [publication]=data.publication></publication-body>\n    <publication-footer [publication]=data.publication [comments]=data.comments [experiences]=data.experiences [userId]=data.user._id [scoreGivenFromUser]="scoreGivenFromUser"></publication-footer>\n  </ion-card-content>\n</ion-card>\n'/*ion-inline-end:"C:\Users\Matias\WebstormProjects\turinsta\src\components\publication\publication.html"*/
+        selector: 'publication',template:/*ion-inline-start:"C:\Users\Matias\WebstormProjects\turinsta\src\components\publication\publication.html"*/'<!-- Generated template for the PublicationComponent component -->\n<ion-card text-wrap>\n  <ion-card-header class="publication-card-header">\n    <publication-header [user]=data.user [publication]=data.publication></publication-header>\n  </ion-card-header>\n  <ion-card-content>\n    <publication-body [user]=data.user [publication]=data.publication></publication-body>\n    <publication-footer [publication]=data.publication [comments]=data.comments [experiences]=data.experiences [user]=data.user [scoreGivenFromUser]="scoreGivenFromUser"></publication-footer>\n  </ion-card-content>\n</ion-card>\n'/*ion-inline-end:"C:\Users\Matias\WebstormProjects\turinsta\src\components\publication\publication.html"*/
     }),
     __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__providers_commons_commons__["a" /* CommonsProvider */]])
 ], PublicationComponent);
@@ -1200,15 +1368,15 @@ PublicationComponent = __decorate([
 
 /***/ }),
 
-/***/ 351:
+/***/ 352:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ExperienceComponent; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__providers_storage_storage__ = __webpack_require__(30);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__providers_storage_storage__ = __webpack_require__(27);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_ionic_angular__ = __webpack_require__(11);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_commons_commons__ = __webpack_require__(22);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_commons_commons__ = __webpack_require__(21);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__pages_experience_writing_experience_writing__ = __webpack_require__(90);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -1295,14 +1463,14 @@ ExperienceComponent = __decorate([
 
 /***/ }),
 
-/***/ 352:
+/***/ 353:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return CommentComponent; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__providers_storage_storage__ = __webpack_require__(30);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_commons_commons__ = __webpack_require__(22);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__providers_storage_storage__ = __webpack_require__(27);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_commons_commons__ = __webpack_require__(21);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_ionic_angular__ = __webpack_require__(11);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__pages_comment_writing_comment_writing__ = __webpack_require__(89);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -1402,15 +1570,15 @@ CommentComponent = __decorate([
 
 /***/ }),
 
-/***/ 353:
+/***/ 354:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return CommentListComponent; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__providers_storage_storage__ = __webpack_require__(30);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__providers_storage_storage__ = __webpack_require__(27);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__ngrx_store__ = __webpack_require__(36);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_commons_commons__ = __webpack_require__(22);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_commons_commons__ = __webpack_require__(21);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__pages_comment_writing_comment_writing__ = __webpack_require__(89);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_ionic_angular__ = __webpack_require__(11);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -1478,19 +1646,19 @@ CommentListComponent = __decorate([
 
 /***/ }),
 
-/***/ 357:
+/***/ 358:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return PublicationEffects; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__ngrx_effects__ = __webpack_require__(261);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs__ = __webpack_require__(358);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__ngrx_effects__ = __webpack_require__(262);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs__ = __webpack_require__(359);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_rxjs__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__reducers_publication_reducer__ = __webpack_require__(50);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__ngrx_store__ = __webpack_require__(36);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__storage__ = __webpack_require__(30);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__commons_commons__ = __webpack_require__(22);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__storage__ = __webpack_require__(27);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__commons_commons__ = __webpack_require__(21);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1621,7 +1789,7 @@ PublicationEffects = __decorate([
 /* harmony export (immutable) */ __webpack_exports__["e"] = cleanFilters;
 /* harmony export (immutable) */ __webpack_exports__["j"] = setSort;
 /* harmony export (immutable) */ __webpack_exports__["h"] = publicationReducer;
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_tassign__ = __webpack_require__(324);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_tassign__ = __webpack_require__(325);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_tassign___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_tassign__);
 
 var GET_PUBLICATIONS = "GET_PUBLICATIONS";
@@ -1796,7 +1964,7 @@ function publicationReducer(state, _a) {
 
 /***/ }),
 
-/***/ 606:
+/***/ 607:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1841,7 +2009,7 @@ PublicationListComponent = __decorate([
 
 /***/ }),
 
-/***/ 607:
+/***/ 608:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1903,7 +2071,7 @@ PublicationHeaderComponent = __decorate([
 
 /***/ }),
 
-/***/ 608:
+/***/ 609:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1952,15 +2120,16 @@ PublicationBodyComponent = __decorate([
 
 /***/ }),
 
-/***/ 609:
+/***/ 610:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return PublicationFooterComponent; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(11);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_commons_commons__ = __webpack_require__(22);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_storage_storage__ = __webpack_require__(30);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_commons_commons__ = __webpack_require__(21);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_storage_storage__ = __webpack_require__(27);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__pages_publication_writing_publication_writing__ = __webpack_require__(160);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1974,6 +2143,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
+
 /**
  * Generated class for the PublicationFooterComponent component.
  *
@@ -1981,14 +2151,15 @@ var __metadata = (this && this.__metadata) || function (k, v) {
  * Components.
  */
 var PublicationFooterComponent = (function () {
-    function PublicationFooterComponent(events, storageService, commons) {
+    function PublicationFooterComponent(events, storageService, commons, modalCtrl) {
         this.events = events;
         this.storageService = storageService;
         this.commons = commons;
+        this.modalCtrl = modalCtrl;
         this.publication = null;
         this.comments = null;
         this.experiences = null;
-        this.userId = null;
+        this.user = null;
         this.scoreGivenFromUser = null;
         this.currentUserScore = null;
         this.initialValue = null;
@@ -2045,8 +2216,9 @@ var PublicationFooterComponent = (function () {
     PublicationFooterComponent.prototype.getAntiquity = function (date) {
         return this.commons.getAntiquity(date);
     };
-    PublicationFooterComponent.prototype.openPublication = function () {
-        alert("Abriendo publicación...");
+    PublicationFooterComponent.prototype.presentPublicationWritingModal = function () {
+        var publicationWritingModal = this.modalCtrl.create(__WEBPACK_IMPORTED_MODULE_4__pages_publication_writing_publication_writing__["a" /* PublicationWritingPage */], { user: this.user, publication: this.publication });
+        publicationWritingModal.present();
     };
     return PublicationFooterComponent;
 }());
@@ -2065,29 +2237,29 @@ __decorate([
 __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["E" /* Input */])(),
     __metadata("design:type", Object)
-], PublicationFooterComponent.prototype, "userId", void 0);
+], PublicationFooterComponent.prototype, "user", void 0);
 __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["E" /* Input */])(),
     __metadata("design:type", Number)
 ], PublicationFooterComponent.prototype, "scoreGivenFromUser", void 0);
 PublicationFooterComponent = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
-        selector: 'publication-footer',template:/*ion-inline-start:"C:\Users\Matias\WebstormProjects\turinsta\src\components\publication-footer\publication-footer.html"*/'<!-- Generated template for the PublicationFooterComponent component -->\n<ion-list style="position: relative">\n  <score-input *ngIf="scoreInputShowed" [score]="currentUserScore"></score-input>\n  <ion-item class="publication-buttons-item">\n    <button item-start class="start-button" (click)="toggleSection(0)" ion-button clear>\n      <ion-icon class="publication-icon" name="ios-paper" color="secondary" isActive="{{sections[0].show}}">\n        <ion-badge *ngIf="experiences.length >0" class="publication-badge">{{experiences.length}}</ion-badge>\n      </ion-icon>\n    </button>\n    <button item-left class="publication-button" (click)="toggleSection(1)" ion-button clear>\n      <ion-icon class="publication-icon" name="ios-text" color="secondary" isActive="{{sections[1].show}}">\n        <ion-badge *ngIf="comments.length >0" class="publication-badge">{{comments.length}}</ion-badge>\n      </ion-icon>\n    </button>\n    <button item-left class="publication-button" (click)="toogleScoreInput()" ion-button clear>\n      <ion-icon class="publication-icon" name="ios-star" color="secondary" isActive="{{scoreInputShowed}}"></ion-icon>\n    </button>\n    <ion-note item-right>{{getAntiquity(publication.timestamps.created)}}</ion-note>\n    <button item-end class="end-button" (click)="openPublication()" ion-button clear>\n      <ion-icon class="publication-icon" name="share-alt" color="secondary"></ion-icon>\n    </button>\n  </ion-item>\n</ion-list>\n<experience-list *ngIf="sections[0].show" [experiences]=experiences [publicationId]=publication._id [publicationOwner]=userId></experience-list>\n<comment-list *ngIf="sections[1].show" [comments]=comments [publicationId]=publication._id [publicationOwner]=userId></comment-list>\n'/*ion-inline-end:"C:\Users\Matias\WebstormProjects\turinsta\src\components\publication-footer\publication-footer.html"*/
+        selector: 'publication-footer',template:/*ion-inline-start:"C:\Users\Matias\WebstormProjects\turinsta\src\components\publication-footer\publication-footer.html"*/'<!-- Generated template for the PublicationFooterComponent component -->\n<ion-list style="position: relative">\n  <score-input *ngIf="scoreInputShowed" [score]="currentUserScore"></score-input>\n  <ion-item class="publication-buttons-item">\n    <button item-start class="start-button" (click)="toggleSection(0)" ion-button clear>\n      <ion-icon class="publication-icon" name="ios-paper" color="secondary" isActive="{{sections[0].show}}">\n        <ion-badge *ngIf="experiences.length >0" class="publication-badge">{{experiences.length}}</ion-badge>\n      </ion-icon>\n    </button>\n    <button item-left class="publication-button" (click)="toggleSection(1)" ion-button clear>\n      <ion-icon class="publication-icon" name="ios-text" color="secondary" isActive="{{sections[1].show}}">\n        <ion-badge *ngIf="comments.length >0" class="publication-badge">{{comments.length}}</ion-badge>\n      </ion-icon>\n    </button>\n    <button item-left class="publication-button" (click)="toogleScoreInput()" ion-button clear>\n      <ion-icon class="publication-icon" name="ios-star" color="secondary" isActive="{{scoreInputShowed}}"></ion-icon>\n    </button>\n    <ion-note item-right>{{getAntiquity(publication.timestamps.created)}}</ion-note>\n    <button item-end class="end-button" (click)="presentPublicationWritingModal()" ion-button clear>\n      <ion-icon class="publication-icon" name="share-alt" color="secondary"></ion-icon>\n    </button>\n  </ion-item>\n</ion-list>\n<experience-list *ngIf="sections[0].show" [experiences]=experiences [publicationId]=publication._id [publicationOwner]=user._id></experience-list>\n<comment-list *ngIf="sections[1].show" [comments]=comments [publicationId]=publication._id [publicationOwner]=user._id></comment-list>\n'/*ion-inline-end:"C:\Users\Matias\WebstormProjects\turinsta\src\components\publication-footer\publication-footer.html"*/
     }),
-    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["c" /* Events */], __WEBPACK_IMPORTED_MODULE_3__providers_storage_storage__["a" /* StorageProvider */], __WEBPACK_IMPORTED_MODULE_2__providers_commons_commons__["a" /* CommonsProvider */]])
+    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["c" /* Events */], __WEBPACK_IMPORTED_MODULE_3__providers_storage_storage__["a" /* StorageProvider */], __WEBPACK_IMPORTED_MODULE_2__providers_commons_commons__["a" /* CommonsProvider */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* ModalController */]])
 ], PublicationFooterComponent);
 
 //# sourceMappingURL=publication-footer.js.map
 
 /***/ }),
 
-/***/ 610:
+/***/ 611:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ExperienceListComponent; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__providers_commons_commons__ = __webpack_require__(22);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__providers_commons_commons__ = __webpack_require__(21);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_ionic_angular__ = __webpack_require__(11);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__pages_experience_writing_experience_writing__ = __webpack_require__(90);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -2150,7 +2322,7 @@ ExperienceListComponent = __decorate([
 
 /***/ }),
 
-/***/ 611:
+/***/ 612:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -2194,7 +2366,7 @@ ContainsFilterPipe = __decorate([
 
 /***/ }),
 
-/***/ 612:
+/***/ 613:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -2234,7 +2406,7 @@ FiltersBarComponent = __decorate([
 
 /***/ }),
 
-/***/ 613:
+/***/ 614:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -2313,7 +2485,7 @@ PlaceFilterComponent = __decorate([
 
 /***/ }),
 
-/***/ 614:
+/***/ 615:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -2363,7 +2535,7 @@ UserFilterComponent = __decorate([
 
 /***/ }),
 
-/***/ 615:
+/***/ 616:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -2413,7 +2585,7 @@ OrderingCriterionComponent = __decorate([
 
 /***/ }),
 
-/***/ 652:
+/***/ 653:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -2475,7 +2647,7 @@ PublicationImageComponent = __decorate([
 
 /***/ }),
 
-/***/ 653:
+/***/ 654:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -2531,7 +2703,7 @@ MyEmojiPickerComponent = __decorate([
 
 /***/ }),
 
-/***/ 654:
+/***/ 655:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -2619,7 +2791,7 @@ ScoreInputComponent = __decorate([
 
 /***/ }),
 
-/***/ 655:
+/***/ 656:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -2627,7 +2799,7 @@ ScoreInputComponent = __decorate([
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(11);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__pages_publication_actions_menu_publication_actions_menu__ = __webpack_require__(157);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_commons_commons__ = __webpack_require__(22);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_commons_commons__ = __webpack_require__(21);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -2694,7 +2866,7 @@ PublicationActionsComponent = __decorate([
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ImgcacheService; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(11);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_imgcache_js__ = __webpack_require__(349);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_imgcache_js__ = __webpack_require__(350);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_imgcache_js___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_imgcache_js__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__angular_platform_browser__ = __webpack_require__(38);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -2809,8 +2981,8 @@ ImgcacheService = __decorate([
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return CommentWritingPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(11);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_storage_storage__ = __webpack_require__(30);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_commons_commons__ = __webpack_require__(22);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_storage_storage__ = __webpack_require__(27);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_commons_commons__ = __webpack_require__(21);
 var __assign = (this && this.__assign) || Object.assign || function(t) {
     for (var s, i = 1, n = arguments.length; i < n; i++) {
         s = arguments[i];
@@ -2914,8 +3086,8 @@ CommentWritingPage = __decorate([
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ExperienceWritingPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(11);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_storage_storage__ = __webpack_require__(30);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_commons_commons__ = __webpack_require__(22);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_storage_storage__ = __webpack_require__(27);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_commons_commons__ = __webpack_require__(21);
 var __assign = (this && this.__assign) || Object.assign || function(t) {
     for (var s, i = 1, n = arguments.length; i < n; i++) {
         s = arguments[i];
@@ -3012,5 +3184,5 @@ ExperienceWritingPage = __decorate([
 
 /***/ })
 
-},[293]);
+},[294]);
 //# sourceMappingURL=main.js.map

@@ -86,4 +86,16 @@ export class StorageProvider {
   removeFollower(followed,follower){
     return this.http.delete(StorageProvider.baseUrl + 'users/followers/' + followed + '/' + follower,{headers: StorageProvider.headers});
   }
+
+  createPublication(publication){
+    return this.http.post(StorageProvider.baseUrl + 'publications/',publication,{headers: StorageProvider.headers});
+  }
+
+  updatePublication(publication){
+    return this.http.put(StorageProvider.baseUrl + 'publications/',publication,{headers: StorageProvider.headers});
+  }
+
+  deletePublication(publication){
+    return this.http.delete(StorageProvider.baseUrl + 'publications/' + publication,{headers: StorageProvider.headers});
+  }
 }

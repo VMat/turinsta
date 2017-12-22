@@ -1,7 +1,8 @@
 import {Component, Input} from '@angular/core';
-import {Events} from "ionic-angular";
+import {Events, ModalController} from "ionic-angular";
 import {CommonsProvider} from "../../providers/commons/commons";
 import {StorageProvider} from "../../providers/storage/storage";
+import {PublicationWritingPage} from "../../pages/publication-writing/publication-writing";
 
 /**
  * Generated class for the PublicationFooterComponent component.
@@ -18,7 +19,7 @@ export class PublicationFooterComponent{
   @Input() publication: any = null;
   @Input() comments: any = null;
   @Input() experiences: any = null;
-  @Input() userId: any = null;
+  @Input() user: any = null;
   @Input() scoreGivenFromUser: number = null;
 
   currentUserScore: any = null;
@@ -26,7 +27,7 @@ export class PublicationFooterComponent{
   sections: any = [{name: "Experiences", show: false}, {name: "Comments", show: false}];
   scoreInputShowed: boolean = false;
 
-  constructor(public events: Events, private storageService: StorageProvider, private commons: CommonsProvider){
+  constructor(public events: Events, private storageService: StorageProvider, private commons: CommonsProvider, private modalCtrl: ModalController){
     console.log('Hello PublicationFooterComponent Component');
   }
 
@@ -82,8 +83,8 @@ export class PublicationFooterComponent{
     return this.commons.getAntiquity(date);
   }
 
-  openPublication(){
-    alert("Abriendo publicación...");
+  presentPublicationWritingModal(){
+    let publicationWritingModal = this.modalCtrl.create(PublicationWritingPage, {user: this.user, publication: this.publication});
+    publicationWritingModal.present();
   }
-
 }
