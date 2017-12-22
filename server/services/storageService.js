@@ -22,6 +22,10 @@ const storageService = (function(){
       return db.createPublication(publication);
     },
 
+    patchPublication: (fields)=>{
+      return db.patchPublication(fields);
+    },
+    
     updatePublication: (publication)=>{
       return db.updatePublication(publication);
     },
