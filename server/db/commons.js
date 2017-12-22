@@ -24,6 +24,10 @@ let Commons = (function(){
       return newPublication.save();
     },
 
+    patch: (Collection,id,fields)=>{
+      return Collection.findByIdAndUpdate(id,{$set: fields});
+    },
+    
     update: (Collection,doc)=>{
       return Collection.findByIdAndUpdate(doc._id, doc, {upsert:false});
     },
