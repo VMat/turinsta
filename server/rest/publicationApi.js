@@ -20,6 +20,12 @@ router.post('/',(req, res)=>{
     .catch(error=>{res.status(500).send(error)})
 });
 
+router.patch('/',(req, res)=>{
+  publicationService.patchPublication(req.body)
+    .then(publication=>{res.status(200).json(publication)})
+    .catch(error=>{res.status(500).send(error)})
+});
+
 router.put('/',(req, res)=>{
   publicationService.updatePublication(req.body)
     .then(publication=>{res.status(200).json(publication)})
