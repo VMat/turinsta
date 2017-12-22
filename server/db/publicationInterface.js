@@ -103,6 +103,10 @@ const PublicationInterface = (function(){
       return Commons.insert(new Publications(publication));
     },
 
+    patch: (id,fields)=>{
+      return Commons.patch(Publications, id, fields)
+    },
+    
     update: (publication)=>{
       return Commons.update(Publications,publication);
     },
