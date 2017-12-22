@@ -29,6 +29,14 @@ const publicationService = (function(){
           catch(error=>reject(error))
       })
     },
+    
+    patchPublication: (fields)=>{
+      return new Promise((resolve, reject)=>{
+        storageService.patchPublication(fields).
+          then(patchedPublication=>resolve(patchedPublication)).
+          catch(error=>reject(error))
+      })
+    },
 
     updatePublication: (publication)=>{
       return new Promise((resolve, reject)=>{
