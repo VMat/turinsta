@@ -33,8 +33,8 @@ let db = (function(){
       return publicationInterface.insert(publication);
     },
 
-    patchPublication: (fields)=>{
-      return publicationInterface.patch(fields)
+    patchPublication: (id,fields)=>{
+      return publicationInterface.patch(id,fields)
     },
     
     updatePublication: (publication)=>{
