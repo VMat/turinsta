@@ -30,9 +30,9 @@ const publicationService = (function(){
       })
     },
     
-    patchPublication: (fields)=>{
+    patchPublication: (id,fields)=>{
       return new Promise((resolve, reject)=>{
-        storageService.patchPublication(fields).
+        storageService.patchPublication(id,fields).
           then(patchedPublication=>resolve(patchedPublication)).
           catch(error=>reject(error))
       })
