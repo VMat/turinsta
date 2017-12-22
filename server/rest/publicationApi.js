@@ -20,8 +20,8 @@ router.post('/',(req, res)=>{
     .catch(error=>{res.status(500).send(error)})
 });
 
-router.patch('/',(req, res)=>{
-  publicationService.patchPublication(req.body)
+router.patch('/:id',(req, res)=>{
+  publicationService.patchPublication(req.params.id,req.body)
     .then(publication=>{res.status(200).json(publication)})
     .catch(error=>{res.status(500).send(error)})
 });
