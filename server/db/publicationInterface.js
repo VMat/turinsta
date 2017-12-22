@@ -104,7 +104,7 @@ const PublicationInterface = (function(){
     },
 
     patch: (id,fields)=>{
-      return Commons.patch(Publications, id, fields)
+      return Commons.patch(Publications,id,fields)
     },
     
     update: (publication)=>{
