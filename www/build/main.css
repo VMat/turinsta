@@ -33407,6 +33407,12 @@ page-publication-user-filter * {
   font-size: x-small;
 }
 
+page-publication-writing .image-action-buttons {
+  position: absolute;
+  right: 0;
+  top: 10px;
+}
+
 .tabs-header .toolbar-title-md {
   color: #ffffff;
   font-weight: bolder;

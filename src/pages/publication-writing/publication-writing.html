@@ -12,18 +12,12 @@
       </button>
       <ion-title *ngIf="!publication._id">Nueva publicación</ion-title>
       <ion-title *ngIf="publication._id">Ver publicación</ion-title>
-      <div *ngIf="checkEditPermission() && !editionMode" item-end>
-        <button ion-button clear (click)="toogleEditMode(true)">
-          <ion-icon name="create" isActive="{{editionMode}}" color="primary"></ion-icon>
-        </button>
+      <div *ngIf="checkEditPermission()" item-end>
         <button ion-button clear (click)="confirmDelete()">
           <ion-icon name="trash" color="danger"></ion-icon>
         </button>
       </div>
-      <div *ngIf="checkEditPermission() && editionMode" item-end>
-        <button ion-button clear (click)="toogleEditMode(false)">
-          <ion-icon name="undo" isActive="{{editionMode}}"></ion-icon>
-        </button>
+      <div *ngIf="publication._id == undefined" item-end>
         <button ion-button clear (click)="confirmSave()">
           <ion-icon name="checkmark" color="success"></ion-icon>
         </button>
@@ -32,11 +26,42 @@
   </ion-navbar>
 </ion-header>
 <ion-content padding>
-  <publication-header [user]=user [publication]=publication></publication-header>
+  <publication-header [user]=user [publication]=publication [edit]="checkEditPermission()"></publication-header>
   <ion-slides>
     <ion-slide style="align-items: start" *ngFor="let image of publication.images">
+      <div class="image-action-buttons" *ngIf="checkEditPermission()">
+        <button ion-button icon-only clear (click)="addImage()">
+          <ion-icon name="add" color="success"></ion-icon>
+        </button>
+        <button ion-button icon-only clear (click)="removeImage()">
+          <ion-icon name="remove" color="danger"></ion-icon>
+        </button>
+      </div>
       <publication-image [id]=image._id [url]=image.url></publication-image>
     </ion-slide>
   </ion-slides>
-  <p *ngIf="publication.description" item-start class="publication-description"><b>{{user.username}}</b>&nbsp;{{publication.description}}</p>
+  <ion-item>
+    <p *ngIf="publication.description" item-start class="publication-description"><b>{{user.username}}</b>&nbsp;{{publication.description}}</p>
+    <div *ngIf="checkEditPermission() && publication.description" item-end>
+      <button ion-button icon-only clear (click)="presentDescriptionUpdating()">
+        <ion-icon name="create"></ion-icon>
+      </button>
+      <button ion-button icon-only clear (click)="deleteDescription()">
+        <ion-icon name="trash" color="danger"></ion-icon>
+      </button>
+    </div>
+    <div *ngIf="checkEditPermission() && !publication.description">
+      <button ion-button icon-only clear (click)="addDescription()">
+        <ion-icon name="add" color="success"></ion-icon>
+      </button>
+    </div>
+  </ion-item>
+  <ion-item>
+    <p>Experiencias</p>
+    <experience-list [experiences]=experiences [publicationOwner]=user._id [publicationId]=publication._id></experience-list>
+  </ion-item>
+  <ion-item>
+    <p>Comentarios</p>
+    <comment-list *ngIf="publication._id != undefined" [comments]=comments [publicationId]=publication._id [publicationOwner]=user._id></comment-list>
+  </ion-item>
 </ion-content>

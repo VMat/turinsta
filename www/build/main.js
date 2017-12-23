@@ -517,22 +517,22 @@ var PublicationWritingPage = (function () {
         this.commons = commons;
         this.publication = {};
         this.user = {};
+        this.experiences = [];
+        this.comments = [];
         this.loggedUser = null;
-        this.editionMode = false;
     }
     PublicationWritingPage.prototype.ionViewWillLoad = function () {
         if (Boolean(this.navParams.get("publication"))) {
             this.publication = __assign({}, this.navParams.get("publication"));
             this.user = __assign({}, this.navParams.get("user"));
+            this.experiences = this.navParams.get("experiences").slice();
+            this.comments = this.navParams.get("comments").slice();
             sessionStorage.setItem("this.user", JSON.stringify(this.user));
         }
         this.loggedUser = this.commons.getUserId();
     };
     PublicationWritingPage.prototype.ionViewDidLoad = function () {
         console.log('ionViewDidLoad PublicationWritingPage');
-    };
-    PublicationWritingPage.prototype.toogleEditMode = function (value) {
-        this.editionMode = value;
     };
     PublicationWritingPage.prototype.checkEditPermission = function () {
         if (Boolean(this.publication._id)) {
@@ -608,15 +608,31 @@ var PublicationWritingPage = (function () {
             _this.viewCtrl.dismiss();
         });
     };
+    PublicationWritingPage.prototype.addImage = function () {
+        alert("add image");
+    };
+    PublicationWritingPage.prototype.removeImage = function () {
+        alert("remove image");
+    };
+    PublicationWritingPage.prototype.presentDescriptionUpdating = function () {
+        alert("update description");
+    };
+    PublicationWritingPage.prototype.deleteDescription = function () {
+        alert("delete description");
+    };
+    PublicationWritingPage.prototype.addDescription = function () {
+        alert("add description");
+    };
     return PublicationWritingPage;
 }());
 PublicationWritingPage = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
-        selector: 'page-publication-writing',template:/*ion-inline-start:"C:\Users\Matias\WebstormProjects\turinsta\src\pages\publication-writing\publication-writing.html"*/'<!--\n  Generated template for the PublicationWritingPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-header>\n  <ion-navbar>\n    <ion-item no-lines style="text-align: center">\n      <button item-start ion-button clear (click)="dismissPublication()">\n        <ion-icon name="close"></ion-icon>\n      </button>\n      <ion-title *ngIf="!publication._id">Nueva publicación</ion-title>\n      <ion-title *ngIf="publication._id">Ver publicación</ion-title>\n      <div *ngIf="checkEditPermission() && !editionMode" item-end>\n        <button ion-button clear (click)="toogleEditMode(true)">\n          <ion-icon name="create" isActive="{{editionMode}}" color="primary"></ion-icon>\n        </button>\n        <button ion-button clear (click)="confirmDelete()">\n          <ion-icon name="trash" color="danger"></ion-icon>\n        </button>\n      </div>\n      <div *ngIf="checkEditPermission() && editionMode" item-end>\n        <button ion-button clear (click)="toogleEditMode(false)">\n          <ion-icon name="undo" isActive="{{editionMode}}"></ion-icon>\n        </button>\n        <button ion-button clear (click)="confirmSave()">\n          <ion-icon name="checkmark" color="success"></ion-icon>\n        </button>\n      </div>\n    </ion-item>\n  </ion-navbar>\n</ion-header>\n<ion-content padding>\n  <publication-header [user]=user [publication]=publication></publication-header>\n  <ion-slides>\n    <ion-slide style="align-items: start" *ngFor="let image of publication.images">\n      <publication-image [id]=image._id [url]=image.url></publication-image>\n    </ion-slide>\n  </ion-slides>\n  <p *ngIf="publication.description" item-start class="publication-description"><b>{{user.username}}</b>&nbsp;{{publication.description}}</p>\n</ion-content>\n'/*ion-inline-end:"C:\Users\Matias\WebstormProjects\turinsta\src\pages\publication-writing\publication-writing.html"*/,
+        selector: 'page-publication-writing',template:/*ion-inline-start:"C:\Users\Matias\WebstormProjects\turinsta\src\pages\publication-writing\publication-writing.html"*/'<!--\n  Generated template for the PublicationWritingPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-header>\n  <ion-navbar>\n    <ion-item no-lines style="text-align: center">\n      <button item-start ion-button clear (click)="dismissPublication()">\n        <ion-icon name="close"></ion-icon>\n      </button>\n      <ion-title *ngIf="!publication._id">Nueva publicación</ion-title>\n      <ion-title *ngIf="publication._id">Ver publicación</ion-title>\n      <div *ngIf="checkEditPermission()" item-end>\n        <button ion-button clear (click)="confirmDelete()">\n          <ion-icon name="trash" color="danger"></ion-icon>\n        </button>\n      </div>\n      <div *ngIf="publication._id == undefined" item-end>\n        <button ion-button clear (click)="confirmSave()">\n          <ion-icon name="checkmark" color="success"></ion-icon>\n        </button>\n      </div>\n    </ion-item>\n  </ion-navbar>\n</ion-header>\n<ion-content padding>\n  <publication-header [user]=user [publication]=publication [edit]="checkEditPermission()"></publication-header>\n  <ion-slides>\n    <ion-slide style="align-items: start" *ngFor="let image of publication.images">\n      <div class="image-action-buttons" *ngIf="checkEditPermission()">\n        <button ion-button icon-only clear (click)="addImage()">\n          <ion-icon name="add" color="success"></ion-icon>\n        </button>\n        <button ion-button icon-only clear (click)="removeImage()">\n          <ion-icon name="remove" color="danger"></ion-icon>\n        </button>\n      </div>\n      <publication-image [id]=image._id [url]=image.url></publication-image>\n    </ion-slide>\n  </ion-slides>\n  <ion-item>\n    <p *ngIf="publication.description" item-start class="publication-description"><b>{{user.username}}</b>&nbsp;{{publication.description}}</p>\n    <div *ngIf="checkEditPermission() && publication.description" item-end>\n      <button ion-button icon-only clear (click)="presentDescriptionUpdating()">\n        <ion-icon name="create"></ion-icon>\n      </button>\n      <button ion-button icon-only clear (click)="deleteDescription()">\n        <ion-icon name="trash" color="danger"></ion-icon>\n      </button>\n    </div>\n    <div *ngIf="checkEditPermission() && !publication.description">\n      <button ion-button icon-only clear (click)="addDescription()">\n        <ion-icon name="add" color="success"></ion-icon>\n      </button>\n    </div>\n  </ion-item>\n  <ion-item>\n    <p>Experiencias</p>\n    <experience-list [experiences]=experiences [publicationOwner]=user._id [publicationId]=publication._id></experience-list>\n  </ion-item>\n  <ion-item>\n    <p>Comentarios</p>\n    <comment-list *ngIf="publication._id != undefined" [comments]=comments [publicationId]=publication._id [publicationOwner]=user._id></comment-list>\n  </ion-item>\n</ion-content>\n'/*ion-inline-end:"C:\Users\Matias\WebstormProjects\turinsta\src\pages\publication-writing\publication-writing.html"*/,
     }),
-    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* NavParams */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["o" /* ViewController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["b" /* AlertController */], __WEBPACK_IMPORTED_MODULE_2__providers_storage_storage__["a" /* StorageProvider */], __WEBPACK_IMPORTED_MODULE_3__providers_commons_commons__["a" /* CommonsProvider */]])
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* NavController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* NavController */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* NavParams */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* NavParams */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["o" /* ViewController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["o" /* ViewController */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["b" /* AlertController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["b" /* AlertController */]) === "function" && _d || Object, typeof (_e = typeof __WEBPACK_IMPORTED_MODULE_2__providers_storage_storage__["a" /* StorageProvider */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__providers_storage_storage__["a" /* StorageProvider */]) === "function" && _e || Object, typeof (_f = typeof __WEBPACK_IMPORTED_MODULE_3__providers_commons_commons__["a" /* CommonsProvider */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__providers_commons_commons__["a" /* CommonsProvider */]) === "function" && _f || Object])
 ], PublicationWritingPage);
 
+var _a, _b, _c, _d, _e, _f;
 //# sourceMappingURL=publication-writing.js.map
 
 /***/ }),
@@ -2038,6 +2054,7 @@ var PublicationHeaderComponent = (function () {
         this.imgCacheService = imgCacheService;
         this.user = null;
         this.publication = null;
+        this.edit = false;
         this.cachedAvatar = null;
         console.log('Hello PublicationHeaderComponent Component');
     }
@@ -2050,6 +2067,9 @@ var PublicationHeaderComponent = (function () {
     PublicationHeaderComponent.prototype.getCachedAvatar = function () {
         return this.user.avatar = this.cachedAvatar;
     };
+    PublicationHeaderComponent.prototype.presentPlaceUpdating = function () {
+        alert("place updating...");
+    };
     return PublicationHeaderComponent;
 }());
 __decorate([
@@ -2060,13 +2080,18 @@ __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["E" /* Input */])(),
     __metadata("design:type", Object)
 ], PublicationHeaderComponent.prototype, "publication", void 0);
+__decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["E" /* Input */])(),
+    __metadata("design:type", Boolean)
+], PublicationHeaderComponent.prototype, "edit", void 0);
 PublicationHeaderComponent = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
-        selector: 'publication-header',template:/*ion-inline-start:"C:\Users\Matias\WebstormProjects\turinsta\src\components\publication-header\publication-header.html"*/'<!-- Generated template for the PublicationHeaderComponent component -->\n<ion-item>\n  <ion-avatar item-start>\n    <img [src]="user.avatar" (error)="getCachedAvatar()">\n  </ion-avatar>\n  <div>\n    <p class="publication-important-text">{{publication.places[0].name}}</p>\n    <p>{{publication.score}}<ion-icon name="star" color="star"></ion-icon> / {{publication.assessments.length}}<ion-icon name="eye" color="primary"></ion-icon></p>\n  </div>\n  <div item-end>\n    <p class="publication-important-text">{{user.username}}</p>\n    <p align="right">{{user.score}}<ion-icon name="star" color="star"></ion-icon> / {{user.publications.length}}<ion-icon name="image" color="secondary"></ion-icon></p>\n  </div>\n</ion-item>\n'/*ion-inline-end:"C:\Users\Matias\WebstormProjects\turinsta\src\components\publication-header\publication-header.html"*/
+        selector: 'publication-header',template:/*ion-inline-start:"C:\Users\Matias\WebstormProjects\turinsta\src\components\publication-header\publication-header.html"*/'<!-- Generated template for the PublicationHeaderComponent component -->\n<ion-item no-lines>\n  <ion-avatar item-start>\n    <img [src]="user.avatar" (error)="getCachedAvatar()">\n  </ion-avatar>\n  <div item-left>\n    <p class="publication-important-text">{{publication.places[0].name}}</p>\n    <p>{{publication.score}}<ion-icon name="star" color="star"></ion-icon> / {{publication.assessments.length}}<ion-icon name="eye" color="primary"></ion-icon></p>\n  </div>\n  <button item-left *ngIf="edit" ion-button icon-only clear (click)="presentPlaceUpdating()">\n    <ion-icon name="create"></ion-icon>\n  </button>\n  <div item-end>\n    <p class="publication-important-text">{{user.username}}</p>\n    <p align="right">{{user.score}}<ion-icon name="star" color="star"></ion-icon> / {{user.publications.length}}<ion-icon name="image" color="secondary"></ion-icon></p>\n  </div>\n</ion-item>\n'/*ion-inline-end:"C:\Users\Matias\WebstormProjects\turinsta\src\components\publication-header\publication-header.html"*/
     }),
-    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__providers_imgcache_imgcache__["a" /* ImgcacheService */]])
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__providers_imgcache_imgcache__["a" /* ImgcacheService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__providers_imgcache_imgcache__["a" /* ImgcacheService */]) === "function" && _a || Object])
 ], PublicationHeaderComponent);
 
+var _a;
 //# sourceMappingURL=publication-header.js.map
 
 /***/ }),
@@ -2217,7 +2242,7 @@ var PublicationFooterComponent = (function () {
         return this.commons.getAntiquity(date);
     };
     PublicationFooterComponent.prototype.presentPublicationWritingModal = function () {
-        var publicationWritingModal = this.modalCtrl.create(__WEBPACK_IMPORTED_MODULE_4__pages_publication_writing_publication_writing__["a" /* PublicationWritingPage */], { user: this.user, publication: this.publication });
+        var publicationWritingModal = this.modalCtrl.create(__WEBPACK_IMPORTED_MODULE_4__pages_publication_writing_publication_writing__["a" /* PublicationWritingPage */], { user: this.user, publication: this.publication, experiences: this.experiences, comments: this.comments });
         publicationWritingModal.present();
     };
     return PublicationFooterComponent;
@@ -2246,9 +2271,10 @@ PublicationFooterComponent = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
         selector: 'publication-footer',template:/*ion-inline-start:"C:\Users\Matias\WebstormProjects\turinsta\src\components\publication-footer\publication-footer.html"*/'<!-- Generated template for the PublicationFooterComponent component -->\n<ion-list style="position: relative">\n  <score-input *ngIf="scoreInputShowed" [score]="currentUserScore"></score-input>\n  <ion-item class="publication-buttons-item">\n    <button item-start class="start-button" (click)="toggleSection(0)" ion-button clear>\n      <ion-icon class="publication-icon" name="ios-paper" color="secondary" isActive="{{sections[0].show}}">\n        <ion-badge *ngIf="experiences.length >0" class="publication-badge">{{experiences.length}}</ion-badge>\n      </ion-icon>\n    </button>\n    <button item-left class="publication-button" (click)="toggleSection(1)" ion-button clear>\n      <ion-icon class="publication-icon" name="ios-text" color="secondary" isActive="{{sections[1].show}}">\n        <ion-badge *ngIf="comments.length >0" class="publication-badge">{{comments.length}}</ion-badge>\n      </ion-icon>\n    </button>\n    <button item-left class="publication-button" (click)="toogleScoreInput()" ion-button clear>\n      <ion-icon class="publication-icon" name="ios-star" color="secondary" isActive="{{scoreInputShowed}}"></ion-icon>\n    </button>\n    <ion-note item-right>{{getAntiquity(publication.timestamps.created)}}</ion-note>\n    <button item-end class="end-button" (click)="presentPublicationWritingModal()" ion-button clear>\n      <ion-icon class="publication-icon" name="share-alt" color="secondary"></ion-icon>\n    </button>\n  </ion-item>\n</ion-list>\n<experience-list *ngIf="sections[0].show" [experiences]=experiences [publicationId]=publication._id [publicationOwner]=user._id></experience-list>\n<comment-list *ngIf="sections[1].show" [comments]=comments [publicationId]=publication._id [publicationOwner]=user._id></comment-list>\n'/*ion-inline-end:"C:\Users\Matias\WebstormProjects\turinsta\src\components\publication-footer\publication-footer.html"*/
     }),
-    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["c" /* Events */], __WEBPACK_IMPORTED_MODULE_3__providers_storage_storage__["a" /* StorageProvider */], __WEBPACK_IMPORTED_MODULE_2__providers_commons_commons__["a" /* CommonsProvider */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* ModalController */]])
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["c" /* Events */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["c" /* Events */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_3__providers_storage_storage__["a" /* StorageProvider */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__providers_storage_storage__["a" /* StorageProvider */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_2__providers_commons_commons__["a" /* CommonsProvider */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__providers_commons_commons__["a" /* CommonsProvider */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* ModalController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* ModalController */]) === "function" && _d || Object])
 ], PublicationFooterComponent);
 
+var _a, _b, _c, _d;
 //# sourceMappingURL=publication-footer.js.map
 
 /***/ }),

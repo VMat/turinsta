@@ -19,8 +19,9 @@ export class PublicationWritingPage {
 
   publication: any = {};
   user: any = {};
+  experiences: any = [];
+  comments: any = [];
   loggedUser: string = null;
-  editionMode: boolean = false;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private viewCtrl: ViewController, private alertCtrl: AlertController, private storageService: StorageProvider, private commons: CommonsProvider) {
   }
@@ -29,6 +30,8 @@ export class PublicationWritingPage {
     if(Boolean(this.navParams.get("publication"))){
       this.publication = {...this.navParams.get("publication")};
       this.user = {...this.navParams.get("user")};
+      this.experiences = [...this.navParams.get("experiences")];
+      this.comments = [...this.navParams.get("comments")];
       sessionStorage.setItem("this.user",JSON.stringify(this.user));
     }
     this.loggedUser = this.commons.getUserId();
@@ -36,10 +39,6 @@ export class PublicationWritingPage {
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad PublicationWritingPage');
-  }
-
-  toogleEditMode(value){
-    this.editionMode = value;
   }
 
   checkEditPermission(){
@@ -118,4 +117,23 @@ export class PublicationWritingPage {
     });
   }
 
+  addImage(){
+    alert("add image");
+  }
+
+  removeImage(){
+    alert("remove image");
+  }
+
+  presentDescriptionUpdating(){
+    alert("update description");
+  }
+
+  deleteDescription(){
+    alert("delete description");
+  }
+
+  addDescription(){
+    alert("add description");
+  }
 }

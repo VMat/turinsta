@@ -84,7 +84,7 @@ export class PublicationFooterComponent{
   }
 
   presentPublicationWritingModal(){
-    let publicationWritingModal = this.modalCtrl.create(PublicationWritingPage, {user: this.user, publication: this.publication});
+    let publicationWritingModal = this.modalCtrl.create(PublicationWritingPage, {user: this.user, publication: this.publication, experiences: this.experiences, comments: this.comments});
     publicationWritingModal.present();
   }
 }

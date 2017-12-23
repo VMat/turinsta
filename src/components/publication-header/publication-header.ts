@@ -1,5 +1,6 @@
 import {Component, Input} from '@angular/core';
 import {ImgcacheService} from "../../providers/imgcache/imgcache";
+import {CommonsProvider} from "../../providers/commons/commons";
 
 /**
  * Generated class for the PublicationHeaderComponent component.
@@ -15,6 +16,7 @@ export class PublicationHeaderComponent {
 
   @Input() user: any = null;
   @Input() publication: any = null;
+  @Input() edit: boolean = false;
   cachedAvatar: string = null;
 
   constructor(private imgCacheService:ImgcacheService){
@@ -29,5 +31,9 @@ export class PublicationHeaderComponent {
 
   getCachedAvatar(){
     return this.user.avatar = this.cachedAvatar;
+  }
+
+  presentPlaceUpdating(){
+    alert("place updating...");
   }
 }
