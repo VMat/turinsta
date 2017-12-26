@@ -90,7 +90,7 @@ const CommentInterface = (function(){
           else{
             return Commons.getOne(Publications, comment.publication)
               .then(publication=>{
-                publication.commentIds.splice(publication.comments.indexOf(comment._id), 1);
+                publication.commentIds.splice(publication.commentIds.indexOf(comment._id), 1);
                 return PublicationInterface.update(publication)
                   .then(()=>{
                     return Commons.removeOne(Comments, comment);
