@@ -111,8 +111,8 @@ const PublicationInterface = (function(){
       return Commons.update(Publications,publication);
     },
 
-    deleteOne: (publication)=>{
-      return Commons.removeOne(Publications,publication);
+    deleteOne: (id)=>{
+      return Commons.removeOne(Publications,id);
     },
     
     addPublicationAssessment: (assessment)=>{
