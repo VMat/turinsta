@@ -3,6 +3,8 @@ const Users = require('../models/user');
 const Experiences = require('../models/experience');
 const Comments = require('../models/comment');
 const Commons = require('./commons');
+const ExperienceInterface = require('./experienceInterface');
+const CommentInterface = require('./commentInterface');
 
 const PublicationInterface = (function(){
 
@@ -112,7 +114,16 @@ const PublicationInterface = (function(){
     },
 
     deleteOne: (id)=>{
-      return Commons.removeOne(Publications,id);
+      return Commons.getOne(Publications,id)
+        .then((publication)=>{
+          publication.experienceIds.foreach((experience)=>{
+            ExperienceInterface.deleteOne(experience);
+          });
+          publication.commentIds.foreach((comment)=>{
+            CommentInterface.deleteOne(comment);
+          });
+          return Commons.removeOne(Publications,publication);
+        });
     },
     
     addPublicationAssessment: (assessment)=>{
