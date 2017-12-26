@@ -30,8 +30,8 @@ const storageService = (function(){
       return db.updatePublication(publication);
     },
 
-    deletePublication: (publication)=>{
-      return db.deletePublication(publication);
+    deletePublication: (id)=>{
+      return db.deletePublication(id);
     },
 
     addPublicationAssessment: (assessment)=>{
