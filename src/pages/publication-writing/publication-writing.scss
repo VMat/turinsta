@@ -1,17 +1,10 @@
 page-publication-writing {
-  //.swiper-slide{
-  //  height: 400px !important;
-  //}
-  //.swiper-slide-active{
-  //  height: 400px !important;
-  //}
-  //
-  //.swiper-wrapper{
-  //  height: 400px !important;
-  //}
   .image-action-buttons{
     position: absolute;
     right: 0;
     top: 10px;
+  }
+  ion-slides{
+    max-height: 220px !important;
   }
 }

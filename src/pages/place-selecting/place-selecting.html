@@ -1,0 +1,23 @@
+<!--
+  Generated template for the PlaceSelectingPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+  <ion-navbar>
+    <ion-item no-lines style="text-align: center">
+      <button item-start ion-button clear (click)="dismissPlaceSelecting()">
+        <ion-icon name="close"></ion-icon>
+      </button>
+      <ion-title>Ingrese una ubicación</ion-title>
+      <button item-end *ngIf="placeSelected" ion-button clear (click)="confirmSave()">
+        <ion-icon name="checkmark" color="success"></ion-icon>
+      </button>
+    </ion-item>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <place-filter [placeSelecting]=true (placeSelected)="setPlace($event)"></place-filter>
+</ion-content>

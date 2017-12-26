@@ -1,14 +1,14 @@
 webpackJsonp([5],{
 
-/***/ 661:
+/***/ 665:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "MyEmojiPickerPageModule", function() { return MyEmojiPickerPageModule; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "PlaceSelectingPageModule", function() { return PlaceSelectingPageModule; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(11);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__my_emoji_picker__ = __webpack_require__(155);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(10);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__place_selecting__ = __webpack_require__(157);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -18,23 +18,23 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 
 
 
-var MyEmojiPickerPageModule = (function () {
-    function MyEmojiPickerPageModule() {
+var PlaceSelectingPageModule = (function () {
+    function PlaceSelectingPageModule() {
     }
-    return MyEmojiPickerPageModule;
+    return PlaceSelectingPageModule;
 }());
-MyEmojiPickerPageModule = __decorate([
+PlaceSelectingPageModule = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["L" /* NgModule */])({
         declarations: [
-            __WEBPACK_IMPORTED_MODULE_2__my_emoji_picker__["a" /* MyEmojiPickerPage */],
+            __WEBPACK_IMPORTED_MODULE_2__place_selecting__["a" /* PlaceSelectingPage */],
         ],
         imports: [
-            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* IonicPageModule */].forChild(__WEBPACK_IMPORTED_MODULE_2__my_emoji_picker__["a" /* MyEmojiPickerPage */]),
+            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* IonicPageModule */].forChild(__WEBPACK_IMPORTED_MODULE_2__place_selecting__["a" /* PlaceSelectingPage */]),
         ],
     })
-], MyEmojiPickerPageModule);
+], PlaceSelectingPageModule);
 
-//# sourceMappingURL=my-emoji-picker.module.js.map
+//# sourceMappingURL=place-selecting.module.js.map
 
 /***/ })
 

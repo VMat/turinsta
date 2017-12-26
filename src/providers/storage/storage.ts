@@ -91,6 +91,10 @@ export class StorageProvider {
     return this.http.post(StorageProvider.baseUrl + 'publications/',publication,{headers: StorageProvider.headers});
   }
 
+  patchPublication(id,fields){
+    return this.http.patch(StorageProvider.baseUrl + 'publications/' + id,fields,{headers: StorageProvider.headers});
+  }
+
   updatePublication(publication){
     return this.http.put(StorageProvider.baseUrl + 'publications/',publication,{headers: StorageProvider.headers});
   }

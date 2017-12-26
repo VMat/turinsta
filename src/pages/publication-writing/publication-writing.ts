@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
-import {IonicPage, NavController, NavParams, ViewController, AlertController} from 'ionic-angular';
+import {IonicPage, NavController, NavParams, ViewController, AlertController, ModalController} from 'ionic-angular';
 import {StorageProvider} from "../../providers/storage/storage";
 import {CommonsProvider} from "../../providers/commons/commons";
+import {DescriptionWritingPage} from "../description-writing/description-writing";
 
 /**
  * Generated class for the PublicationWritingPage page.
@@ -22,8 +23,10 @@ export class PublicationWritingPage {
   experiences: any = [];
   comments: any = [];
   loggedUser: string = null;
+  experienceListOpened: boolean = false;
+  commentListOpened: boolean = false;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private viewCtrl: ViewController, private alertCtrl: AlertController, private storageService: StorageProvider, private commons: CommonsProvider) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private viewCtrl: ViewController, private alertCtrl: AlertController, private storageService: StorageProvider, private commons: CommonsProvider, private ModalCtrl: ModalController) {
   }
 
   ionViewWillLoad(){
@@ -46,6 +49,14 @@ export class PublicationWritingPage {
       return this.loggedUser == this.publication.user;
     }
     return false;
+  }
+
+  toogleExperienceList(){
+    this.experienceListOpened = !this.experienceListOpened;
+  }
+
+  toogleCommentList(){
+    this.commentListOpened = !this.commentListOpened;
   }
 
   dismissPublication(){
@@ -117,6 +128,10 @@ export class PublicationWritingPage {
     });
   }
 
+  setPlace(event){
+    this.publication.places = [event];
+  }
+
   addImage(){
     alert("add image");
   }
@@ -125,8 +140,12 @@ export class PublicationWritingPage {
     alert("remove image");
   }
 
-  presentDescriptionUpdating(){
-    alert("update description");
+  presentDescriptionWriting(){
+    let descriptionWritingModal = this.ModalCtrl.create(DescriptionWritingPage,{publicationId: this.publication._id, description: this.publication.description});
+    descriptionWritingModal.present();
+    descriptionWritingModal.onDidDismiss((description)=>{
+      this.publication.description = description;
+    });
   }
 
   deleteDescription(){

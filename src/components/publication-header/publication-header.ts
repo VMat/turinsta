@@ -1,6 +1,9 @@
-import {Component, Input} from '@angular/core';
+import {Component, Input, Output, EventEmitter} from '@angular/core';
 import {ImgcacheService} from "../../providers/imgcache/imgcache";
 import {CommonsProvider} from "../../providers/commons/commons";
+import {ModalController} from "ionic-angular";
+import {PlaceFilterComponent} from "../place-filter/place-filter";
+import {PlaceSelectingPage} from "../../pages/place-selecting/place-selecting";
 
 /**
  * Generated class for the PublicationHeaderComponent component.
@@ -17,9 +20,10 @@ export class PublicationHeaderComponent {
   @Input() user: any = null;
   @Input() publication: any = null;
   @Input() edit: boolean = false;
+  @Output() changePlace = new EventEmitter<any>();
   cachedAvatar: string = null;
 
-  constructor(private imgCacheService:ImgcacheService){
+  constructor(private imgCacheService:ImgcacheService, private modalCtrl: ModalController){
     console.log('Hello PublicationHeaderComponent Component');
   }
 
@@ -34,6 +38,10 @@ export class PublicationHeaderComponent {
   }
 
   presentPlaceUpdating(){
-    alert("place updating...");
+    let placeSelecting = this.modalCtrl.create(PlaceSelectingPage,{publicationId: this.publication._id});
+    placeSelecting.present();
+    placeSelecting.onDidDismiss((place)=>{
+      this.changePlace.emit(place);
+    })
   }
 }

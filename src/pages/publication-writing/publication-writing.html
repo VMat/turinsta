@@ -26,7 +26,7 @@
   </ion-navbar>
 </ion-header>
 <ion-content padding>
-  <publication-header [user]=user [publication]=publication [edit]="checkEditPermission()"></publication-header>
+  <publication-header [user]=user [publication]=publication [edit]="checkEditPermission()" (changePlace)="setPlace($event)"></publication-header>
   <ion-slides>
     <ion-slide style="align-items: start" *ngFor="let image of publication.images">
       <div class="image-action-buttons" *ngIf="checkEditPermission()">
@@ -42,8 +42,8 @@
   </ion-slides>
   <ion-item>
     <p *ngIf="publication.description" item-start class="publication-description"><b>{{user.username}}</b>&nbsp;{{publication.description}}</p>
-    <div *ngIf="checkEditPermission() && publication.description" item-end>
-      <button ion-button icon-only clear (click)="presentDescriptionUpdating()">
+    <div *ngIf="checkEditPermission() && publication.description" item-right>
+      <button ion-button icon-only clear (click)="presentDescriptionWriting()">
         <ion-icon name="create"></ion-icon>
       </button>
       <button ion-button icon-only clear (click)="deleteDescription()">
@@ -51,17 +51,27 @@
       </button>
     </div>
     <div *ngIf="checkEditPermission() && !publication.description">
-      <button ion-button icon-only clear (click)="addDescription()">
+      <button ion-button icon-only clear (click)="presentDescriptionWriting()">
         <ion-icon name="add" color="success"></ion-icon>
       </button>
     </div>
   </ion-item>
   <ion-item>
-    <p>Experiencias</p>
-    <experience-list [experiences]=experiences [publicationOwner]=user._id [publicationId]=publication._id></experience-list>
+    <ion-item no-lines>
+      <p>Experiencias (<span>{{experiences.length}}</span>)</p>
+      <button item-end ion-button icon-only clear (click)="toogleExperienceList()">
+        <ion-icon name="{{experienceListOpened ? 'ios-arrow-dropdown' : 'ios-arrow-dropright'}}"></ion-icon>
+      </button>
+    </ion-item>
+    <experience-list *ngIf="experienceListOpened" [experiences]=experiences [publicationOwner]=user._id [publicationId]=publication._id></experience-list>
   </ion-item>
   <ion-item>
-    <p>Comentarios</p>
-    <comment-list *ngIf="publication._id != undefined" [comments]=comments [publicationId]=publication._id [publicationOwner]=user._id></comment-list>
+    <ion-item no-lines>
+      <p>Comentarios (<span>{{comments.length}}</span>)</p>
+      <button item-end ion-button icon-only clear (click)="toogleCommentList()">
+        <ion-icon name="{{commentListOpened ? 'ios-arrow-dropdown' : 'ios-arrow-dropright'}}"></ion-icon>
+      </button>
+    </ion-item>
+    <comment-list *ngIf="publication._id != undefined && commentListOpened" [comments]=comments [publicationId]=publication._id [publicationOwner]=user._id></comment-list>
   </ion-item>
 </ion-content>

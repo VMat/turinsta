@@ -1,4 +1,4 @@
-import {Component, ViewChild} from '@angular/core';
+import {Component, ViewChild, Input, Output, EventEmitter} from '@angular/core';
 import {Select} from "ionic-angular";
 import {cleanFilters, addFilter} from "../../providers/reducers/publication.reducer";
 import {AppState} from "../../providers/models/publication.model";
@@ -20,6 +20,8 @@ export class PlaceFilterComponent {
   placeFilter = null;
   showAutocomplete = false;
   @ViewChild(Select) select: Select;
+  @Input() placeSelecting: boolean = false;
+  @Output() placeSelected = new EventEmitter<string>();
 
   constructor(public store: Store<AppState>) {
     console.log('Hello PlaceFilterComponent Component');
@@ -28,7 +30,12 @@ export class PlaceFilterComponent {
   setPlaceFilter(){
     this.searchInput = this.placeFilter;
     this.showAutocomplete = false;
-    this.store.dispatch(addFilter({key:"publication.places.name", value: this.placeFilter, operation: "EQUAL"}));
+    if(this.placeSelecting){
+      this.placeSelected.emit(this.placeFilter);
+    }
+    else{
+      this.store.dispatch(addFilter({key:"publication.places.name", value: this.placeFilter, operation: "EQUAL"}));
+    }
   }
 
   onSearchInput(event){
@@ -49,6 +56,11 @@ export class PlaceFilterComponent {
   }
 
   onSearchClear(event){
-    this.store.dispatch(cleanFilters());
+    if(this.placeSelecting){
+      this.placeSelected.emit(null);
+    }
+    else{
+      this.store.dispatch(cleanFilters());
+    }
   }
 }

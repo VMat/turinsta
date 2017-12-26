@@ -48,6 +48,8 @@ import {PublicationActionsComponent} from "../components/publication-actions/pub
 import {PublicationActionsMenuPage} from "../pages/publication-actions-menu/publication-actions-menu";
 import {MyEmojiPickerPage} from "../pages/my-emoji-picker/my-emoji-picker";
 import {PublicationWritingPage} from "../pages/publication-writing/publication-writing";
+import {PlaceSelectingPage} from "../pages/place-selecting/place-selecting";
+import {DescriptionWritingPage} from "../pages/description-writing/description-writing";
 
 
 @NgModule({
@@ -65,6 +67,8 @@ import {PublicationWritingPage} from "../pages/publication-writing/publication-w
     PublicationActionsMenuPage,
     MyEmojiPickerPage,
     PublicationWritingPage,
+    PlaceSelectingPage,
+    DescriptionWritingPage,
     PublicationHeaderComponent,
     PublicationBodyComponent,
     PublicationFooterComponent,
@@ -114,7 +118,9 @@ import {PublicationWritingPage} from "../pages/publication-writing/publication-w
     CommentWritingPage,
     PublicationActionsMenuPage,
     MyEmojiPickerPage,
-    PublicationWritingPage
+    PublicationWritingPage,
+    PlaceSelectingPage,
+    DescriptionWritingPage
   ],
   providers: [
     StatusBar,

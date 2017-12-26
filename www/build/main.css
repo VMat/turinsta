@@ -33413,6 +33413,10 @@ page-publication-writing .image-action-buttons {
   top: 10px;
 }
 
+page-publication-writing ion-slides {
+  max-height: 220px !important;
+}
+
 .tabs-header .toolbar-title-md {
   color: #ffffff;
   font-weight: bolder;
