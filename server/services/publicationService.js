@@ -46,9 +46,9 @@ const publicationService = (function(){
       })
     },
 
-    deletePublication: (publication)=>{
+    deletePublication: (id)=>{
       return new Promise((resolve, reject)=>{
-      storageService.deletePublication(publication).
+      storageService.deletePublication(id).
         then(deletedPublication=>resolve(deletedPublication)).
         catch(error=>reject(error))
       })
