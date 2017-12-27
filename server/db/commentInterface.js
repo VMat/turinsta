@@ -101,7 +101,7 @@ const CommentInterface = (function(){
     },
     
     deleteFromPublication: (id)=>{
-      return Commons.deleteWithFilter({"publication": id});
+      return Commons.deleteWithFilter(Comments,{"publication": id});
     }
     
   };
