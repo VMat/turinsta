@@ -122,6 +122,9 @@ const PublicationInterface = (function(){
           publication.commentIds.forEach((comment)=>{
             CommentInterface.deleteOne(comment);
           });
+          return publication;
+        })
+        .then((publication)=>{
           return Commons.removeOne(Publications,publication);
         });
     },
