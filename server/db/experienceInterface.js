@@ -44,7 +44,7 @@ const ExperienceInterface = (function(){
     },
     
     deleteFromPublication: (id)=>{
-      return Commons.deleteWithFilter(Experiences,{"publication": id});
+      return Commons.removeWithFilter(Experiences,{"publication": id});
     }
     
   };
