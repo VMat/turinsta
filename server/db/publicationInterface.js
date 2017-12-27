@@ -116,16 +116,13 @@ const PublicationInterface = (function(){
     deleteOne: (id)=>{
       return Commons.getOne(Publications,id)
         .then((publication)=>{
-          publication.experienceIds.forEach((experience)=>{
-            ExperienceInterface.deleteOne(experience);
-          });
-          publication.commentIds.forEach((comment)=>{
-            CommentInterface.deleteOne(comment);
-          });
-          return publication;
-        })
-        .then((publication)=>{
-          //return Commons.removeOne(Publications,publication);
+          return ExperienceInterface.deleteFromPublication(id)
+          .then(()=>{
+            return CommentInterface.deleteFromPublication(id)
+            .then(()=>{
+              return Commons.removeOne(Publications,publication);
+            })   
+          })
         });
     },
     
