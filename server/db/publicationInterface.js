@@ -125,7 +125,7 @@ const PublicationInterface = (function(){
           return publication;
         })
         .then((publication)=>{
-          return Commons.removeOne(Publications,publication);
+          //return Commons.removeOne(Publications,publication);
         });
     },
     
