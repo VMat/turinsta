@@ -35,6 +35,10 @@ let Commons = (function(){
     removeAll: (Collection)=>{
       return Collection.remove();
     },
+    
+    removeWithFilter: (Collection,filter)=>{
+      return Collection.remove(filter);
+    },
 
     removeOne: (Collection,doc)=>{
       return Collection.findByIdAndRemove(doc._id);
