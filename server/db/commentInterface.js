@@ -98,7 +98,12 @@ const CommentInterface = (function(){
               })
           }
         })
+    },
+    
+    deleteFromPublication: (id)=>{
+      return Commons.deleteWithFilter({"publication": id});
     }
+    
   };
 
   return oCommentInterface;
