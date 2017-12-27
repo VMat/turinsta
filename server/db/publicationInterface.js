@@ -116,10 +116,10 @@ const PublicationInterface = (function(){
     deleteOne: (id)=>{
       return Commons.getOne(Publications,id)
         .then((publication)=>{
-          publication.experienceIds.foreach((experience)=>{
+          publication.experienceIds.forEach((experience)=>{
             ExperienceInterface.deleteOne(experience);
           });
-          publication.commentIds.foreach((comment)=>{
+          publication.commentIds.forEach((comment)=>{
             CommentInterface.deleteOne(comment);
           });
           return Commons.removeOne(Publications,publication);
