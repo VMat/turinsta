@@ -172,7 +172,7 @@ export class PublicationWritingPage {
   deleteDescription(){
     this.storageService.patchPublication(this.publication._id,{description: null}).subscribe((patchedPublication)=>{
       this.commons.presentToast("La descripción ha sido eliminada con éxito");
-      this.viewCtrl.dismiss();
+      this.publication.description = null;
     });
   }
 }

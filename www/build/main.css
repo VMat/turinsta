@@ -33190,6 +33190,10 @@ filters-bar ion-searchbar {
   margin: 0 !important;
 }
 
+my-emoji-picker .popover-content {
+  overflow: hidden !important;
+}
+
 place-filter .select-md .select-icon {
   position: absolute;
 }
@@ -33398,6 +33402,10 @@ page-my-emoji-picker ion-content {
 page-my-emoji-picker button {
   height: 300px;
   width: 100%;
+}
+
+.popover-content {
+  overflow: hidden !important;
 }
 
 page-publication-actions-menu ion-item {
