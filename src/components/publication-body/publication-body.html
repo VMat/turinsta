@@ -6,6 +6,6 @@
     <!--<img id="{{image.url}}" class="publication-image" src='{{image.url}}'/>-->
   </ion-slide>
 </ion-slides>
-<p *ngIf="publication.description" item-start class="publication-description"><b>{{user.username}}</b>&nbsp;{{publication.description}}</p>
+<p item-start class="publication-description"><span *ngIf="publication.description"><b>{{user.username}}</b>&nbsp;{{publication.description}}</span></p>
 
 

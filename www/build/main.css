@@ -33208,15 +33208,6 @@ place-filter .select-md .select-text {
   padding: 0;
 }
 
-.publication-image {
-  width: 100% !important;
-  height: auto;
-}
-
-.publication-description {
-  padding: 10px 0;
-}
-
 .publication-badge {
   padding: 1px 5px;
   font-size: xx-small;
@@ -33229,12 +33220,6 @@ place-filter .select-md .select-text {
 
 .publication-icon {
   font-size: x-large;
-}
-
-.publication-button {
-  position: relative;
-  top: 1px;
-  right: 1px;
 }
 
 .publication-buttons-item {
@@ -33343,13 +33328,26 @@ publication-body {
   position: relative;
 }
 
+.publication-description {
+  padding-top: 0;
+  margin: 0;
+  height: 15px;
+}
+
+publication-footer ion-icon {
+  font-size: large !important;
+}
+
+publication-footer .publication-button {
+  margin-bottom: 0 !important;
+}
+
 publication-footer .start-button {
-  padding-left: 0 !important;
+  padding-left: 10px !important;
 }
 
 publication-footer .end-button {
-  padding: 0 !important;
-  margin: 0 !important;
+  padding-right: 10px !important;
 }
 
 publication-footer .item-inner {
@@ -33357,12 +33355,18 @@ publication-footer .item-inner {
 }
 
 publication-footer ion-note {
+  margin-bottom: 0 !important;
   font-size: xx-small !important;
+}
+
+publication-image .publication-image {
+  width: 100% !important;
+  height: auto;
 }
 
 score-input {
   position: absolute;
-  top: -50px;
+  top: -65px;
   height: 50px;
   width: 100%;
   z-index: 100;
@@ -33374,6 +33378,7 @@ score-input {
 
 score-input ion-icon {
   vertical-align: middle;
+  font-size: xx-large !important;
 }
 
 page-comment-writing {

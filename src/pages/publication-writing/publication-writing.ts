@@ -148,11 +148,31 @@ export class PublicationWritingPage {
     });
   }
 
-  deleteDescription(){
-    alert("delete description");
+  confirmDeleteDescription(){
+    let confirm = this.alertCtrl.create({
+      title: 'Confirmar operación',
+      message: '¿Está seguro que desea eliminar la descripción?',
+      buttons: [
+        {
+          text: 'Aceptar',
+          handler: () => {
+            this.deleteDescription();
+          }
+        },
+        {
+          text: 'Cancelar',
+          handler: () => {
+          }
+        }
+      ]
+    });
+    confirm.present();
   }
 
-  addDescription(){
-    alert("add description");
+  deleteDescription(){
+    this.storageService.patchPublication(this.publication._id,{description: null}).subscribe((patchedPublication)=>{
+      this.commons.presentToast("La descripción ha sido eliminada con éxito");
+      this.viewCtrl.dismiss();
+    });
   }
 }
