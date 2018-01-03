@@ -1,14 +1,13 @@
 
-const ImageUploaderService = (function(){
+const imageUploaderService = (function(){
 
   function oImageUploaderService(){}
 
   oImageUploaderService.prototype = {};
   
-  return oImageUploaderService;
-  
+  return oImageUploaderService;  
 })();
 
-const oImageUploaderService = new ImageUploaderService();
+const oImageUploaderService = new imageUploaderService();
 
-module.export = oImageUploaderService;
+module.exports = oImageUploaderService;
