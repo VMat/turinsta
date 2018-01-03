@@ -65,7 +65,7 @@ let db = (function(){
       return publicationInterface.addPublicationImage(publicationId, image);
     },
     
-    deletePublicationImage: (publicationId)=>{
+    deletePublicationImage: (publicationId, imageUrl)=>{
       return publicationInterface.deletePublicationImage(publicationId);
     },
 
