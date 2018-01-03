@@ -50,8 +50,8 @@ const storageService = (function(){
       return db.addPublicationImage(publicationId, image)
     },
     
-    deletePublicationImage: (publicationId)=>{
-      return db.deletePublicationImage(publicationId)
+    deletePublicationImage: (publicationId, imageUrl)=>{
+      return db.deletePublicationImage(publicationId, imageUrl)
     },
     
     getActivities: ()=>{
