@@ -17,8 +17,8 @@ function getPublicUrl(filename) {
 let ImgUpload = {};
 
 ImgUpload.uploadToGcs = (req, res, next) => {
-  
-  console.log("Req: " + JSON.stringify(req));
+  console.log("uploadToGcs");
+  //console.log("Req: " + JSON.stringify(req));
   
   if(!req.file) return next();
 
@@ -33,6 +33,7 @@ ImgUpload.uploadToGcs = (req, res, next) => {
   });
 
   stream.on('error', (err) => {
+    console.log("Upload failed");
     req.file.cloudStorageError = err;
     next(err);
   });
@@ -40,6 +41,7 @@ ImgUpload.uploadToGcs = (req, res, next) => {
   stream.on('finish', () => {
     req.file.cloudStorageObject = gcsname;
     req.file.cloudStoragePublicUrl = getPublicUrl(gcsname);
+    console.log("Upload finished");
     console.log("Object: " + JSON.stringify(req.file.cloudStorageObject));
     console.log("Url: " + req.file.cloudStoragePublicUrl);
     next();
