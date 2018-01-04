@@ -16,6 +16,7 @@ const uploadHandler = multer({
     bucket      : 'tur0000000001', // Required : bucket name to upload 
     projectId      : 'turinsta-189517', // Required : Google project ID 
     keyFilename : '../Turinsta-14582893bb92.json' // Required : JSON credentials file for Google Cloud Storage 
+  })
 });
 
 router.get('/count/:count/sort/:field/:way',(req, res)=>{
