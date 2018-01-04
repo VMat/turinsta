@@ -1,7 +1,7 @@
 const router = require('express').Router();
 const publicationService = require('../services/publicationService');
 const Multer = require('multer');
-const multerGoogleStorage = require("multer-google-storage");
+const MulterGoogleCloudStorage = require("multer-google-storage");
 //const imageUploader = require('../services/imageUploader');
 
 // Handles the multipart/form-data
