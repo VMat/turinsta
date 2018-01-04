@@ -1,15 +1,21 @@
 const router = require('express').Router();
 const publicationService = require('../services/publicationService');
 const Multer = require('multer');
-const imageUploader = require('../services/imageUploader');
+const multerGoogleStorage = require("multer-google-storage");
+//const imageUploader = require('../services/imageUploader');
 
 // Handles the multipart/form-data
 // Adds a .file key to the request object
 // the 'storage' key saves the image temporarily for in memory
 // You can also pass a file path on your server and it will save the image there
-const multer = Multer({
-  storage: Multer.MemoryStorage,
-  fileSize: 5 * 1024 * 1024
+const uploadHandler = multer({
+  storage: new MulterGoogleCloudStorage({
+    filename    : ( req, file, cb )=>{       
+      cb( null, file.fieldname + '-' + Date.now() );     
+    },
+    bucket      : 'tur0000000001', // Required : bucket name to upload 
+    projectId      : 'turinsta-189517', // Required : Google project ID 
+    keyFilename : '../Turinsta.json' // Required : JSON credentials file for Google Cloud Storage 
 });
 
 router.get('/count/:count/sort/:field/:way',(req, res)=>{
@@ -68,21 +74,11 @@ router.delete('/assessments/user/:user/publication/:publication',(req, res)=>{
     .catch(error=>{res.status(500).send(error)})
 });
 
-router.post('/images/publication/:publication',(request, response, next)=>{
-  console.log(JSON.stringify(request.body));
+router.post('/images/publication/:publication',uploadHandler.any(),(request, response, next)=>{
   console.log("Post Image");
-  const turinstafile = multer.single('turinstafile');
-  console.log("Turinstafile");
-  imageUploader.uploadToGcs(turinstafile,response, next).then((url)=>{
-    const data = request.body;
-    if(request.file && request.file.cloudStoragePublicUrl){
-      publicationService.addPublicationImage(request.params.publication, request.file.cloudStoragePublicUrl)
-      .then(publication=>{response.status(200).json(publication)})
-      .catch(error=>{response.status(500).send(error)})
-    }
-    else{
-      response.status(500).send("No se ha podido subir la imagen")
-    }
+  publicationService.addPublicationImage(request.params.publication, request.files)
+    .then(publication=>{response.status(200).json(publication)})
+    .catch(error=>{response.status(500).send(error)})
   }); 
 });
 
