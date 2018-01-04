@@ -51,6 +51,8 @@ import {PublicationWritingPage} from "../pages/publication-writing/publication-w
 import {PlaceSelectingPage} from "../pages/place-selecting/place-selecting";
 import {DescriptionWritingPage} from "../pages/description-writing/description-writing";
 import {ImagePicker} from "@ionic-native/image-picker";
+import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-native/file-transfer';
+import { File } from '@ionic-native/file';
 
 
 @NgModule({
@@ -130,7 +132,11 @@ import {ImagePicker} from "@ionic-native/image-picker";
     StorageProvider,
     CommonsProvider,
     ImgcacheService,
-    ImagePicker
+    ImagePicker,
+    FileTransfer,
+    // FileUploadOptions,
+    FileTransferObject,
+    File
   ]
 })
 export class AppModule {}

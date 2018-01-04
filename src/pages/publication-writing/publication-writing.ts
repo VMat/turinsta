@@ -1,9 +1,13 @@
 import { Component } from '@angular/core';
-import {IonicPage, NavController, NavParams, ViewController, AlertController, ModalController} from 'ionic-angular';
+import {
+  IonicPage, NavController, NavParams, ViewController, AlertController, ModalController,
+  LoadingController
+} from 'ionic-angular';
 import {StorageProvider} from "../../providers/storage/storage";
 import {CommonsProvider} from "../../providers/commons/commons";
 import {DescriptionWritingPage} from "../description-writing/description-writing";
 import {ImagePicker} from "@ionic-native/image-picker";
+import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-native/file-transfer';
 
 /**
  * Generated class for the PublicationWritingPage page.
@@ -27,8 +31,11 @@ export class PublicationWritingPage {
   experienceListOpened: boolean = false;
   commentListOpened: boolean = false;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private viewCtrl: ViewController, private alertCtrl: AlertController, private storageService: StorageProvider, private commons: CommonsProvider, private ModalCtrl: ModalController, private imagePicker: ImagePicker) {
-  }
+  constructor(public navCtrl: NavController, public navParams: NavParams, private viewCtrl: ViewController,
+              private alertCtrl: AlertController, private storageService: StorageProvider, private commons: CommonsProvider,
+              private ModalCtrl: ModalController, private imagePicker: ImagePicker, private loadingCtrl: LoadingController,
+              private transfer: FileTransfer
+  ){}
 
   ionViewWillLoad(){
     if(Boolean(this.navParams.get("publication"))){
@@ -133,6 +140,33 @@ export class PublicationWritingPage {
     this.publication.places = [event];
   }
 
+  uploadFile(imageUrls) {
+    let loader = this.loadingCtrl.create({
+      content: "Uploading..."
+    });
+    loader.present();
+    const fileTransfer: FileTransferObject = this.transfer.create();
+
+    let options: FileUploadOptions = {
+      fileKey: 'turinstafile',
+      fileName: 'turinstafile',
+      chunkedMode: false,
+      mimeType: "image/jpeg",
+      headers: StorageProvider.headers
+    };
+
+    fileTransfer.upload(imageUrls, StorageProvider.baseUrl + 'publications/images/publication/' + this.publication._id, options)
+      .then((data) => {
+        console.log(data+" Uploaded Successfully");
+        loader.dismiss();
+        this.commons.presentToast("Image uploaded successfully");
+      }, (err) => {
+        console.log(err);
+        loader.dismiss();
+        this.commons.presentToast(err);
+    });
+  }
+
   addImage(){
     let options = {
       maximumImagesCount: 8,
@@ -144,9 +178,11 @@ export class PublicationWritingPage {
     this.imagePicker.getPictures(options).then(
     // file_uris => this._navCtrl.push(GalleryPage, {images: file_uris}),
       file_uris => {
-        this.storageService.addPublicationImage(this.publication._id, file_uris).subscribe((updatedPublication)=>{
-          this.commons.presentToast("Las imágenes se han cargado correctamente");
-        });
+
+        this.uploadFile(file_uris);
+        // this.storageService.addPublicationImage(this.publication._id, file_uris).subscribe((updatedPublication)=>{
+        //   this.commons.presentToast("Las imágenes se han cargado correctamente");
+        // });
       },
       err => this.commons.presentToast("Se ha producido un error al cargar la imagen")
     );

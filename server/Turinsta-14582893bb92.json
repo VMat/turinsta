@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "turinsta-189517",
+  "private_key_id": "14582893bb920dfc5ed3b75a998c01f24b31d138",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQC6bEkmK1E8X0kP\n9PR0+270IUgRTH2bzuo45qqr1iSsyRe/jBcVwJ1wTVSddgFyrx3ESUiUvKxuw1YX\nDLzXmG6E0RR/ntGdRusJecPA6nO+1LrTHV+VtcQ/LRYDZI73dp+lHYv9zQE1o6RV\nQpmdIsJg32o8awTOneLu+uFXxWOyGteATxspZE2wt4fax7uAdidpfgOyaGgUprTT\n5e1bYdbCrIiixcuSnTR9mjmLrEQMAZtagpghpaMEkszB7oKgMPd8NHvSD4fX3NN8\nOLrZP2xwgP7cGpB6Q33TU3cWXftg2cH99CBk0EjClOaXEsTb5ZF84yEDTK9AcnTK\nduBzO1FpAgMBAAECggEAHsL6EhKRSddGUNwAj6IitaWdRP98dZ6f3ypO7OJ99EYN\nhWXKNGRvhkW4afA8Pm6fiJF4KNT2ViOk+9I2AhRs3j069vEf0SZP5+UgFGALn+ht\n+KKu8F8JRkx8BqzL+5EnOEGHJWbz5WQ+nHQMMZX4AbC0EMqvBSIf/YPH9eoEMLH9\nOFLfD4IC/zrKRp9SyofG1yKZEAYtybvJ7PjkVg+cYYmvIwHZaDwTI/GWxpWtalun\nETLkF9dvodCxtwo+tVMM79eoL9DUV9S4G8c3nXcXG3NMN7OTVPOOAhhFs6F4SGIj\nNeOLiPIsjn/fMB0GyUubKwEQsLa5exjNS23v6ckAdQKBgQDxwfLNrxnx120VOxSb\nWAymm06nTSxODF25CMSFRh6CudAqOpFpyDSOM5PSfrHOvbqnbLzM+jprRon/irX/\nVDcIxfnEeYXy3gp5isl6WOvJHTVtdjSWVdiDKcKm+s5y44t0v9ZqQTw8cqoCyFSJ\nmIfivRTlB8kYVfhvi9TT/YZeBQKBgQDFZ8/VPHrdEjLUEtiecrHZad5TS+G7BmU4\nlwyphVLk76p1CIzoP5BzrU7ONhGmvSzWhO8l/FQMhzgOnHySPoq+G97s7dtocbQZ\nb4k5IoOGkv5/jhBHbqbJ4bdPJfRqWhtWrnEZfJNwP1AgbV4C3iIYDblTsJSxtiLT\nVOpG7/cfFQKBgQDKELqZkiZUTiP9n9D8el6wjpTyHv3OCmX3t01Su6Xay+Yitas+\nyDitNozyXjTNwSUWtTsk9G0Jpv7G2TB/Rett6NN3lb8QnOgSaJ84JMSG52P1ptwT\nX5NFJg1tNaqCuo+gOIvFadsoBwr0om6ORzAkorepKpW5QnoQ+cYcngXF5QKBgQCc\nfemiz6lO7AhjWvVi1uXqxyS6v+MZEr7Xl9cv5EOMvfpRgQ/DZfCr424fx3lCx6Fu\nBkBXyqsOq3tjCecvQGlYwFt/VCilqc3uhB8yrgu6eXlLwWFiX3PVgxyAoEQcs4YM\nt4ltfPac+3QX4NuwRkyc6PRMRiX6o7sD8cMvrTgo6QKBgAYk0bVy0N46epUrxXxN\n7g+CN6AopYmlcoiFJwmUe6cDqj6NTneg6Io18r2pJTtHtm15WsAzh8lqInGEK48q\ncNGX9YJO+XhuHE26VPWyEL3ZWwxXfA/nOjMwDVCiFaqy0iqiDWXzTet7jZIdHKkE\naNcGcrLOMhoiy19ujMvc4rOI\n-----END PRIVATE KEY-----\n",
+  "client_email": "turinsta-writer@turinsta-189517.iam.gserviceaccount.com",
+  "client_id": "108878524090116179685",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://accounts.google.com/o/oauth2/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/turinsta-writer%40turinsta-189517.iam.gserviceaccount.com"
+}
