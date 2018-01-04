@@ -1,7 +1,7 @@
 const router = require('express').Router();
 const publicationService = require('../services/publicationService');
 const Multer = require('multer');
-const imageUploader = require('../modules/imageUploader');
+const imageUploader = require('../services/imageUploader');
 
 // Handles the multipart/form-data
 // Adds a .file key to the request object
