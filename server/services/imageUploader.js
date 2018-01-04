@@ -3,8 +3,8 @@ const storage = require('@google-cloud/storage');
 const fs = require('fs');
 
 const gcs = storage({
-  projectId: 'your-project-id',
-  keyFilename: '../keyfile.json'
+  projectId: 'turinsta-189517',
+  keyFilename: '../Turinsta-14582893bb92.json'
 });
 
 const bucketName = 'tur0000000001';
