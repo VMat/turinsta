@@ -69,7 +69,7 @@ router.delete('/assessments/user/:user/publication/:publication',(req, res)=>{
 });
 
 router.post('/images/publication/:publication',(request, response, next)=>{
-  
+  console.log(JSON.stringify(request.body));
   console.log("Post Image");
   const turinstafile = multer.single('turinstafile');
   console.log("Turinstafile");
