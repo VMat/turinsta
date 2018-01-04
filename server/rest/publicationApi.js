@@ -68,10 +68,16 @@ router.delete('/assessments/user/:user/publication/:publication',(req, res)=>{
     .catch(error=>{res.status(500).send(error)})
 });
 
-router.post('/images/publication/:publication', multer.single('turinstafile'), imageUploader.uploadToGcs,(req, res)=>{
-  publicationService.addPublicationImage(req.params.publication, req.body)
-    .then(publication=>{res.status(200).json(publication)})
-    .catch(error=>{res.status(500).send(error)})
+router.post('/images/publication/:publication', multer.single('turinstafile'), imageUploader.uploadToGcs,(request, response, next)=>{
+  const data = request.body;
+  if(request.file && request.file.cloudStoragePublicUrl){
+    publicationService.addPublicationImage(request.params.publication, request.file.cloudStoragePublicUrl)
+    .then(publication=>{response.status(200).json(publication)})
+    .catch(error=>{response.status(500).send(error)})
+  }
+  else{
+    response.status(500).send("No se ha podido subir la imagen")
+  }
 });
 
 router.delete('/images/publication/:publication/image/:image',(req, res)=>{
