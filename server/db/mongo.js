@@ -60,6 +60,14 @@ let db = (function(){
     deletePublicationAssessment: (assessment)=>{
       return publicationInterface.deletePublicationAssessment(assessment);
     },
+    
+    addPublicationImage: (publicationId, image)=>{
+      return publicationInterface.addPublicationImage(publicationId, image);
+    },
+    
+    deletePublicationImage: (publicationId, imageUrl)=>{
+      return publicationInterface.deletePublicationImage(publicationId);
+    },
 
     getActivities: ()=>{
       return activityInterface.getAll();

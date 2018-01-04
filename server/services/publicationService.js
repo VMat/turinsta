@@ -76,6 +76,22 @@ const publicationService = (function(){
         then(updatedPublication=>resolve(updatedPublication)).
         catch(error=>reject(error))
       })
+    },
+    
+    addPublicationImage: (publicationId, image)=>{
+      return new Promise((resolve, reject)=>{
+      storageService.addPublicationImage(publicationId, image).
+        then(updatedPublication=>resolve(updatedPublication)).
+        catch(error=>reject(error))
+      })
+    },
+    
+    deletePublicationImage: (publicationId, imageUrl)=>{
+      return new Promise((resolve, reject)=>{
+      storageService.deletePublicationImage(publicationId, imageUrl).
+        then(updatedPublication=>resolve(updatedPublication)).
+        catch(error=>reject(error))
+      })
     }
   };
 

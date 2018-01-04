@@ -177,6 +177,12 @@ const PublicationInterface = (function(){
           publication.followers.splice(publication.followers.indexOf(user),1);
           return Commons.update(Publications,publication);
         });
+    },
+    
+    addPublicationImage: (publicationId, image)=>{      
+    },
+    
+    deletePublicationImage(publicationId, imageUrl){
     }
 
   };

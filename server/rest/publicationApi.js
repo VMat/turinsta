@@ -68,4 +68,16 @@ router.delete('/assessments/user/:user/publication/:publication',(req, res)=>{
     .catch(error=>{res.status(500).send(error)})
 });
 
+router.post('/images/publication/:publication',(req, res)=>{
+  publicationService.addPublicationImage(req.params.publication, req.body)
+    .then(publication=>{res.status(200).json(publication)})
+    .catch(error=>{res.status(500).send(error)})
+});
+
+router.delete('/images/publication/:publication/image/:image',(req, res)=>{
+  publicationService.deletePublicationImage(req.params.publication, req.params.image)
+    .then(publication=>{res.status(200).json(publication)})
+    .catch(error=>{res.status(500).send(error)})
+});
+
 module.exports = router;
