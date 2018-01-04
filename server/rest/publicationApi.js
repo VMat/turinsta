@@ -68,7 +68,7 @@ router.delete('/assessments/user/:user/publication/:publication',(req, res)=>{
     .catch(error=>{res.status(500).send(error)})
 });
 
-router.post('/images/publication/:publication', multer.single('image'), imageUploader.uploadToGcs,(req, res)=>{
+router.post('/images/publication/:publication', multer.single('turinstafile'), imageUploader.uploadToGcs,(req, res)=>{
   publicationService.addPublicationImage(req.params.publication, req.body)
     .then(publication=>{res.status(200).json(publication)})
     .catch(error=>{res.status(500).send(error)})
