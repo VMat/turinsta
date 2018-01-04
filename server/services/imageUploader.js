@@ -4,10 +4,10 @@ const fs = require('fs');
 
 const gcs = storage({
   projectId: 'your-project-id',
-  keyFilename: '/path/to/keyfile.json'
+  keyFilename: '../keyfile.json'
 });
 
-const bucketName = 'bucket-name-for-upload';
+const bucketName = 'tur0000000001';
 const bucket = gcs.bucket(bucketName);
 
 function getPublicUrl(filename) {
@@ -17,6 +17,9 @@ function getPublicUrl(filename) {
 let ImgUpload = {};
 
 ImgUpload.uploadToGcs = (req, res, next) => {
+  
+  console.log("Req: " + JSON.strigify(req));
+  
   if(!req.file) return next();
 
   // Can optionally add a path to the gcsname below by concatenating it before the filename
@@ -37,6 +40,8 @@ ImgUpload.uploadToGcs = (req, res, next) => {
   stream.on('finish', () => {
     req.file.cloudStorageObject = gcsname;
     req.file.cloudStoragePublicUrl = getPublicUrl(gcsname);
+    console.log("Object: " + JSON.strigify(req.file.cloudStorageObject));
+    console.log("Url: " + req.file.cloudStoragePublicUrl);
     next();
   });
 
