@@ -42,7 +42,7 @@ ImgUpload.uploadToGcs = (req, res, next) => {
     req.file.cloudStorageObject = gcsname;
     req.file.cloudStoragePublicUrl = getPublicUrl(gcsname);
     console.log("Upload finished");
-    console.log("Object: " + JSON.stringify(req.file.cloudStorageObject));
+    //console.log("Object: " + JSON.stringify(req.file.cloudStorageObject));
     console.log("Url: " + req.file.cloudStoragePublicUrl);
     next();
   });
