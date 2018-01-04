@@ -18,7 +18,7 @@ let ImgUpload = {};
 
 ImgUpload.uploadToGcs = (req, res, next) => {
   
-  console.log("Req: " + JSON.strigify(req));
+  console.log("Req: " + JSON.stringify(req));
   
   if(!req.file) return next();
 
@@ -40,7 +40,7 @@ ImgUpload.uploadToGcs = (req, res, next) => {
   stream.on('finish', () => {
     req.file.cloudStorageObject = gcsname;
     req.file.cloudStoragePublicUrl = getPublicUrl(gcsname);
-    console.log("Object: " + JSON.strigify(req.file.cloudStorageObject));
+    console.log("Object: " + JSON.stringify(req.file.cloudStorageObject));
     console.log("Url: " + req.file.cloudStoragePublicUrl);
     next();
   });
