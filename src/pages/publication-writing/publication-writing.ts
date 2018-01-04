@@ -3,6 +3,7 @@ import {IonicPage, NavController, NavParams, ViewController, AlertController, Mo
 import {StorageProvider} from "../../providers/storage/storage";
 import {CommonsProvider} from "../../providers/commons/commons";
 import {DescriptionWritingPage} from "../description-writing/description-writing";
+import {ImagePicker} from "@ionic-native/image-picker";
 
 /**
  * Generated class for the PublicationWritingPage page.
@@ -26,7 +27,7 @@ export class PublicationWritingPage {
   experienceListOpened: boolean = false;
   commentListOpened: boolean = false;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private viewCtrl: ViewController, private alertCtrl: AlertController, private storageService: StorageProvider, private commons: CommonsProvider, private ModalCtrl: ModalController) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private viewCtrl: ViewController, private alertCtrl: AlertController, private storageService: StorageProvider, private commons: CommonsProvider, private ModalCtrl: ModalController, private imagePicker: ImagePicker) {
   }
 
   ionViewWillLoad(){
@@ -133,7 +134,22 @@ export class PublicationWritingPage {
   }
 
   addImage(){
-    alert("add image");
+    let options = {
+      maximumImagesCount: 8,
+      width: 500,
+      height: 500,
+      quality: 75
+    };
+
+    this.imagePicker.getPictures(options).then(
+    // file_uris => this._navCtrl.push(GalleryPage, {images: file_uris}),
+      file_uris => {
+        this.storageService.addPublicationImage(this.publication._id, file_uris).subscribe((updatedPublication)=>{
+          this.commons.presentToast("Las imágenes se han cargado correctamente");
+        });
+      },
+      err => this.commons.presentToast("Se ha producido un error al cargar la imagen")
+    );
   }
 
   removeImage(){

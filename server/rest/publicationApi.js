@@ -1,5 +1,16 @@
 const router = require('express').Router();
 const publicationService = require('../services/publicationService');
+const Multer = require('multer');
+const imgUpload = require('../modules/imgUpload');
+
+// Handles the multipart/form-data
+// Adds a .file key to the request object
+// the 'storage' key saves the image temporarily for in memory
+// You can also pass a file path on your server and it will save the image there
+const multer = Multer({
+  storage: Multer.MemoryStorage,
+  fileSize: 5 * 1024 * 1024
+});
 
 router.get('/count/:count/sort/:field/:way',(req, res)=>{
   let rowSearchParams = JSON.parse(decodeURI(JSON.stringify(req.query)));
@@ -15,6 +26,7 @@ router.get('/count/:count/sort/:field/:way',(req, res)=>{
 });
 
 router.post('/',(req, res)=>{
+  //multer.single('image'), imgUpload.uploadToGcs()
   publicationService.createPublication(req.body)
     .then(publication=>{res.status(200).json(publication)})
     .catch(error=>{res.status(500).send(error)})

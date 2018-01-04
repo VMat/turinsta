@@ -50,6 +50,7 @@ import {MyEmojiPickerPage} from "../pages/my-emoji-picker/my-emoji-picker";
 import {PublicationWritingPage} from "../pages/publication-writing/publication-writing";
 import {PlaceSelectingPage} from "../pages/place-selecting/place-selecting";
 import {DescriptionWritingPage} from "../pages/description-writing/description-writing";
+import {ImagePicker} from "@ionic-native/image-picker";
 
 
 @NgModule({
@@ -128,7 +129,8 @@ import {DescriptionWritingPage} from "../pages/description-writing/description-w
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     StorageProvider,
     CommonsProvider,
-    ImgcacheService
+    ImgcacheService,
+    ImagePicker
   ]
 })
 export class AppModule {}

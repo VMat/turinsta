@@ -102,4 +102,8 @@ export class StorageProvider {
   deletePublication(publication){
     return this.http.delete(StorageProvider.baseUrl + 'publications/' + publication,{headers: StorageProvider.headers});
   }
+
+  addPublicationImage(publication, images){
+    return this.http.post(StorageProvider.baseUrl + 'publications/images/publication/' + publication, images, {headers: StorageProvider.headers});
+  }
 }
