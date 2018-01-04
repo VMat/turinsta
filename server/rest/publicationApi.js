@@ -80,7 +80,6 @@ router.post('/images/publication/:publication',uploadHandler.any(),(request, res
   publicationService.addPublicationImage(request.params.publication, request.files)
     .then(publication=>{response.status(200).json(publication)})
     .catch(error=>{response.status(500).send(error)})
-  }); 
 });
 
 router.delete('/images/publication/:publication/image/:image',(req, res)=>{
