@@ -8,7 +8,7 @@ const MulterGoogleCloudStorage = require("multer-google-storage");
 // Adds a .file key to the request object
 // the 'storage' key saves the image temporarily for in memory
 // You can also pass a file path on your server and it will save the image there
-const uploadHandler = multer({
+const uploadHandler = Multer({
   storage: new MulterGoogleCloudStorage({
     filename    : ( req, file, cb )=>{       
       cb( null, file.fieldname + '-' + Date.now() );     
