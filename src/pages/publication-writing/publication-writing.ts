@@ -152,7 +152,7 @@ export class PublicationWritingPage {
       fileName: 'turinstafile',
       chunkedMode: true,
       mimeType: "image/jpeg",
-      headers: StorageProvider.headers
+      headers: {}
     };
 
     fileTransfer.upload(imageUrls[0], StorageProvider.baseUrl + 'publications/images/publication/' + this.publication._id, options)

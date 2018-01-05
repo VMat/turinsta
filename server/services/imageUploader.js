@@ -1,10 +1,14 @@
 'use strict';
 const storage = require('@google-cloud/storage');
 const fs = require('fs');
+const path = require('path');
+
+const filePath = path.join(__dirname, '/Turinsta-14582893bb92.json');
+console.log(filePath);
 
 const gcs = storage({
   projectId: 'turinsta-189517',
-  keyFilename: '../Turinsta-14582893bb92.json'
+  keyFilename: filePath
 });
 
 const bucketName = 'tur0000000001';
@@ -19,9 +23,9 @@ let ImgUpload = {};
 ImgUpload.uploadToGcs = (req, res, next) => {
   console.log("uploadToGcs");
   //console.log("Req: " + JSON.stringify(req));
-  
+
   // Note: cache should not be re-used by repeated calls to JSON.stringify.
-  var cache = [];
+  let cache = [];
   console.log(JSON.stringify(req, function(key, value) {
       if (typeof value === 'object' && value !== null) {
           if (cache.indexOf(value) !== -1) {
@@ -34,12 +38,11 @@ ImgUpload.uploadToGcs = (req, res, next) => {
       return value;
   }));
   cache = null; // Enable garbage collection
-  
-  
+
+
   console.log("file: " + req.file);
   console.log("files: " + req.files);
-  console.log("turinstafile: " + req.turinstafile);
-  
+
   if(!req.file) return next();
 
   // Can optionally add a path to the gcsname below by concatenating it before the filename

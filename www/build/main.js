@@ -829,7 +829,7 @@ var PublicationWritingPage = (function () {
             fileName: 'turinstafile',
             chunkedMode: true,
             mimeType: "image/jpeg",
-            headers: __WEBPACK_IMPORTED_MODULE_2__providers_storage_storage__["a" /* StorageProvider */].headers
+            headers: {}
         };
         fileTransfer.upload(imageUrls[0], __WEBPACK_IMPORTED_MODULE_2__providers_storage_storage__["a" /* StorageProvider */].baseUrl + 'publications/images/publication/' + this.publication._id, options)
             .then(function (data) {
