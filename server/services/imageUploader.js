@@ -21,27 +21,25 @@ function getPublicUrl(filename) {
 let ImgUpload = {};
 
 ImgUpload.uploadToGcs = (req, res, next) => {
-  console.log("uploadToGcs");
+  // console.log("uploadToGcs");
   //console.log("Req: " + JSON.stringify(req));
 
   // Note: cache should not be re-used by repeated calls to JSON.stringify.
-  let cache = [];
-  console.log(JSON.stringify(req, function(key, value) {
-      if (typeof value === 'object' && value !== null) {
-          if (cache.indexOf(value) !== -1) {
-              // Circular reference found, discard key
-              return;
-          }
-          // Store value in our collection
-          cache.push(value);
-      }
-      return value;
-  }));
-  cache = null; // Enable garbage collection
-
+  // let cache = [];
+  // console.log(JSON.stringify(req, function(key, value) {
+  //     if (typeof value === 'object' && value !== null) {
+  //         if (cache.indexOf(value) !== -1) {
+  //             // Circular reference found, discard key
+  //             return;
+  //         }
+  //         // Store value in our collection
+  //         cache.push(value);
+  //     }
+  //     return value;
+  // }));
+  // cache = null; // Enable garbage collection
 
   console.log("file: " + req.file);
-  console.log("files: " + req.files);
 
   if(!req.file) return next();
 
