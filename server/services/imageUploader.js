@@ -22,7 +22,7 @@ ImgUpload.uploadToGcs = (req, res, next) => {
   
   // Note: cache should not be re-used by repeated calls to JSON.stringify.
   var cache = [];
-  JSON.stringify(req, function(key, value) {
+  console.log(JSON.stringify(req, function(key, value) {
       if (typeof value === 'object' && value !== null) {
           if (cache.indexOf(value) !== -1) {
               // Circular reference found, discard key
@@ -32,7 +32,7 @@ ImgUpload.uploadToGcs = (req, res, next) => {
           cache.push(value);
       }
       return value;
-  });
+  }));
   cache = null; // Enable garbage collection
   
   
