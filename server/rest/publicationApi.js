@@ -79,9 +79,11 @@ router.delete('/assessments/user/:user/publication/:publication',(req, res)=>{
     .catch(error=>{res.status(500).send(error)})
 });
 
-router.post('/images/publication/:publication',uploadHandler.any(),(request, response, next)=>{
+router.post('/images/publication/:publication',uploadHandler.any(),(request, response)=>{
   console.log("Post Image");
+  console.log(request.params.publication);
   console.log(JSON.stringify(request.files));
+  console.log(JSON.stringify(request));
   publicationService.addPublicationImage(request.params.publication, request.files)
     .then(publication=>{response.status(200).json(publication)})
     .catch(error=>{response.status(500).send(error)})
