@@ -10,12 +10,12 @@ const MulterGoogleCloudStorage = require("multer-google-storage");
 // You can also pass a file path on your server and it will save the image there
 const uploadHandler = Multer({
   storage: MulterGoogleCloudStorage.storageEngine({
-    filename    : ( req, file, cb )=>{       
-      cb( null, file.fieldname + '-' + Date.now() );     
+    filename    : ( req, file, cb )=>{
+      cb( null, file.fieldname + '-' + Date.now() );
     },
-    bucket      : 'tur0000000001', // Required : bucket name to upload 
-    projectId      : 'turinsta-189517', // Required : Google project ID 
-    keyFilename : '../Turinsta-14582893bb92.json' // Required : JSON credentials file for Google Cloud Storage 
+    bucket      : 'tur0000000001', // Required : bucket name to upload
+    projectId      : 'turinsta-189517', // Required : Google project ID
+    keyFilename : '../Turinsta-14582893bb92.json' // Required : JSON credentials file for Google Cloud Storage
   })
 });
 
@@ -77,6 +77,7 @@ router.delete('/assessments/user/:user/publication/:publication',(req, res)=>{
 
 router.post('/images/publication/:publication',uploadHandler.any(),(request, response, next)=>{
   console.log("Post Image");
+  console.log(JSON.stringify(request.files));
   publicationService.addPublicationImage(request.params.publication, request.files)
     .then(publication=>{response.status(200).json(publication)})
     .catch(error=>{response.status(500).send(error)})

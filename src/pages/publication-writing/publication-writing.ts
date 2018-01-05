@@ -150,12 +150,12 @@ export class PublicationWritingPage {
     let options: FileUploadOptions = {
       fileKey: 'turinstafile',
       fileName: 'turinstafile',
-      chunkedMode: false,
+      chunkedMode: true,
       mimeType: "image/jpeg",
       headers: StorageProvider.headers
     };
 
-    fileTransfer.upload(imageUrls, StorageProvider.baseUrl + 'publications/images/publication/' + this.publication._id, options)
+    fileTransfer.upload(imageUrls[0], StorageProvider.baseUrl + 'publications/images/publication/' + this.publication._id, options)
       .then((data) => {
         console.log(data+" Uploaded Successfully");
         loader.dismiss();
@@ -163,6 +163,7 @@ export class PublicationWritingPage {
       }, (err) => {
         console.log(err);
         loader.dismiss();
+        this.commons.presentToast(JSON.stringify(err));
         this.commons.presentToast(err);
     });
   }
