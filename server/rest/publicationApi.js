@@ -83,7 +83,6 @@ router.post('/images/publication/:publication',uploadHandler.any(),(request, res
   console.log("Post Image");
   console.log(request.params.publication);
   console.log(JSON.stringify(request.files));
-  console.log(JSON.stringify(request));
   publicationService.addPublicationImage(request.params.publication, request.files)
     .then(publication=>{response.status(200).json(publication)})
     .catch(error=>{response.status(500).send(error)})
