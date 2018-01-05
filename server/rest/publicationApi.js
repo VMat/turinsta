@@ -8,15 +8,19 @@ const MulterGoogleCloudStorage = require("multer-google-storage");
 // Adds a .file key to the request object
 // the 'storage' key saves the image temporarily for in memory
 // You can also pass a file path on your server and it will save the image there
+// const uploadHandler = Multer({
+//   storage: MulterGoogleCloudStorage.storageEngine({
+//     filename    : ( req, file, cb )=>{
+//       cb( null, file.fieldname + '-' + Date.now() );
+//     },
+//     bucket      : 'tur0000000001', // Required : bucket name to upload
+//     projectId      : 'turinsta-189517', // Required : Google project ID
+//     keyFilename : '../Turinsta-14582893bb92.json' // Required : JSON credentials file for Google Cloud Storage
+//   })
+// });
+
 const uploadHandler = Multer({
-  storage: MulterGoogleCloudStorage.storageEngine({
-    filename    : ( req, file, cb )=>{
-      cb( null, file.fieldname + '-' + Date.now() );
-    },
-    bucket      : 'tur0000000001', // Required : bucket name to upload
-    projectId      : 'turinsta-189517', // Required : Google project ID
-    keyFilename : '../Turinsta-14582893bb92.json' // Required : JSON credentials file for Google Cloud Storage
-  })
+  storage: MulterGoogleCloudStorage.storageEngine()
 });
 
 router.get('/count/:count/sort/:field/:way',(req, res)=>{
