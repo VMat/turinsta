@@ -84,7 +84,7 @@ router.delete('/assessments/user/:user/publication/:publication',(req, res)=>{
     .catch(error=>{res.status(500).send(error)})
 });
 
-router.post('/images/publication/:publication',uploadHandler.single('turinstafile'),(request, response)=>{
+router.post('/images/publication/:publication',uploadHandler.single('turinstafile'),imageUploader.uploadToGcs,(request, response)=>{
   console.log("Post Image");
   console.log(request.params.publication);
   console.log(JSON.stringify(request.file));
