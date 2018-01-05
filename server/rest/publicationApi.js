@@ -2,7 +2,7 @@ const router = require('express').Router();
 const publicationService = require('../services/publicationService');
 const Multer = require('multer');
 const MulterGoogleCloudStorage = require("multer-google-storage");
-//const imageUploader = require('../services/imageUploader');
+const imageUploader = require('../services/imageUploader');
 
 // Handles the multipart/form-data
 // Adds a .file key to the request object
@@ -19,8 +19,13 @@ const MulterGoogleCloudStorage = require("multer-google-storage");
 //   })
 // });
 
+//const uploadHandler = Multer({
+//  storage: MulterGoogleCloudStorage.storageEngine()
+//});
+
 const uploadHandler = Multer({
-  storage: MulterGoogleCloudStorage.storageEngine()
+  storage: Multer.MemoryStorage,
+  fileSize: 5 * 1024 * 1024
 });
 
 router.get('/count/:count/sort/:field/:way',(req, res)=>{
