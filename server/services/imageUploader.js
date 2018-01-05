@@ -19,6 +19,9 @@ let ImgUpload = {};
 ImgUpload.uploadToGcs = (req, res, next) => {
   console.log("uploadToGcs");
   //console.log("Req: " + JSON.stringify(req));
+  console.log("file: " + req.file);
+  console.log("files: " + req.files);
+  console.log("turinstafile: " + req.turinstafile);
   
   if(!req.file) return next();
 
