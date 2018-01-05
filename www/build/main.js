@@ -837,10 +837,9 @@ var PublicationWritingPage = (function () {
             loader.dismiss();
             _this.commons.presentToast("Image uploaded successfully");
         }, function (err) {
-            console.log(err);
             loader.dismiss();
             _this.commons.presentToast(JSON.stringify(err));
-            _this.commons.presentToast(err);
+            // this.commons.presentToast(err);
         });
     };
     PublicationWritingPage.prototype.addImage = function () {
@@ -854,6 +853,7 @@ var PublicationWritingPage = (function () {
         this.imagePicker.getPictures(options).then(
         // file_uris => this._navCtrl.push(GalleryPage, {images: file_uris}),
         function (file_uris) {
+            alert(JSON.stringify(file_uris));
             _this.uploadFile(file_uris);
             // this.storageService.addPublicationImage(this.publication._id, file_uris).subscribe((updatedPublication)=>{
             //   this.commons.presentToast("Las imágenes se han cargado correctamente");

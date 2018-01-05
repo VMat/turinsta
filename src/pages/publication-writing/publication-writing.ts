@@ -161,10 +161,9 @@ export class PublicationWritingPage {
         loader.dismiss();
         this.commons.presentToast("Image uploaded successfully");
       }, (err) => {
-        console.log(err);
         loader.dismiss();
         this.commons.presentToast(JSON.stringify(err));
-        this.commons.presentToast(err);
+        // this.commons.presentToast(err);
     });
   }
 
@@ -179,7 +178,7 @@ export class PublicationWritingPage {
     this.imagePicker.getPictures(options).then(
     // file_uris => this._navCtrl.push(GalleryPage, {images: file_uris}),
       file_uris => {
-
+        alert(JSON.stringify(file_uris));
         this.uploadFile(file_uris);
         // this.storageService.addPublicationImage(this.publication._id, file_uris).subscribe((updatedPublication)=>{
         //   this.commons.presentToast("Las imágenes se han cargado correctamente");
