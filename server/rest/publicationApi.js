@@ -86,7 +86,9 @@ router.delete('/assessments/user/:user/publication/:publication',(req, res)=>{
 });
 
 router.post('/images/publication/:publication',uploadHandler.any(),imageUploader.uploadToGcs,(request, response)=>{
-  publicationService.addPublicationImage(request.params.publication, request.file.cloudStoragePublicUrl)
+  const cloudStoragePublicUrls = request.files.map((file)=>{return file.cloudStoragePublicUrl});
+  console.log("cloudStoragePublicUrls: " + cloudStoragePublicUrls);
+  publicationService.addPublicationImage(request.params.publication, cloudStoragePublicUrls)
     .then(publication=>{response.status(200).json(publication)})
     .catch(error=>{console.log(error);response.status(500).send(error)})
 });
