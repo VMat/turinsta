@@ -14,7 +14,7 @@ const aclOptions = {
   entity: 'allUsers',
   role: storage.acl.READER_ROLE
 };
-bucket.acl.add(aclOptions, function(err, aclObject) {});
+// bucket.acl.add(aclOptions, function(err, aclObject) {});
 bucket.acl.default.add(aclOptions, function(err, aclObject) {});
 
 function getPublicUrl(filename) {
