@@ -10,10 +10,12 @@ const gcs = storage({
 
 const bucketName = 'tur0000000001';
 const bucket = gcs.bucket(bucketName);
-bucket.acl.add({
+const aclOptions = {
   entity: 'allUsers',
-  role: storage.acl.OWNER_ROLE
-}, function(err, aclObject) {});
+  role: storage.acl.READER_ROLE
+};
+bucket.acl.add(aclOptions, function(err, aclObject) {});
+bucket.acl.default.add(aclOptions, function(err, aclObject) {});
 
 function getPublicUrl(filename) {
   return 'https://storage.googleapis.com/' + bucketName + '/' + filename;
