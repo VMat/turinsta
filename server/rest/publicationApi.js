@@ -85,11 +85,7 @@ router.delete('/assessments/user/:user/publication/:publication',(req, res)=>{
 });
 
 router.post('/images/publication/:publication',uploadHandler.single('turinstafile'),imageUploader.uploadToGcs,(request, response)=>{
-  // console.log("Post Image");
-  // console.log(request.params.publication);
-  console.log("File uploaded " + JSON.stringify(request.file));
-  // console.log(JSON.stringify(request.files));
-  publicationService.addPublicationImage(request.params.publication, request.file)
+  publicationService.addPublicationImage(request.params.publication, request.file.cloudStoragePublicUrl)
     .then(publication=>{response.status(200).json(publication)})
     .catch(error=>{console.log(error);response.status(500).send(error)})
 });

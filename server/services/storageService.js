@@ -25,7 +25,7 @@ const storageService = (function(){
     patchPublication: (id,fields)=>{
       return db.patchPublication(id,fields);
     },
-    
+
     updatePublication: (publication)=>{
       return db.updatePublication(publication);
     },
@@ -37,23 +37,23 @@ const storageService = (function(){
     addPublicationAssessment: (assessment)=>{
       return db.addPublicationAssessment(assessment);
     },
-    
+
     modifyPublicationAssessment: (assessment)=>{
       return db.modifyPublicationAssessment(assessment)
     },
-    
+
     deletePublicationAssessment: (assessment)=>{
       return db.deletePublicationAssessment(assessment)
     },
-    
-    addPublicationImage: (publicationId, image)=>{
-      return db.addPublicationImage(publicationId, image)
+
+    addPublicationImage: (publicationId, imageUrl)=>{
+      return db.addPublicationImage(publicationId, imageUrl)
     },
-    
+
     deletePublicationImage: (publicationId, imageUrl)=>{
       return db.deletePublicationImage(publicationId, imageUrl)
     },
-    
+
     getActivities: ()=>{
       return db.getActivities();
     },
@@ -105,7 +105,7 @@ const storageService = (function(){
     deleteExperience: (id)=>{
       return db.deleteExperience(id);
     },
-    
+
     getUsers: ()=>{
       return db.getUsers();
     },
@@ -121,19 +121,19 @@ const storageService = (function(){
     updateUser: (user)=>{
       return db.updateUser(user);
     },
-    
+
     addFavoritePublication: (favorite)=>{
       return db.addFavoritePublication(favorite);
     },
-    
+
     removeFavoritePublication: (favorite)=>{
       return db.removeFavoritePublication(favorite);
     },
-    
+
     addUserFollower: (follower)=>{
       return db.addUserFollower(follower);
     },
-    
+
     removeUserFollower: (follower)=>{
       return db.removeUserFollower(follower);
     }

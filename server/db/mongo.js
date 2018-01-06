@@ -36,7 +36,7 @@ let db = (function(){
     patchPublication: (id,fields)=>{
       return publicationInterface.patch(id,fields)
     },
-    
+
     updatePublication: (publication)=>{
       return publicationInterface.update(publication);
     },
@@ -48,23 +48,23 @@ let db = (function(){
     deletePublication: (id)=>{
       return publicationInterface.deleteOne(id);
     },
-    
+
     addPublicationAssessment: (assessment)=>{
       return publicationInterface.addPublicationAssessment(assessment);
     },
-    
+
     modifyPublicationAssessment: (assessment)=>{
       return publicationInterface.modifyPublicationAssessment(assessment);
     },
-    
+
     deletePublicationAssessment: (assessment)=>{
       return publicationInterface.deletePublicationAssessment(assessment);
     },
-    
-    addPublicationImage: (publicationId, image)=>{
-      return publicationInterface.addPublicationImage(publicationId, image);
+
+    addPublicationImage: (publicationId, imageUrl)=>{
+      return publicationInterface.addPublicationImage(publicationId, imageUrl);
     },
-    
+
     deletePublicationImage: (publicationId, imageUrl)=>{
       return publicationInterface.deletePublicationImage(publicationId);
     },
@@ -104,7 +104,7 @@ let db = (function(){
     deleteComment: (id)=>{
       return commentInterface.deleteOne(id);
     },
-    
+
     getExperience: (id)=>{
       return experienceInterface.getOne(id);
     },
@@ -136,19 +136,19 @@ let db = (function(){
     updateUser: (user)=>{
       return userInterface.update(user);
     },
-    
+
     addFavoritePublication: (favorite)=>{
       return userInterface.addFavoritePublication(favorite);
     },
-    
+
     removeFavoritePublication: (favorite)=>{
       return userInterface.removeFavoritePublication(favorite);
     },
-    
+
     addUserFollower: (follower)=>{
       return userInterface.addUserFollower(follower);
     },
-    
+
     removeUserFollower: (follower)=>{
       return userInterface.removeUserFollower(follower);
     }

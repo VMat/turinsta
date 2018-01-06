@@ -3,12 +3,9 @@ const storage = require('@google-cloud/storage');
 const fs = require('fs');
 const path = require('path');
 
-const filePath = path.join(__dirname, '/../Turinsta-14582893bb92.json');
-console.log(filePath);
-
 const gcs = storage({
   projectId: 'turinsta-189517',
-  keyFilename: filePath
+  keyFilename: path.join(__dirname, '/../Turinsta-14582893bb92.json')
 });
 
 const bucketName = 'tur0000000001';
@@ -21,25 +18,6 @@ function getPublicUrl(filename) {
 let ImgUpload = {};
 
 ImgUpload.uploadToGcs = (req, res, next) => {
-  // console.log("uploadToGcs");
-  //console.log("Req: " + JSON.stringify(req));
-
-  // Note: cache should not be re-used by repeated calls to JSON.stringify.
-  // let cache = [];
-  // console.log(JSON.stringify(req, function(key, value) {
-  //     if (typeof value === 'object' && value !== null) {
-  //         if (cache.indexOf(value) !== -1) {
-  //             // Circular reference found, discard key
-  //             return;
-  //         }
-  //         // Store value in our collection
-  //         cache.push(value);
-  //     }
-  //     return value;
-  // }));
-  // cache = null; // Enable garbage collection
-
-  console.log("file: " + req.file);
 
   if(!req.file) return next();
 

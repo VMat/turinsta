@@ -29,7 +29,7 @@ const publicationService = (function(){
           catch(error=>reject(error))
       })
     },
-    
+
     patchPublication: (id,fields)=>{
       return new Promise((resolve, reject)=>{
         storageService.patchPublication(id,fields).
@@ -53,7 +53,7 @@ const publicationService = (function(){
         catch(error=>reject(error))
       })
     },
-    
+
     addPublicationAssessment: (assessment)=>{
       return new Promise((resolve, reject)=>{
       storageService.addPublicationAssessment(assessment).
@@ -61,7 +61,7 @@ const publicationService = (function(){
         catch(error=>reject(error))
       })
     },
-    
+
     modifyPublicationAssessment: (assessment)=>{
       return new Promise((resolve, reject)=>{
       storageService.modifyPublicationAssessment(assessment).
@@ -69,7 +69,7 @@ const publicationService = (function(){
         catch(error=>reject(error))
       })
     },
-    
+
     deletePublicationAssessment: (assessment)=>{
       return new Promise((resolve, reject)=>{
       storageService.deletePublicationAssessment(assessment).
@@ -77,15 +77,15 @@ const publicationService = (function(){
         catch(error=>reject(error))
       })
     },
-    
-    addPublicationImage: (publicationId, image)=>{
+
+    addPublicationImage: (publicationId, imageUrl)=>{
       return new Promise((resolve, reject)=>{
-      storageService.addPublicationImage(publicationId, image).
+      storageService.addPublicationImage(publicationId, imageUrl).
         then(updatedPublication=>resolve(updatedPublication)).
         catch(error=>reject(error))
       })
     },
-    
+
     deletePublicationImage: (publicationId, imageUrl)=>{
       return new Promise((resolve, reject)=>{
       storageService.deletePublicationImage(publicationId, imageUrl).

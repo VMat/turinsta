@@ -19,7 +19,7 @@ const PublicationInterface = (function(){
         .populate('comments');
     },
 
-    getN: (searchParams,n,order)=>{      
+    getN: (searchParams,n,order)=>{
       let filters = Commons.processAggregateParams(searchParams);
       return Publications.aggregate([
         {
@@ -108,7 +108,7 @@ const PublicationInterface = (function(){
     patch: (id,fields)=>{
       return Commons.patch(Publications,id,fields)
     },
-    
+
     update: (publication)=>{
       return Commons.update(Publications,publication);
     },
@@ -121,11 +121,11 @@ const PublicationInterface = (function(){
             return CommentInterface.deleteFromPublication(id)
             .then(()=>{
               return Commons.removeOne(Publications,publication);
-            })   
+            })
           })
         });
     },
-    
+
     addPublicationAssessment: (assessment)=>{
       return Commons.getOne(Publications, assessment.publication)
         .then((publication)=> {
@@ -134,7 +134,7 @@ const PublicationInterface = (function(){
           return Commons.update(Publications,publication);
         });
     },
-    
+
     modifyPublicationAssessment: (assessment)=>{
       return Commons.getOne(Publications, assessment.publication)
         .then((publication)=> {
@@ -149,7 +149,7 @@ const PublicationInterface = (function(){
           return Commons.update(Publications,publication);
         });
     },
-    
+
     deletePublicationAssessment: (assessment)=>{
       return Commons.getOne(Publications, assessment.publication)
         .then((publication)=> {
@@ -162,7 +162,7 @@ const PublicationInterface = (function(){
           return Commons.update(Publications,publication);
         });
     },
-    
+
     addPublicationFollower: (publication, user)=>{
       return Commons.getOne(Publications, publication)
         .then((publication)=>{
@@ -170,7 +170,7 @@ const PublicationInterface = (function(){
           return Commons.update(Publications,publication);
         });
     },
-    
+
     removePublicationFollower: (publication, user)=>{
       return Commons.getOne(Publications, publication)
         .then((publication)=>{
@@ -178,10 +178,15 @@ const PublicationInterface = (function(){
           return Commons.update(Publications,publication);
         });
     },
-    
-    addPublicationImage: (publicationId, image)=>{      
+
+    addPublicationImage: (publicationId, image)=>{
+      return Commons.getOne(Publications, publicationId)
+        .then((publication)=>{
+          publication.images.push({url:image});
+          return Commons.update(Publications,publication);
+      });
     },
-    
+
     deletePublicationImage(publicationId, imageUrl){
     }
 
