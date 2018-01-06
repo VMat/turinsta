@@ -179,10 +179,12 @@ const PublicationInterface = (function(){
         });
     },
 
-    addPublicationImage: (publicationId, image)=>{
+    addPublicationImage: (publicationId, images)=>{
       return Commons.getOne(Publications, publicationId)
         .then((publication)=>{
-          publication.images.push({url:image});
+          images.forEach((image)=>{
+            publication.images.push({url:image});
+          });
           return Commons.update(Publications,publication);
       });
     },

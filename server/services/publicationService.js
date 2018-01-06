@@ -78,9 +78,9 @@ const publicationService = (function(){
       })
     },
 
-    addPublicationImage: (publicationId, imageUrl)=>{
+    addPublicationImage: (publicationId, imageUrls)=>{
       return new Promise((resolve, reject)=>{
-      storageService.addPublicationImage(publicationId, imageUrl).
+      storageService.addPublicationImage(publicationId, imageUrls).
         then(updatedPublication=>resolve(updatedPublication)).
         catch(error=>reject(error))
       })
