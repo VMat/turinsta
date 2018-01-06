@@ -11,7 +11,7 @@ const gcs = storage({
 const bucketName = 'tur0000000001';
 const bucket = gcs.bucket(bucketName);
 bucket.acl.add({
-  entity: 'allusers',
+  entity: 'allUsers',
   role: storage.acl.OWNER_ROLE
 }, function(err, aclObject) {});
 
