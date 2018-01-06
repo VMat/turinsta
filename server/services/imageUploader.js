@@ -22,7 +22,7 @@ ImgUpload.uploadToGcs = (req, res, next) => {
   if(!req.file) return next();
 
   // Can optionally add a path to the gcsname below by concatenating it before the filename
-  const gcsname = req.file.originalname;
+  const gcsname = req.file.originalname + '-' + Date.now();
   const file = bucket.file(gcsname);
 
   const stream = file.createWriteStream({

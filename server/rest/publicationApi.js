@@ -2,32 +2,32 @@ const router = require('express').Router();
 const publicationService = require('../services/publicationService');
 const path = require('path');
 const Multer = require('multer');
-const MulterGoogleCloudStorage = require("multer-google-storage");
+// const MulterGoogleCloudStorage = require("multer-google-storage");
 const imageUploader = require('../services/imageUploader');
 
 // Handles the multipart/form-data
 // Adds a .file key to the request object
 // the 'storage' key saves the image temporarily for in memory
 // You can also pass a file path on your server and it will save the image there
-const uploadHandler = Multer({
-  storage: MulterGoogleCloudStorage.storageEngine({
-    filename    : ( req, file, cb )=>{
-      cb( null, file.fieldname + '-' + Date.now() + ".jpeg" );
-    },
-    bucket      : 'tur0000000001', // Required : bucket name to upload
-    projectId      : 'turinsta-189517', // Required : Google project ID
-    keyFilename : path.join(__dirname, '/../Turinsta-14582893bb92.json') // Required : JSON credentials file for Google Cloud Storage
-  })
-});
+// const uploadHandler = Multer({
+//   storage: MulterGoogleCloudStorage.storageEngine({
+//     filename    : ( req, file, cb )=>{
+//       cb( null, file.fieldname + '-' + Date.now());
+//     },
+//     bucket      : 'tur0000000001', // Required : bucket name to upload
+//     projectId      : 'turinsta-189517', // Required : Google project ID
+//     keyFilename : path.join(__dirname, '/../Turinsta-14582893bb92.json') // Required : JSON credentials file for Google Cloud Storage
+//   })
+// });
 
 //const uploadHandler = Multer({
 //  storage: MulterGoogleCloudStorage.storageEngine()
 //});
 
-// const uploadHandler = Multer({
-//   storage: Multer.MemoryStorage,
-//   fileSize: 5 * 1024 * 1024
-// });
+const uploadHandler = Multer({
+  storage: Multer.MemoryStorage,
+  fileSize: 5 * 1024 * 1024
+});
 
 router.get('/count/:count/sort/:field/:way',(req, res)=>{
   let rowSearchParams = JSON.parse(decodeURI(JSON.stringify(req.query)));
@@ -85,7 +85,7 @@ router.delete('/assessments/user/:user/publication/:publication',(req, res)=>{
     .catch(error=>{res.status(500).send(error)})
 });
 
-router.post('/images/publication/:publication',uploadHandler.single('turinstafile'),(request, response)=>{
+router.post('/images/publication/:publication',uploadHandler.single('turinstafile'),imageUploader.uploadToGcs,(request, response)=>{
   publicationService.addPublicationImage(request.params.publication, request.file.cloudStoragePublicUrl)
     .then(publication=>{response.status(200).json(publication)})
     .catch(error=>{console.log(error);response.status(500).send(error)})

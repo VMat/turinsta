@@ -149,7 +149,7 @@ export class PublicationWritingPage {
 
     let options: FileUploadOptions = {
       fileKey: 'turinstafile',
-      fileName: 'turinstafile',
+      fileName: this.user._id,
       chunkedMode: true,
       mimeType: "image/jpeg",
       headers: {}
