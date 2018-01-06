@@ -33,7 +33,7 @@ ImgUpload.uploadToGcs = (req, res, next) => {
 
   req.files.map((file,i)=>{
     gcsname[i] = file.originalname + '-' + Date.now();
-    bucketFile[i] = bucket.file(gcsname);
+    bucketFile[i] = bucket.file(gcsname[i]);
     stream[i] = bucketFile[i].createWriteStream({
       metadata: {
         contentType: file.mimetype
