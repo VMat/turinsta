@@ -85,7 +85,7 @@ router.delete('/assessments/user/:user/publication/:publication',(req, res)=>{
     .catch(error=>{res.status(500).send(error)})
 });
 
-router.post('/images/publication/:publication',uploadHandler.single('turinstafile'),imageUploader.uploadToGcs,(request, response)=>{
+router.post('/images/publication/:publication',uploadHandler.any(),imageUploader.uploadToGcs,(request, response)=>{
   publicationService.addPublicationImage(request.params.publication, request.file.cloudStoragePublicUrl)
     .then(publication=>{response.status(200).json(publication)})
     .catch(error=>{console.log(error);response.status(500).send(error)})
