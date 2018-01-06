@@ -164,6 +164,35 @@ export class PublicationWritingPage {
         loader.dismiss();
         this.commons.presentToast(JSON.stringify(err));
         // this.commons.presentToast(err);
+      });
+  }
+
+  uploadPics(images) {
+    let loader = this.loadingCtrl.create({
+      content: "Subiendo imágenes..."
+    });
+    loader.present();
+    Promise.all(
+      images.map((i)=>{
+        let uri = StorageProvider.baseUrl + 'publications/images/publication/' + this.publication._id;
+        let options: FileUploadOptions = {
+          fileKey: 'turinstafile',
+          fileName: this.user._id,
+          chunkedMode: true,
+          mimeType: "image/jpeg",
+          headers: {}
+        };
+        const ft: FileTransferObject = this.transfer.create();
+        return ft.upload(i, uri, options);
+      })
+    )
+    .then((value) => {
+      loader.dismiss();
+      this.commons.presentToast("Image uploaded successfully")
+    })
+    .catch((err) => {
+      loader.dismiss();
+      this.commons.presentToast("Image uploaded failed")
     });
   }
 
@@ -178,11 +207,7 @@ export class PublicationWritingPage {
     this.imagePicker.getPictures(options).then(
     // file_uris => this._navCtrl.push(GalleryPage, {images: file_uris}),
       file_uris => {
-        alert(JSON.stringify(file_uris));
-        this.uploadFile(file_uris);
-        // this.storageService.addPublicationImage(this.publication._id, file_uris).subscribe((updatedPublication)=>{
-        //   this.commons.presentToast("Las imágenes se han cargado correctamente");
-        // });
+        this.uploadPics(file_uris);
       },
       err => this.commons.presentToast("Se ha producido un error al cargar la imagen")
     );

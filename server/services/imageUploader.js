@@ -10,6 +10,10 @@ const gcs = storage({
 
 const bucketName = 'tur0000000001';
 const bucket = gcs.bucket(bucketName);
+bucket.acl.add({
+  entity: 'allusers',
+  role: storage.acl.OWNER_ROLE
+}, function(err, aclObject) {});
 
 function getPublicUrl(filename) {
   return 'https://storage.googleapis.com/' + bucketName + '/' + filename;
@@ -20,10 +24,6 @@ let ImgUpload = {};
 ImgUpload.uploadToGcs = (req, res, next) => {
 
   if(!req.files) return next();
-
-  console.log(JSON.stringify(req.files));
-
-  // Can optionally add a path to the gcsname below by concatenating it before the filename
 
   let gcsname = [];
   let bucketFile = [];
@@ -59,31 +59,6 @@ ImgUpload.uploadToGcs = (req, res, next) => {
 
     stream[i].end(file.buffer);
   });
-
-  // const gcsname = req.files.originalname + '-' + Date.now();
-  // const file = bucket.file(gcsname);
-
-  // const stream = file.createWriteStream({
-  //   metadata: {
-  //     contentType: req.files.mimetype
-  //   }
-  // });
-
-  // stream.on('error', (err) => {
-  //   console.log("Upload failed");
-  //   req.files.cloudStorageError = err;
-  //   next(err);
-  // });
-  //
-  // stream.on('finish', () => {
-  //   req.file.cloudStorageObject = gcsname;
-  //   req.file.cloudStoragePublicUrl = getPublicUrl(gcsname);
-  //   console.log("Upload finished");
-  //   console.log("Url: " + req.file.cloudStoragePublicUrl);
-  //   next();
-  // });
-
-  // stream.end(req.file.buffer);
 };
 
 module.exports = ImgUpload;
