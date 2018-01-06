@@ -12,7 +12,7 @@ const imageUploader = require('../services/imageUploader');
 const uploadHandler = Multer({
   storage: MulterGoogleCloudStorage.storageEngine({
     filename    : ( req, file, cb )=>{
-      cb( null, file.fieldname + '-' + Date.now() );
+      cb( null, file.fieldname + '-' + Date.now() + ".jpeg" );
     },
     bucket      : 'tur0000000001', // Required : bucket name to upload
     projectId      : 'turinsta-189517', // Required : Google project ID
