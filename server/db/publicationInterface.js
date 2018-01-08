@@ -195,7 +195,7 @@ const PublicationInterface = (function(){
         .then((publication)=>{
           publication.images.forEach((image,i)=>{
             if(image._id==imageId){
-              imageUploader.removeFromGcs(image.url).
+              return imageUploader.removeFromGcs(image.url).
                 then(()=>{
                   publication.images.splice(i,1);
                   return Commons.update(Publications,publication);
