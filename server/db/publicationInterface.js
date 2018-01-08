@@ -5,6 +5,7 @@ const Comments = require('../models/comment');
 const Commons = require('./commons');
 const ExperienceInterface = require('./experienceInterface');
 const CommentInterface = require('./commentInterface');
+const imageUploader = require('../services/imageUploader');
 
 const PublicationInterface = (function(){
 
@@ -189,7 +190,19 @@ const PublicationInterface = (function(){
       });
     },
 
-    deletePublicationImage(publicationId, imageUrl){
+    deletePublicationImage(publicationId, imageId){
+      return Commons.getOne(Publications, publicationId)
+        .then((publication)=>{
+          publication.images.forEach((image,i)=>{
+            if(image._id==imageId){
+              imageUploader.removeFromGcs(image.url).
+                then(()=>{
+                  publication.images.splice(i,1);
+                  return Commons.update(Publications,publication);
+                })
+            }
+          });
+        });
     }
 
   };
