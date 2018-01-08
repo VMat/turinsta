@@ -63,4 +63,8 @@ ImgUpload.uploadToGcs = (req, res, next) => {
   });
 };
 
+ImgUpload.removeFromGcs = (imageUrl)=>{
+  return next();
+};
+
 module.exports = ImgUpload;
