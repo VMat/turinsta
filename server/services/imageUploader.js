@@ -65,7 +65,7 @@ ImgUpload.uploadToGcs = (req, res, next) => {
 
 ImgUpload.removeFromGcs = (imageUrl)=>{
   return new Promise((resolve, reject)=>{
-    resolve()   
+    resolve(imageUrl)   
   })
 };
 
