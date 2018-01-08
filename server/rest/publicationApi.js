@@ -2,27 +2,7 @@ const router = require('express').Router();
 const publicationService = require('../services/publicationService');
 const path = require('path');
 const Multer = require('multer');
-// const MulterGoogleCloudStorage = require("multer-google-storage");
 const imageUploader = require('../services/imageUploader');
-
-// Handles the multipart/form-data
-// Adds a .file key to the request object
-// the 'storage' key saves the image temporarily for in memory
-// You can also pass a file path on your server and it will save the image there
-// const uploadHandler = Multer({
-//   storage: MulterGoogleCloudStorage.storageEngine({
-//     filename    : ( req, file, cb )=>{
-//       cb( null, file.fieldname + '-' + Date.now());
-//     },
-//     bucket      : 'tur0000000001', // Required : bucket name to upload
-//     projectId      : 'turinsta-189517', // Required : Google project ID
-//     keyFilename : path.join(__dirname, '/../Turinsta-14582893bb92.json') // Required : JSON credentials file for Google Cloud Storage
-//   })
-// });
-
-//const uploadHandler = Multer({
-//  storage: MulterGoogleCloudStorage.storageEngine()
-//});
 
 const uploadHandler = Multer({
   storage: Multer.MemoryStorage,
@@ -87,7 +67,6 @@ router.delete('/assessments/user/:user/publication/:publication',(req, res)=>{
 
 router.post('/images/publication/:publication',uploadHandler.any(),imageUploader.uploadToGcs,(request, response)=>{
   const cloudStoragePublicUrls = request.files.map((file)=>{return file.cloudStoragePublicUrl});
-  console.log("cloudStoragePublicUrls: " + cloudStoragePublicUrls);
   publicationService.addPublicationImage(request.params.publication, cloudStoragePublicUrls)
     .then(publication=>{response.status(200).json(publication)})
     .catch(error=>{console.log(error);response.status(500).send(error)})
