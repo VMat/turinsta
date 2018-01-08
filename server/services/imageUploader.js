@@ -64,9 +64,9 @@ ImgUpload.uploadToGcs = (req, res, next) => {
 };
 
 ImgUpload.removeFromGcs = (imageUrl)=>{
-  return new Promise((resolve, reject)=>{
-    resolve(imageUrl)   
-  })
+  let parsedUrl = imageUrl.split("/");
+  let file = bucket.file(parsedUrl[parsedUrl.length-1]);
+  return file.delete();
 };
 
 module.exports = ImgUpload;
