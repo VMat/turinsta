@@ -1,7 +1,7 @@
-import { Component } from '@angular/core';
+import {Component, ViewChild} from '@angular/core';
 import {
   IonicPage, NavController, NavParams, ViewController, AlertController, ModalController,
-  LoadingController
+  LoadingController, Slides
 } from 'ionic-angular';
 import {StorageProvider} from "../../providers/storage/storage";
 import {CommonsProvider} from "../../providers/commons/commons";
@@ -30,6 +30,8 @@ export class PublicationWritingPage {
   loggedUser: string = null;
   experienceListOpened: boolean = false;
   commentListOpened: boolean = false;
+
+  @ViewChild(Slides) slides: Slides;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private viewCtrl: ViewController,
               private alertCtrl: AlertController, private storageService: StorageProvider, private commons: CommonsProvider,
@@ -113,6 +115,27 @@ export class PublicationWritingPage {
     confirm.present();
   }
 
+  confirmDeleteImage() {
+    let confirm = this.alertCtrl.create({
+      title: 'Confirmar operación',
+      message: '¿Está seguro que desea eliminar la imagen?',
+      buttons: [
+        {
+          text: 'Aceptar',
+          handler: () => {
+            this.removeImage();
+          }
+        },
+        {
+          text: 'Cancelar',
+          handler: () => {
+          }
+        }
+      ]
+    });
+    confirm.present();
+  }
+
   savePublication(){
     sessionStorage.setItem("this.publication",JSON.stringify(this.publication));
     if(Boolean(this.publication._id)){
@@ -138,33 +161,6 @@ export class PublicationWritingPage {
 
   setPlace(event){
     this.publication.places = [event];
-  }
-
-  uploadFile(imageUrls) {
-    let loader = this.loadingCtrl.create({
-      content: "Uploading..."
-    });
-    loader.present();
-    const fileTransfer: FileTransferObject = this.transfer.create();
-
-    let options: FileUploadOptions = {
-      fileKey: 'turinstafile',
-      fileName: this.user._id,
-      chunkedMode: true,
-      mimeType: "image/jpeg",
-      headers: {}
-    };
-
-    fileTransfer.upload(imageUrls[0], StorageProvider.baseUrl + 'publications/images/publication/' + this.publication._id, options)
-      .then((data) => {
-        console.log(data+" Uploaded Successfully");
-        loader.dismiss();
-        this.commons.presentToast("Image uploaded successfully");
-      }, (err) => {
-        loader.dismiss();
-        this.commons.presentToast(JSON.stringify(err));
-        // this.commons.presentToast(err);
-      });
   }
 
   uploadPics(images) {
@@ -199,9 +195,9 @@ export class PublicationWritingPage {
   addImage(){
     let options = {
       maximumImagesCount: 8,
-      width: 500,
-      height: 500,
-      quality: 75
+      // width: 500,
+      // height: 500,
+      quality: 100
     };
 
     this.imagePicker.getPictures(options).then(
@@ -214,7 +210,11 @@ export class PublicationWritingPage {
   }
 
   removeImage(){
-    alert("remove image");
+    alert(this.publication._id);
+    alert(this.publication.images[this.slides.getActiveIndex()]._id);
+    this.storageService.deletePublicationImage(this.publication._id,this.publication.images[this.slides.getActiveIndex()]._id).subscribe((updatedPublication)=>{
+      this.commons.presentToast("La imagen ha sido eliminada con éxito");
+    });
   }
 
   presentDescriptionWriting(){
