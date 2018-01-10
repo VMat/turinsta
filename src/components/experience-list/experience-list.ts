@@ -24,7 +24,7 @@ export class ExperienceListComponent {
   }
 
   checkUserPermission(){
-    return this.publicationOwner == this.commonsService.getUserId();
+    return this.publicationOwner == this.commonsService.getUserId() || !this.publicationOwner;
   }
 
   presentExperienceWritingModal(){

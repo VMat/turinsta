@@ -58,7 +58,7 @@ export class PublicationWritingPage {
     if(Boolean(this.publication._id)){
       return this.loggedUser == this.publication.user;
     }
-    return false;
+    return true;
   }
 
   toogleExperienceList(){
@@ -203,7 +203,12 @@ export class PublicationWritingPage {
     this.imagePicker.getPictures(options).then(
     // file_uris => this._navCtrl.push(GalleryPage, {images: file_uris}),
       file_uris => {
-        this.uploadPics(file_uris);
+        if(this.publication._id){
+          this.uploadPics(file_uris);
+        }
+        else{
+          this.publication.images = file_uris;
+        }
       },
       err => this.commons.presentToast("Se ha producido un error al cargar la imagen")
     );

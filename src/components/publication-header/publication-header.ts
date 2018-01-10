@@ -28,9 +28,11 @@ export class PublicationHeaderComponent {
   }
 
   ngOnInit(){
-    this.imgCacheService.cacheImg(this.user.avatar).then((cachedAvatar)=>{
-      this.cachedAvatar = cachedAvatar;
-    });
+    if(this.user._id){
+      this.imgCacheService.cacheImg(this.user.avatar).then((cachedAvatar)=>{
+        this.cachedAvatar = cachedAvatar;
+      });
+    }
   }
 
   getCachedAvatar(){
@@ -41,7 +43,9 @@ export class PublicationHeaderComponent {
     let placeSelecting = this.modalCtrl.create(PlaceSelectingPage,{publicationId: this.publication._id});
     placeSelecting.present();
     placeSelecting.onDidDismiss((place)=>{
-      this.changePlace.emit(place);
+      if(place){
+        this.changePlace.emit(place);
+      }
     })
   }
 }
