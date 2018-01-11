@@ -23,7 +23,6 @@ router.get('/count/:count/sort/:field/:way',(req, res)=>{
 });
 
 router.post('/',(req, res)=>{
-  //multer.single('image'), imgUpload.uploadToGcs()
   publicationService.createPublication(req.body)
     .then(publication=>{res.status(200).json(publication)})
     .catch(error=>{res.status(500).send(error)})
