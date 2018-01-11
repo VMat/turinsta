@@ -54,7 +54,6 @@ export class ExperienceWritingPage {
   }
 
   saveExperience(){
-    sessionStorage.setItem("this.experience",JSON.stringify(this.experience));
     if(Boolean(this.experience._id)){
       this.storageService.updateExperience(this.experience).subscribe((editedExperience)=>{
         this.commons.presentToast("La experiencia ha sido actualizada con éxito");
@@ -62,10 +61,15 @@ export class ExperienceWritingPage {
       });
     }
     else{
-      this.storageService.createExperience(this.experience).subscribe((newExperience)=>{
-        this.commons.presentToast("La experiencia ha sido grabada con éxito");
-        this.viewCtrl.dismiss();
-      });
+      if(this.experience.publication){
+        this.storageService.createExperience(this.experience).subscribe((newExperience)=>{
+          this.commons.presentToast("La experiencia ha sido grabada con éxito");
+          this.viewCtrl.dismiss();
+        });
+      }
+      else{
+        this.viewCtrl.dismiss(this.experience);
+      }
     }
   }
 

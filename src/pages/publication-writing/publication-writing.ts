@@ -137,6 +137,10 @@ export class PublicationWritingPage {
   }
 
   savePublication(){
+    let loader = this.loadingCtrl.create({
+      content: "Guardando publicación..."
+    });
+    loader.present();
     sessionStorage.setItem("this.publication",JSON.stringify(this.publication));
     if(Boolean(this.publication._id)){
       this.storageService.updatePublication(this.publication).subscribe((editedPublication)=>{
@@ -145,9 +149,34 @@ export class PublicationWritingPage {
       });
     }
     else{
+      this.publication.user = this.commons.getUserId();
+      let images = this.publication.images.map((image)=>{return image.url});
+      this.publication.images = [];
       this.storageService.createPublication(this.publication).subscribe((newPublication)=>{
-        this.commons.presentToast("La publicación ha sido grabada con éxito");
-        this.viewCtrl.dismiss();
+        this.publication = newPublication;
+        this.uploadPics(images).then(()=>{
+          Promise.all(
+            this.experiences((experience)=>{
+              return this.storageService.createExperience(experience).toPromise();
+            })
+          )
+          .then(()=>{
+            loader.dismiss();
+            this.commons.presentToast("La publicación ha sido grabada con éxito");
+            this.viewCtrl.dismiss();
+          })
+          .catch((err) => {
+            loader.dismiss();
+            this.commons.presentToast("No se han podido subir las experiencias")
+          });
+        })
+        .catch((err) => {
+          loader.dismiss();
+          this.commons.presentToast("No se han podido subir las imágenes")
+        });
+      },(error)=>{
+        loader.dismiss();
+        this.commons.presentToast("No se ha podido subir la publicación")
       });
     }
   }
@@ -160,15 +189,11 @@ export class PublicationWritingPage {
   }
 
   setPlace(event){
-    this.publication.places = [event];
+    this.publication.places = [{name: event}];
   }
 
   uploadPics(images) {
-    let loader = this.loadingCtrl.create({
-      content: "Subiendo imágenes..."
-    });
-    loader.present();
-    Promise.all(
+    return Promise.all(
       images.map((i)=>{
         let uri = StorageProvider.baseUrl + 'publications/images/publication/' + this.publication._id;
         let options: FileUploadOptions = {
@@ -181,15 +206,7 @@ export class PublicationWritingPage {
         const ft: FileTransferObject = this.transfer.create();
         return ft.upload(i, uri, options);
       })
-    )
-    .then((value) => {
-      loader.dismiss();
-      this.commons.presentToast("Image uploaded successfully")
-    })
-    .catch((err) => {
-      loader.dismiss();
-      this.commons.presentToast("Image uploaded failed")
-    });
+    );
   }
 
   addImage(){
@@ -204,10 +221,22 @@ export class PublicationWritingPage {
     // file_uris => this._navCtrl.push(GalleryPage, {images: file_uris}),
       file_uris => {
         if(this.publication._id){
-          this.uploadPics(file_uris);
+          let loader = this.loadingCtrl.create({
+            content: "Subiendo imágenes..."
+          });
+          loader.present();
+          this.uploadPics(file_uris)
+          .then((value) => {
+            loader.dismiss();
+            this.commons.presentToast("Image uploaded successfully")
+          })
+          .catch((err) => {
+            loader.dismiss();
+            this.commons.presentToast("Image uploaded failed")
+          });
         }
         else{
-          this.publication.images = file_uris;
+          this.publication.images = file_uris.map((uri)=>{return {url: uri}});
         }
       },
       err => this.commons.presentToast("Se ha producido un error al cargar la imagen")
@@ -257,4 +286,5 @@ export class PublicationWritingPage {
       this.publication.description = null;
     });
   }
+
 }

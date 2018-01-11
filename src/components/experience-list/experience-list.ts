@@ -1,4 +1,4 @@
-import {Component, Input} from '@angular/core';
+import {Component, Input, Output, EventEmitter} from '@angular/core';
 import {CommonsProvider} from "../../providers/commons/commons";
 import {ModalController} from "ionic-angular";
 import {ExperienceWritingPage} from "../../pages/experience-writing/experience-writing";
@@ -30,6 +30,16 @@ export class ExperienceListComponent {
   presentExperienceWritingModal(){
     let experienceWritingModal = this.modalCtrl.create(ExperienceWritingPage,{experience: {publication: this.publicationId}});
     experienceWritingModal.present();
+    experienceWritingModal.onDidDismiss((experience)=>{
+      if(experience){
+        if(this.experiences){
+          this.experiences.push(experience);
+        }
+        else{
+          this.experiences = [experience];
+        }
+      }
+    })
   }
 
 }

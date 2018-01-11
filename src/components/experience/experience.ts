@@ -47,6 +47,11 @@ export class ExperienceComponent {
   presentExperienceWritingModal(){
     let experienceWritingModal = this.modalCtrl.create(ExperienceWritingPage,{experience: this.data});
     experienceWritingModal.present();
+    experienceWritingModal.onDidDismiss((experience)=>{
+      if(experience){
+        this.data = experience;
+      }
+    })
   }
 
   removeExperience(){
@@ -56,7 +61,7 @@ export class ExperienceComponent {
   }
 
   checkEditionPermission(){
-    return this.publicationOwner == this.commonsService.getUserId();
+    return this.publicationOwner == this.commonsService.getUserId() || !this.publicationOwner;
   }
 
 }
