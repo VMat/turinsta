@@ -104,7 +104,7 @@ const PublicationInterface = (function(){
 
     insert: (publication)=>{
       publication.timestamps = {
-        "created": "2017-01-01T11:30:00-03:00",
+        "created": new Date().toISOString(),
         "modified": null
       };
       return Commons.insert(new Publications(publication));
