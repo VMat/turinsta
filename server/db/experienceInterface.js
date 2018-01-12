@@ -40,7 +40,7 @@ const ExperienceInterface = (function(){
         return Commons.getOne(Publications, experience.publication)
         .then(publication=>{
           publication.experienceIds.splice(publication.experienceIds.indexOf(experience._id), 1);
-            return PublicationInterface.update(publication)
+            return Commons.update(Publications,publication)
               .then(()=>{
                 return Commons.removeOne(Experiences, experience);
               })
