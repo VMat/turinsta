@@ -17,8 +17,10 @@ const ExperienceInterface = (function(){
       experience.score = 0;
       return Commons.insert(new Experiences(experience))
         .then(insertedExperience=>{
-          return PublicationInterface.getOne(insertedExperience.publication)
+          console.log("insertedExperience.publication: " + insertedExperience);
+          return Commons.getOne(Publications, insertedExperience.publication)
             .then(publication=>{
+              console.log("publication: " + publication._id);
               publication.experienceIds.push(insertedExperience._id);
               return PublicationInterface.update(publication)
             })
@@ -42,11 +44,11 @@ const ExperienceInterface = (function(){
         })
       })
     },
-    
+
     deleteFromPublication: (id)=>{
       return Commons.removeWithFilter(Experiences,{"publication": id});
     }
-    
+
   };
 
   return oExperienceInterface;
