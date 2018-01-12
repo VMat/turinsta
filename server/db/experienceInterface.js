@@ -20,7 +20,7 @@ const ExperienceInterface = (function(){
           return Commons.getOne(Publications, insertedExperience.publication)
             .then(publication=>{
               publication.experienceIds.push(insertedExperience._id);
-              publication.timestamps.modified = new Date();
+              publication.timestamps.modified = new Date().toISOString();
               return Commons.update(Publications,publication);
             })
         });
