@@ -25,7 +25,7 @@ const ExperienceInterface = (function(){
               console.log("insertedExperience._id to add: " + insertedExperience._id);
               publication.experienceIds.push(insertedExperience._id);
               console.log("publication.experienceIds after: " + publication.experienceIds);
-              return PublicationInterface.update(publication);
+              return Commons.update(Publications,publication);
             })
         });
     },
