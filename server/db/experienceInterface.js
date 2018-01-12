@@ -21,8 +21,11 @@ const ExperienceInterface = (function(){
           return Commons.getOne(Publications, insertedExperience.publication)
             .then(publication=>{
               console.log("publication: " + publication._id);
+              console.log("publication.experienceIds before: " + publication.experienceIds);
+              console.log("insertedExperience._id to add: " + insertedExperience._id);
               publication.experienceIds.push(insertedExperience._id);
-              return PublicationInterface.update(publication)
+              console.log("publication.experienceIds after: " + publication.experienceIds);
+              return PublicationInterface.update(publication);
             })
         });
     },
