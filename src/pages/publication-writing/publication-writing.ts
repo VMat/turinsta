@@ -8,6 +8,8 @@ import {CommonsProvider} from "../../providers/commons/commons";
 import {DescriptionWritingPage} from "../description-writing/description-writing";
 import {ImagePicker} from "@ionic-native/image-picker";
 import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-native/file-transfer';
+import {Observable} from "rxjs";
+import {toPromise} from "rxjs/operator/toPromise";
 
 /**
  * Generated class for the PublicationWritingPage page.
@@ -153,11 +155,11 @@ export class PublicationWritingPage {
       let images = this.publication.images.map((image)=>{return image.url});
       this.publication.images = [];
       this.storageService.createPublication(this.publication).subscribe((newPublication)=>{
-        this.publication = newPublication;
+        this.publication = newPublication.json();
         this.uploadPics(images).then(()=>{
           Promise.all(
-            this.experiences((experience)=>{
-              return this.storageService.createExperience(experience).toPromise();
+            this.experiences.map((experience)=>{
+              return this.storageService.createExperience({...experience, publication: this.publication._id}).toPromise();
             })
           )
           .then(()=>{
@@ -193,6 +195,7 @@ export class PublicationWritingPage {
   }
 
   uploadPics(images) {
+    alert(this.publication._id);
     return Promise.all(
       images.map((i)=>{
         let uri = StorageProvider.baseUrl + 'publications/images/publication/' + this.publication._id;
