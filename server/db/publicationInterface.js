@@ -132,7 +132,14 @@ const PublicationInterface = (function(){
           .then(()=>{
             return CommentInterface.deleteFromPublication(id)
             .then(()=>{
-              return Commons.removeOne(Publications,publication);
+              return Promise.all(
+                publication.images.map((image)=>{
+                  return imageUploader.removeFromGcs(image.url)
+                })
+              )
+              .then(()=>{
+                return Commons.removeOne(Publications,publication);
+              })
             })
           })
         });
