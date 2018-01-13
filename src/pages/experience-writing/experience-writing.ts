@@ -57,14 +57,14 @@ export class ExperienceWritingPage {
     if(Boolean(this.experience._id)){
       this.storageService.updateExperience(this.experience).subscribe((editedExperience)=>{
         this.commons.presentToast("La experiencia ha sido actualizada con éxito");
-        this.viewCtrl.dismiss();
+        this.viewCtrl.dismiss(this.experience);
       });
     }
     else{
       if(this.experience.publication){
         this.storageService.createExperience(this.experience).subscribe((newExperience)=>{
           this.commons.presentToast("La experiencia ha sido grabada con éxito");
-          this.viewCtrl.dismiss();
+          this.viewCtrl.dismiss(this.experience);
         });
       }
       else{

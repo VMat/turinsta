@@ -239,6 +239,9 @@ export class PublicationWritingPage {
     this.imagePicker.getPictures(options).then(
     // file_uris => this._navCtrl.push(GalleryPage, {images: file_uris}),
       file_uris => {
+        if(!file_uris){
+          return false;
+        }
         if(this.publication._id){
           let loader = this.loadingCtrl.create({
             content: "Subiendo imágenes..."
@@ -247,11 +250,12 @@ export class PublicationWritingPage {
           this.uploadPics(file_uris)
           .then((value) => {
             loader.dismiss();
-            this.commons.presentToast("Image uploaded successfully")
+            alert(JSON.stringify(value));
+            this.commons.presentToast("Las imágenes se han grabado con éxito")
           })
           .catch((err) => {
             loader.dismiss();
-            this.commons.presentToast("Image uploaded failed")
+            this.commons.presentToast("Se ha producido un error al grabar las imágenes")
           });
         }
         else{

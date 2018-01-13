@@ -22,7 +22,8 @@ export class CommonsProvider {
                       MINUTE: {SINGULAR: "MINUTO", PLURAL: 'MINUTOS'},
                       SECOND: {SINGULAR: "SEGUNDO", PLURAL: 'SEGUNDOS'}
     },
-    antiquitySentence: "Hace :x :timeUnit"
+    antiquitySentence: "Hace :x :timeUnit",
+    veryRecentActivitySentence: "Hace un instante"
   };
 
   constructor(public http: Http, public toastCtrl: ToastController, public alertCtrl: AlertController, private localStorage: Storage) {
@@ -76,7 +77,7 @@ export class CommonsProvider {
     let diffInSeconds = this.dateDiff(dateSince,(new Date()));
 
     if(diffInSeconds<0){
-      return null;
+      return this.glosary.veryRecentActivitySentence;
     }
 
     if(diffInSeconds/31104000 >=1){
