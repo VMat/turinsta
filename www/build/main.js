@@ -764,6 +764,9 @@ var CommonsProvider = (function () {
     };
     CommonsProvider.prototype.getAntiquity = function (dateSince) {
         var diffInSeconds = this.dateDiff(dateSince, (new Date()));
+        if (diffInSeconds < 0) {
+            return null;
+        }
         if (diffInSeconds / 31104000 >= 1) {
             var years = Math.floor(diffInSeconds / 31104000);
             return this.glosary.antiquitySentence.replace(':x', years).
@@ -2227,7 +2230,7 @@ __decorate([
 ], PublicationBodyComponent.prototype, "publication", void 0);
 PublicationBodyComponent = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
-        selector: 'publication-body',template:/*ion-inline-start:"C:\Users\Matias\WebstormProjects\turinsta\src\components\publication-body\publication-body.html"*/'<!-- Generated template for the PublicationBodyComponent component -->\n<ion-slides align="center">\n  <publication-actions [publication]="publication" [user]="user"></publication-actions>\n  <ion-slide *ngFor="let image of publication.images">\n    <publication-image [id]=image._id [url]=image.url></publication-image>\n    <!--<img id="{{image.url}}" class="publication-image" src=\'{{image.url}}\'/>-->\n  </ion-slide>\n</ion-slides>\n<p item-start class="publication-description"><span *ngIf="publication.description"><b>{{user.username}}</b>&nbsp;{{publication.description}}</span></p>\n\n\n'/*ion-inline-end:"C:\Users\Matias\WebstormProjects\turinsta\src\components\publication-body\publication-body.html"*/
+        selector: 'publication-body',template:/*ion-inline-start:"C:\Users\Matias\WebstormProjects\turinsta\src\components\publication-body\publication-body.html"*/'<!-- Generated template for the PublicationBodyComponent component -->\n<!--<publication-actions class="publication-actions-button" [publication]="publication" [user]="user"></publication-actions>-->\n<ion-slides align="center">\n  <!--<publication-actions class="publication-actions-button" [publication]="publication" [user]="user"></publication-actions>-->\n  <ion-slide *ngFor="let image of publication.images">\n    <publication-actions class="publication-actions-button" [publication]="publication" [user]="user"></publication-actions>\n    <publication-image [id]=image._id [url]=image.url></publication-image>\n    <!--<img id="{{image.url}}" class="publication-image" src=\'{{image.url}}\'/>-->\n  </ion-slide>\n</ion-slides>\n<p item-start class="publication-description"><span *ngIf="publication.description"><b>{{user.username}}</b>&nbsp;{{publication.description}}</span></p>\n\n\n'/*ion-inline-end:"C:\Users\Matias\WebstormProjects\turinsta\src\components\publication-body\publication-body.html"*/
     }),
     __metadata("design:paramtypes", [])
 ], PublicationBodyComponent);
@@ -3425,26 +3428,41 @@ var PublicationWritingPage = (function () {
     PublicationWritingPage.prototype.dismissPublication = function () {
         this.viewCtrl.dismiss();
     };
+    PublicationWritingPage.prototype.checkNeededField = function () {
+        if (!this.publication.images || this.publication.images.length == 0) {
+            this.commons.presentToast("Debe proporcionar al menos una imagen.");
+            return false;
+        }
+        if (!this.publication.places || this.publication.places.length == 0) {
+            this.commons.presentToast("Debe proporcionar un destino.");
+            return false;
+        }
+        return true;
+    };
     PublicationWritingPage.prototype.confirmSave = function () {
         var _this = this;
-        var confirm = this.alertCtrl.create({
-            title: 'Confirmar operación',
-            message: '¿Está seguro que desea guardar la publicación?',
-            buttons: [
-                {
-                    text: 'Aceptar',
-                    handler: function () {
-                        _this.savePublication();
+        if (this.checkNeededField()) {
+            var confirm_1 = this.alertCtrl.create({
+                title: 'Confirmar operación',
+                message: '¿Está seguro que desea guardar la publicación?',
+                buttons: [
+                    {
+                        text: 'Aceptar',
+                        handler: function () {
+                            _this.savePublication();
+                        }
+                    },
+                    {
+                        text: 'Cancelar',
+                        handler: function () {
+                        }
                     }
-                },
-                {
-                    text: 'Cancelar',
-                    handler: function () {
-                    }
-                }
-            ]
-        });
-        confirm.present();
+                ]
+            });
+            confirm_1.present();
+        }
+        else {
+        }
     };
     PublicationWritingPage.prototype.confirmDelete = function () {
         var _this = this;
@@ -3533,7 +3551,7 @@ var PublicationWritingPage = (function () {
     };
     PublicationWritingPage.prototype.deletePublication = function () {
         var _this = this;
-        this.storageService.deletePublication(this.publication).subscribe(function (deletedPublication) {
+        this.storageService.deletePublication(this.publication._id).subscribe(function (deletedPublication) {
             _this.commons.presentToast("La publicación ha sido eliminada con éxito");
             _this.viewCtrl.dismiss();
         });
@@ -3543,7 +3561,6 @@ var PublicationWritingPage = (function () {
     };
     PublicationWritingPage.prototype.uploadPics = function (images) {
         var _this = this;
-        alert(this.publication._id);
         return Promise.all(images.map(function (i) {
             var uri = __WEBPACK_IMPORTED_MODULE_2__providers_storage_storage__["a" /* StorageProvider */].baseUrl + 'publications/images/publication/' + _this.publication._id;
             var options = {
@@ -3584,17 +3601,24 @@ var PublicationWritingPage = (function () {
                 });
             }
             else {
-                _this.publication.images = file_uris.map(function (uri) { return { url: uri }; });
+                if (!_this.publication.images) {
+                    _this.publication.images = [];
+                }
+                _this.publication.images = _this.publication.images.concat(file_uris.map(function (uri) { return { url: uri }; }));
             }
         }, function (err) { return _this.commons.presentToast("Se ha producido un error al cargar la imagen"); });
     };
     PublicationWritingPage.prototype.removeImage = function () {
         var _this = this;
-        alert(this.publication._id);
-        alert(this.publication.images[this.slides.getActiveIndex()]._id);
-        this.storageService.deletePublicationImage(this.publication._id, this.publication.images[this.slides.getActiveIndex()]._id).subscribe(function (updatedPublication) {
-            _this.commons.presentToast("La imagen ha sido eliminada con éxito");
-        });
+        var imageIndex = this.slides.getActiveIndex();
+        if (this.publication._id) {
+            this.storageService.deletePublicationImage(this.publication._id, this.publication.images[imageIndex]._id).subscribe(function (updatedPublication) {
+                _this.commons.presentToast("La imagen ha sido eliminada con éxito");
+            });
+        }
+        else {
+            this.publication.images.splice(imageIndex, 1);
+        }
     };
     PublicationWritingPage.prototype.presentDescriptionWriting = function () {
         var _this = this;

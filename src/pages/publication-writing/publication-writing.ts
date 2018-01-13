@@ -75,25 +75,42 @@ export class PublicationWritingPage {
     this.viewCtrl.dismiss();
   }
 
+  checkNeededField(){
+    if(!this.publication.images || this.publication.images.length==0){
+      this.commons.presentToast("Debe proporcionar al menos una imagen.");
+      return false;
+    }
+    if(!this.publication.places || this.publication.places.length==0){
+      this.commons.presentToast("Debe proporcionar un destino.");
+      return false;
+    }
+    return true;
+  }
+
   confirmSave() {
-    let confirm = this.alertCtrl.create({
-      title: 'Confirmar operación',
-      message: '¿Está seguro que desea guardar la publicación?',
-      buttons: [
-        {
-          text: 'Aceptar',
-          handler: () => {
-            this.savePublication();
+    if(this.checkNeededField()){
+      let confirm = this.alertCtrl.create({
+        title: 'Confirmar operación',
+        message: '¿Está seguro que desea guardar la publicación?',
+        buttons: [
+          {
+            text: 'Aceptar',
+            handler: () => {
+              this.savePublication();
+            }
+          },
+          {
+            text: 'Cancelar',
+            handler: () => {
+            }
           }
-        },
-        {
-          text: 'Cancelar',
-          handler: () => {
-          }
-        }
-      ]
-    });
-    confirm.present();
+        ]
+      });
+      confirm.present();
+    }
+    else{
+
+    }
   }
 
   confirmDelete() {
@@ -184,7 +201,7 @@ export class PublicationWritingPage {
   }
 
   deletePublication(){
-    this.storageService.deletePublication(this.publication).subscribe((deletedPublication)=>{
+    this.storageService.deletePublication(this.publication._id).subscribe((deletedPublication)=>{
       this.commons.presentToast("La publicación ha sido eliminada con éxito");
       this.viewCtrl.dismiss();
     });
@@ -195,7 +212,6 @@ export class PublicationWritingPage {
   }
 
   uploadPics(images) {
-    alert(this.publication._id);
     return Promise.all(
       images.map((i)=>{
         let uri = StorageProvider.baseUrl + 'publications/images/publication/' + this.publication._id;
@@ -239,7 +255,10 @@ export class PublicationWritingPage {
           });
         }
         else{
-          this.publication.images = file_uris.map((uri)=>{return {url: uri}});
+          if(!this.publication.images){
+            this.publication.images = [];
+          }
+          this.publication.images = this.publication.images.concat(file_uris.map((uri)=>{return {url: uri}}));
         }
       },
       err => this.commons.presentToast("Se ha producido un error al cargar la imagen")
@@ -247,11 +266,15 @@ export class PublicationWritingPage {
   }
 
   removeImage(){
-    alert(this.publication._id);
-    alert(this.publication.images[this.slides.getActiveIndex()]._id);
-    this.storageService.deletePublicationImage(this.publication._id,this.publication.images[this.slides.getActiveIndex()]._id).subscribe((updatedPublication)=>{
-      this.commons.presentToast("La imagen ha sido eliminada con éxito");
-    });
+    let imageIndex = this.slides.getActiveIndex();
+    if(this.publication._id){
+      this.storageService.deletePublicationImage(this.publication._id,this.publication.images[imageIndex]._id).subscribe((updatedPublication)=>{
+        this.commons.presentToast("La imagen ha sido eliminada con éxito");
+      });
+    }
+    else{
+      this.publication.images.splice(imageIndex,1);
+    }
   }
 
   presentDescriptionWriting(){

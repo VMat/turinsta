@@ -75,6 +75,10 @@ export class CommonsProvider {
   getAntiquity(dateSince){
     let diffInSeconds = this.dateDiff(dateSince,(new Date()));
 
+    if(diffInSeconds<0){
+      return null;
+    }
+
     if(diffInSeconds/31104000 >=1){
       let years = Math.floor(diffInSeconds/31104000);
       return this.glosary.antiquitySentence.replace(':x',years).

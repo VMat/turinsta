@@ -7,3 +7,10 @@ publication-body {
   margin: 0;
   height: 15px;
 }
+
+.publication-actions-button{
+  position: absolute;
+  right: 0;
+  top: 0;
+  z-index: 100;
+}

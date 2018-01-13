@@ -33338,6 +33338,13 @@ publication-body {
   height: 15px;
 }
 
+.publication-actions-button {
+  position: absolute;
+  right: 0;
+  top: 0;
+  z-index: 100;
+}
+
 publication-footer ion-icon {
   font-size: large !important;
 }
@@ -33423,7 +33430,12 @@ page-publication-user-filter * {
 page-publication-writing .image-action-buttons {
   position: absolute;
   right: 0;
-  top: 10px;
+  top: 0;
+  z-index: 100;
+}
+
+page-publication-writing .image-action-buttons button {
+  font-size: x-small;
 }
 
 page-publication-writing ion-slides {
