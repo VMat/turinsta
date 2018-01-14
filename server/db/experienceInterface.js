@@ -17,15 +17,11 @@ const ExperienceInterface = (function(){
       experience.score = 0;
       return Commons.insert(new Experiences(experience))
         .then(insertedExperience=>{
-          console.log("insertedExperience.publication: " + insertedExperience);
           return Commons.getOne(Publications, insertedExperience.publication)
             .then(publication=>{
-              console.log("publication: " + publication._id);
-              console.log("publication.experienceIds before: " + publication.experienceIds);
-              console.log("insertedExperience._id to add: " + insertedExperience._id);
               publication.experienceIds.push(insertedExperience._id);
-              console.log("publication.experienceIds after: " + publication.experienceIds);
-              return PublicationInterface.update(publication);
+              publication.timestamps.modified = new Date().toISOString();
+              return Commons.update(Publications,publication);
             })
         });
     },

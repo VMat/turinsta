@@ -103,11 +103,22 @@ const PublicationInterface = (function(){
     },
 
     insert: (publication)=>{
+      publication.timestamps = {
+        created: new Date().toISOString(),
+        modified: null
+      };
       return Commons.insert(new Publications(publication));
     },
 
     patch: (id,fields)=>{
-      return Commons.patch(Publications,id,fields)
+      return Commons.getOne(Publications,id)
+        .then((publication)=>{
+          fields.timestamps = {
+            created: publication.timestamps.created,
+            modified: new Date().toISOString()
+          };
+          return Commons.patch(Publications,id,fields)
+        });
     },
 
     update: (publication)=>{
@@ -121,7 +132,14 @@ const PublicationInterface = (function(){
           .then(()=>{
             return CommentInterface.deleteFromPublication(id)
             .then(()=>{
-              return Commons.removeOne(Publications,publication);
+              return Promise.all(
+                publication.images.map((image)=>{
+                  return imageUploader.removeFromGcs(image.url)
+                })
+              )
+              .then(()=>{
+                return Commons.removeOne(Publications,publication);
+              })
             })
           })
         });
