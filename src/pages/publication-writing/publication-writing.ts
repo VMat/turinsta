@@ -248,10 +248,10 @@ export class PublicationWritingPage {
           });
           loader.present();
           this.uploadPics(file_uris)
-          .then((value) => {
+          .then((values) => {
             loader.dismiss();
-            alert(JSON.stringify(value));
-            this.commons.presentToast("Las imágenes se han grabado con éxito")
+            this.commons.presentToast("Las imágenes se han grabado con éxito");
+            this.publication.images = JSON.parse(values[0]["response"]).images;
           })
           .catch((err) => {
             loader.dismiss();
@@ -271,14 +271,14 @@ export class PublicationWritingPage {
 
   removeImage(){
     let imageIndex = this.slides.getActiveIndex();
+    let imageId = this.publication.images[imageIndex]._id;
     if(this.publication._id){
-      this.storageService.deletePublicationImage(this.publication._id,this.publication.images[imageIndex]._id).subscribe((updatedPublication)=>{
+      this.storageService.deletePublicationImage(this.publication._id,imageId).subscribe((updatedPublication)=>{
         this.commons.presentToast("La imagen ha sido eliminada con éxito");
       });
     }
-    else{
-      this.publication.images.splice(imageIndex,1);
-    }
+    this.publication.images.splice(imageIndex,1);
+    this.slides.slideTo(0);
   }
 
   presentDescriptionWriting(){

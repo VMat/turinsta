@@ -167,7 +167,7 @@ var DescriptionWritingPage = (function () {
         var _this = this;
         this.storageService.patchPublication(this.publicationId, { description: [this.description.content] }).subscribe(function (patchedPublication) {
             _this.commons.presentToast("La descripción ha sido actualizada con éxito");
-            _this.viewCtrl.dismiss(patchedPublication.json().description);
+            _this.viewCtrl.dismiss(_this.description.content);
         });
     };
     return DescriptionWritingPage;
@@ -314,7 +314,7 @@ var PlaceSelectingPage = (function () {
         var _this = this;
         this.storageService.patchPublication(this.publicationId, { places: [{ name: this.placeSelected }] }).subscribe(function (patchedPublication) {
             _this.commons.presentToast("La ubicación ha sido actualizada con éxito");
-            _this.viewCtrl.dismiss(patchedPublication.json().places[0].name);
+            _this.viewCtrl.dismiss(_this.placeSelected);
         });
     };
     return PlaceSelectingPage;
@@ -3599,10 +3599,10 @@ var PublicationWritingPage = (function () {
                 });
                 loader_1.present();
                 _this.uploadPics(file_uris)
-                    .then(function (value) {
+                    .then(function (values) {
                     loader_1.dismiss();
-                    alert(JSON.stringify(value));
                     _this.commons.presentToast("Las imágenes se han grabado con éxito");
+                    _this.publication.images = JSON.parse(values[0]["response"]).images;
                 })
                     .catch(function (err) {
                     loader_1.dismiss();
@@ -3620,14 +3620,14 @@ var PublicationWritingPage = (function () {
     PublicationWritingPage.prototype.removeImage = function () {
         var _this = this;
         var imageIndex = this.slides.getActiveIndex();
+        var imageId = this.publication.images[imageIndex]._id;
         if (this.publication._id) {
-            this.storageService.deletePublicationImage(this.publication._id, this.publication.images[imageIndex]._id).subscribe(function (updatedPublication) {
+            this.storageService.deletePublicationImage(this.publication._id, imageId).subscribe(function (updatedPublication) {
                 _this.commons.presentToast("La imagen ha sido eliminada con éxito");
             });
         }
-        else {
-            this.publication.images.splice(imageIndex, 1);
-        }
+        this.publication.images.splice(imageIndex, 1);
+        this.slides.slideTo(0);
     };
     PublicationWritingPage.prototype.presentDescriptionWriting = function () {
         var _this = this;
