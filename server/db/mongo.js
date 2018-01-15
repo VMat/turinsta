@@ -69,6 +69,10 @@ let db = (function(){
       return publicationInterface.deletePublicationImage(publicationId, imageUrl);
     },
 
+    getPublicationImage: (publicationId, imageUrl)=>{
+      return publicationInterface.getPublicationImage(publicationId, imageUrl);
+    },
+
     getActivities: ()=>{
       return activityInterface.getAll();
     },

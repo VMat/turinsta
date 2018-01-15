@@ -92,6 +92,14 @@ const publicationService = (function(){
         then(updatedPublication=>resolve(updatedPublication)).
         catch(error=>reject(error))
       })
+    },
+
+    getPublicationImage: (publicationId, imageUrl)=>{
+      return new Promise((resolve, reject)=>{
+        storageService.getPublicationImage(publicationId, imageUrl).
+        then(image=>resolve(image)).
+        catch(error=>reject(error))
+      })
     }
   };
 

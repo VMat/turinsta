@@ -54,6 +54,10 @@ const storageService = (function(){
       return db.deletePublicationImage(publicationId, imageUrl)
     },
 
+    getPublicationImage: (publicationId, imageUrl)=>{
+      return db.getPublicationImage(publicationId, imageUrl);
+    },
+
     getActivities: ()=>{
       return db.getActivities();
     },

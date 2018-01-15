@@ -208,7 +208,7 @@ const PublicationInterface = (function(){
       });
     },
 
-    deletePublicationImage(publicationId, imageId){
+    deletePublicationImage: (publicationId, imageId)=>{
       return Commons.getOne(Publications, publicationId)
         .then((publication)=>{
           publication.images.forEach((image,i)=>{
@@ -221,6 +221,17 @@ const PublicationInterface = (function(){
             }
           });
         });
+    },
+
+    getPublicationImage: (publicationId, imageUrl)=>{
+      return Commons.getOne(Publications, publicationId)
+        .then((publication)=>{
+          publication.images.forEach((image)=>{
+            if(image.url==imageUrl){
+              return image;
+            }
+          })
+        })
     }
 
   };
