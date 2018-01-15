@@ -226,10 +226,13 @@ const PublicationInterface = (function(){
     getPublicationImage: (publicationId, imageUrl)=>{
       return Commons.getOne(Publications, publicationId)
         .then((publication)=>{
-          publication.images.forEach((image)=>{
-            if(image.url==imageUrl){
-              return image;
-            }
+          return new Promise((resolve, reject)=>{
+            publication.images.forEach((image)=>{
+              if(image.url==imageUrl){
+                resolve(image);
+              }
+            });
+            reject("can't found imageUrl");
           })
         })
     }
