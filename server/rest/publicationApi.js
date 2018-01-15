@@ -70,6 +70,7 @@ router.post('/images/publication/:publication',uploadHandler.any(),imageUploader
     .then(publication=> {
       publicationService.getPublicationImage(publication._id, cloudStoragePublicUrls[0])
         .then((image) => {
+          console.log("new image: " + JSON.stringify(image));
           response.status(200).json({...publication, images: publication.images.push(image)})
         })
         .catch(error => {
