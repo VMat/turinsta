@@ -2,7 +2,7 @@
 const storage = require('@google-cloud/storage');
 const fs = require('fs');
 const path = require('path');
-const publicationService = require('publicationService');
+const publicationService = require('./publicationService');
 
 const gcs = storage({
   projectId: 'turinsta-189517',
