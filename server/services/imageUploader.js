@@ -17,8 +17,6 @@ const aclOptions = {
 let bucketName = null;
 let bucket = null;
 
-bucket.acl.default.add(aclOptions, (err, aclObject)=>{});
-
 function getPublicUrl(filename) {
   return 'https://storage.googleapis.com/' + bucketName + '/' + filename;
 }
@@ -33,6 +31,7 @@ ImgUpload.uploadToGcs = (req, res, next) => {
     .then((publication)=>{
       bucketName = publication.user.bucketId;
       bucket = gcs.bucket(bucketName);
+      bucket.acl.default.add(aclOptions, (err, aclObject)=>{});
 
       let gcsname = [];
       let bucketFile = [];
