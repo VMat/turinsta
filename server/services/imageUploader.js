@@ -3,7 +3,6 @@ const storage = require('@google-cloud/storage');
 const fs = require('fs');
 const path = require('path');
 const publicationService = require('./publicationService');
-const storageService = require('./storageService');
 
 
 const gcs = storage({

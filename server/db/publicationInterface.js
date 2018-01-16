@@ -5,7 +5,6 @@ const Comments = require('../models/comment');
 const Commons = require('./commons');
 const ExperienceInterface = require('./experienceInterface');
 const CommentInterface = require('./commentInterface');
-const imageUploader = require('../services/imageUploader');
 
 const PublicationInterface = (function(){
 
@@ -126,6 +125,7 @@ const PublicationInterface = (function(){
     },
 
     deleteOne: (id)=>{
+      const imageUploader = require('../services/imageUploader');
       return Commons.getOne(Publications,id)
         .then((publication)=>{
           return ExperienceInterface.deleteFromPublication(id)
