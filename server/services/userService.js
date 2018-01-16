@@ -1,81 +1,69 @@
 const storageService = require('./storageService');
 
-const userService = (function(){
-
-  function oUserService(){}
-  
-  oUserService.prototype = {
+let userService = {};
+     
+userService.getUsers = ()=>{
+  return new Promise((resolve, reject)=>{
+    storageService.getUsers().
+      then(users=>resolve(users)).
+      catch(error=>reject(error))        
+  })                
+};  
       
-    getUsers: ()=>{
-      return new Promise((resolve, reject)=>{
-        storageService.getUsers().
-          then(users=>resolve(users)).
-          catch(error=>reject(error))        
-      })                
-    },  
-      
-    getUser: (id)=>{
-      return new Promise((resolve, reject)=>{
-        storageService.getUser(id).
-          then(users=>resolve(users)).
-          catch(error=>reject(error))        
-      })                
-    },
+userService.getUser = (id)=>{
+  return new Promise((resolve, reject)=>{
+    storageService.getUser(id).
+      then(users=>resolve(users)).
+      catch(error=>reject(error))        
+  })                
+};
     
-    createUser: (user)=>{
-      return new Promise((resolve, reject)=>{
-        storageService.createUser(user).
-          then(newUser=>resolve(newUser)).
-          catch(error=>reject(error)) 
-      })
-    },
+userService.createUser = (user)=>{
+  return new Promise((resolve, reject)=>{
+    storageService.createUser(user).
+      then(newUser=>resolve(newUser)).
+      catch(error=>reject(error)) 
+  })
+};
     
-    updateUser: (user)=>{
-      return new Promise((resolve, reject)=>{
-        storageService.updateUser(user).
-          then(updatedUser=>resolve(updatedUser)).
-          catch(error=>reject(error))  
-      })
-    },
+userService.updateUser = (user)=>{
+  return new Promise((resolve, reject)=>{
+    storageService.updateUser(user).
+      then(updatedUser=>resolve(updatedUser)).
+      catch(error=>reject(error))  
+  })
+};
     
-    addFavoritePublication: (favorite)=>{
-      return new Promise((resolve, reject)=>{
-        storageService.addFavoritePublication(favorite).
-          then(updatedUser=>resolve(updatedUser)).
-          catch(error=>reject(error))  
-      })    
-    },
+userService.addFavoritePublication = (favorite)=>{
+  return new Promise((resolve, reject)=>{
+    storageService.addFavoritePublication(favorite).
+      then(updatedUser=>resolve(updatedUser)).
+      catch(error=>reject(error))  
+  })    
+};
     
-    removeFavoritePublication: (favorite)=>{
-      return new Promise((resolve, reject)=>{
-        storageService.removeFavoritePublication(favorite).
-          then(updatedUser=>resolve(updatedUser)).
-          catch(error=>reject(error))  
-      })   
-    },
+userService.removeFavoritePublication = (favorite)=>{
+  return new Promise((resolve, reject)=>{
+    storageService.removeFavoritePublication(favorite).
+      then(updatedUser=>resolve(updatedUser)).
+      catch(error=>reject(error))  
+  })   
+};
     
-    addUserFollower: (follower)=>{
-      return new Promise((resolve, reject)=>{
-        storageService.addUserFollower(follower).
-          then(updatedUser=>resolve(updatedUser)).
-          catch(error=>reject(error))  
-      })    
-    },
+userService.addUserFollower = (follower)=>{
+  return new Promise((resolve, reject)=>{
+    storageService.addUserFollower(follower).
+      then(updatedUser=>resolve(updatedUser)).
+      catch(error=>reject(error))  
+  })    
+};
     
-    removeUserFollower: (follower)=>{
-      return new Promise((resolve, reject)=>{
-        storageService.removeUserFollower(follower).
-          then(updatedUser=>resolve(updatedUser)).
-          catch(error=>reject(error))  
-      })   
-    }
-    
-  };
+userService.removeUserFollower = (follower)=>{
+  return new Promise((resolve, reject)=>{
+    storageService.removeUserFollower(follower).
+      then(updatedUser=>resolve(updatedUser)).
+      catch(error=>reject(error))  
+  })   
+};
 
-  return oUserService;
-
-})();
-
-const oUserService = new userService();
-
-module.exports = oUserService;
+module.exports = userService;
