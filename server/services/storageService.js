@@ -18,7 +18,7 @@ storageService.createPublication = (publication)=>{
   return db.createPublication(publication);
 };
 
-storageServicepatchPublication = (id,fields)=>{
+storageService.patchPublication = (id,fields)=>{
   return db.patchPublication(id,fields);
 };
 
