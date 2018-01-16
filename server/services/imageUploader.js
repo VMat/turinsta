@@ -27,7 +27,7 @@ ImgUpload.uploadToGcs = (req, res, next) => {
 
   if(!req.files) return next();
 
-  console.log("req.params.publication", req.params.publication);
+  console.log("req.params.publication:" + req.params.publication);
   publicationService.getPublication(req.params.publication)
     .then((publication)=>{
       console.log(JSON.stringify(publication));
