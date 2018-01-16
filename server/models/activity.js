@@ -7,9 +7,7 @@ const activitySchema = new Schema({
 	  type: Schema.Types.ObjectId, ref: 'Users'
 	},
 	direction: String,
-	caption: {
-		type: Schema.Types.ObjectId, ref: 'Captions'
-	},
+	caption: String,
 	relatedUsers:[{
 		type: Schema.Types.ObjectId, ref: 'Users'
 	}],
