@@ -1,7 +1,8 @@
-// 'use strict';
+'use strict';
 const storage = require('@google-cloud/storage');
 const fs = require('fs');
 const path = require('path');
+const storageService = require('./storageService');
 const publicationService = require('./publicationService');
 
 const gcs = storage({
