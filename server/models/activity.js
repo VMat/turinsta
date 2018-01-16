@@ -8,7 +8,7 @@ const activitySchema = new Schema({
 	},
 	direction: String,
 	caption: String,
-  params: [{}],
+  params: {},
 	relatedUsers:[{
 		type: Schema.Types.ObjectId, ref: 'Users'
 	}],
