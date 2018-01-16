@@ -5,163 +5,152 @@ const commentInterface = require('./commentInterface');
 const userInterface = require('./userInterface');
 const experienceInterface = require('./experienceInterface');
 
-let db = (function(){
+let db = {};
 
-  function oDb(){}
+db.connect = ()=>{
 
-  oDb.prototype = {
+  mongoose.connect(process.env.MONGOLAB_URI, (error)=>{
+    if (error)
+      console.error(error);
+    else
+      console.log('mongo connected');
+  });
+};
 
-    connect: ()=>{
+db.getPublications = (searchParams,count,order)=>{
+  return publicationInterface.getN(searchParams,count,order);
+};
 
-      mongoose.connect(process.env.MONGOLAB_URI, (error)=>{
-        if (error)
-          console.error(error);
-        else
-          console.log('mongo connected');
-      });
-    },
+db.getPublication = (id)=>{
+  return publicationInterface.getOne(id);
+};
 
-    getPublications: (searchParams,count,order)=>{
-      return publicationInterface.getN(searchParams,count,order);
-    },
+db.createPublication = (publication)=>{
+  return publicationInterface.insert(publication);
+};
 
-    getPublication: (id)=>{
-      return publicationInterface.getOne(id);
-    },
+db.patchPublication = (id,fields)=>{
+  return publicationInterface.patch(id,fields)
+};
 
-    createPublication: (publication)=>{
-      return publicationInterface.insert(publication);
-    },
+db.updatePublication = (publication)=>{
+  return publicationInterface.update(publication);
+};
 
-    patchPublication: (id,fields)=>{
-      return publicationInterface.patch(id,fields)
-    },
+db.deletePublications = ()=>{
+  return publicationInterface.deleteAll();
+};
 
-    updatePublication: (publication)=>{
-      return publicationInterface.update(publication);
-    },
+db.deletePublication = (id)=>{
+  return publicationInterface.deleteOne(id);
+};
 
-    deletePublications: ()=>{
-      return publicationInterface.deleteAll();
-    },
+db.addPublicationAssessment = (assessment)=>{
+  return publicationInterface.addPublicationAssessment(assessment);
+};
 
-    deletePublication: (id)=>{
-      return publicationInterface.deleteOne(id);
-    },
+db.modifyPublicationAssessment = (assessment)=>{
+  return publicationInterface.modifyPublicationAssessment(assessment);
+};
 
-    addPublicationAssessment: (assessment)=>{
-      return publicationInterface.addPublicationAssessment(assessment);
-    },
+db.deletePublicationAssessment = (assessment)=>{
+  return publicationInterface.deletePublicationAssessment(assessment);
+};
 
-    modifyPublicationAssessment: (assessment)=>{
-      return publicationInterface.modifyPublicationAssessment(assessment);
-    },
+db.addPublicationImage = (publicationId, imageUrls)=>{
+  return publicationInterface.addPublicationImage(publicationId, imageUrls);
+};
 
-    deletePublicationAssessment: (assessment)=>{
-      return publicationInterface.deletePublicationAssessment(assessment);
-    },
+db.deletePublicationImage = (publicationId, imageUrl)=>{
+  return publicationInterface.deletePublicationImage(publicationId, imageUrl);
+};
 
-    addPublicationImage: (publicationId, imageUrls)=>{
-      return publicationInterface.addPublicationImage(publicationId, imageUrls);
-    },
+db.getPublicationImage = (publicationId, imageUrl)=>{
+  return publicationInterface.getPublicationImage(publicationId, imageUrl);
+};
 
-    deletePublicationImage: (publicationId, imageUrl)=>{
-      return publicationInterface.deletePublicationImage(publicationId, imageUrl);
-    },
+db.getActivities = ()=>{
+  return activityInterface.getAll();
+};
 
-    getPublicationImage: (publicationId, imageUrl)=>{
-      return publicationInterface.getPublicationImage(publicationId, imageUrl);
-    },
+db.getActivity = (id)=>{
+  return activityInterface.getOne(id);
+};
 
-    getActivities: ()=>{
-      return activityInterface.getAll();
-    },
+db.createActivity = (activity)=>{
+  return activityInterface.insert(activity);
+};
 
-    getActivity: (id)=>{
-      return activityInterface.getOne(id);
-    },
+db.updateActivity = (activity)=>{
+  return activityInterface.update(activity);
+};
 
-    createActivity: (activity)=>{
-      return activityInterface.insert(activity);
-    },
+db.deleteActivity = (id)=>{
+  return activityInterface.deleteOne(id);
+};
 
-    updateActivity: (activity)=>{
-      return activityInterface.update(activity);
-    },
+db.getComment = (id)=>{
+  return commentInterface.getOne(id);
+};
 
-    deleteActivity: (id)=>{
-      return activityInterface.deleteOne(id);
-    },
+db.createComment = (comment)=>{
+  return commentInterface.insert(comment);
+};
 
-    getComment: (id)=>{
-      return commentInterface.getOne(id);
-    },
+db.updateComment = (comment)=>{
+  return commentInterface.update(comment);
+};
 
-    createComment: (comment)=>{
-      return commentInterface.insert(comment);
-    },
+db.deleteComment = (id)=>{
+  return commentInterface.deleteOne(id);
+};
 
-    updateComment: (comment)=>{
-      return commentInterface.update(comment);
-    },
+db.getExperience = (id)=>{
+  return experienceInterface.getOne(id);
+};
 
-    deleteComment: (id)=>{
-      return commentInterface.deleteOne(id);
-    },
+db.createExperience = (experience)=>{
+  return experienceInterface.insert(experience);
+};
 
-    getExperience: (id)=>{
-      return experienceInterface.getOne(id);
-    },
+db.updateExperience = (experience)=>{
+  return experienceInterface.update(experience);
+};
 
-    createExperience: (experience)=>{
-      return experienceInterface.insert(experience);
-    },
+db.deleteExperience = (id)=>{
+  return experienceInterface.deleteOne(id);
+};
 
-    updateExperience: (experience)=>{
-      return experienceInterface.update(experience);
-    },
+db.getUsers = ()=>{
+  return userInterface.getAll();
+};
 
-    deleteExperience: (id)=>{
-      return experienceInterface.deleteOne(id);
-    },
+db.getUser = (id)=>{
+  return userInterface.getOne(id);
+};
 
-    getUsers: ()=>{
-      return userInterface.getAll();
-    },
+db.createUser = (user)=>{
+  return userInterface.insert(user);
+};
 
-    getUser: (id)=>{
-      return userInterface.getOne(id);
-    },
+db.updateUser = (user)=>{
+  return userInterface.update(user);
+};
 
-    createUser: (user)=>{
-      return userInterface.insert(user);
-    },
+db.addFavoritePublication = (favorite)=>{
+  return userInterface.addFavoritePublication(favorite);
+};
 
-    updateUser: (user)=>{
-      return userInterface.update(user);
-    },
+db.removeFavoritePublication = (favorite)=>{
+  return userInterface.removeFavoritePublication(favorite);
+};
 
-    addFavoritePublication: (favorite)=>{
-      return userInterface.addFavoritePublication(favorite);
-    },
+db.addUserFollower = (follower)=>{
+  return userInterface.addUserFollower(follower);
+};
 
-    removeFavoritePublication: (favorite)=>{
-      return userInterface.removeFavoritePublication(favorite);
-    },
+db.removeUserFollower = (follower)=>{
+  return userInterface.removeUserFollower(follower);
+};
 
-    addUserFollower: (follower)=>{
-      return userInterface.addUserFollower(follower);
-    },
-
-    removeUserFollower: (follower)=>{
-      return userInterface.removeUserFollower(follower);
-    }
-
-  };
-
-  return oDb;
-})();
-
-let oDb = new db();
-
-module.exports = oDb;
+module.exports = db;
