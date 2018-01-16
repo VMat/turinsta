@@ -1,48 +1,37 @@
 const storageService = require('./storageService');
 
-const experienceService = (function(){
+let experienceService = {};
 
-  function oExperienceService(){}
+experienceService.getExperience = (id)=>{
+  return new Promise((resolve, reject)=>{
+    storageService.getExperience(id).
+      then(experiences=>resolve(experiences)).
+      catch(error=>reject(error))
+  })
+};
 
-  oExperienceService.prototype = {
+experienceService.createExperience = (experience)=>{
+  return new Promise((resolve, reject)=>{
+    storageService.createExperience(experience).
+      then(newExperience=>resolve(newExperience)).
+      catch(error=>reject(error))
+  })
+};
 
-    getExperience: (id)=>{
-      return new Promise((resolve, reject)=>{
-        storageService.getExperience(id).
-          then(experiences=>resolve(experiences)).
-          catch(error=>reject(error))
-      })
-    },
+experienceService.updateExperience = (experience)=>{
+  return new Promise((resolve, reject)=>{
+    storageService.updateExperience(experience).
+      then(updatedExperience=>resolve(updatedExperience)).
+      catch(error=>reject(error))
+  })
+};
 
-    createExperience: (experience)=>{
-      return new Promise((resolve, reject)=>{
-        storageService.createExperience(experience).
-          then(newExperience=>resolve(newExperience)).
-          catch(error=>reject(error))
-      })
-    },
+experienceService.deleteExperience = (id)=>{
+  return new Promise((resolve, reject)=>{
+  storageService.deleteExperience(id).
+    then(deletedExperience=>resolve(deletedExperience)).
+    catch(error=>reject(error))
+  })
+};
 
-    updateExperience: (experience)=>{
-      return new Promise((resolve, reject)=>{
-        storageService.updateExperience(experience).
-          then(updatedExperience=>resolve(updatedExperience)).
-          catch(error=>reject(error))
-      })
-    },
-
-    deleteExperience: (id)=>{
-      return new Promise((resolve, reject)=>{
-      storageService.deleteExperience(id).
-        then(deletedExperience=>resolve(deletedExperience)).
-        catch(error=>reject(error))
-      })
-    }
-  };
-
-  return oExperienceService;
-
-})();
-
-const oExperienceService = new experienceService();
-
-module.exports = oExperienceService;
+module.exports = experienceService;
