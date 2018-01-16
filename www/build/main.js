@@ -835,11 +835,11 @@ var map = {
 		9
 	],
 	"../pages/description-writing/description-writing.module": [
-		666,
+		665,
 		8
 	],
 	"../pages/experience-writing/experience-writing.module": [
-		665,
+		666,
 		7
 	],
 	"../pages/my-emoji-picker/my-emoji-picker.module": [
@@ -1288,8 +1288,8 @@ AppModule = __decorate([
                     { loadChildren: '../pages/account/account.module#AccountPageModule', name: 'AccountPage', segment: 'account', priority: 'low', defaultHistory: [] },
                     { loadChildren: '../pages/activities/activities.module#ActivitiesPageModule', name: 'ActivitiesPage', segment: 'activities', priority: 'low', defaultHistory: [] },
                     { loadChildren: '../pages/comment-writing/comment-writing.module#CommentWritingPageModule', name: 'CommentWritingPage', segment: 'comment-writing', priority: 'low', defaultHistory: [] },
-                    { loadChildren: '../pages/experience-writing/experience-writing.module#ExperienceWritingPageModule', name: 'ExperienceWritingPage', segment: 'experience-writing', priority: 'low', defaultHistory: [] },
                     { loadChildren: '../pages/description-writing/description-writing.module#DescriptionWritingPageModule', name: 'DescriptionWritingPage', segment: 'description-writing', priority: 'low', defaultHistory: [] },
+                    { loadChildren: '../pages/experience-writing/experience-writing.module#ExperienceWritingPageModule', name: 'ExperienceWritingPage', segment: 'experience-writing', priority: 'low', defaultHistory: [] },
                     { loadChildren: '../pages/my-emoji-picker/my-emoji-picker.module#MyEmojiPickerPageModule', name: 'MyEmojiPickerPage', segment: 'my-emoji-picker', priority: 'low', defaultHistory: [] },
                     { loadChildren: '../pages/place-selecting/place-selecting.module#PlaceSelectingPageModule', name: 'PlaceSelectingPage', segment: 'place-selecting', priority: 'low', defaultHistory: [] },
                     { loadChildren: '../pages/places/places.module#PlacesPageModule', name: 'PlacesPage', segment: 'places', priority: 'low', defaultHistory: [] },
@@ -2231,7 +2231,7 @@ __decorate([
 ], PublicationBodyComponent.prototype, "publication", void 0);
 PublicationBodyComponent = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
-        selector: 'publication-body',template:/*ion-inline-start:"C:\Users\Matias\WebstormProjects\turinsta\src\components\publication-body\publication-body.html"*/'<!-- Generated template for the PublicationBodyComponent component -->\n<ion-slides align="center">\n  <ion-slide *ngFor="let image of publication.images">\n    <publication-actions class="publication-actions-button" [publication]="publication" [user]="user"></publication-actions>\n    <publication-image [id]=image._id [url]=image.url></publication-image>\n  </ion-slide>\n</ion-slides>\n<p item-start class="publication-description"><span *ngIf="publication.description"><b>{{user.username}}</b>&nbsp;{{publication.description}}</span></p>\n\n\n'/*ion-inline-end:"C:\Users\Matias\WebstormProjects\turinsta\src\components\publication-body\publication-body.html"*/
+        selector: 'publication-body',template:/*ion-inline-start:"C:\Users\Matias\WebstormProjects\turinsta\src\components\publication-body\publication-body.html"*/'<!-- Generated template for the PublicationBodyComponent component -->\n<ion-slides align="center">\n  <ion-slide *ngFor="let image of publication.images">\n    <publication-actions *ngIf="image._id" class="publication-actions-button" [publication]="publication" [user]="user"></publication-actions>\n    <publication-image *ngIf="image._id" [id]=image._id [url]=image.url></publication-image>\n  </ion-slide>\n</ion-slides>\n<p item-start class="publication-description"><span *ngIf="publication.description"><b>{{user.username}}</b>&nbsp;{{publication.description}}</span></p>\n\n\n'/*ion-inline-end:"C:\Users\Matias\WebstormProjects\turinsta\src\components\publication-body\publication-body.html"*/
     }),
     __metadata("design:paramtypes", [])
 ], PublicationBodyComponent);
@@ -3579,14 +3579,14 @@ var PublicationWritingPage = (function () {
         var _this = this;
         var options = {
             maximumImagesCount: 8,
-            // width: 500,
-            // height: 500,
+            width: 500,
+            height: 500,
             quality: 100
         };
         this.imagePicker.getPictures(options).then(
         // file_uris => this._navCtrl.push(GalleryPage, {images: file_uris}),
         function (file_uris) {
-            if (!file_uris) {
+            if (file_uris.length == 0) {
                 return false;
             }
             if (_this.publication._id) {

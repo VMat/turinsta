@@ -231,15 +231,15 @@ export class PublicationWritingPage {
   addImage(){
     let options = {
       maximumImagesCount: 8,
-      // width: 500,
-      // height: 500,
+      width: 500,
+      height: 500,
       quality: 100
     };
 
     this.imagePicker.getPictures(options).then(
     // file_uris => this._navCtrl.push(GalleryPage, {images: file_uris}),
       file_uris => {
-        if(!file_uris){
+        if(file_uris.length==0){
           return false;
         }
         if(this.publication._id){
