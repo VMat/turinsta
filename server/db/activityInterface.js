@@ -4,45 +4,34 @@ const Users = require('../models/user');
 const Captions = require('../models/caption');
 const Commons = require('./commons');
 
-var ActivityInterface = (function(){
+let ActivityInterface = {};
 
-  function oActivityInterface(){}
+ActivityInterface.getAll = ()=>{
+  return Commons.getAll(Activities)
+    .populate('user')
+    .populate('caption')
+    .populate('relatedUsers')
+    .populate('AppState');
+};
 
-  oActivityInterface.prototype = {
+ActivityInterface.getOne = (id)=>{
+  return Commons.getOne(Activities, id)
+    .populate('user')
+    .populate('caption')
+    .populate('relatedUsers')
+    .populate('AppState');
+};
 
-    getAll: ()=>{
-      return Commons.getAll(Activities)
-        .populate('user')
-        .populate('caption')
-        .populate('relatedUsers')
-        .populate('AppState');
-    },
+ActivityInterface.insert = (activity)=>{
+  return Commons.insert(new Activities(activity));
+};
 
-    getOne: (id)=>{
-      return Commons.getOne(Activities, id)
-        .populate('user')
-        .populate('caption')
-        .populate('relatedUsers')
-        .populate('AppState');
-    },
+ActivityInterface.update = (activity)=>{
+  return Commons.update(Activities,activity);
+};
 
-    insert: (activity)=>{
-      return Commons.insert(new Activities(activity));
-    },
+ActivityInterface.deleteOne = (activity)=>{
+  return Commons.removeOne(Activities, activity);
+};
 
-    update: (activity)=>{
-      return Commons.update(Activities,activity);
-    },
-
-    deleteOne: (activity)=>{
-      return Commons.removeOne(Activities, activity);
-    }
-  }
-
-  return oActivityInterface;
-
-})();
-
-oActivityInterface = new ActivityInterface();
-
-module.exports = oActivityInterface;
+module.exports = ActivityInterface;
