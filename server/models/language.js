@@ -1,13 +1,11 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-// Mongoose captionSchema definition
-const captionSchema = new Schema({
-  "language": {
-    "name": String,
-    "short": String,
-    "flag": String
-  },
+// Mongoose languageSchema definition
+const languageSchema = new Schema({
+  "name": String,
+  "short": String,
+  "flag": String,
   "glosary": {
         "timeUnits": {
             "YEAR": {
@@ -40,6 +38,6 @@ const captionSchema = new Schema({
     }
 });
 
-const Captions = mongoose.model('Captions', captionSchema, 'Captions');
+const Languages = mongoose.model('Languages', languageSchema, 'Languages');
 
-module.exports = Captions;
+module.exports = Languages;
