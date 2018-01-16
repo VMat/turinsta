@@ -28,7 +28,6 @@ ImgUpload.uploadToGcs = (req, res, next) => {
 
   if(!req.files) return next();
 
-  console.log("req.params.publication:" + req.params.publication);
   publicationService.getPublication(req.params.publication)
     .then((publication)=>{
       bucketName = publication.user.bucketId;
@@ -72,7 +71,9 @@ ImgUpload.uploadToGcs = (req, res, next) => {
     })
 };
 
-ImgUpload.removeFromGcs = (imageUrl)=>{
+ImgUpload.removeFromGcs = (bucketId,imageUrl)=>{
+  bucketName = bucketId;
+  bucket = gcs.bucket(bucketName);
   let parsedUrl = imageUrl.split("/");
   let file = bucket.file(parsedUrl[parsedUrl.length-1]);
   return file.delete();

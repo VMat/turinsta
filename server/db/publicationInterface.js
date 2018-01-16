@@ -132,14 +132,17 @@ const PublicationInterface = (function(){
           .then(()=>{
             return CommentInterface.deleteFromPublication(id)
             .then(()=>{
-              return Promise.all(
-                publication.images.map((image)=>{
-                  return imageUploader.removeFromGcs(image.url)
+              Commons.getOne(Users, publication.user)
+                .then((user)=>{
+                  return Promise.all(
+                    publication.images.map((image)=>{
+                      return imageUploader.removeFromGcs(user.bucketId,image.url)
+                    })
+                  )
+                  .then(()=>{
+                    return Commons.removeOne(Publications,publication);
+                  })
                 })
-              )
-              .then(()=>{
-                return Commons.removeOne(Publications,publication);
-              })
             })
           })
         });
@@ -214,11 +217,14 @@ const PublicationInterface = (function(){
         .then((publication)=>{
           publication.images.forEach((image,i)=>{
             if(image._id==imageId){
-              return imageUploader.removeFromGcs(image.url).
-                then(()=>{
-                  publication.images.splice(i,1);
-                  return Commons.update(Publications,publication);
-                })
+              Commons.getOne(Users, publication.user)
+                .then((user)=>{
+                  return imageUploader.removeFromGcs(user.bucketId,image.url).
+                  then(()=>{
+                    publication.images.splice(i,1);
+                    return Commons.update(Publications,publication);
+                  })
+                });
             }
           });
         });
