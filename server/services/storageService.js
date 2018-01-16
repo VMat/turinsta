@@ -1,153 +1,141 @@
 const db = require('../db/mongo');
 
-const storageService = (function(){
+let storageService = {};
 
-  function oStorageService(){}
+storageService.connect = ()=>{
+  db.connect();
+};
 
-  oStorageService.prototype = {
+storageService.getPublications = (searchParams,count,order)=>{
+  return db.getPublications(searchParams,count,order);
+};
 
-    connect: ()=>{
-      db.connect();
-    },
+storageService.getPublication = (id)=>{
+  return db.getPublication(id);
+};
 
-    getPublications: (searchParams,count,order)=>{
-      return db.getPublications(searchParams,count,order);
-    },
+storageService.createPublication = (publication)=>{
+  return db.createPublication(publication);
+};
 
-    getPublication: (id)=>{
-      return db.getPublication(id);
-    },
+storageServicepatchPublication = (id,fields)=>{
+  return db.patchPublication(id,fields);
+};
 
-    createPublication: (publication)=>{
-      return db.createPublication(publication);
-    },
+storageService.updatePublication = (publication)=>{
+  return db.updatePublication(publication);
+};
 
-    patchPublication: (id,fields)=>{
-      return db.patchPublication(id,fields);
-    },
+storageService.deletePublication = (id)=>{
+  return db.deletePublication(id);
+};
 
-    updatePublication: (publication)=>{
-      return db.updatePublication(publication);
-    },
+storageService.addPublicationAssessment = (assessment)=>{
+  return db.addPublicationAssessment(assessment);
+};
 
-    deletePublication: (id)=>{
-      return db.deletePublication(id);
-    },
+storageService.modifyPublicationAssessment = (assessment)=>{
+  return db.modifyPublicationAssessment(assessment)
+};
 
-    addPublicationAssessment: (assessment)=>{
-      return db.addPublicationAssessment(assessment);
-    },
+storageService.deletePublicationAssessment = (assessment)=>{
+  return db.deletePublicationAssessment(assessment)
+};
 
-    modifyPublicationAssessment: (assessment)=>{
-      return db.modifyPublicationAssessment(assessment)
-    },
+storageService.addPublicationImage = (publicationId, imageUrls)=>{
+  return db.addPublicationImage(publicationId, imageUrls)
+};
 
-    deletePublicationAssessment: (assessment)=>{
-      return db.deletePublicationAssessment(assessment)
-    },
+storageService.deletePublicationImage = (publicationId, imageUrl)=>{
+  return db.deletePublicationImage(publicationId, imageUrl)
+};
 
-    addPublicationImage: (publicationId, imageUrls)=>{
-      return db.addPublicationImage(publicationId, imageUrls)
-    },
+storageService.getPublicationImage = (publicationId, imageUrl)=>{
+  return db.getPublicationImage(publicationId, imageUrl);
+};
 
-    deletePublicationImage: (publicationId, imageUrl)=>{
-      return db.deletePublicationImage(publicationId, imageUrl)
-    },
+storageService.getActivities = ()=>{
+  return db.getActivities();
+};
 
-    getPublicationImage: (publicationId, imageUrl)=>{
-      return db.getPublicationImage(publicationId, imageUrl);
-    },
+storageService.getActivity = (id)=>{
+  return db.getActivity(id);
+};
 
-    getActivities: ()=>{
-      return db.getActivities();
-    },
+storageService.createActivity = (activity)=>{
+  return db.createActivity(activity);
+};
 
-    getActivity: (id)=>{
-      return db.getActivity(id);
-    },
+storageService.updateActivity = (activity)=>{
+  return db.updateActivity(activity);
+};
 
-    createActivity: (activity)=>{
-      return db.createActivity(activity);
-    },
+storageService.deleteActivity = (activity)=>{
+  return db.deleteActivity(activity);
+};
 
-    updateActivity: (activity)=>{
-      return db.updateActivity(activity);
-    },
+storageService.getComment = (id)=>{
+  return db.getComment(id);
+};
 
-    deleteActivity: (activity)=>{
-      return db.deleteActivity(activity);
-    },
+storageService.createComment = (comment)=>{
+  return db.createComment(comment);
+};
 
-    getComment: (id)=>{
-      return db.getComment(id);
-    },
+storageService.updateComment = (comment)=>{
+  return db.updateComment(comment);
+};
 
-    createComment: (comment)=>{
-      return db.createComment(comment);
-    },
+storageService.deleteComment = (id)=>{
+  return db.deleteComment(id);
+};
 
-    updateComment: (comment)=>{
-      return db.updateComment(comment);
-    },
+storageService.getExperience = (id)=>{
+  return db.getExperience(id);
+};
 
-    deleteComment: (id)=>{
-      return db.deleteComment(id);
-    },
+storageService.createExperience = (experience)=>{
+  return db.createExperience(experience);
+};
 
-    getExperience: (id)=>{
-      return db.getExperience(id);
-    },
+storageService.updateExperience = (experience)=>{
+  return db.updateExperience(experience);
+};
 
-    createExperience: (experience)=>{
-      return db.createExperience(experience);
-    },
+storageService.deleteExperience = (id)=>{
+  return db.deleteExperience(id);
+};
 
-    updateExperience: (experience)=>{
-      return db.updateExperience(experience);
-    },
+storageService.getUsers = ()=>{
+  return db.getUsers();
+};
 
-    deleteExperience: (id)=>{
-      return db.deleteExperience(id);
-    },
+storageService.getUser = (id)=>{
+  return db.getUser(id);
+};
 
-    getUsers: ()=>{
-      return db.getUsers();
-    },
+storageService.createUser = (user)=>{
+  return db.createUser(user);
+};
 
-    getUser: (id)=>{
-      return db.getUser(id);
-    },
+storageService.updateUser = (user)=>{
+  return db.updateUser(user);
+};
 
-    createUser: (user)=>{
-      return db.createUser(user);
-    },
+storageService.addFavoritePublication = (favorite)=>{
+  return db.addFavoritePublication(favorite);
+};
 
-    updateUser: (user)=>{
-      return db.updateUser(user);
-    },
+storageService.removeFavoritePublication = (favorite)=>{
+  return db.removeFavoritePublication(favorite);
+};
 
-    addFavoritePublication: (favorite)=>{
-      return db.addFavoritePublication(favorite);
-    },
+storageService.addUserFollower = (follower)=>{
+  return db.addUserFollower(follower);
+};
 
-    removeFavoritePublication: (favorite)=>{
-      return db.removeFavoritePublication(favorite);
-    },
+storageService.removeUserFollower = (follower)=>{
+  return db.removeUserFollower(follower);
+};
 
-    addUserFollower: (follower)=>{
-      return db.addUserFollower(follower);
-    },
-
-    removeUserFollower: (follower)=>{
-      return db.removeUserFollower(follower);
-    }
-
-  };
-
-  return oStorageService;
-
-})();
-
-const oStorageService = new storageService();
-
-module.exports = oStorageService;
+module.exports = storageService;
