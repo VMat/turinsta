@@ -138,4 +138,12 @@ storageService.removeUserFollower = (follower)=>{
   return db.removeUserFollower(follower);
 };
 
+storageService.getLanguages = ()=>{
+  return db.getLanguages();
+};
+
+storageService.getLanguage = (id)=>{
+  return db.getLanguage(id);
+};
+
 module.exports = storageService;
