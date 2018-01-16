@@ -3,57 +3,45 @@ const Experiences = require('../models/experience');
 const Commons = require('./commons');
 const PublicationInterface = require('./publicationInterface');
 
-const ExperienceInterface = (function(){
+let ExperienceInterface = {};
 
-  function oExperienceInterface(){}
+ExperienceInterface.getOne = (id)=>{
+  return Commons.getOne(Experiences, id);
+};
 
-  oExperienceInterface.prototype = {
-
-    getOne: (id)=>{
-      return Commons.getOne(Experiences, id);
-    },
-
-    insert: (experience)=>{
-      experience.score = 0;
-      return Commons.insert(new Experiences(experience))
-        .then(insertedExperience=>{
-          return Commons.getOne(Publications, insertedExperience.publication)
-            .then(publication=>{
-              publication.experienceIds.push(insertedExperience._id);
-              publication.timestamps.modified = new Date().toISOString();
-              return Commons.update(Publications,publication);
-            })
-        });
-    },
-
-    update: (experience)=>{
-      return Commons.update(Experiences, experience);
-    },
-
-    deleteOne: (id)=>{
-      return Commons.getOne(Experiences,id)
-      .then((experience)=>{
-        return Commons.getOne(Publications, experience.publication)
+ExperienceInterface.insert = (experience)=>{
+  experience.score = 0;
+  return Commons.insert(new Experiences(experience))
+    .then(insertedExperience=>{
+      return Commons.getOne(Publications, insertedExperience.publication)
         .then(publication=>{
-          publication.experienceIds.splice(publication.experienceIds.indexOf(experience._id), 1);
-            return Commons.update(Publications,publication)
-              .then(()=>{
-                return Commons.removeOne(Experiences, experience);
-              })
+          publication.experienceIds.push(insertedExperience._id);
+          publication.timestamps.modified = new Date().toISOString();
+          return Commons.update(Publications,publication);
         })
-      })
-    },
+    });
+};
 
-    deleteFromPublication: (id)=>{
-      return Commons.removeWithFilter(Experiences,{"publication": id});
-    }
+ExperienceInterface.update = (experience)=>{
+  return Commons.update(Experiences, experience);
+};
 
-  };
+ExperienceInterface.deleteOne = (id)=>{
+  return Commons.getOne(Experiences,id)
+  .then((experience)=>{
+    return Commons.getOne(Publications, experience.publication)
+    .then(publication=>{
+      publication.experienceIds.splice(publication.experienceIds.indexOf(experience._id), 1);
+        return Commons.update(Publications,publication)
+          .then(()=>{
+            return Commons.removeOne(Experiences, experience);
+          })
+    })
+  })
+};
 
-  return oExperienceInterface;
+ExperienceInterface.deleteFromPublication = (id)=>{
+  return Commons.removeWithFilter(Experiences,{"publication": id});
+};
 
-})();
-
-oExperienceInterface = new ExperienceInterface();
-
-module.exports = oExperienceInterface;
+module.exports = ExperienceInterface;
