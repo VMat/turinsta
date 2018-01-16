@@ -153,4 +153,12 @@ db.removeUserFollower = (follower)=>{
   return userInterface.removeUserFollower(follower);
 };
 
+db.getLanguages = ()=>{
+  return languageInterface.getLanguages();
+};
+
+db.getLanguage = (id)=>{
+  return languageInterface.getLanguage(id);
+};
+
 module.exports = db;
