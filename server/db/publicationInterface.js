@@ -209,6 +209,7 @@ const PublicationInterface = (function(){
     },
 
     deletePublicationImage: (publicationId, imageId)=>{
+      const imageUploader = require('../services/imageUploader');
       return Commons.getOne(Publications, publicationId)
         .then((publication)=>{
           publication.images.forEach((image,i)=>{
