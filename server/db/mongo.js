@@ -38,7 +38,7 @@ db.createPublication = (publication)=>{
         timestamps: newPublication.timestamps,
         seen: false
       };
-      return experienceInterface.insert(newActivity);
+      return activityInterface.insert(newActivity);
     });
 };
 
