@@ -16,6 +16,7 @@ export class PublicationComponent {
 
   @Input() data: any = null;
   scoreGivenFromUser: number = null;
+  needRefreshSlides: boolean = false;
 
   constructor(private commons: CommonsProvider) {
     console.log('Hello PublicationComponent Component');
@@ -25,5 +26,9 @@ export class PublicationComponent {
     let loggedUser = this.commons.getUserId();
     let targetAssessment = this.data.publication.assessments.filter((assessment)=>{return assessment.user == loggedUser});
     this.scoreGivenFromUser = targetAssessment.length > 0 ? targetAssessment[0].value : null;
+  }
+
+  refreshSlides(){
+
   }
 }

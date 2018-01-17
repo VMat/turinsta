@@ -1,4 +1,5 @@
-import {Component, Input} from '@angular/core';
+import {Component, Input, ViewChild} from '@angular/core';
+import {Slides} from "ionic-angular";
 
 
 /**
@@ -15,9 +16,18 @@ export class PublicationBodyComponent {
 
   @Input() user: any = null;
   @Input() publication: any = null;
+  @Input() needRefreshSlides: any = false;
+  @ViewChild(Slides) slides: Slides;
 
   constructor() {
     console.log('Hello PublicationBodyComponent Component');
+  }
+
+  ngOnChanges(...args: any[]) {
+    if(this.needRefreshSlides){
+      alert("needRefreshSlides");
+      this.slides.slideTo(1);
+    }
   }
 
 }

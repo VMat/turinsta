@@ -4,7 +4,7 @@
     <publication-header [user]=data.user [publication]=data.publication></publication-header>
   </ion-card-header>
   <ion-card-content no-padding>
-    <publication-body [user]=data.user [publication]=data.publication></publication-body>
-    <publication-footer [publication]=data.publication [comments]=data.comments [experiences]=data.experiences [user]=data.user [scoreGivenFromUser]="scoreGivenFromUser"></publication-footer>
+    <publication-body [user]=data.user [publication]=data.publication [needRefreshSlides]=needRefreshSlides></publication-body>
+    <publication-footer (publicationWritingDismissed)="refreshSlides()" [publication]=data.publication [comments]=data.comments [experiences]=data.experiences [user]=data.user [scoreGivenFromUser]="scoreGivenFromUser"></publication-footer>
   </ion-card-content>
 </ion-card>
