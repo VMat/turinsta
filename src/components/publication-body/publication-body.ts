@@ -1,4 +1,4 @@
-import {Component, Input, ViewChild} from '@angular/core';
+import {Component, Input, ViewChild, Output, EventEmitter} from '@angular/core';
 import {Slides} from "ionic-angular";
 
 
@@ -16,7 +16,6 @@ export class PublicationBodyComponent {
 
   @Input() user: any = null;
   @Input() publication: any = null;
-  @Input() needRefreshSlides: any = false;
   @ViewChild(Slides) slides: Slides;
 
   constructor() {
@@ -24,9 +23,9 @@ export class PublicationBodyComponent {
   }
 
   ngOnChanges(...args: any[]) {
-    if(this.needRefreshSlides){
-      alert("needRefreshSlides");
-      this.slides.slideTo(1);
+    this.slides.update();
+    if(this.slides.getActiveIndex() >= this.slides.length()){
+      this.slides.slideTo(0);
     }
   }
 

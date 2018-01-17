@@ -21,7 +21,6 @@ export class PublicationFooterComponent{
   @Input() experiences: any = null;
   @Input() user: any = null;
   @Input() scoreGivenFromUser: number = null;
-  @Output() publicationWritingDismissed = new EventEmitter<any>();
 
   currentUserScore: any = null;
   initialValue: number = null;
