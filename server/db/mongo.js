@@ -203,27 +203,51 @@ db.getComment = (id)=>{
 
 db.createComment = (comment)=>{
   return commentInterface.insert(comment)
-    .then((updatedPublication)=>{
-      let newOutActivity = {
-        user: comment.user,
-        direction: "OUT",
-        caption: "publicationCommentGiven",
-        params: null,
-        relatedUsers: updatedPublication.user,
-        publication: updatedPublication._id,
-        timestamps: {created: new Date().toISOString(), modified: null},
-        seen: true
-    };
-    let newInActivity = {
-        user: updatedPublication.user,
-        direction: "IN",
-        caption: "publicationCommentAddedNotification",
-        params: null,
-        relatedUsers: comment.user,
-        publication: updatedPublication._id,
-        timestamps: {created: new Date().toISOString(), modified: null},
-        seen: false
-    };
+    .then((response)=>{
+      if(comment.parent!=null){
+        let newOutActivity = {
+          user: comment.user._id,
+          direction: "OUT",
+          caption: "commentResponseGiven",
+          params: null,
+          relatedUsers: response.user._id,
+          publication: response.publication,
+          timestamps: {created: new Date().toISOString(), modified: null},
+          seen: true
+        };
+        let newInActivity = {
+          user: response.user._id,
+          direction: "IN",
+          caption: "commentResponseAddedNotification",
+          params: null,
+          relatedUsers: comment.user._id,
+          publication: response.publication,
+          timestamps: {created: new Date().toISOString(), modified: null},
+          seen: false
+        }; 
+      }
+      else{
+        let newOutActivity = {
+          user: comment.user,
+          direction: "OUT",
+          caption: "publicationCommentGiven",
+          params: null,
+          relatedUsers: respose.user,
+          publication: respose._id,
+          timestamps: {created: new Date().toISOString(), modified: null},
+          seen: true
+        };
+        let newInActivity = {
+          user: respose.user,
+          direction: "IN",
+          caption: "publicationCommentAddedNotification",
+          params: null,
+          relatedUsers: comment.user,
+          publication: respose._id,
+          timestamps: {created: new Date().toISOString(), modified: null},
+          seen: false
+        };
+      }
     return Promise.all([activityInterface.insert(newOutActivity),activityInterface.insert(newInActivity)]);
   });  
 };
@@ -233,26 +257,51 @@ db.updateComment = (comment)=>{
     .then((updatedComment)=>{
       return publicationInterface.getOne(updatedComment.publication)
         .then((publication)=>{
-          let newOutActivity = {
-            user: comment.user,
-            direction: "OUT",
-            caption: "publicationCommentModified",
-            params: null,
-            relatedUsers: publication.user,
-            publication: publication._id,
-            timestamps: {created: new Date().toISOString(), modified: null},
-            seen: true
-          };
-          let newInActivity = {
-            user: publication.user._id,
-            direction: "IN",
-            caption: "publicationCommentUpdatedNotification",
-            params: null,
-            relatedUsers: comment.user,
-            publication: publication._id,
-            timestamps: {created: new Date().toISOString(), modified: null},
-            seen: false
-          };
+          if(comment.parent!=null){
+            let newOutActivity = {
+              user: comment.user,
+              direction: "OUT",
+              caption: "commentResponseModified",
+              params: null,
+              relatedUsers: publication.user,
+              publication: publication._id,
+              timestamps: {created: new Date().toISOString(), modified: null},
+              seen: true
+            };
+            let newInActivity = {
+              user: publication.user._id,
+              direction: "IN",
+              caption: "commentResponseUpdatedNotification",
+              params: null,
+              relatedUsers: comment.user,
+              publication: publication._id,
+              timestamps: {created: new Date().toISOString(), modified: null},
+              seen: false
+            };
+          }
+          else{
+            let newOutActivity = {
+              user: comment.user,
+              direction: "OUT",
+              caption: "publicationCommentModified",
+              params: null,
+              relatedUsers: publication.user,
+              publication: publication._id,
+              timestamps: {created: new Date().toISOString(), modified: null},
+              seen: true
+            };
+            let newInActivity = {
+              user: publication.user._id,
+              direction: "IN",
+              caption: "publicationCommentUpdatedNotification",
+              params: null,
+              relatedUsers: comment.user,
+              publication: publication._id,
+              timestamps: {created: new Date().toISOString(), modified: null},
+              seen: false
+            };
+          }
+          
           return Promise.all([activityInterface.insert(newOutActivity),activityInterface.insert(newInActivity)]);
         });
     });  
@@ -263,26 +312,51 @@ db.deleteComment = (id)=>{
     .then((deletedComment)=>{
       return publicationInterface.getOne(deletedComment.publication)
         .then((publication)=>{
-          let newOutActivity = {
-            user: deletedComment.user,
-            direction: "OUT",
-            caption: "publicationCommentDeleted",
-            params: null,
-            relatedUsers: publication.user,
-            publication: publication._id,
-            timestamps: {created: new Date().toISOString(), modified: null},
-            seen: true
-          };
-          let newInActivity = {
-            user: publication.user._id,
-            direction: "IN",
-            caption: "publicationCommentDeletedNotification",
-            params: null,
-            relatedUsers: deletedComment.user,
-            publication: publication._id,
-            timestamps: {created: new Date().toISOString(), modified: null},
-            seen: false
-          };
+          if(deletedComment.parent!=null){
+            let newOutActivity = {
+              user: deletedComment.user,
+              direction: "OUT",
+              caption: "commentResponseDeleted",
+              params: null,
+              relatedUsers: publication.user,
+              publication: publication._id,
+              timestamps: {created: new Date().toISOString(), modified: null},
+              seen: true
+            };
+            let newInActivity = {
+              user: publication.user._id,
+              direction: "IN",
+              caption: "commentResponseDeletedNotification",
+              params: null,
+              relatedUsers: deletedComment.user,
+              publication: publication._id,
+              timestamps: {created: new Date().toISOString(), modified: null},
+              seen: false
+            };
+          }
+          else{
+            let newOutActivity = {
+              user: deletedComment.user,
+              direction: "OUT",
+              caption: "publicationCommentDeleted",
+              params: null,
+              relatedUsers: publication.user,
+              publication: publication._id,
+              timestamps: {created: new Date().toISOString(), modified: null},
+              seen: true
+            };
+            let newInActivity = {
+              user: publication.user._id,
+              direction: "IN",
+              caption: "publicationCommentDeletedNotification",
+              params: null,
+              relatedUsers: deletedComment.user,
+              publication: publication._id,
+              timestamps: {created: new Date().toISOString(), modified: null},
+              seen: false
+            };
+          }
+
           return Promise.all([activityInterface.insert(newOutActivity),activityInterface.insert(newInActivity)]);
         });  
     });  
