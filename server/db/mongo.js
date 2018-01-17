@@ -35,8 +35,8 @@ db.createPublication = (publication)=>{
         params: null,
         relatedUsers: null,
         publication: newPublication._id,
-        timestamps: newPublication.timestamps,
-        seen: false
+        timestamps: {created: new Date().toISOString(), modified: null},
+        seen: true
       };
       return activityInterface.insert(newActivity);
     });
@@ -44,6 +44,19 @@ db.createPublication = (publication)=>{
 
 db.patchPublication = (id,fields)=>{
   return publicationInterface.patch(id,fields)
+    .then((editedPublication)=>{
+      let newActivity = {
+        user: editedPublication.user,
+        direction: "OUT",
+        caption: "publicationEdited",
+        params: null,
+        relatedUsers: null,
+        publication: editedPublication._id,
+        timestamps: {created: new Date().toISOString(), modified: null},
+        seen: true
+      };
+      return activityInterface.insert(newActivity);
+    });
 };
 
 db.updatePublication = (publication)=>{
@@ -55,11 +68,47 @@ db.deletePublications = ()=>{
 };
 
 db.deletePublication = (id)=>{
-  return publicationInterface.deleteOne(id);
+  return publicationInterface.deleteOne(id)
+    .then((deletedPublication)=>{
+      let newActivity = {
+        user: deletedPublication.user,
+        direction: "OUT",
+        caption: "publicationDeleted",
+        params: null,
+        relatedUsers: null,
+        publication: null,
+        timestamps: {created: new Date().toISOString(), modified: null},
+        seen: true
+      };
+      return activityInterface.insert(newActivity);
+    });
 };
 
 db.addPublicationAssessment = (assessment)=>{
-  return publicationInterface.addPublicationAssessment(assessment);
+  return publicationInterface.addPublicationAssessment(assessment)
+    .then((updatedPublication)=>{
+      let newOutActivity = {
+        user: assessment.user,
+        direction: "OUT",
+        caption: "publicationAssessmentGiven",
+        params: {":number": assessment.value},
+        relatedUsers: updatedPublication.user,
+        publication: updatedPublication._id,
+        timestamps: {created: new Date().toISOString(), modified: null},
+        seen: true
+      };
+      let newInActivity = {
+        user: updatedPublication.user,
+        direction: "IN",
+        caption: "publicationAssessmentAddedNotification",
+        params: {":number": assessment.value},
+        relatedUsers: assessment.user,
+        publication: updatedPublication._id,
+        timestamps: {created: new Date().toISOString(), modified: null},
+        seen: false
+      };
+      return Promise.all([activityInterface.insert(newOutActivity),activityInterface.insert(newInActivity)]);
+    });
 };
 
 db.modifyPublicationAssessment = (assessment)=>{
