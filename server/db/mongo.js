@@ -112,11 +112,57 @@ db.addPublicationAssessment = (assessment)=>{
 };
 
 db.modifyPublicationAssessment = (assessment)=>{
-  return publicationInterface.modifyPublicationAssessment(assessment);
+  return publicationInterface.modifyPublicationAssessment(assessment)
+    .then((updatedPublication)=>{
+      let newOutActivity = {
+        user: assessment.user,
+        direction: "OUT",
+        caption: "publicationAssessmentModified",
+        params: {":number": assessment.value},
+        relatedUsers: updatedPublication.user,
+        publication: updatedPublication._id,
+        timestamps: {created: new Date().toISOString(), modified: null},
+        seen: true
+      };
+      let newInActivity = {
+        user: updatedPublication.user,
+        direction: "IN",
+        caption: "publicationAssessmentUpdatedNotification",
+        params: {":number": assessment.value},
+        relatedUsers: assessment.user,
+        publication: updatedPublication._id,
+        timestamps: {created: new Date().toISOString(), modified: null},
+        seen: false
+      };
+      return Promise.all([activityInterface.insert(newOutActivity),activityInterface.insert(newInActivity)]);
+  });
 };
 
 db.deletePublicationAssessment = (assessment)=>{
-  return publicationInterface.deletePublicationAssessment(assessment);
+  return publicationInterface.deletePublicationAssessment(assessment)
+    .then((updatedPublication)=>{
+      let newOutActivity = {
+        user: assessment.user,
+        direction: "OUT",
+        caption: "publicationAssessmentDeleted",
+        params: null,
+        relatedUsers: updatedPublication.user,
+        publication: updatedPublication._id,
+        timestamps: {created: new Date().toISOString(), modified: null},
+        seen: true
+      };
+      let newInActivity = {
+        user: updatedPublication.user,
+        direction: "IN",
+        caption: "publicationAssessmentDeletedNotification",
+        params: null,
+        relatedUsers: assessment.user,
+        publication: updatedPublication._id,
+        timestamps: {created: new Date().toISOString(), modified: null},
+        seen: false
+      };
+      return Promise.all([activityInterface.insert(newOutActivity),activityInterface.insert(newInActivity)]);
+  });
 };
 
 db.addPublicationImage = (publicationId, imageUrls)=>{
@@ -156,15 +202,90 @@ db.getComment = (id)=>{
 };
 
 db.createComment = (comment)=>{
-  return commentInterface.insert(comment);
+  return commentInterface.insert(comment)
+    .then((updatedPublication)=>{
+      let newOutActivity = {
+        user: comment.user,
+        direction: "OUT",
+        caption: "publicationCommentGiven",
+        params: null,
+        relatedUsers: updatedPublication.user,
+        publication: updatedPublication._id,
+        timestamps: {created: new Date().toISOString(), modified: null},
+        seen: true
+    };
+    let newInActivity = {
+        user: updatedPublication.user,
+        direction: "IN",
+        caption: "publicationCommentAddedNotification",
+        params: null,
+        relatedUsers: comment.user,
+        publication: updatedPublication._id,
+        timestamps: {created: new Date().toISOString(), modified: null},
+        seen: false
+    };
+    return Promise.all([activityInterface.insert(newOutActivity),activityInterface.insert(newInActivity)]);
+  });  
 };
 
 db.updateComment = (comment)=>{
-  return commentInterface.update(comment);
+  return commentInterface.update(comment)
+    .then((updatedComment)=>{
+      return publicationInterface.getOne(updatedComment.publication)
+        .then((publication)=>{
+          let newOutActivity = {
+            user: comment.user,
+            direction: "OUT",
+            caption: "publicationCommentModified",
+            params: null,
+            relatedUsers: publication.user,
+            publication: publication._id,
+            timestamps: {created: new Date().toISOString(), modified: null},
+            seen: true
+          };
+          let newInActivity = {
+            user: publication.user._id,
+            direction: "IN",
+            caption: "publicationCommentUpdatedNotification",
+            params: null,
+            relatedUsers: comment.user,
+            publication: publication._id,
+            timestamps: {created: new Date().toISOString(), modified: null},
+            seen: false
+          };
+          return Promise.all([activityInterface.insert(newOutActivity),activityInterface.insert(newInActivity)]);
+        });
+    });  
 };
 
 db.deleteComment = (id)=>{
-  return commentInterface.deleteOne(id);
+  return commentInterface.deleteOne(id)
+    .then((deletedComment)=>{
+      return publicationInterface.getOne(deletedComment.publication)
+        .then((publication)=>{
+          let newOutActivity = {
+            user: deletedComment.user,
+            direction: "OUT",
+            caption: "publicationCommentDeleted",
+            params: null,
+            relatedUsers: publication.user,
+            publication: publication._id,
+            timestamps: {created: new Date().toISOString(), modified: null},
+            seen: true
+          };
+          let newInActivity = {
+            user: publication.user._id,
+            direction: "IN",
+            caption: "publicationCommentDeletedNotification",
+            params: null,
+            relatedUsers: deletedComment.user,
+            publication: publication._id,
+            timestamps: {created: new Date().toISOString(), modified: null},
+            seen: false
+          };
+          return Promise.all([activityInterface.insert(newOutActivity),activityInterface.insert(newInActivity)]);
+        });  
+    });  
 };
 
 db.getExperience = (id)=>{
