@@ -367,15 +367,60 @@ db.getExperience = (id)=>{
 };
 
 db.createExperience = (experience)=>{
-  return experienceInterface.insert(experience);
+  return experienceInterface.insert(experience)
+    .then((updatedPublication)=>{
+      let newActivity = {
+        user: updatedPublication.user,
+        direction: "OUT",
+        caption: "experienceCreated",
+        params: null,
+        relatedUsers: null,
+        publication: updatedPublication._id,
+        timestamps: {created: new Date().toISOString(), modified: null},
+        seen: true
+      };
+      return activityInterface.insert(newActivity);
+    });
 };
 
 db.updateExperience = (experience)=>{
-  return experienceInterface.update(experience);
+  return experienceInterface.update(experience)
+    .then((updatedExperience)=>{
+      return publicationInterface.getOne(updatedExperience.publication)
+        .then((publication)=>{
+          let newActivity = {
+            user: publication.user,
+            direction: "OUT",
+            caption: "experienceUpdated",
+            params: null,
+            relatedUsers: null,
+            publication: publication._id,
+            timestamps: {created: new Date().toISOString(), modified: null},
+            seen: true
+          };
+          return activityInterface.insert(newActivity);
+      });
+    });
 };
 
 db.deleteExperience = (id)=>{
-  return experienceInterface.deleteOne(id);
+  return experienceInterface.deleteOne(id)
+    .then((deletedExperience)=>{
+      return publicationInterface.getOne(deletedExperience.publication)
+        .then((publication)=>{
+          let newActivity = {
+            user: publication.user,
+            direction: "OUT",
+            caption: "experienceDeleted",
+            params: null,
+            relatedUsers: null,
+            publication: publication._id,
+            timestamps: {created: new Date().toISOString(), modified: null},
+            seen: true
+          };
+          return activityInterface.insert(newActivity);
+      });
+    });  
 };
 
 db.getUsers = ()=>{
