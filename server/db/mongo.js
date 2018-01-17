@@ -26,7 +26,20 @@ db.getPublication = (id)=>{
 };
 
 db.createPublication = (publication)=>{
-  return publicationInterface.insert(publication);
+  return publicationInterface.insert(publication)
+    .then((newPublication)=>{
+      let newActivity = {
+        user: newPublication.user,
+        direction: "OUT",
+        caption: "publicationCreated",
+        params: null,
+        relatedUsers: null,
+        publication: newPublication._id,
+        timestamps: newPublication.timestamps,
+        seen: false
+      };
+      return experienceInterface.insert(newActivity);
+    });
 };
 
 db.patchPublication = (id,fields)=>{
