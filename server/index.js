@@ -24,6 +24,7 @@ app.use(cors());*/
 
 app.use(bodyParser.json()); // support json encoded bodies
 app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
+app.use(cors());
 
 app.use((req, res, next)=>{
   res.header("Access-Control-Allow-Origin", "*");
