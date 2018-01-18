@@ -27,7 +27,10 @@
 </ion-header>
 <ion-content padding>
   <publication-header [user]=user [publication]=publication [edit]="checkEditPermission()" (changePlace)="setPlace($event)"></publication-header>
-  <button *ngIf="!publication._id  && !publication.images" (click)="addImage()" ion-button icon-only clear><ion-icon name="images"></ion-icon></button>
+  <ion-item *ngIf="!publication._id  && !publication.images" no-lines>
+    <button (click)="addImage()" ion-button icon-only clear item-start><ion-icon name="images"></ion-icon></button>
+    <span item-left>Agregar imágenes</span>
+  </ion-item>
   <ion-slides *ngIf="publication._id || publication.images">
     <ion-slide style="align-items: start" *ngFor="let image of publication.images">
       <div class="image-action-buttons" *ngIf="checkEditPermission()">
@@ -51,11 +54,12 @@
         <ion-icon name="trash" color="danger"></ion-icon>
       </button>
     </div>
-    <div *ngIf="checkEditPermission() && !publication.description" item-end>
+    <div *ngIf="checkEditPermission() && !publication.description" item-right>
       <button ion-button icon-only clear (click)="presentDescriptionWriting()">
         <ion-icon name="add" color="success"></ion-icon>
       </button>
     </div>
+    <p *ngIf="publication.timeStamps" item-end>{{prettyDate(publication.timeStamps.created)}}</p>
   </ion-item>
   <ion-item>
     <ion-item no-lines>
@@ -74,5 +78,8 @@
       </button>
     </ion-item>
     <comment-list *ngIf="publication._id != undefined && commentListOpened" [comments]=comments [publicationId]=publication._id [publicationOwner]=user._id></comment-list>
+  </ion-item>
+  <ion-item *ngIf="publication._id">
+    <score-handler [publicationScore]="currentUserScore" [publicationId]="publication._id" [scoreInputShowed]=true></score-handler>
   </ion-item>
 </ion-content>

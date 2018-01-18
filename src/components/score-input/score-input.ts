@@ -1,4 +1,4 @@
-import {Component, Input} from '@angular/core';
+import {Component, Input, Output, EventEmitter} from '@angular/core';
 import {Platform} from "ionic-angular";
 
 /**
@@ -14,6 +14,7 @@ import {Platform} from "ionic-angular";
 export class ScoreInputComponent {
 
   @Input() score: any = null;
+  @Output() scoringFinished = new EventEmitter<any>();
   lastDeltaXRight: number = 0;
   lastDeltaXLeft: number = 0;
   lastEvent: string = null;
@@ -23,7 +24,6 @@ export class ScoreInputComponent {
   }
 
   increment(event){
-    sessionStorage.setItem("pan-event", JSON.stringify(event));
     if(this.lastEvent != event.type){
       this.lastEvent = event.type;
       if(this.platform.isLandscape()){
@@ -55,13 +55,10 @@ export class ScoreInputComponent {
     }
   }
 
-  initDeltas(event){
-    sessionStorage.setItem("pan-start", JSON.stringify(event));
-  }
-
   restartDeltas(){
     this.lastDeltaXRight = 0;
     this.lastDeltaXLeft = 0;
+    this.scoringFinished.emit("");
   }
 
 }

@@ -53,6 +53,7 @@ import {DescriptionWritingPage} from "../pages/description-writing/description-w
 import {ImagePicker} from "@ionic-native/image-picker";
 import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-native/file-transfer';
 import { File } from '@ionic-native/file';
+import {ScoreHandlerComponent} from "../components/score-handler/score-handler";
 
 
 @NgModule({
@@ -89,6 +90,7 @@ import { File } from '@ionic-native/file';
     MyEmojiPickerComponent,
     ScoreInputComponent,
     PublicationActionsComponent,
+    ScoreHandlerComponent,
     ContainsFilterPipe
   ],
   imports: [

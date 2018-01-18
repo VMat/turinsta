@@ -317,4 +317,7 @@ export class PublicationWritingPage {
     });
   }
 
+  prettyDate(rowDate){
+    return this.commons.prettyDate(rowDate);
+  }
 }

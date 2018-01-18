@@ -46,39 +46,6 @@ export class PublicationFooterComponent{
     this.sections[i].show = !this.sections[i].show;
   };
 
-  toogleScoreInput(){
-
-    if(this.scoreInputShowed){
-      if(this.currentUserScore.value != this.initialValue){
-        if(this.initialValue == null){
-          this.storageService.addPublicationAssessment(this.currentUserScore).subscribe((assessmentAdded)=>{
-            this.scoreInputShowed = false;
-            this.initialValue = this.currentUserScore.value;
-          });
-        }
-        else{
-          if(this.currentUserScore.value >0){
-            this.storageService.modifyPublicationAssessment(this.currentUserScore).subscribe((assessmentModified)=>{
-              this.scoreInputShowed = false;
-            });
-          }
-          else{
-            this.storageService.deletePublicationAssessment(this.currentUserScore.user,this.currentUserScore.publication).subscribe((assessmentDeleted)=>{
-              this.scoreInputShowed = false;
-              this.initialValue = null;
-            });
-          }
-        }
-      }
-      else{
-        this.scoreInputShowed = false;
-      }
-    }
-    else{
-      this.scoreInputShowed = true;
-    }
-  }
-
   getAntiquity(date){
     return this.commons.getAntiquity(date);
   }

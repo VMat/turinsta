@@ -23,9 +23,10 @@ export class PublicationBodyComponent {
   }
 
   ngOnChanges(...args: any[]) {
-    this.slides.update();
-    if(this.slides.getActiveIndex() >= this.slides.length()){
-      this.slides.slideTo(0);
+    if(this.slides!=undefined){
+      if(this.slides.getActiveIndex() >= this.slides.length()){
+        this.slides.slideTo(0);
+      }
     }
   }
 

@@ -66,6 +66,11 @@ export class CommonsProvider {
     return this.localStorage.get("publications");
   }
 
+  prettyDate(rowDate){
+    let parsedRowDate = new Date(rowDate);
+    return parsedRowDate.getDay() + '/' + (parsedRowDate.getMonth() <= 8 ? '0' + (parsedRowDate.getMonth() + 1) : (parsedRowDate.getMonth() + 1)) + '/' + parsedRowDate.getFullYear();
+  }
+
   dateDiff(dateSince, dateUntil){
     let diffInMs: number = Date.parse(dateUntil) - Date.parse(dateSince);
     let diffInSeconds: number = diffInMs / 1000;
