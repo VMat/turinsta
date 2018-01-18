@@ -440,19 +440,115 @@ db.updateUser = (user)=>{
 };
 
 db.addFavoritePublication = (favorite)=>{
-  return userInterface.addFavoritePublication(favorite);
+  return userInterface.addFavoritePublication(favorite)
+    .then((updatedPublication)=>{        
+      let newOutActivity = {
+        user: favorite.user,
+        direction: "OUT",
+        caption: "favoritePublicationAdded",
+        params: null,
+        relatedUsers: updatedPublication.user,
+        publication: updatedPublication._id,
+        timestamps: {created: new Date().toISOString(), modified: null},
+        seen: true
+      };
+      let newInActivity = {
+        user: updatedPublication.user,
+        direction: "IN",
+        caption: "favoritePublicationAddedNotification",
+        params: null,
+        relatedUsers: favorite.user,
+        publication: updatedPublication._id,
+        timestamps: {created: new Date().toISOString(), modified: null},
+        seen: false
+      };      
+
+      return Promise.all([activityInterface.insert(newOutActivity),activityInterface.insert(newInActivity)]);
+    });  
 };
 
 db.removeFavoritePublication = (favorite)=>{
-  return userInterface.removeFavoritePublication(favorite);
+  return userInterface.removeFavoritePublication(favorite)
+    .then((updatedPublication)=>{        
+      let newOutActivity = {
+        user: favorite.user,
+        direction: "OUT",
+        caption: "favoritePublicationDeleted",
+        params: null,
+        relatedUsers: updatedPublication.user,
+        publication: updatedPublication._id,
+        timestamps: {created: new Date().toISOString(), modified: null},
+        seen: true
+      };
+      let newInActivity = {
+        user: updatedPublication.user,
+        direction: "IN",
+        caption: "favoritePublicationDeletedNotification",
+        params: null,
+        relatedUsers: favorite.user,
+        publication: updatedPublication._id,
+        timestamps: {created: new Date().toISOString(), modified: null},
+        seen: false
+      };      
+
+      return Promise.all([activityInterface.insert(newOutActivity),activityInterface.insert(newInActivity)]);
+    });   
 };
 
 db.addUserFollower = (follower)=>{
-  return userInterface.addUserFollower(follower);
+  return userInterface.addUserFollower(follower)
+    .then((updatedUser)=>{        
+      let newOutActivity = {
+        user: follower.follower,
+        direction: "OUT",
+        caption: "userFollowerAdded",
+        params: null,
+        relatedUsers: follower.followed,
+        publication: null,
+        timestamps: {created: new Date().toISOString(), modified: null},
+        seen: true
+      };
+      let newInActivity = {
+        user: follower.followed,
+        direction: "IN",
+        caption: "userFollowerAddedNotification",
+        params: null,
+        relatedUsers: follower.follower,
+        publication: null,
+        timestamps: {created: new Date().toISOString(), modified: null},
+        seen: false
+      };      
+
+      return Promise.all([activityInterface.insert(newOutActivity),activityInterface.insert(newInActivity)]);
+    });   
 };
 
 db.removeUserFollower = (follower)=>{
-  return userInterface.removeUserFollower(follower);
+  return userInterface.removeUserFollower(follower)
+    .then((updatedUser)=>{        
+      let newOutActivity = {
+        user: follower.follower,
+        direction: "OUT",
+        caption: "userFollowerDeleted",
+        params: null,
+        relatedUsers: follower.followed,
+        publication: null,
+        timestamps: {created: new Date().toISOString(), modified: null},
+        seen: true
+      };
+      let newInActivity = {
+        user: follower.followed,
+        direction: "IN",
+        caption: "userFollowerDeletedNotification",
+        params: null,
+        relatedUsers: follower.follower,
+        publication: null,
+        timestamps: {created: new Date().toISOString(), modified: null},
+        seen: false
+      };      
+
+      return Promise.all([activityInterface.insert(newOutActivity),activityInterface.insert(newInActivity)]);
+    });     
 };
 
 db.getLanguages = ()=>{
