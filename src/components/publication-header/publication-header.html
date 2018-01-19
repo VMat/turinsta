@@ -17,6 +17,7 @@
 </ion-item>
 <ion-item *ngIf="!publication._id" no-lines>
   <p *ngIf="publication.places" class="publication-important-text">{{publication.places[0].name}}</p>
+  <p *ngIf="!publication.places" class="publication-important-text">Agregar destino</p>
   <button item-left *ngIf="edit" ion-button icon-only clear (click)="presentPlaceUpdating()">
     <ion-icon name="map"></ion-icon>
   </button>

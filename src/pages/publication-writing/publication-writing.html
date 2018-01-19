@@ -29,7 +29,7 @@
   <publication-header [user]=user [publication]=publication [edit]="checkEditPermission()" (changePlace)="setPlace($event)"></publication-header>
   <ion-item *ngIf="!publication._id  && !publication.images" no-lines>
     <button (click)="addImage()" ion-button icon-only clear item-start><ion-icon name="images"></ion-icon></button>
-    <span item-left>Agregar imágenes</span>
+    <p class="publication-important-text" item-left>Agregar imágenes</p>
   </ion-item>
   <ion-slides *ngIf="publication._id || publication.images">
     <ion-slide style="align-items: start" *ngFor="let image of publication.images">
@@ -54,12 +54,13 @@
         <ion-icon name="trash" color="danger"></ion-icon>
       </button>
     </div>
-    <div *ngIf="checkEditPermission() && !publication.description" item-right>
-      <button ion-button icon-only clear (click)="presentDescriptionWriting()">
+    <div *ngIf="checkEditPermission() && !publication.description" ion-item>
+      <p class="publication-important-text">Agregar descripción</p>
+      <button ion-button icon-only clear (click)="presentDescriptionWriting()" item-left>
         <ion-icon name="add" color="success"></ion-icon>
       </button>
     </div>
-    <p *ngIf="publication.timeStamps" item-end>{{prettyDate(publication.timeStamps.created)}}</p>
+    <p *ngIf="publication.timestamps" item-end>{{prettyDate(publication.timestamps.created)}}</p>
   </ion-item>
   <ion-item>
     <ion-item no-lines>
