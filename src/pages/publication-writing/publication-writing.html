@@ -80,7 +80,7 @@
     </ion-item>
     <comment-list *ngIf="publication._id != undefined && commentListOpened" [comments]=comments [publicationId]=publication._id [publicationOwner]=user._id></comment-list>
   </ion-item>
-  <ion-item *ngIf="publication._id">
-    <score-handler [publicationScore]="currentUserScore" [publicationId]="publication._id" [scoreInputShowed]=true></score-handler>
+  <ion-item *ngIf="publication._id && !checkEditPermission()">
+    <score-handler [publicationScore]="publication.score" [publicationId]="publication._id" [scoreInputShowed]=true></score-handler>
   </ion-item>
 </ion-content>

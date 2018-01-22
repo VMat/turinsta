@@ -25,15 +25,10 @@ export class PublicationFooterComponent{
   currentUserScore: any = null;
   initialValue: number = null;
   sections: any = [{name: "Experiences", show: false}, {name: "Comments", show: false}];
-  scoreInputShowed: boolean = false;
+  scoreInputShowed: boolean = true;
 
   constructor(public events: Events, private storageService: StorageProvider, private commons: CommonsProvider, private modalCtrl: ModalController){
     console.log('Hello PublicationFooterComponent Component');
-  }
-
-  ngOnInit(){
-    this.initialValue = this.scoreGivenFromUser;
-    this.currentUserScore = {publication: this.publication._id, user: this.commons.getUserId(), value: this.initialValue}
   }
 
   toggleSection(i) {

@@ -68,7 +68,7 @@ export class CommonsProvider {
 
   prettyDate(rowDate){
     let parsedRowDate = new Date(rowDate);
-    return parsedRowDate.getDay() + '/' + (parsedRowDate.getMonth() <= 8 ? '0' + (parsedRowDate.getMonth() + 1) : (parsedRowDate.getMonth() + 1)) + '/' + parsedRowDate.getFullYear();
+    return (parsedRowDate.getDay()<=9 ? '0' + parsedRowDate.getDay() : parsedRowDate.getDay()) + '/' + (parsedRowDate.getMonth() <= 8 ? '0' + (parsedRowDate.getMonth() + 1) : (parsedRowDate.getMonth() + 1)) + '/' + parsedRowDate.getFullYear();
   }
 
   dateDiff(dateSince, dateUntil){
