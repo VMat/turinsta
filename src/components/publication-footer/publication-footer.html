@@ -1,6 +1,6 @@
 <!-- Generated template for the PublicationFooterComponent component -->
 <ion-list style="position: relative">
-  <score-handler [scoreInputShowed]="scoreInputShowed" [publicationScore]="scoreGivenFromUser" [publicationId]="publication._id"></score-handler>
+  <score-handler *ngIf="scoreInputShowed" [publicationScore]="scoreGivenFromUser()" [publicationId]="publication._id"></score-handler>
   <ion-item class="publication-buttons-item">
     <button item-start class="publication-button start-button" (click)="toggleSection(0)" ion-button clear>
       <ion-icon class="publication-icon" name="ios-paper" color="secondary" isActive="{{sections[0].show}}">

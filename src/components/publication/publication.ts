@@ -20,10 +20,4 @@ export class PublicationComponent {
   constructor(private commons: CommonsProvider) {
     console.log('Hello PublicationComponent Component');
   }
-
-  ngOnInit(){
-    let loggedUser = this.commons.getUserId();
-    let targetAssessment = this.data.publication.assessments.filter((assessment)=>{return assessment.user == loggedUser});
-    this.scoreGivenFromUser = targetAssessment.length > 0 ? targetAssessment[0].value : null;
-  }
 }

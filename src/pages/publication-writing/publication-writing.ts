@@ -52,6 +52,10 @@ export class PublicationWritingPage {
     this.loggedUser = this.commons.getUserId();
   }
 
+  scoreGivenFromUser(){
+    return this.commons.getScoreGivenFromUser(this.publication.assessments);
+  }
+
   ionViewDidLoad() {
     console.log('ionViewDidLoad PublicationWritingPage');
   }

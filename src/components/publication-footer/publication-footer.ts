@@ -20,15 +20,18 @@ export class PublicationFooterComponent{
   @Input() comments: any = null;
   @Input() experiences: any = null;
   @Input() user: any = null;
-  @Input() scoreGivenFromUser: number = null;
 
   currentUserScore: any = null;
   initialValue: number = null;
   sections: any = [{name: "Experiences", show: false}, {name: "Comments", show: false}];
-  scoreInputShowed: boolean = true;
+  scoreInputShowed: boolean = false;
 
   constructor(public events: Events, private storageService: StorageProvider, private commons: CommonsProvider, private modalCtrl: ModalController){
     console.log('Hello PublicationFooterComponent Component');
+  }
+
+  scoreGivenFromUser(){
+    return this.commons.getScoreGivenFromUser(this.publication.assessments);
   }
 
   toggleSection(i) {
@@ -40,6 +43,10 @@ export class PublicationFooterComponent{
     });
     this.sections[i].show = !this.sections[i].show;
   };
+
+  toogleScoreInput(){
+    this.scoreInputShowed = !this.scoreInputShowed;
+  }
 
   getAntiquity(date){
     return this.commons.getAntiquity(date);

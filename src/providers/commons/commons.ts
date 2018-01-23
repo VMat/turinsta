@@ -124,4 +124,13 @@ export class CommonsProvider {
       }
     }
   }
+
+  getScoreGivenFromUser(assessments){
+    if(assessments){
+      let loggedUser = this.getUserId();
+      let targetAssessment = assessments.filter((assessment)=>{return assessment.user == loggedUser});
+      return targetAssessment.length > 0 ? targetAssessment[0].value : null;
+    }
+    return null;
+  }
 }

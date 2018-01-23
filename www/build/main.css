@@ -33370,6 +33370,18 @@ publication-footer ion-note {
   font-size: xx-small !important;
 }
 
+publication-footer score-handler {
+  position: absolute;
+  top: -65px;
+  height: 50px;
+  width: 100%;
+  z-index: 100;
+  opacity: 0.8;
+  background-color: black;
+  text-align: center;
+  font-size: x-large;
+}
+
 publication-image .publication-image {
   width: 100% !important;
   height: auto;
