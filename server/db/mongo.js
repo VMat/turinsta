@@ -562,11 +562,11 @@ db.removeUserFollower = (follower)=>{
 };
 
 db.getLanguages = ()=>{
-  return languageInterface.getLanguages();
+  return languageInterface.getAll();
 };
 
 db.getLanguage = (id)=>{
-  return languageInterface.getLanguage(id);
+  return languageInterface.getOne(id);
 };
 
 module.exports = db;
