@@ -4,6 +4,7 @@ const activityInterface = require('./activityInterface');
 const commentInterface = require('./commentInterface');
 const userInterface = require('./userInterface');
 const experienceInterface = require('./experienceInterface');
+const languageInterface = require('./languageInterface');
 
 let db = {};
 
