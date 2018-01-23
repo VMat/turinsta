@@ -4,7 +4,7 @@ const activityApi = require('../rest/activityApi');
 const commentApi = require('../rest/commentApi');
 const experienceApi = require('../rest/experienceApi');
 const userApi = require('../rest/userApi');
-const languageApi = require('../rest/languageApi')
+const languageApi = require('../rest/languageApi');
 
 routeServer.get('/', function (req, res){
   res.json(200, {msg: 'OK' });
