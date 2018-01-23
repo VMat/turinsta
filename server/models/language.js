@@ -5,8 +5,7 @@ const Schema = mongoose.Schema;
 const languageSchema = new Schema({
   "name": String,
   "short": String,
-  "flag": String,
-  "glosary": {}
+  "flag": String
 });
 
 const Languages = mongoose.model('Languages', languageSchema, 'Languages');
