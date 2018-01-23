@@ -3,11 +3,11 @@ const Commons = require('./commons');
 
 let LanguageInterface = {};
 
-LanguageInterface.getLanguages = ()=>{
+LanguageInterface.getAll = ()=>{
   return Commons.getAll(Languages);
 };
 
-LanguageInterface.getLanguage = (id)=>{
+LanguageInterface.getOne = (id)=>{
   return Commons.getOne(Languages, id)
 };
 
