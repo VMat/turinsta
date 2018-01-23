@@ -68,20 +68,23 @@ db.deletePublications = ()=>{
 };
 
 db.deletePublication = (id)=>{
-  return publicationInterface.deleteOne(id)
+  return publicationInterface.getOne(id)
     .then((deletedPublication)=>{
-      let newActivity = {
-        user: deletedPublication.user,
-        direction: "OUT",
-        caption: "publicationDeleted",
-        params: null,
-        relatedUsers: null,
-        publication: null,
-        timestamps: {created: new Date().toISOString(), modified: null},
-        seen: true
-      };
-      return activityInterface.insert(newActivity);
-    });
+      return publicationInterface.deleteOne(id)
+      .then(()=>{
+        let newActivity = {
+          user: deletedPublication.user,
+          direction: "OUT",
+          caption: "publicationDeleted",
+          params: null,
+          relatedUsers: null,
+          publication: null,
+          timestamps: {created: new Date().toISOString(), modified: null},
+          seen: true
+        };
+        return activityInterface.insert(newActivity);
+      });
+    })
 };
 
 db.addPublicationAssessment = (assessment)=>{
@@ -308,58 +311,61 @@ db.updateComment = (comment)=>{
 };
 
 db.deleteComment = (id)=>{
-  return commentInterface.deleteOne(id)
+  return commentInterface.getOne(id)
     .then((deletedComment)=>{
-      return publicationInterface.getOne(deletedComment.publication)
-        .then((publication)=>{
-          if(deletedComment.parent!=null){
-            let newOutActivity = {
-              user: deletedComment.user,
-              direction: "OUT",
-              caption: "commentResponseDeleted",
-              params: null,
-              relatedUsers: publication.user,
-              publication: publication._id,
-              timestamps: {created: new Date().toISOString(), modified: null},
-              seen: true
-            };
-            let newInActivity = {
-              user: publication.user._id,
-              direction: "IN",
-              caption: "commentResponseDeletedNotification",
-              params: null,
-              relatedUsers: deletedComment.user,
-              publication: publication._id,
-              timestamps: {created: new Date().toISOString(), modified: null},
-              seen: false
-            };
-          }
-          else{
-            let newOutActivity = {
-              user: deletedComment.user,
-              direction: "OUT",
-              caption: "publicationCommentDeleted",
-              params: null,
-              relatedUsers: publication.user,
-              publication: publication._id,
-              timestamps: {created: new Date().toISOString(), modified: null},
-              seen: true
-            };
-            let newInActivity = {
-              user: publication.user._id,
-              direction: "IN",
-              caption: "publicationCommentDeletedNotification",
-              params: null,
-              relatedUsers: deletedComment.user,
-              publication: publication._id,
-              timestamps: {created: new Date().toISOString(), modified: null},
-              seen: false
-            };
-          }
+      return commentInterface.deleteOne(id)
+        .then(()=>{
+          return publicationInterface.getOne(deletedComment.publication)
+            .then((publication)=>{
+              if(deletedComment.parent!=null){
+                let newOutActivity = {
+                  user: deletedComment.user,
+                  direction: "OUT",
+                  caption: "commentResponseDeleted",
+                  params: null,
+                  relatedUsers: publication.user,
+                  publication: publication._id,
+                  timestamps: {created: new Date().toISOString(), modified: null},
+                  seen: true
+                };
+                let newInActivity = {
+                  user: publication.user._id,
+                  direction: "IN",
+                  caption: "commentResponseDeletedNotification",
+                  params: null,
+                  relatedUsers: deletedComment.user,
+                  publication: publication._id,
+                  timestamps: {created: new Date().toISOString(), modified: null},
+                  seen: false
+                };
+              }
+              else{
+                let newOutActivity = {
+                  user: deletedComment.user,
+                  direction: "OUT",
+                  caption: "publicationCommentDeleted",
+                  params: null,
+                  relatedUsers: publication.user,
+                  publication: publication._id,
+                  timestamps: {created: new Date().toISOString(), modified: null},
+                  seen: true
+                };
+                let newInActivity = {
+                  user: publication.user._id,
+                  direction: "IN",
+                  caption: "publicationCommentDeletedNotification",
+                  params: null,
+                  relatedUsers: deletedComment.user,
+                  publication: publication._id,
+                  timestamps: {created: new Date().toISOString(), modified: null},
+                  seen: false
+                };
+              }
 
-          return Promise.all([activityInterface.insert(newOutActivity),activityInterface.insert(newInActivity)]);
+              return Promise.all([activityInterface.insert(newOutActivity),activityInterface.insert(newInActivity)]);
+            });  
         });  
-    });  
+    });
 };
 
 db.getExperience = (id)=>{
@@ -404,23 +410,26 @@ db.updateExperience = (experience)=>{
 };
 
 db.deleteExperience = (id)=>{
-  return experienceInterface.deleteOne(id)
+  return experienceInterface.getOne(id)
     .then((deletedExperience)=>{
-      return publicationInterface.getOne(deletedExperience.publication)
-        .then((publication)=>{
-          let newActivity = {
-            user: publication.user,
-            direction: "OUT",
-            caption: "experienceDeleted",
-            params: null,
-            relatedUsers: null,
-            publication: publication._id,
-            timestamps: {created: new Date().toISOString(), modified: null},
-            seen: true
-          };
-          return activityInterface.insert(newActivity);
-      });
-    });  
+      return experienceInterface.deleteOne(id)
+        .then(()=>{
+          return publicationInterface.getOne(deletedExperience.publication)
+            .then((publication)=>{
+              let newActivity = {
+                user: publication.user,
+                direction: "OUT",
+                caption: "experienceDeleted",
+                params: null,
+                relatedUsers: null,
+                publication: publication._id,
+                timestamps: {created: new Date().toISOString(), modified: null},
+                seen: true
+              };
+              return activityInterface.insert(newActivity);
+          });
+      });  
+    }); 
 };
 
 db.getUsers = ()=>{
