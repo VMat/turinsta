@@ -35,8 +35,8 @@ ActivityInterface.insert = (activity)=>{
 ActivityInterface.update = (activity)=>{
   activity.seen = true;
   return Commons.update(Activities,activity)
-    .then(()=>{
-      return UserInterface.removeActivity(activity.user,activity._id);
+    .then((updatedActivity)=>{
+      return UserInterface.removeActivity(updatedActivity.user,updatedActivity._id);
     });
 };
 
