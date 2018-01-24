@@ -36,10 +36,7 @@ ActivityInterface.update = (activity)=>{
   activity.seen = true;
   return Commons.update(Activities,activity)
     .then(()=>{
-      UserInterface.removeActivity(activity.user,activity._id)
-        .then(()=>{
-          return Commons.removeOne(Activities, activity);
-        });
+      return UserInterface.removeActivity(activity.user,activity._id);
     });
 };
 
