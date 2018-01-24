@@ -1,15 +1,7 @@
 const storageService = require('./storageService');
 
 let inboxService = {};
-      
-inboxService.getInboxes = (userId)=>{      
-  return new Promise((resolve, reject)=>{
-    storageService.getInboxes(userId).
-      then(inboxes=>resolve(inboxes)).
-      catch(error=>reject(error))        
-  })
-};
-    
+          
 inboxService.getInbox = (id)=>{
   return new Promise((resolve, reject)=>{
     storageService.getInbox(id).
