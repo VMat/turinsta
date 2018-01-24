@@ -33,7 +33,14 @@ ActivityInterface.insert = (activity)=>{
 };
 
 ActivityInterface.update = (activity)=>{
-  return Commons.update(Activities,activity);
+  activity.seen = true;
+  return Commons.update(Activities,activity)
+    .then(()=>{
+      UserInterface.removeActivity(activity.user,activity._id)
+        .then(()=>{
+          return Commons.removeOne(Activities, activity);
+        });
+    });
 };
 
 ActivityInterface.deleteOne = (id)=>{
@@ -44,20 +51,6 @@ ActivityInterface.deleteOne = (id)=>{
           .then(()=>{
             return Commons.removeOne(Activities, activity);
           });
-    });
-};
-
-ActivityInterface.markAsSeenActivity = (id)=>{
-  return Commons.getOne(Activities,id)
-    .then((activity)=>{
-      activity.seen = true;
-      return Commons.update(Activities,activity)
-        .then(()=>{
-          UserInterface.removeActivity(activity.user,activity._id)
-            .then(()=>{
-              return Commons.removeOne(Activities, activity);
-            });
-        });
     });
 };
 
