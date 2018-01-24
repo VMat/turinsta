@@ -36,19 +36,29 @@ ActivityInterface.update = (activity)=>{
   return Commons.update(Activities,activity);
 };
 
-ActivityInterface.deleteOne = (activity)=>{
-  if(activity.direction=='IN'){
-    UserInterface.removeActivity(activity.user,activity._id)
-      .then(()=>{
-        return Commons.removeOne(Activities, activity);
-      });
-  }
-  else{
-    UserInterface.removeActivity(activity.relatedUsers[0],activity._id)
-      .then(()=>{
-        return Commons.removeOne(Activities, activity);
-      });
-  }
+ActivityInterface.deleteOne = (id)=>{
+  return Commons.getOne(Activities,id)
+    .then((activity)=>{
+      let user = activity.direction=='IN'? activity.user : activity.relatedUsers[0];
+        UserInterface.removeActivity(user,activity._id)
+          .then(()=>{
+            return Commons.removeOne(Activities, activity);
+          });
+    });
+};
+
+ActivityInterface.markAsSeenActivity = (id)=>{
+  return Commons.getOne(Activities,id)
+    .then((activity)=>{
+      activity.seen = true;
+      return Commons.update(Activities,activity)
+        .then(()=>{
+          UserInterface.removeActivity(activity.user,activity._id)
+            .then(()=>{
+              return Commons.removeOne(Activities, activity);
+            });
+        });
+    });
 };
 
 module.exports = ActivityInterface;
