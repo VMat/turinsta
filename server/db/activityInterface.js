@@ -2,6 +2,7 @@ const Activities = require('../models/activity');
 const Publications = require('../models/publication');
 const Users = require('../models/user');
 const Commons = require('./commons');
+const UserInterface = require('./userInterface');
 
 let ActivityInterface = {};
 
@@ -20,7 +21,15 @@ ActivityInterface.getOne = (id)=>{
 };
 
 ActivityInterface.insert = (activity)=>{
-  return Commons.insert(new Activities(activity));
+  if(activity.direction=='IN'){
+    return Commons.insert(new Activities(activity))
+    .then((newActivity)=>{
+      return UserInterface.addActivity(newActivity.user,newActivity._id);
+    });
+  }
+  else{
+    return Commons.insert(new Activities(activity));
+  }
 };
 
 ActivityInterface.update = (activity)=>{
