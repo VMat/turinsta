@@ -110,4 +110,14 @@ export class StorageProvider {
   deletePublicationImage(publication, image){
     return this.http.delete(StorageProvider.baseUrl + 'publications/images/publication/' + publication + '/image/' + image, {headers: StorageProvider.headers});
   }
+
+  getLanguages(){
+    return this.http.get(StorageProvider.baseUrl + 'languages')
+      .map((res:Response) => res.json());
+  }
+
+  getLanguage(id){
+    return this.http.get(StorageProvider.baseUrl + 'languages/' + id)
+      .map((res:Response) => res.json());
+  }
 }

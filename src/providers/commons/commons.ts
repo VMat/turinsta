@@ -3,6 +3,7 @@ import {Http} from '@angular/http';
 import 'rxjs/add/operator/map';
 import {ToastController, AlertController} from "ionic-angular";
 import {Storage} from '@ionic/storage';
+import {StorageProvider} from "../storage/storage";
 
 /*
   Generated class for the CommonsProvider provider.
@@ -13,24 +14,22 @@ import {Storage} from '@ionic/storage';
 @Injectable()
 export class CommonsProvider {
 
-  glosary: any = {
-    timeUnits: {
-                      YEAR: {SINGULAR: "AÑO", PLURAL: 'AÑOS'},
-                      MONTH: {SINGULAR: "MES", PLURAL: 'MESES'},
-                      DAY: {SINGULAR: "DÍA", PLURAL: 'DÍAS'},
-                      HOUR: {SINGULAR: "HORA", PLURAL: 'HORAS'},
-                      MINUTE: {SINGULAR: "MINUTO", PLURAL: 'MINUTOS'},
-                      SECOND: {SINGULAR: "SEGUNDO", PLURAL: 'SEGUNDOS'}
-    },
-    antiquitySentence: "Hace :x :timeUnit",
-    veryRecentActivitySentence: "Hace un instante"
-  };
+  glosary: any = {};
 
-  constructor(public http: Http, public toastCtrl: ToastController, public alertCtrl: AlertController, private localStorage: Storage) {
+  constructor(public http: Http, public toastCtrl: ToastController, public alertCtrl: AlertController, private localStorage: Storage, private storage: StorageProvider) {
     console.log('Hello CommonsProvider Provider');
     this.setUserId("59f7562af36d282363087270"); //Pedro
     // this.setUserId("59f7588ef36d282363087491"); //Laura
     // this.setUserId("5a00bb48eea55b00126725f8"); //Julieta
+    this.setLanguage("5a5cf928734d1d3471842007"); //Inglés
+    // this.setLanguage("5a5e6f98734d1d3471851836"); //Español
+    // this.setLanguage("5a5d0ace734d1d3471842c83"); //Italiano
+  }
+
+  setLanguage(id){
+    this.storage.getLanguage(id).subscribe((language)=>{
+      this.glosary = language.glosary;
+    });
   }
 
   setUserId(userId){
