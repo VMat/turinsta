@@ -37,7 +37,18 @@ ActivityInterface.update = (activity)=>{
 };
 
 ActivityInterface.deleteOne = (activity)=>{
-  return Commons.removeOne(Activities, activity);
+  if(activity.direction=='IN'){
+    UserInterface.removeActivity(activity.user,activity._id)
+      .then(()=>{
+        return Commons.removeOne(Activities, activity);
+      });
+  }
+  else{
+    UserInterface.removeActivity(activity.relatedUsers[0],activity._id)
+      .then(()=>{
+        return Commons.removeOne(Activities, activity);
+      });
+  }
 };
 
 module.exports = ActivityInterface;
