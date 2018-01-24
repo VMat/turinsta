@@ -12,6 +12,8 @@ const serveStatic = require('serve-static');
 const storageService = require('./services/storageService');
 const routeServer = require('./router/routeServer');
 
+const inbox = require('./inbox');
+
 // Configuration
 storageService.connect();
 
