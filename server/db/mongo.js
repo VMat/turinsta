@@ -5,6 +5,7 @@ const commentInterface = require('./commentInterface');
 const userInterface = require('./userInterface');
 const experienceInterface = require('./experienceInterface');
 const languageInterface = require('./languageInterface');
+const inboxInterface = require('./inboxInterface');
 
 let db = {};
 
@@ -567,6 +568,26 @@ db.getLanguages = ()=>{
 
 db.getLanguage = (id)=>{
   return languageInterface.getOne(id);
+};
+
+db.getInboxes = (userId)=>{
+  return inboxInterface.getN(userId);
+};
+
+db.getInbox = (id)=>{
+  return inboxInterface.getOne(id);
+};
+
+db.createInbox = (inbox)=>{
+  return inboxInterface.insert(inbox);
+};
+
+db.updateInbox = (inbox)=>{
+  return inboxInterface.update(inbox);
+};
+
+db.deleteInbox = (id)=>{
+  return inboxInterface.deleteOne(id);
 };
 
 module.exports = db;
