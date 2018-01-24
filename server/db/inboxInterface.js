@@ -3,10 +3,6 @@ const Commons = require('./commons');
 
 let InboxInterface = {};
 
-InboxInterface.getN = (userId)=>{
-  return Commons.getN({user:userId});
-};
-
 InboxInterface.getOne = (id)=>{
   return Commons.getOne(Inbox, id);
 };
