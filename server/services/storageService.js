@@ -146,4 +146,24 @@ storageService.getLanguage = (id)=>{
   return db.getLanguage(id);
 };
 
+storageService.getInboxes = (userId)=>{
+  return db.getInboxes(userId);
+};
+
+storageService.getInbox = ()=>{
+  return db.getInbox();
+};
+
+storageService.createInbox = (inbox)=>{
+  return db.createInbox(inbox);
+};
+
+storageService.updateInbox = (inbox)=>{
+  return db.updateInbox(inbox);
+};
+
+storageService.deleteInbox = (id)=>{
+  return db.deleteInbox(id);
+};
+
 module.exports = storageService;
