@@ -85,7 +85,7 @@ UserInterface.addActivity = (userId,activityId)=>{
 UserInterface.removeActivity = (userId,activityId)=>{
   return Commons.getOne(Users,userId)
     .then((user)=>{
-      user.notifications.splice(user.notifications.indexOf(activityId),1);
+      user.notifications.unseenActivities.splice(user.notifications.unseenActivities.indexOf(activityId),1);
       return Commons.update(Users, user);
     });
 };
