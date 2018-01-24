@@ -70,8 +70,8 @@ storageService.updateActivity = (activity)=>{
   return db.updateActivity(activity);
 };
 
-storageService.deleteActivity = (activity)=>{
-  return db.deleteActivity(activity);
+storageService.deleteActivity = (id)=>{
+  return db.deleteActivity(id);
 };
 
 storageService.getComment = (id)=>{
