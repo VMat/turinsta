@@ -570,10 +570,6 @@ db.getLanguage = (id)=>{
   return languageInterface.getOne(id);
 };
 
-db.getInboxes = (userId)=>{
-  return inboxInterface.getN(userId);
-};
-
 db.getInbox = (id)=>{
   return inboxInterface.getOne(id);
 };
