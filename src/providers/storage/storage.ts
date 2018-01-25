@@ -25,7 +25,7 @@ export class StorageProvider {
       params.set(filter.key, JSON.stringify({value: filter.value, operation: filter.operation}));
     });
 
-    return this.http.get(StorageProvider.baseUrl + 'publications/count/' + range + '/sort/' + sort.field + '/' + sort.way, {params: params})
+    return this.http.get(StorageProvider.baseUrl + 'publications/count/' + range + '/sort/' + sort.field + '/' + sort.way, {params: params, headers: StorageProvider.headers})
       .map((res:Response) => res.json());
   }
 
@@ -112,7 +112,7 @@ export class StorageProvider {
   }
 
   getLanguages(){
-    return this.http.get(StorageProvider.baseUrl + 'languages')
+    return this.http.get(StorageProvider.baseUrl + 'languages', {headers: StorageProvider.headers})
       .map((res:Response) => res.json());
   }
 

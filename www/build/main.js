@@ -880,7 +880,7 @@ var StorageProvider = StorageProvider_1 = (function () {
         filters.forEach(function (filter) {
             params.set(filter.key, JSON.stringify({ value: filter.value, operation: filter.operation }));
         });
-        return this.http.get(StorageProvider_1.baseUrl + 'publications/count/' + range + '/sort/' + sort.field + '/' + sort.way, { params: params })
+        return this.http.get(StorageProvider_1.baseUrl + 'publications/count/' + range + '/sort/' + sort.field + '/' + sort.way, { params: params, headers: StorageProvider_1.headers })
             .map(function (res) { return res.json(); });
     };
     StorageProvider.prototype.createComment = function (comment) {
@@ -947,7 +947,7 @@ var StorageProvider = StorageProvider_1 = (function () {
         return this.http.delete(StorageProvider_1.baseUrl + 'publications/images/publication/' + publication + '/image/' + image, { headers: StorageProvider_1.headers });
     };
     StorageProvider.prototype.getLanguages = function () {
-        return this.http.get(StorageProvider_1.baseUrl + 'languages')
+        return this.http.get(StorageProvider_1.baseUrl + 'languages', { headers: StorageProvider_1.headers })
             .map(function (res) { return res.json(); });
     };
     StorageProvider.prototype.getLanguage = function (id) {
@@ -964,10 +964,10 @@ StorageProvider.baseUrl = 'https://turinsta-staging.herokuapp.com/api/';
 StorageProvider.headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["a" /* Headers */]();
 StorageProvider = StorageProvider_1 = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["B" /* Injectable */])(),
-    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* Http */]])
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* Http */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* Http */]) === "function" && _a || Object])
 ], StorageProvider);
 
-var StorageProvider_1;
+var StorageProvider_1, _a;
 //# sourceMappingURL=storage.js.map
 
 /***/ }),
