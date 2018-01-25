@@ -92,11 +92,12 @@ var ActivitiesPage = (function () {
 }());
 ActivitiesPage = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
-        selector: 'page-activities',template:/*ion-inline-start:"C:\Users\Matias\WebstormProjects\turinsta\src\pages\activities\activities.html"*/'<!--\n  Generated template for the ActivitiesPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-header>\n  <ion-toolbar>\n    <ion-segment [(ngModel)]="direction" color="secondary">\n      <ion-segment-button value="IN">\n        <ion-icon name="down-arrow"></ion-icon>\n      </ion-segment-button>\n      <ion-segment-button value="OUT">\n        <ion-icon name="up-arrow"></ion-icon>\n      </ion-segment-button>\n    </ion-segment>\n  </ion-toolbar>\n</ion-header>\n<ion-content padding>\n  <div [ngSwitch]="direction">\n    <ion-list *ngSwitchCase="\'IN\'">\n      <ion-item *ngFor="let activity of activities | containsFilter:{\'direction\':\'IN\'}">\n        <ion-thumbnail item-start>\n          <img src="img/thumbnail-puppy-1.jpg">\n        </ion-thumbnail>\n        <h2>activity.caption</h2>\n      </ion-item>\n    </ion-list>\n    <ion-list *ngSwitchCase="\'OUT\'">\n      <ion-item *ngFor="let activity of activities | containsFilter:{\'direction\':\'OUT\'}">\n        <ion-thumbnail item-start>\n          <img src="img/thumbnail-puppy-1.jpg">\n        </ion-thumbnail>\n        <h2>activity.caption</h2>\n      </ion-item>\n    </ion-list>\n  </div>\n</ion-content>\n'/*ion-inline-end:"C:\Users\Matias\WebstormProjects\turinsta\src\pages\activities\activities.html"*/,
+        selector: 'page-activities',template:/*ion-inline-start:"C:\Users\Matias\WebstormProjects\turinsta\src\pages\activities\activities.html"*/'<!--\n\n  Generated template for the ActivitiesPage page.\n\n\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n\n  Ionic pages and navigation.\n\n-->\n\n<ion-header>\n\n  <ion-toolbar>\n\n    <ion-segment [(ngModel)]="direction" color="secondary">\n\n      <ion-segment-button value="IN">\n\n        <ion-icon name="down-arrow"></ion-icon>\n\n      </ion-segment-button>\n\n      <ion-segment-button value="OUT">\n\n        <ion-icon name="up-arrow"></ion-icon>\n\n      </ion-segment-button>\n\n    </ion-segment>\n\n  </ion-toolbar>\n\n</ion-header>\n\n<ion-content padding>\n\n  <div [ngSwitch]="direction">\n\n    <ion-list *ngSwitchCase="\'IN\'">\n\n      <ion-item *ngFor="let activity of activities | containsFilter:{\'direction\':\'IN\'}">\n\n        <ion-thumbnail item-start>\n\n          <img src="img/thumbnail-puppy-1.jpg">\n\n        </ion-thumbnail>\n\n        <h2>activity.caption</h2>\n\n      </ion-item>\n\n    </ion-list>\n\n    <ion-list *ngSwitchCase="\'OUT\'">\n\n      <ion-item *ngFor="let activity of activities | containsFilter:{\'direction\':\'OUT\'}">\n\n        <ion-thumbnail item-start>\n\n          <img src="img/thumbnail-puppy-1.jpg">\n\n        </ion-thumbnail>\n\n        <h2>activity.caption</h2>\n\n      </ion-item>\n\n    </ion-list>\n\n  </div>\n\n</ion-content>\n\n'/*ion-inline-end:"C:\Users\Matias\WebstormProjects\turinsta\src\pages\activities\activities.html"*/,
     }),
-    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* NavParams */], __WEBPACK_IMPORTED_MODULE_2__providers_commons_commons__["a" /* CommonsProvider */], __WEBPACK_IMPORTED_MODULE_3__providers_storage_storage__["a" /* StorageProvider */]])
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* NavController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* NavController */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* NavParams */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* NavParams */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_2__providers_commons_commons__["a" /* CommonsProvider */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__providers_commons_commons__["a" /* CommonsProvider */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_3__providers_storage_storage__["a" /* StorageProvider */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__providers_storage_storage__["a" /* StorageProvider */]) === "function" && _d || Object])
 ], ActivitiesPage);
 
+var _a, _b, _c, _d;
 //# sourceMappingURL=activities.js.map
 
 /***/ }),
@@ -351,7 +352,6 @@ PlaceSelectingPage = __decorate([
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_add_operator_map___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_rxjs_add_operator_map__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_ionic_angular__ = __webpack_require__(9);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__ionic_storage__ = __webpack_require__(216);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__storage_storage__ = __webpack_require__(21);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -366,7 +366,6 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
-
 /*
   Generated class for the CommonsProvider provider.
 
@@ -374,27 +373,28 @@ var __metadata = (this && this.__metadata) || function (k, v) {
   and Angular DI.
 */
 var CommonsProvider = (function () {
-    function CommonsProvider(http, toastCtrl, alertCtrl, localStorage, storage) {
+    function CommonsProvider(http, toastCtrl, alertCtrl, localStorage) {
         this.http = http;
         this.toastCtrl = toastCtrl;
         this.alertCtrl = alertCtrl;
         this.localStorage = localStorage;
-        this.storage = storage;
-        this.glosary = {};
+        this.glosary = {
+            timeUnits: {
+                YEAR: { SINGULAR: "AÑO", PLURAL: 'AÑOS' },
+                MONTH: { SINGULAR: "MES", PLURAL: 'MESES' },
+                DAY: { SINGULAR: "DÍA", PLURAL: 'DÍAS' },
+                HOUR: { SINGULAR: "HORA", PLURAL: 'HORAS' },
+                MINUTE: { SINGULAR: "MINUTO", PLURAL: 'MINUTOS' },
+                SECOND: { SINGULAR: "SEGUNDO", PLURAL: 'SEGUNDOS' }
+            },
+            antiquitySentence: "Hace :x :timeUnit",
+            veryRecentActivitySentence: "Hace un instante"
+        };
         console.log('Hello CommonsProvider Provider');
         this.setUserId("59f7562af36d282363087270"); //Pedro
         // this.setUserId("59f7588ef36d282363087491"); //Laura
         // this.setUserId("5a00bb48eea55b00126725f8"); //Julieta
-        this.setLanguage("5a5cf928734d1d3471842007"); //Inglés
-        // this.setLanguage("5a5e6f98734d1d3471851836"); //Español
-        // this.setLanguage("5a5d0ace734d1d3471842c83"); //Italiano
     }
-    CommonsProvider.prototype.setLanguage = function (id) {
-        var _this = this;
-        this.storage.getLanguage(id).subscribe(function (language) {
-            _this.glosary = language.glosary;
-        });
-    };
     CommonsProvider.prototype.setUserId = function (userId) {
         sessionStorage.setItem("userId", userId);
     };
@@ -488,9 +488,10 @@ var CommonsProvider = (function () {
 }());
 CommonsProvider = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["B" /* Injectable */])(),
-    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* Http */], __WEBPACK_IMPORTED_MODULE_3_ionic_angular__["p" /* ToastController */], __WEBPACK_IMPORTED_MODULE_3_ionic_angular__["b" /* AlertController */], __WEBPACK_IMPORTED_MODULE_4__ionic_storage__["b" /* Storage */], __WEBPACK_IMPORTED_MODULE_5__storage_storage__["a" /* StorageProvider */]])
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* Http */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* Http */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_3_ionic_angular__["p" /* ToastController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3_ionic_angular__["p" /* ToastController */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_3_ionic_angular__["b" /* AlertController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3_ionic_angular__["b" /* AlertController */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_4__ionic_storage__["b" /* Storage */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_4__ionic_storage__["b" /* Storage */]) === "function" && _d || Object])
 ], CommonsProvider);
 
+var _a, _b, _c, _d;
 //# sourceMappingURL=commons.js.map
 
 /***/ }),
@@ -964,10 +965,10 @@ StorageProvider.baseUrl = 'https://turinsta-staging.herokuapp.com/api/';
 StorageProvider.headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["a" /* Headers */]();
 StorageProvider = StorageProvider_1 = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["B" /* Injectable */])(),
-    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* Http */]])
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* Http */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* Http */]) === "function" && _a || Object])
 ], StorageProvider);
 
-var StorageProvider_1;
+var StorageProvider_1, _a;
 //# sourceMappingURL=storage.js.map
 
 /***/ }),
