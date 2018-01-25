@@ -162,4 +162,8 @@ storageService.deleteInbox = (id)=>{
   return db.deleteInbox(id);
 };
 
+storageService.saveMessage = (id,message)=>{
+  return db.saveMessage(id,message);
+};
+
 module.exports = storageService;
