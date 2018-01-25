@@ -586,4 +586,8 @@ db.deleteInbox = (id)=>{
   return inboxInterface.deleteOne(id);
 };
 
+db.saveMessage = (id,message)=>{
+  return inboxInterface.saveMessage(id,message);
+};
+
 module.exports = db;
