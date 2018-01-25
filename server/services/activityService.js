@@ -34,9 +34,9 @@ activityService.updateActivity = (activityToUpdate)=>{
   })
 };
         
-activityService.deleteActivity = (activity)=>{
+activityService.deleteActivity = (id)=>{
   return new Promise((resolve, reject)=>{
-    storageService.deleteActivity(activity).
+    storageService.deleteActivity(id).
       then(activity=>resolve(activity)).
       catch(error=>reject(error))        
   })  

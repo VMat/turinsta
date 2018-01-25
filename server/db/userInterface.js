@@ -73,5 +73,21 @@ UserInterface.removeUserFollower = (follower)=>{
         })
     });
 };
+
+UserInterface.addActivity = (userId,activityId)=>{
+  return Commons.getOne(Users,userId)
+    .then((user)=>{
+      user.notifications.unseenActivities.push(activityId);
+      return Commons.update(Users, user);
+    });
+};
+
+UserInterface.removeActivity = (userId,activityId)=>{
+  return Commons.getOne(Users,userId)
+    .then((user)=>{
+      user.notifications.unseenActivities.splice(user.notifications.unseenActivities.indexOf(activityId),1);
+      return Commons.update(Users, user);
+    });
+};
             
 module.exports = UserInterface;

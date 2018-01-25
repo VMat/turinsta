@@ -70,8 +70,8 @@ storageService.updateActivity = (activity)=>{
   return db.updateActivity(activity);
 };
 
-storageService.deleteActivity = (activity)=>{
-  return db.deleteActivity(activity);
+storageService.deleteActivity = (id)=>{
+  return db.deleteActivity(id);
 };
 
 storageService.getComment = (id)=>{
@@ -144,6 +144,22 @@ storageService.getLanguages = ()=>{
 
 storageService.getLanguage = (id)=>{
   return db.getLanguage(id);
+};
+
+storageService.getInbox = (id)=>{
+  return db.getInbox(id);
+};
+
+storageService.createInbox = (inbox)=>{
+  return db.createInbox(inbox);
+};
+
+storageService.updateInbox = (inbox)=>{
+  return db.updateInbox(inbox);
+};
+
+storageService.deleteInbox = (id)=>{
+  return db.deleteInbox(id);
 };
 
 module.exports = storageService;
