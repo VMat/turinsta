@@ -18,6 +18,7 @@ import {StorageProvider} from "../../providers/storage/storage";
 export class ActivitiesPage {
 
   activities = [];
+  direction = 'IN';
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private commons: CommonsProvider, private storageService: StorageProvider) {
     this.storageService.getActivities(this.commons.getUserId()).subscribe((activities)=>{
@@ -27,6 +28,10 @@ export class ActivitiesPage {
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad ActivitiesPage');
+  }
+
+  getActivityCaption(caption,user,params){
+    return this.commons.translate(caption,{...params,':user':user});
   }
 
 }

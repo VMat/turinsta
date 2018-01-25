@@ -8,10 +8,10 @@
   <ion-toolbar>
     <ion-segment [(ngModel)]="direction" color="secondary">
       <ion-segment-button value="IN">
-        <ion-icon name="down-arrow"></ion-icon>
+        <ion-icon name="cloud-download"></ion-icon>
       </ion-segment-button>
       <ion-segment-button value="OUT">
-        <ion-icon name="up-arrow"></ion-icon>
+        <ion-icon name="cloud-upload"></ion-icon>
       </ion-segment-button>
     </ion-segment>
   </ion-toolbar>
@@ -19,19 +19,19 @@
 <ion-content padding>
   <div [ngSwitch]="direction">
     <ion-list *ngSwitchCase="'IN'">
-      <ion-item *ngFor="let activity of activities | containsFilter:{'direction':'IN'}">
-        <ion-thumbnail item-start>
-          <img src="img/thumbnail-puppy-1.jpg">
+      <ion-item *ngFor="let activity of activities | containsFilter:{'key':'direction', 'value':'IN'}">
+        <ion-thumbnail item-start mini>
+          <img *ngIf="activity.publication" src="{{activity.publication.images[0].url}}">
         </ion-thumbnail>
-        <h2>activity.caption</h2>
+        <p class="publication-important-text">{{getActivityCaption(activity.caption, activity.relatedUsers[0].username,activity.params)}}</p>
       </ion-item>
     </ion-list>
     <ion-list *ngSwitchCase="'OUT'">
-      <ion-item *ngFor="let activity of activities | containsFilter:{'direction':'OUT'}">
-        <ion-thumbnail item-start>
-          <img src="img/thumbnail-puppy-1.jpg">
+      <ion-item *ngFor="let activity of activities | containsFilter:{'key':'direction', 'value':'OUT'}">
+        <ion-thumbnail item-start mini>
+          <img *ngIf="activity.publication" src="{{activity.publication.images[0].url}}">
         </ion-thumbnail>
-        <h2>activity.caption</h2>
+        <p class="publication-important-text">{{getActivityCaption(activity.caption,activity.relatedUsers? activity.relatedUsers[0].username : '',activity.params)}}</p>
       </ion-item>
     </ion-list>
   </div>
