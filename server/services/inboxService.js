@@ -34,4 +34,12 @@ inboxService.deleteInbox = (id)=>{
   })  
 };
 
+inboxService.saveMessage = (id,message)=>{
+  return new Promise((resolve, reject)=>{
+    storageService.saveMessage(id,message).
+      then(inbox=>resolve(inbox)).
+      catch(error=>reject(error))        
+  })  
+};
+
 module.exports = inboxService;
