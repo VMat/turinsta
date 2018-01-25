@@ -22,4 +22,12 @@ InboxInterface.deleteOne = (id)=>{
     });
 };
 
+InboxInterface.saveMessage = (id,message)=>{
+  return Commons.getOne(Inboxes,id)
+    .then((inbox)=>{
+      inbox.messages.push(message);
+      return Commons.update(Inboxes,inbox);
+    });
+};
+
 module.exports = InboxInterface;
