@@ -120,4 +120,9 @@ export class StorageProvider {
     return this.http.get(StorageProvider.baseUrl + 'languages/' + id)
       .map((res:Response) => res.json());
   }
+
+  getActivities(userId){
+    return this.http.get(StorageProvider.baseUrl + 'activities/user/' + userId)
+      .map((res:Response) => res.json());
+  }
 }

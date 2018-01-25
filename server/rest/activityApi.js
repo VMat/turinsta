@@ -1,8 +1,8 @@
 const router = require('express').Router();
 const activityService = require('../services/activityService');
-  
-router.get('/',(req, res)=>{
-  activityService.getActivities()
+
+router.get('/user/:user',(req, res)=>{
+  activityService.getActivities(req.params.user)
     .then(activities=>{res.status(200).json(activities)})
     .catch(error=>{res.status(500).send(error)})
 });

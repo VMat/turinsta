@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import {CommonsProvider} from "../../providers/commons/commons";
+import {StorageProvider} from "../../providers/storage/storage";
 
 /**
  * Generated class for the ActivitiesPage page.
@@ -15,7 +17,12 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 })
 export class ActivitiesPage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  activities = [];
+
+  constructor(public navCtrl: NavController, public navParams: NavParams, private commons: CommonsProvider, private storageService: StorageProvider) {
+    this.storageService.getActivities(this.commons.getUserId()).subscribe((activities)=>{
+      this.activities = activities;
+    });
   }
 
   ionViewDidLoad() {

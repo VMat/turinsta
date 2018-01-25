@@ -182,8 +182,8 @@ db.getPublicationImage = (publicationId, imageUrl)=>{
   return publicationInterface.getPublicationImage(publicationId, imageUrl);
 };
 
-db.getActivities = ()=>{
-  return activityInterface.getAll();
+db.getActivities = (userId)=>{
+  return activityInterface.getN(userId);
 };
 
 db.getActivity = (id)=>{
@@ -229,7 +229,7 @@ db.createComment = (comment)=>{
           publication: response.publication,
           timestamps: {created: new Date().toISOString(), modified: null},
           seen: false
-        }; 
+        };
       }
       else{
         let newOutActivity = {
@@ -254,7 +254,7 @@ db.createComment = (comment)=>{
         };
       }
     return Promise.all([activityInterface.insert(newOutActivity),activityInterface.insert(newInActivity)]);
-  });  
+  });
 };
 
 db.updateComment = (comment)=>{
@@ -306,10 +306,10 @@ db.updateComment = (comment)=>{
               seen: false
             };
           }
-          
+
           return Promise.all([activityInterface.insert(newOutActivity),activityInterface.insert(newInActivity)]);
         });
-    });  
+    });
 };
 
 db.deleteComment = (id)=>{
@@ -365,8 +365,8 @@ db.deleteComment = (id)=>{
               }
 
               return Promise.all([activityInterface.insert(newOutActivity),activityInterface.insert(newInActivity)]);
-            });  
-        });  
+            });
+        });
     });
 };
 
@@ -430,8 +430,8 @@ db.deleteExperience = (id)=>{
               };
               return activityInterface.insert(newActivity);
           });
-      });  
-    }); 
+      });
+    });
 };
 
 db.getUsers = ()=>{
@@ -452,7 +452,7 @@ db.updateUser = (user)=>{
 
 db.addFavoritePublication = (favorite)=>{
   return userInterface.addFavoritePublication(favorite)
-    .then((updatedPublication)=>{        
+    .then((updatedPublication)=>{
       let newOutActivity = {
         user: favorite.user,
         direction: "OUT",
@@ -472,15 +472,15 @@ db.addFavoritePublication = (favorite)=>{
         publication: updatedPublication._id,
         timestamps: {created: new Date().toISOString(), modified: null},
         seen: false
-      };      
+      };
 
       return Promise.all([activityInterface.insert(newOutActivity),activityInterface.insert(newInActivity)]);
-    });  
+    });
 };
 
 db.removeFavoritePublication = (favorite)=>{
   return userInterface.removeFavoritePublication(favorite)
-    .then((updatedPublication)=>{        
+    .then((updatedPublication)=>{
       let newOutActivity = {
         user: favorite.user,
         direction: "OUT",
@@ -500,15 +500,15 @@ db.removeFavoritePublication = (favorite)=>{
         publication: updatedPublication._id,
         timestamps: {created: new Date().toISOString(), modified: null},
         seen: false
-      };      
+      };
 
       return Promise.all([activityInterface.insert(newOutActivity),activityInterface.insert(newInActivity)]);
-    });   
+    });
 };
 
 db.addUserFollower = (follower)=>{
   return userInterface.addUserFollower(follower)
-    .then((updatedUser)=>{        
+    .then((updatedUser)=>{
       let newOutActivity = {
         user: follower.follower,
         direction: "OUT",
@@ -528,15 +528,15 @@ db.addUserFollower = (follower)=>{
         publication: null,
         timestamps: {created: new Date().toISOString(), modified: null},
         seen: false
-      };      
+      };
 
       return Promise.all([activityInterface.insert(newOutActivity),activityInterface.insert(newInActivity)]);
-    });   
+    });
 };
 
 db.removeUserFollower = (follower)=>{
   return userInterface.removeUserFollower(follower)
-    .then((updatedUser)=>{        
+    .then((updatedUser)=>{
       let newOutActivity = {
         user: follower.follower,
         direction: "OUT",
@@ -556,10 +556,10 @@ db.removeUserFollower = (follower)=>{
         publication: null,
         timestamps: {created: new Date().toISOString(), modified: null},
         seen: false
-      };      
+      };
 
       return Promise.all([activityInterface.insert(newOutActivity),activityInterface.insert(newInActivity)]);
-    });     
+    });
 };
 
 db.getLanguages = ()=>{

@@ -6,11 +6,11 @@ const UserInterface = require('./userInterface');
 
 let ActivityInterface = {};
 
-ActivityInterface.getAll = ()=>{
-  return Commons.getAll(Activities)
+ActivityInterface.getN = (userId)=>{
+  return Commons.getN(Activities,{user: userId})
     .populate('user')
-    .populate('relatedUsers')
-    .populate('AppState');
+    .populate('publication')
+    .populate('relatedUsers');
 };
 
 ActivityInterface.getOne = (id)=>{
