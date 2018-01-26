@@ -6,7 +6,7 @@ let InboxService = require('./services/inboxService');
 io.on('connection', (socket) => {
   
   socket.on('disconnect', function(){
-    io.emit('users-changed', {user: socket.nickname, event: 'left'});   
+    io.emit('users-changed', {user: 'socket.nickname', event: 'left'});
   });
  
   socket.on('set-nickname', (data) => {
