@@ -22,7 +22,7 @@ inboxServer.init = (server)=>{
     });
     
     socket.on('add-message', (message) => {
-      socket.broadcast.to(socket.inbox).emit('message',
+      socket.emit('message',
                                              {text: message.text, from: socket.user, created: new Date()}, 
                                              function (received) {
                                                 console.log(received); 
