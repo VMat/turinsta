@@ -64,7 +64,7 @@ io.on('connection', (socket) => {
   socket.on('set-nickname', (data) => {
     socket.nickname = data.nickname;
     socket.inbox = data.inbox;
-    io.emit('users-changed', {user: nickname, event: 'joined'});
+    io.emit('users-changed', {user: socket.nickname, event: 'joined'});
   });
 
   socket.on('add-message', (message) => {
