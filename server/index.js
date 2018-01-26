@@ -37,7 +37,6 @@ app.use((req, res, next)=>{
 
 // Routes
 app.use('/api', routeServer);
-app.use('/socket.io', inbox);
 app.use('/', serveStatic(path.join(__dirname, '/../www')));
 app.use('/assets', serveStatic(path.join(__dirname, '/assets')));
 
