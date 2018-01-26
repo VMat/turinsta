@@ -12,7 +12,11 @@ const serveStatic = require('serve-static');
 const storageService = require('./services/storageService');
 const routeServer = require('./router/routeServer');
 
-const inbox = require('./inbox');
+const http = require("http");
+const socketIo = require("socket.io");
+
+// const inbox = require('./inbox');
+const InboxService = require('./services/inboxService');
 
 // Configuration
 storageService.connect();
@@ -48,7 +52,32 @@ app.get('/',(request, response)=>{
   response.render('index');
 });
 
-// listen (start app with node server.js) ======================================
-const listener = app.listen(process.env.PORT || 5001, ()=>{
-    console.log('Listening on port ' + listener.address().port);
+const server = http.createServer(app);
+const io = socketIo(server);
+
+io.on('connection', (socket) => {
+
+  socket.on('disconnect', function(){
+    io.emit('users-changed', {user: socket.nickname, event: 'left'});
+  });
+
+  socket.on('set-nickname', (data) => {
+    socket.nickname = data.nickname;
+    socket.inbox = data.inbox;
+    io.emit('users-changed', {user: nickname, event: 'joined'});
+  });
+
+  socket.on('add-message', (message) => {
+    io.emit('message', {text: message.text, from: socket.nickname, created: new Date()});
+    InboxService.saveMessage(socket.inbox,{content: message.text, author: socket.nickname, timestamps: {created: new Date(), modified: null}});
+  });
 });
+
+const port = process.env.PORT || 5001;
+
+server.listen(port, () => console.log(`Listening on port ${port}`));
+
+// listen (start app with node server.js) ======================================
+// const listener = app.listen(process.env.PORT || 5001, ()=>{
+//     console.log('Listening on port ' + listener.address().port);
+// });
