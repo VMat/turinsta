@@ -8,6 +8,8 @@ inboxServer.init = (server)=>{
   
   io.on('connection', (socket) => {
 
+    socket.join(socket.handshake.query.inbox);
+    
     socket.user = socket.handshake.query.user;
     socket.inbox = socket.handshake.query.inbox;
     
@@ -16,7 +18,8 @@ inboxServer.init = (server)=>{
     });
 
     socket.on('add-message', (message) => {
-      io.emit('message', {text: message.text, from: socket.user, created: new Date()});
+      socket.broadcast.to(socket.handshake.query.inbox).emit('message', {text: message.text, from: socket.user, created: new Date()});
+      //io.emit('message', {text: message.text, from: socket.user, created: new Date()});
       InboxService.saveMessage(socket.inbox,{content: message.text, author: socket.user, timestamps: {created: new Date(), modified: null}});
     });
   });
