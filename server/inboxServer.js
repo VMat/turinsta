@@ -15,12 +15,6 @@ inboxServer.init = (server)=>{
       io.emit('users-changed', {user: socket.user, event: 'left'});
     });
 
-    socket.on('set-nickname', (data) => {
-      socket.user = data.user;
-      socket.inbox = data.inbox;
-      io.emit('users-changed', {user: socket.user, event: 'joined'});
-    });
-
     socket.on('add-message', (message) => {
       io.emit('message', {text: message.text, from: socket.user, created: new Date()});
       InboxService.saveMessage(socket.inbox,{content: message.text, author: socket.user, timestamps: {created: new Date(), modified: null}});
