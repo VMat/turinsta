@@ -13,12 +13,12 @@ inboxServer.init = (server)=>{
     
     socket.join(socket.inbox);   
 
-    socket.on('writting', ()=>{
-      socket.broadcast.to(socket.inbox).emit('is-writting', {user: socket.user});
+    socket.on('writing', ()=>{
+      socket.broadcast.to(socket.inbox).emit('is-writing', {user: socket.user});
     });
     
-    socket.on('stop-writting', ()=>{
-      socket.broadcast.to(socket.inbox).emit('left-writting', {user: socket.user});
+    socket.on('stop-writing', ()=>{
+      socket.broadcast.to(socket.inbox).emit('left-writing', {user: socket.user});
     });
     
     socket.on('add-message', (message) => {
