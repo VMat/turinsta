@@ -23,6 +23,6 @@ inboxServer.init = (server)=>{
       InboxService.saveMessage(socket.inbox,{content: message.text, author: socket.nickname, timestamps: {created: new Date(), modified: null}});
     });
   });
-}
+};
 
 module.exports = inboxServer;
