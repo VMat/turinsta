@@ -8,6 +8,7 @@ const inboxSchema = new Schema({
 	messages: [{
     author:{type: Schema.Types.ObjectId, ref: 'Users'},
 		content: String,
+    state: String,
 		timestamps: {created: String, modified: String}
   }]		
 });
