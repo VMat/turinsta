@@ -6,8 +6,8 @@ const UserInterface = require('./userInterface');
 
 let ActivityInterface = {};
 
-ActivityInterface.getN = (userId)=>{
-  return Commons.getN(Activities,{user: userId})
+ActivityInterface.getN = (userId,limit)=>{
+  return Commons.getN(Activities,{user: userId},limit,{"timestamps.created": -1})
     .populate('user')
     .populate('publication')
     .populate('relatedUsers');

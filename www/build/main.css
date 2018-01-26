@@ -33402,6 +33402,14 @@ score-input ion-icon {
   font-size: xx-large !important;
 }
 
+page-activities p {
+  font-size: x-small;
+}
+
+page-activities ion-note {
+  font-size: xx-small !important;
+}
+
 page-comment-writing {
   width: 100%;
 }

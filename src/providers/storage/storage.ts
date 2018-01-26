@@ -121,8 +121,8 @@ export class StorageProvider {
       .map((res:Response) => res.json());
   }
 
-  getActivities(userId){
-    return this.http.get(StorageProvider.baseUrl + 'activities/user/' + userId)
+  getActivities(userId,limit){
+    return this.http.get(StorageProvider.baseUrl + 'activities/user/' + userId + '/count/' + limit)
       .map((res:Response) => res.json());
   }
 }

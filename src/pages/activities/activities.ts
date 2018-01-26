@@ -19,9 +19,10 @@ export class ActivitiesPage {
 
   activities = [];
   direction = 'IN';
+  readonly LIMIT = 50;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private commons: CommonsProvider, private storageService: StorageProvider) {
-    this.storageService.getActivities(this.commons.getUserId()).subscribe((activities)=>{
+    this.storageService.getActivities(this.commons.getUserId(), this.LIMIT).subscribe((activities)=>{
       this.activities = activities;
     });
   }
@@ -32,6 +33,10 @@ export class ActivitiesPage {
 
   getActivityCaption(caption,user,params){
     return this.commons.translate(caption,{...params,':user':user});
+  }
+
+  getAntiquity(date){
+    return this.commons.getAntiquity(date);
   }
 
 }

@@ -182,8 +182,8 @@ db.getPublicationImage = (publicationId, imageUrl)=>{
   return publicationInterface.getPublicationImage(publicationId, imageUrl);
 };
 
-db.getActivities = (userId)=>{
-  return activityInterface.getN(userId);
+db.getActivities = (userId,limit)=>{
+  return activityInterface.getN(userId,limit);
 };
 
 db.getActivity = (id)=>{
