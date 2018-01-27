@@ -17,6 +17,8 @@ import { MyEmojiPickerComponent } from './my-emoji-picker/my-emoji-picker';
 import { ScoreInputComponent } from './score-input/score-input';
 import { PublicationActionsComponent } from './publication-actions/publication-actions';
 import { ScoreHandlerComponent } from './score-handler/score-handler';
+import { InboxListComponent } from './inbox-list/inbox-list';
+import { InboxComponent } from './inbox/inbox';
 @NgModule({
 	declarations: [PublicationComponent,
     ExperienceComponent,
@@ -36,7 +38,9 @@ import { ScoreHandlerComponent } from './score-handler/score-handler';
     ScoreInputComponent,
     PublicationActionsComponent,
     ScoreHandlerComponent,
-    ScoreHandlerComponent],
+    ScoreHandlerComponent,
+    InboxListComponent,
+    InboxComponent],
 	imports: [],
 	exports: [PublicationComponent,
     ExperienceComponent,
@@ -56,6 +60,8 @@ import { ScoreHandlerComponent } from './score-handler/score-handler';
     ScoreInputComponent,
     PublicationActionsComponent,
     ScoreHandlerComponent,
-    ScoreHandlerComponent]
+    ScoreHandlerComponent,
+    InboxListComponent,
+    InboxComponent]
 })
 export class ComponentsModule {}

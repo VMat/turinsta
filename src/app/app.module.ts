@@ -54,6 +54,9 @@ import {ImagePicker} from "@ionic-native/image-picker";
 import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-native/file-transfer';
 import { File } from '@ionic-native/file';
 import {ScoreHandlerComponent} from "../components/score-handler/score-handler";
+import {InboxListComponent} from "../components/inbox-list/inbox-list";
+import {InboxComponent} from "../components/inbox/inbox";
+import {ChatPage} from "../pages/chat/chat";
 
 
 @NgModule({
@@ -73,6 +76,7 @@ import {ScoreHandlerComponent} from "../components/score-handler/score-handler";
     PublicationWritingPage,
     PlaceSelectingPage,
     DescriptionWritingPage,
+    ChatPage,
     PublicationHeaderComponent,
     PublicationBodyComponent,
     PublicationFooterComponent,
@@ -91,6 +95,8 @@ import {ScoreHandlerComponent} from "../components/score-handler/score-handler";
     ScoreInputComponent,
     PublicationActionsComponent,
     ScoreHandlerComponent,
+    InboxListComponent,
+    InboxComponent,
     ContainsFilterPipe
   ],
   imports: [
@@ -125,7 +131,8 @@ import {ScoreHandlerComponent} from "../components/score-handler/score-handler";
     MyEmojiPickerPage,
     PublicationWritingPage,
     PlaceSelectingPage,
-    DescriptionWritingPage
+    DescriptionWritingPage,
+    ChatPage
   ],
   providers: [
     StatusBar,
