@@ -55,7 +55,7 @@ export class ScoreInputComponent {
     }
   }
 
-  restartDeltas(){
+  restartDeltas(event){
     this.lastDeltaXRight = 0;
     this.lastDeltaXLeft = 0;
     this.scoringFinished.emit("");

@@ -33186,6 +33186,10 @@ ion-navbar.toolbar {
   min-height: calc(46px + constant(safe-area-inset-top));
 }
 
+experience .experience-content {
+  text-align: left;
+}
+
 filters-bar ion-searchbar {
   margin: 0 !important;
 }
@@ -33332,7 +33336,19 @@ publication-body {
   position: relative;
 }
 
+publication-body score-handler {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  z-index: 100 !important;
+  opacity: 0.8;
+  background-color: black;
+  font-size: x-large;
+}
+
 .publication-description {
+  text-align: left;
   padding-top: 0;
   margin: 0;
   height: 15px;
@@ -33370,18 +33386,6 @@ publication-footer ion-note {
   font-size: xx-small !important;
 }
 
-publication-footer score-handler {
-  position: absolute;
-  top: -65px;
-  height: 50px;
-  width: 100%;
-  z-index: 100;
-  opacity: 0.8;
-  background-color: black;
-  text-align: center;
-  font-size: x-large;
-}
-
 publication-image .publication-image {
   width: 100% !important;
   height: auto;
@@ -33389,10 +33393,6 @@ publication-image .publication-image {
 
 score-input {
   height: 50px;
-  width: 100%;
-  z-index: 100;
-  opacity: 0.8;
-  background-color: black;
   text-align: center;
   font-size: x-large;
 }
@@ -33412,6 +33412,20 @@ page-activities ion-note {
 
 page-comment-writing {
   width: 100%;
+}
+
+.home-slides .scroll-content {
+  margin-bottom: 0 !important;
+}
+
+.home-slides .swiper-slide {
+  overflow-y: scroll;
+  display: block;
+}
+
+.home-slides .slide-zoom {
+  width: 100%;
+  height: 100%;
 }
 
 page-my-emoji-picker emoji-picker {

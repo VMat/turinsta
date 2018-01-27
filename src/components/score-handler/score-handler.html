@@ -1,2 +1,2 @@
 <!-- Generated template for the ScoreHandlerComponent component -->
-<score-input [score]="currentUserScore" (scoringFinished)="scoringFinished()"></score-input>
+<score-input *ngIf="scoreInputShowed" [score]="currentUserScore" (scoringFinished)="scoringFinished()"></score-input>

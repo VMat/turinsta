@@ -3,6 +3,7 @@
   <ion-slide *ngFor="let image of publication.images">
     <publication-actions class="publication-actions-button" [publication]="publication" [user]="user"></publication-actions>
     <publication-image [id]=image._id [url]=image.url></publication-image>
+    <score-handler [scoreInputShowed]="showScoreInput" [publicationScore]="scoreGivenFromUser()" [publicationId]="publication._id"></score-handler>
   </ion-slide>
 </ion-slides>
 <p item-start class="publication-description"><span *ngIf="publication.description"><b>{{user.username}}</b>&nbsp;{{publication.description}}</span></p>

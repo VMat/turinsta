@@ -1,8 +1,8 @@
 <!-- Generated template for the ScoreInputComponent component -->
-<div (panright)="increment($event)" (panleft)="decrement($event)" (panend)="restartDeltas()">
-  <ion-icon name="ios-star" color="{{score.value > 0 ? 'star' : 'light'}}"></ion-icon>
-  <ion-icon name="ios-star" color="{{score.value > 1 ? 'star' : 'light'}}"></ion-icon>
-  <ion-icon name="ios-star" color="{{score.value > 2 ? 'star' : 'light'}}"></ion-icon>
-  <ion-icon name="ios-star" color="{{score.value > 3 ? 'star' : 'light'}}"></ion-icon>
-  <ion-icon name="ios-star" color="{{score.value > 4 ? 'star' : 'light'}}"></ion-icon>
+<div (panright)="increment($event)" (panleft)="decrement($event)" (panend)="restartDeltas($event)">
+  <ion-icon item-left name="ios-star" color="{{score.value > 0 ? 'star' : 'light'}}"></ion-icon>
+  <ion-icon item-left name="ios-star" color="{{score.value > 1 ? 'star' : 'light'}}"></ion-icon>
+  <ion-icon item-left name="ios-star" color="{{score.value > 2 ? 'star' : 'light'}}"></ion-icon>
+  <ion-icon item-left name="ios-star" color="{{score.value > 3 ? 'star' : 'light'}}"></ion-icon>
+  <ion-icon item-left name="ios-star" color="{{score.value > 4 ? 'star' : 'light'}}"></ion-icon>
 </div>

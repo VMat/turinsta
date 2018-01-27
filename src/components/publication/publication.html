@@ -4,7 +4,7 @@
     <publication-header [user]=data.user [publication]=data.publication></publication-header>
   </ion-card-header>
   <ion-card-content no-padding>
-    <publication-body [user]=data.user [publication]=data.publication></publication-body>
-    <publication-footer [publication]=data.publication [comments]=data.comments [experiences]=data.experiences [user]=data.user></publication-footer>
+    <publication-body [showScoreInput]="showScoreInput" [user]=data.user [publication]=data.publication></publication-body>
+    <publication-footer [publication]=data.publication [comments]=data.comments [experiences]=data.experiences [user]=data.user (showScoreInputChanged)="showScoreInputChanged($event)"></publication-footer>
   </ion-card-content>
 </ion-card>

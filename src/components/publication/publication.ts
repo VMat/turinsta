@@ -15,9 +15,13 @@ import {CommonsProvider} from "../../providers/commons/commons";
 export class PublicationComponent {
 
   @Input() data: any = null;
-  scoreGivenFromUser: number = null;
+  showScoreInput: boolean = false;
 
-  constructor(private commons: CommonsProvider) {
+  constructor() {
     console.log('Hello PublicationComponent Component');
+  }
+
+  showScoreInputChanged(event){
+    this.showScoreInput = event;
   }
 }
