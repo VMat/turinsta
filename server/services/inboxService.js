@@ -2,12 +2,20 @@ const storageService = require('./storageService');
 
 let inboxService = {};
           
+inboxService.getInboxes = (user)=>{
+  return new Promise((resolve, reject)=>{
+    storageService.getInboxes(user).
+      then(inbox=>resolve(inbox)).
+      catch(error=>reject(error))        
+  })                
+};
+
 inboxService.getInbox = (id)=>{
   return new Promise((resolve, reject)=>{
     storageService.getInbox(id).
       then(inbox=>resolve(inbox)).
-      catch(error=>reject(error))        
-  })                
+      catch(error=>reject(error))
+  })
 };
     
 inboxService.createInbox = (inbox)=>{      

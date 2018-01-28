@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import {CommonsProvider} from "../../providers/commons/commons";
+import {StorageProvider} from "../../providers/storage/storage";
 
 /**
  * Generated class for the InboxListComponent component.
@@ -15,9 +16,12 @@ export class InboxListComponent {
 
   inboxes: any = null;
 
-  constructor(private commons: CommonsProvider) {
+  constructor(private storage: StorageProvider, private commons: CommonsProvider) {
     console.log('Hello InboxListComponent Component');
-    this.inboxes = [{name: "conversación 1", messages:[{content:"Hola",author: this.commons.getUserId()},{content:"Hola, cómo va?",author: "awdda5115"}]}];
+    this.storage.getInboxes(this.commons.getUserId()).subscribe((inboxes)=>{
+      this.inboxes = inboxes;
+    });
+    // this.inboxes = [{name: "conversación 1", messages:[{content:"Hola",author: this.commons.getUserId()},{content:"Hola, cómo va?",author: "awdda5115"}]}];
   }
 
 }

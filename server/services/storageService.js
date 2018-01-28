@@ -146,6 +146,10 @@ storageService.getLanguage = (id)=>{
   return db.getLanguage(id);
 };
 
+storageService.getInboxes = (user)=>{
+  return db.getInboxes(user);
+};
+
 storageService.getInbox = (id)=>{
   return db.getInbox(id);
 };

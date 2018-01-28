@@ -3,8 +3,12 @@ const Commons = require('./commons');
 
 let InboxInterface = {};
 
+InboxInterface.getN = (user)=>{
+  return Commons.getN(Inboxes,{participants:{$elemMatch: {$eq: user}}});
+};
+
 InboxInterface.getOne = (id)=>{
-  return Commons.getOne(Inbox, id);
+  return Commons.getOne(Inboxes, id);
 };
 
 InboxInterface.insert = (inbox)=>{
@@ -16,7 +20,7 @@ InboxInterface.update = (inbox)=>{
 };
 
 InboxInterface.deleteOne = (id)=>{
-  return Commons.getOne(Inbox,id)
+  return Commons.getOne(Inboxes,id)
     .then((inbox)=>{
       return Commons.removeOne(Inboxes, inbox);
     });

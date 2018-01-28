@@ -5,6 +5,7 @@ const commentApi = require('../rest/commentApi');
 const experienceApi = require('../rest/experienceApi');
 const userApi = require('../rest/userApi');
 const languageApi = require('../rest/languageApi');
+const inboxApi = require('../rest/inboxApi');
 
 routeServer.get('/', function (req, res){
   res.json(200, {msg: 'OK' });
@@ -27,5 +28,8 @@ routeServer.use('/users', userApi);
 
 // API REST LANGUAGES
 routeServer.use('/languages', languageApi);
+
+// API REST INBOXES
+routeServer.use('/inboxes', inboxApi);
 
 module.exports = routeServer;

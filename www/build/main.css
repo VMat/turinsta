@@ -33410,6 +33410,38 @@ page-activities ion-note {
   font-size: xx-small !important;
 }
 
+.user_name {
+  color: #afafaf;
+}
+
+.message {
+  padding: 10px !important;
+  -webkit-transition: all 250ms ease-in-out !important;
+  transition: all 250ms ease-in-out !important;
+  border-radius: 10px !important;
+  margin-bottom: 4px !important;
+}
+
+.my_message {
+  background: #488aff !important;
+  color: #000 !important;
+}
+
+.other_message {
+  background: #dcdcdc !important;
+  color: #000 !important;
+}
+
+.time {
+  color: #afafaf;
+  float: right;
+  font-size: small;
+}
+
+.message_row {
+  background-color: #fff;
+}
+
 page-comment-writing {
   width: 100%;
 }
