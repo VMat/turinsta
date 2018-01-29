@@ -1,4 +1,5 @@
 <!-- Generated template for the InboxComponent component -->
 <ion-item (click)="openChat()">
-  <p>{{data.name}}</p>
+  <p *ngIf="data.name">{{data.name}}</p>
+  <p *ngIf="!data.name">{{data.participants}}</p>
 </ion-item>

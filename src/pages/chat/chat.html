@@ -14,7 +14,7 @@
   <ion-grid>
     <ion-row *ngFor="let message of chat.messages">
 
-      <ion-col col-9 *ngIf="message.author !== nickname" class="message" [ngClass]="{'my_message': message.author === currentUser, 'other_message': message.author !== currentUser}">
+      <ion-col col-9 *ngIf="message.author !== currentUser" class="message" [ngClass]="{'my_message': message.author === currentUser, 'other_message': message.author !== currentUser}">
         <span class="user_name">{{ message.author }}:</span><br>
         <span>{{ message.content }}</span>
         <div class="time">{{message.timestamps.created | date:'dd.MM hh:MM'}}</div>
