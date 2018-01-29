@@ -30,10 +30,8 @@ InboxInterface.deleteOne = (id)=>{
 InboxInterface.saveMessage = (id,message)=>{
   return Commons.getOne(Inboxes,id)
     .then((inbox)=>{
-      let status = inbox.participants.map((user)=>{return {user: user, name: null, date: null}});
-      console.log("status: " + status);
-      message.status = status;
-      inbox.messages.push(message);
+      let status = inbox.participants.map((user)=>{if(user != message.author){return {user: user, name: null, date: null}}});
+      inbox.messages.push({...message, status: status});
       return Commons.update(Inboxes,inbox)
     })
     .then(()=>{
@@ -53,10 +51,6 @@ InboxInterface.saveMessage = (id,message)=>{
 InboxInterface.changeMessageStatus = (id,messageId,userId,status)=>{
   return Commons.getOne(Inboxes,id)
     .then((inbox)=>{
-      console.log("inboxId: " + id);
-      console.log("messageId: " + messageId);
-      console.log("userId: " + userId);
-      console.log("status: " + JSON.stringify(status));
       let targetMessage = inbox.messages.filter((message)=>{return message._id == messageId});
       let targetStatus = targetMessage[0].status.filter((statusItem)=>{return statusItem.user == userId});
       targetStatus[0].name = status.name;
