@@ -47,7 +47,7 @@ export class ChatPage {
     if(Boolean(this.navParams.get("chat"))){
       this.chat = this.navParams.get("chat");
       this.currentUser = this.commons.getUserId();
-      this.socket.emit('setInbox',{user: this.currentUser, inbox: this.chat._id});
+      this.socket.emit('set-inbox',{user: this.currentUser, inbox: this.chat._id});
     }
   }
 
