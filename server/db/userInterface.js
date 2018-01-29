@@ -101,8 +101,10 @@ UserInterface.addUnreadMessage = (userId,inboxId,message)=>{
       else{
         user.notifications.unreadMessages.push({inbox:inboxId,messages:[message]});
       }
-
-      return Commons.update(Users, user);
+      return Commons.update(Users, user)
+        .then(()=>{
+          return InboxInterface.changeMessageStatus(inboxId,message._id,userId,{type: "RECEIVED", date: new Date().toISOString()});
+        })
     });
 };
 
