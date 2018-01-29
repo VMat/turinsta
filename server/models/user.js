@@ -14,7 +14,8 @@ const userSchema = new schema({
 			type: schema.Types.ObjectId, ref: 'Activities'
 		}],
     unreadMessages:[{
-      type: schema.Types.ObjectId, ref: 'Inboxes'
+      inbox: {type: schema.Types.ObjectId, ref: 'Inboxes'},
+      messages: [] 
     }]
   },
   favorites: [{type: schema.Types.ObjectId, "ref": 'Publications'}],
