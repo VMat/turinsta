@@ -103,7 +103,7 @@ UserInterface.addUnreadMessage = (userId,inboxId,message)=>{
       }
       return Commons.update(Users, user)
         .then(()=>{
-          return InboxInterface.changeMessageStatus(inboxId,message._id,userId,{type: "RECEIVED", date: new Date().toISOString()});
+          return InboxInterface.changeMessageStatus(inboxId,message._id,userId,{name: "RECEIVED", date: new Date().toISOString()});
         })
     });
 };
@@ -115,7 +115,7 @@ UserInterface.removeUnreadMessages = (userId,inboxId)=>{
       let index = null;
       user.notifications.unreadMessages.forEach((inbox,i)=>{if(inbox.inbox == inboxId){index=i}}); 
       return Promise.all(user.notifications.unreadMessages[index].messages.map((message)=>{
-        return InboxInterface.changeMessageStatus(inboxId,message._id,userId,{type: "READ", date: new Date().toISOString()});
+        return InboxInterface.changeMessageStatus(inboxId,message._id,userId,{name: "READ", date: new Date().toISOString()});
       }))
       .then(()=>{
         user.notifications.unreadMessages.splice(index,1);
