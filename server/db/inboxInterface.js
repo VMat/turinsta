@@ -42,7 +42,7 @@ InboxInterface.saveMessage = (id,message)=>{
           return Promise.all(inboxUpdated.participants.map((user)=>{
             console.log("user: " + user);
             console.log("author: " + inboxUpdated.messages[inboxUpdated.messages.length - 1].author);
-            if(user !== inboxUpdated.messages[inboxUpdated.messages.length - 1].author){
+            if(user != inboxUpdated.messages[inboxUpdated.messages.length - 1].author){
               return UserInterface.addUnreadMessage(user,id,inboxUpdated.messages[inboxUpdated.messages.length - 1]); 
             }            
           }))         
