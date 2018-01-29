@@ -45,7 +45,7 @@ InboxInterface.saveMessage = (id,message)=>{
     });
 };
 
-InboxInterface.changeStatusMessage = (id,messageId,userId,status)=>{
+InboxInterface.changeMessageStatus = (id,messageId,userId,status)=>{
   return Commons.getOne(Inboxes,id)
     .then((inbox)=>{
       let targetMessage = inbox.messages.filter((message)=>{return message._id == messageId});
