@@ -9,7 +9,7 @@ const inboxSchema = new Schema({
 	messages: [{
     author:{type: Schema.Types.ObjectId, ref: 'Users'},
 		content: String,
-    status: String,
+    status: {type: String, date: String},
 		timestamps: {created: String, modified: String}
   }],
   timestamps: {created: String, modified: String}
