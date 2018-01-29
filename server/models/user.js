@@ -12,7 +12,10 @@ const userSchema = new schema({
   notifications: {
 	  unseenActivities:[{
 			type: schema.Types.ObjectId, ref: 'Activities'
-		}]
+		}],
+    unreadMessages:[{
+      type: schema.Types.ObjectId, ref: 'Inboxes'
+    }]
   },
   favorites: [{type: schema.Types.ObjectId, "ref": 'Publications'}],
   followers: [{type: schema.Types.ObjectId, "ref": 'Users'}],
