@@ -106,12 +106,18 @@ userInterface.addUnreadMessage = (userId,inboxId,message)=>{
 };
 
 UserInterface.removeUnreadMessages = (userId,inboxId)=>{
+  const InboxInterface = require('./inboxInterface');
   return Commons.getOne(Users,userId)
     .then((user)=>{
       let index = null;
       user.notifications.unreadMessages.forEach((inbox,i)=>{if(inbox.inbox == inboxId){index=i}}); 
-      user.notifications.unreadMessages.splice(index,1);
-      return Commons.update(Users, user);
+      return Promise.all(user.notifications.unreadMessages[index].messages.map((message)=>{
+        return InboxInterface.changeMessageStatus(inboxId,message._id,userId,{type: "READ", date: null});
+      }))
+      .then(()=>{
+        user.notifications.unreadMessages.splice(index,1);
+        return Commons.update(Users, user);
+      })
     });
 };
             
