@@ -30,7 +30,7 @@ InboxInterface.deleteOne = (id)=>{
 InboxInterface.saveMessage = (id,message)=>{
   return Commons.getOne(Inboxes,id)
     .then((inbox)=>{
-      let status = inbox.participants.map((user)=>{return {user: user, type: null, date: null}});
+      let status = inbox.participants.map((user)=>{return {user: user, name: null, date: null}});
       console.log("status: " + status);
       message.status = status;
       inbox.messages.push(message);
