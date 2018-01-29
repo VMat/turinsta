@@ -94,7 +94,7 @@ UserInterface.addUnreadMessage = (userId,inboxId,message)=>{
   const InboxInterface = require('./inboxInterface');
   return Commons.getOne(Users,userId)
     .then((user)=>{
-      let inbox = user.notifications.unreadMessages.filter((inbox)=>{return inbox.inbox == inboxId})
+      let inbox = user.notifications.unreadMessages.filter((inbox)=>{return inbox.inbox.equals(inboxId)})
       if(inbox.length > 0){
         inbox[0].messages.push(message);
       }
@@ -113,7 +113,7 @@ UserInterface.removeUnreadMessages = (userId,inboxId)=>{
   return Commons.getOne(Users,userId)
     .then((user)=>{
       let index = null;
-      user.notifications.unreadMessages.forEach((inbox,i)=>{if(inbox.inbox == inboxId){index=i}}); 
+      user.notifications.unreadMessages.forEach((inbox,i)=>{if(inbox.inbox.equals(inboxId)){index=i}}); 
       return Promise.all(user.notifications.unreadMessages[index].messages.map((message)=>{
         return InboxInterface.changeMessageStatus(inboxId,message._id,userId,{name: "READ", date: new Date().toISOString()});
       }))
