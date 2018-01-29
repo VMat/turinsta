@@ -30,7 +30,7 @@ InboxInterface.deleteOne = (id)=>{
 InboxInterface.saveMessage = (id,message)=>{
   return Commons.getOne(Inboxes,id)
     .then((inbox)=>{
-      let status = inbox.participants.map((user)=>{if(user != message.author){return {user: user, name: null, date: null}}});
+      let status = inbox.participants.map((user)=>{if(!user.equals(message.author)){return {user: user, name: null, date: null}}});
       inbox.messages.push({...message, status: status});
       return Commons.update(Inboxes,inbox)
     })
@@ -40,7 +40,7 @@ InboxInterface.saveMessage = (id,message)=>{
           return Promise.all(inboxUpdated.participants.map((user)=>{
             console.log("user: " + user);
             console.log("author: " + inboxUpdated.messages[inboxUpdated.messages.length - 1].author);
-            if(user != inboxUpdated.messages[inboxUpdated.messages.length - 1].author){
+            if(!user.equals(inboxUpdated.messages[inboxUpdated.messages.length - 1].author)){
               return UserInterface.addUnreadMessage(user,id,inboxUpdated.messages[inboxUpdated.messages.length - 1]); 
             }            
           }))         
@@ -51,8 +51,8 @@ InboxInterface.saveMessage = (id,message)=>{
 InboxInterface.changeMessageStatus = (id,messageId,userId,status)=>{
   return Commons.getOne(Inboxes,id)
     .then((inbox)=>{
-      let targetMessage = inbox.messages.filter((message)=>{return message._id == messageId});
-      let targetStatus = targetMessage[0].status.filter((statusItem)=>{return statusItem.user == userId});
+      let targetMessage = inbox.messages.filter((message)=>{return message._id.equals(messageId)});
+      let targetStatus = targetMessage[0].status.filter((statusItem)=>{return statusItem.user.equals(userId)});
       targetStatus[0].name = status.name;
       targetStatus[0].date = status.date;
       return Commons.update(Inboxes,inbox);
