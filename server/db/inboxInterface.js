@@ -30,13 +30,16 @@ InboxInterface.deleteOne = (id)=>{
 InboxInterface.saveMessage = (id,message)=>{
   return Commons.getOne(Inboxes,id)
     .then((inbox)=>{
-      return Promise.all(inbox.participants.map((user)=>{
-        return UserInterface.addUnreadMessage(user,id,message)  
-      }))
-      .then(()=>{
-        inbox.messages.push(message);
-        return Commons.update(Inboxes,inbox);
-      })
+      inbox.messages.push(message);
+      return Commons.update(Inboxes,inbox)
+    })
+    .then(()=>{
+      return Commons.getOne(Inboxes,id)
+        .then((inboxUpdated)=>{
+          return Promise.all(inboxUpdated.participants.map((user)=>{
+            return UserInterface.addUnreadMessage(user,id,inboxUpdated.messages[inboxUpdated.messages.length - 1]);  
+          }))         
+        })
     });
 };
 
