@@ -4,7 +4,8 @@ const Commons = require('./commons');
 let InboxInterface = {};
 
 InboxInterface.getN = (user)=>{
-  return Commons.getN(Inboxes,{participants:{$elemMatch: {$eq: user}}});
+  return Commons.getAll(Inboxes);
+  // return Commons.getN(Inboxes,{participants:{$elemMatch: {$eq: user}}});
 };
 
 InboxInterface.getOne = (id)=>{

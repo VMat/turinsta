@@ -3350,6 +3350,7 @@ var InboxListComponent = (function () {
         this.inboxes = null;
         console.log('Hello InboxListComponent Component');
         this.storage.getInboxes(this.commons.getUserId()).subscribe(function (inboxes) {
+            alert(JSON.stringify(inboxes));
             _this.inboxes = inboxes;
         });
         // this.inboxes = [{name: "conversación 1", messages:[{content:"Hola",author: this.commons.getUserId()},{content:"Hola, cómo va?",author: "awdda5115"}]}];
@@ -3360,9 +3361,10 @@ InboxListComponent = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
         selector: 'inbox-list',template:/*ion-inline-start:"C:\Users\Matias\WebstormProjects\turinsta\src\components\inbox-list\inbox-list.html"*/'<!-- Generated template for the InboxListComponent component -->\n<ion-list>\n  <inbox *ngFor="let inbox of inboxes" [data]=inbox></inbox>\n</ion-list>\n'/*ion-inline-end:"C:\Users\Matias\WebstormProjects\turinsta\src\components\inbox-list\inbox-list.html"*/
     }),
-    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_2__providers_storage_storage__["a" /* StorageProvider */], __WEBPACK_IMPORTED_MODULE_1__providers_commons_commons__["a" /* CommonsProvider */]])
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_2__providers_storage_storage__["a" /* StorageProvider */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__providers_storage_storage__["a" /* StorageProvider */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1__providers_commons_commons__["a" /* CommonsProvider */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__providers_commons_commons__["a" /* CommonsProvider */]) === "function" && _b || Object])
 ], InboxListComponent);
 
+var _a, _b;
 //# sourceMappingURL=inbox-list.js.map
 
 /***/ }),
