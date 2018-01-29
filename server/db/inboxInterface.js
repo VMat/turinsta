@@ -53,6 +53,10 @@ InboxInterface.saveMessage = (id,message)=>{
 InboxInterface.changeMessageStatus = (id,messageId,userId,status)=>{
   return Commons.getOne(Inboxes,id)
     .then((inbox)=>{
+      console.log("inboxId: " + id);
+      console.log("messageId: " + messageId);
+      console.log("userId: " + userId);
+      console.log("status: " + JSON.stringify(status));
       let targetMessage = inbox.messages.filter((message)=>{return message._id == messageId});
       let targetStatus = targetMessage[0].status.filter((statusItem)=>{return statusItem.user == userId});
       targetStatus[0].name = status.name;
