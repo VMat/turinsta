@@ -32,7 +32,8 @@ InboxInterface.saveMessage = (id,message)=>{
     .then((inbox)=>{
       let status = inbox.participants.map((user)=>{return {user: user, type: null, date: null}});
       console.log("status: " + status);
-      inbox.messages.push({...message, status: status});
+      message.status = status;
+      inbox.messages.push(message);
       return Commons.update(Inboxes,inbox)
     })
     .then(()=>{
