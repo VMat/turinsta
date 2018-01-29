@@ -91,6 +91,7 @@ UserInterface.removeActivity = (userId,activityId)=>{
 };
 
 UserInterface.addUnreadMessage = (userId,inboxId,message)=>{
+  const InboxInterface = require('./inboxInterface');
   return Commons.getOne(Users,userId)
     .then((user)=>{
       let inbox = user.notifications.unreadMessages.filter((inbox)=>{return inbox.inbox == inboxId})
