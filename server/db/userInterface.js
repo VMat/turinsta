@@ -90,7 +90,7 @@ UserInterface.removeActivity = (userId,activityId)=>{
     });
 };
 
-userInterface.addUnreadMessage = (userId,inboxId,message)=>{
+UserInterface.addUnreadMessage = (userId,inboxId,message)=>{
   return Commons.getOne(Users,userId)
     .then((user)=>{
       let inbox = user.notifications.unreadMessages.filter((inbox)=>{return inbox.inbox == inboxId})
