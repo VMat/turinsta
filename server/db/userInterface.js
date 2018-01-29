@@ -89,5 +89,30 @@ UserInterface.removeActivity = (userId,activityId)=>{
       return Commons.update(Users, user);
     });
 };
+
+userInterface.addUnreadMessage = (userId,inboxId,message)=>{
+  return Commons.getOne(Users,userId)
+    .then((user)=>{
+      let inbox = user.notifications.unreadMessages.filter((inbox)=>{return inbox.inbox == inboxId})
+      if(inbox.length > 0){
+        inbox[0].messages.push(message);
+      }
+      else{
+        user.notifications.unreadMessages.push({inbox:inboxId,messages:[message]});
+      }
+
+      return Commons.update(Users, user);
+    });
+};
+
+UserInterface.removeUnreadMessages = (userId,inboxId)=>{
+  return Commons.getOne(Users,userId)
+    .then((user)=>{
+      let index = null;
+      user.notifications.unreadMessages.forEach((inbox,i)=>{if(inbox.inbox == inboxId){index=i}}); 
+      user.notifications.unreadMessages.splice(index,1);
+      return Commons.update(Users, user);
+    });
+};
             
 module.exports = UserInterface;
