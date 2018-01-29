@@ -31,12 +31,23 @@ InboxInterface.saveMessage = (id,message)=>{
   return Commons.getOne(Inboxes,id)
     .then((inbox)=>{
       return Promise.all(inbox.participants.map((user)=>{
-        return UserInterface.addUnreadMessage(id,message)  
+        return UserInterface.addUnreadMessage(user,id,message)  
       }))
       .then(()=>{
         inbox.messages.push(message);
         return Commons.update(Inboxes,inbox);
       })
+    });
+};
+
+InboxInterface.changeStatusMessage = (id,messageId,userId,status)=>{
+  return Commons.getOne(Inboxes,id)
+    .then((inbox)=>{
+      let targetMessage = inbox.messages.filter((message)=>{return message._id == messageId});
+      let targetStatus = targetMessage[0].status.filter((statusItem)=>{return statusItem.user == userId});
+      targetStatus[0].type = status.type;
+      targetStatus[0].date = status.date;
+      return Commons.update(Inboxes,inbox);
     });
 };
 
