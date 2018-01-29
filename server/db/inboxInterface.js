@@ -55,7 +55,7 @@ InboxInterface.changeMessageStatus = (id,messageId,userId,status)=>{
     .then((inbox)=>{
       let targetMessage = inbox.messages.filter((message)=>{return message._id == messageId});
       let targetStatus = targetMessage[0].status.filter((statusItem)=>{return statusItem.user == userId});
-      targetStatus[0].type = status.type;
+      targetStatus[0].name = status.name;
       targetStatus[0].date = status.date;
       return Commons.update(Inboxes,inbox);
     });
