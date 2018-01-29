@@ -31,7 +31,7 @@ InboxInterface.saveMessage = (id,message)=>{
   return Commons.getOne(Inboxes,id)
     .then((inbox)=>{
       let status = inbox.participants.map((user)=>{if(!user.equals(message.author)){return {user: user, name: null, date: null}}});
-      inbox.messages.push({...message, status: status});
+      inbox.messages.push({...message, status: status.filter((statusItem)=>{return Boolean(statusItem)})});
       return Commons.update(Inboxes,inbox)
     })
     .then(()=>{
