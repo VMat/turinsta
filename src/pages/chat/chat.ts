@@ -47,9 +47,16 @@ export class ChatPage {
     if(Boolean(this.navParams.get("chat"))){
       this.chat = this.navParams.get("chat");
       this.currentUser = this.commons.getUserId();
-      alert(this.chat._id);
       this.socket.emit('set-inbox',{user: this.currentUser, inbox: this.chat._id});
     }
+  }
+
+  getUsername(userId){
+    let targetUser = this.chat.participants.filter((user)=>{return userId == user._id});
+    if(targetUser.length>0){
+      return targetUser[0].username;
+    }
+    return null;
   }
 
   sendMessage() {
