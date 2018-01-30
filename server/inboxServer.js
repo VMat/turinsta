@@ -24,7 +24,7 @@ inboxServer.init = (server)=>{
 
     socket.on('add-message', (message) => {
       console.log("add-message in inbox: " + socket.inbox);
-      socket.to(socket.inbox).emit('message', {content: message.text, author: socket.user, timestamps: {created: new Date(), modified: null}});
+      io.in(socket.inbox).emit('message', {content: message.text, author: socket.user, timestamps: {created: new Date(), modified: null}});
       InboxService.saveMessage(socket.inbox,{content: message.text, author: socket.user, timestamps: {created: new Date(), modified: null}});
     });
   });
