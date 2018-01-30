@@ -1,5 +1,6 @@
 const socketIo = require("socket.io");
-let InboxService = require('./services/inboxService');
+const InboxService = require('./services/inboxService');
+const UserService = require('./services/userService');
 
 let inboxServer = {};
 
@@ -20,6 +21,11 @@ inboxServer.init = (server)=>{
 
     socket.on('stop-writing', ()=>{
       socket.broadcast.to(socket.inbox).emit('left-writing', {user: socket.user});
+    });
+    
+    socket.on('message-read', (data)=>{
+      io.in(socket.inbox).emit('read',data);
+      UserService.removeUnreadMessages(socket.user,socket.inbox);
     });
 
     socket.on('add-message', (message) => {
