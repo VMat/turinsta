@@ -20,6 +20,8 @@ export class ChatPage {
 
   chat: any = null;
   message: string = null;
+  chatDescription: string = null;
+  avatar: string = null;
   currentUser: string = null;
   chatInfo: string = null;
 
@@ -46,6 +48,8 @@ export class ChatPage {
   ionViewWillLoad(){
     if(Boolean(this.navParams.get("chat"))){
       this.chat = this.navParams.get("chat");
+      this.chatDescription = this.navParams.get("chatDescription");
+      this.avatar = this.navParams.get("avatar");
       this.currentUser = this.commons.getUserId();
       this.socket.emit('set-inbox',{user: this.currentUser, inbox: this.chat._id});
     }

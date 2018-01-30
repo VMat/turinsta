@@ -1,7 +1,7 @@
 const socketIo = require("socket.io");
 let InboxService = require('./services/inboxService');
 
-inboxServer = {};
+let inboxServer = {};
 
 inboxServer.init = (server)=>{
   const io = socketIo(server);

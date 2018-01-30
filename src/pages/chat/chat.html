@@ -6,8 +6,12 @@
 -->
 <ion-header>
   <ion-navbar>
-    <ion-title *ngIf="chat.name">{{chat.name}}</ion-title>
-    <ion-title *ngIf="!chat.name">{{chat.participants}}</ion-title>
+    <ion-item no-lines>
+      <ion-avatar item-start>
+        <img src="{{avatar}}">
+      </ion-avatar>
+      <ion-title>{{chatDescription}}</ion-title>
+    </ion-item>
   </ion-navbar>
 </ion-header>
 

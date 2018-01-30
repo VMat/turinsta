@@ -1,5 +1,7 @@
 <!-- Generated template for the InboxComponent component -->
 <ion-item (click)="openChat()">
-  <p *ngIf="data.name">{{data.name}}</p>
-  <p *ngIf="!data.name">{{data.participants}}</p>
+  <ion-avatar item-start>
+    <img src="{{avatar}}">
+  </ion-avatar>
+  <p>{{chatDescription}}</p>
 </ion-item>
