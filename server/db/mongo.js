@@ -562,6 +562,10 @@ db.removeUserFollower = (follower)=>{
     });
 };
 
+db.removeUnreadMessages = (userId,inboxId)=>{
+  return userInterface.removeUnreadMessages(userId,inboxId);
+};
+
 db.getLanguages = ()=>{
   return languageInterface.getAll();
 };
