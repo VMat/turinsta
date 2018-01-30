@@ -8,14 +8,10 @@ inboxServer.init = (server)=>{
 
   io.on('connection', (socket) => {
 
-    // socket.user = socket.handshake.query.user;
-    // socket.inbox = socket.handshake.query.inbox;
-
-    socket.join(socket.inbox);
-
     socket.on('set-inbox', (data)=>{
       socket.user = data.user;
       socket.inbox = data.inbox;
+      socket.join(socket.inbox);
     });
 
     socket.on('writing', ()=>{
