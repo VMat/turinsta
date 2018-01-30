@@ -66,4 +66,12 @@ userService.removeUserFollower = (follower)=>{
   })   
 };
 
+userService.removeUnreadMessages = (userId,inboxId)=>{
+  return new Promise((resolve, reject)=>{
+    storageService.removeUnreadMessages(userId,inboxId).
+      then(updatedUser=>resolve(updatedUser)).
+      catch(error=>reject(error))
+  })
+};
+
 module.exports = userService;
