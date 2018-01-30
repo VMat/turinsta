@@ -138,6 +138,10 @@ storageService.removeUserFollower = (follower)=>{
   return db.removeUserFollower(follower);
 };
 
+storageService.removeUnreadMessages = (userId,inboxId)=>{
+  return db.removeUnreadMessages(userId,inboxId);
+};
+
 storageService.getLanguages = ()=>{
   return db.getLanguages();
 };
