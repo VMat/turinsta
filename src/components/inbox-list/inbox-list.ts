@@ -19,10 +19,8 @@ export class InboxListComponent {
   constructor(private storage: StorageProvider, private commons: CommonsProvider) {
     console.log('Hello InboxListComponent Component');
     this.storage.getInboxes(this.commons.getUserId()).subscribe((inboxes)=>{
-      alert(JSON.stringify(inboxes));
       this.inboxes = inboxes;
     });
-    // this.inboxes = [{name: "conversación 1", messages:[{content:"Hola",author: this.commons.getUserId()},{content:"Hola, cómo va?",author: "awdda5115"}]}];
   }
 
 }

@@ -1,9 +1,9 @@
-<ion-header no-margin no-padding>
-  <filters-bar></filters-bar>
-</ion-header>
 <ion-content>
   <ion-slides class="home-slides">
     <ion-slide>
+      <ion-header no-margin no-padding>
+        <filters-bar></filters-bar>
+      </ion-header>
       <ion-content>
         <publication-list [data]="publications | async"></publication-list>
         <!--<ion-list [virtualScroll]="publications.publications | async">-->
@@ -28,7 +28,14 @@
       </ion-content>
     </ion-slide>
     <ion-slide>
-      <inbox-list></inbox-list>
+      <ion-header>
+        <ion-navbar>
+          <ion-title>Chats</ion-title>
+        </ion-navbar>
+      </ion-header>
+      <ion-content>
+        <inbox-list></inbox-list>
+      </ion-content>
     </ion-slide>
   </ion-slides>
 </ion-content>
