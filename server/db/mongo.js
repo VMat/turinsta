@@ -598,4 +598,8 @@ db.saveMessage = (id,message)=>{
   return inboxInterface.saveMessage(id,message);
 };
 
+db.changeMessageStatus = (id,messageId,userId,status)=>{
+  return inboxInterface.changeMessageStatus(id,messageId,userId,status);
+};
+
 module.exports = db;
