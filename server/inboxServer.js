@@ -23,14 +23,21 @@ inboxServer.init = (server)=>{
       socket.broadcast.to(socket.inbox).emit('left-writing', {user: socket.user});
     });
     
+    socket.on('message-received', (data)=>{
+      io.in(socket.inbox).emit('received',data);
+      InboxService.changeMessageStatus()
+    });
+    
     socket.on('message-read', (data)=>{
       io.in(socket.inbox).emit('read',data);
       UserService.removeUnreadMessages(socket.user,socket.inbox);
     });
 
     socket.on('add-message', (message) => {
-      io.in(socket.inbox).emit('message', {content: message.text, author: socket.user, timestamps: {created: new Date(), modified: null}});
-      InboxService.saveMessage(socket.inbox,{content: message.text, author: socket.user, timestamps: {created: new Date(), modified: null}});
+      InboxService.saveMessage(socket.inbox, {content: message.text, author: socket.user, timestamps: {created: new Date(), modified: null}})
+        .then(()=>{
+          io.in(socket.inbox).emit('message', {content: message.text, author: socket.user, timestamps: {created: new Date(), modified: null}});
+        });
     });
   });
 };
