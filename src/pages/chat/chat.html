@@ -11,6 +11,7 @@
         <img src="{{avatar}}">
       </ion-avatar>
       <ion-title>{{chatDescription}}</ion-title>
+      <span class="chat-info">&nbsp;{{chatInfo}}</span>
     </ion-item>
   </ion-navbar>
 </ion-header>
@@ -28,7 +29,10 @@
       <ion-col offset-3 col-9 *ngIf="message.author === currentUser" class="message" [ngClass]="{'my_message': message.author === currentUser, 'other_message': message.author !== currentUser}">
         <span class="user_name">{{ getUsername(message.author) }}:</span><br>
         <span>{{ message.content }}</span>
-        <div class="time">{{message.timestamps.created | date:'dd.MM hh:mm'}}</div>
+        <div class="time">{{message.timestamps.created | date:'dd.MM hh:mm'}}</div><br>
+        <ion-icon *ngIf="getMessageStatus(message.status) == 'SEND'" class="message-status" name="checkmark" color="light"></ion-icon>
+        <ion-icon *ngIf="getMessageStatus(message.status) == 'RECEIVED'" class="message-status" name="done-all" color="light"></ion-icon>
+        <ion-icon *ngIf="getMessageStatus(message.status) == 'READ'" class="message-status" name="done-all" color="secondary"></ion-icon>
       </ion-col>
 
     </ion-row>
@@ -40,7 +44,7 @@
     <ion-row class="message_row">
       <ion-col col-9>
         <ion-item no-lines>
-          <ion-input type="text" placeholder="Mensaje" [(ngModel)]="message"></ion-input>
+          <ion-input type="text" placeholder="Mensaje" [(ngModel)]="message" (keypress)="writing()" (keyup)="stopWriting()"></ion-input>
         </ion-item>
       </ion-col>
       <ion-col col-3>

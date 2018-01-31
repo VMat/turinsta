@@ -87,6 +87,10 @@ export class StorageProvider {
     return this.http.delete(StorageProvider.baseUrl + 'users/followers/' + followed + '/' + follower,{headers: StorageProvider.headers});
   }
 
+  removeUnreadMessages(userId,inboxId){
+    return this.http.delete(StorageProvider.baseUrl + 'users/' + userId+ '/inbox/' + inboxId,{headers: StorageProvider.headers});
+  }
+
   createPublication(publication){
     return this.http.post(StorageProvider.baseUrl + 'publications/',publication,{headers: StorageProvider.headers});
   }

@@ -20,7 +20,7 @@ export class InboxComponent {
   avatar :string = null;
   currentUser :string = null;
 
-  constructor(private modalCtrl: ModalController, private socket: Socket, private commons: CommonsProvider) {
+  constructor(private modalCtrl: ModalController, private commons: CommonsProvider) {
     console.log('Hello InboxComponent Component');
     this.currentUser = this.commons.getUserId();
   }
@@ -60,8 +60,8 @@ export class InboxComponent {
   }
 
   openChat(){
-    this.socket.connect();
-    let publicationWritingModal = this.modalCtrl.create(ChatPage, {chat: this.data, chatDescription: this.chatDescription, avatar: this.avatar});
+    let socket = new Socket({ url: 'https://turinsta-staging.herokuapp.com', options: {user: this.currentUser, inbox: this.data._id} });
+    let publicationWritingModal = this.modalCtrl.create(ChatPage, {chat: this.data, chatDescription: this.chatDescription, avatar: this.avatar, socket: socket});
     publicationWritingModal.present();
   }
 }

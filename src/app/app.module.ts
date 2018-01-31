@@ -57,8 +57,6 @@ import {ScoreHandlerComponent} from "../components/score-handler/score-handler";
 import {InboxListComponent} from "../components/inbox-list/inbox-list";
 import {InboxComponent} from "../components/inbox/inbox";
 import {ChatPage} from "../pages/chat/chat";
-import { SocketIoModule, SocketIoConfig } from 'ng-socket-io';
-const config: SocketIoConfig = { url: 'https://turinsta-staging.herokuapp.com', options: {} };
 
 
 @NgModule({
@@ -115,8 +113,7 @@ const config: SocketIoConfig = { url: 'https://turinsta-staging.herokuapp.com', 
       maxAge: 10 // number of states to retain
     }),
     IonicStorageModule.forRoot(),
-    EmojiPickerModule.forRoot(),
-    SocketIoModule.forRoot(config)
+    EmojiPickerModule.forRoot()
   ],
   bootstrap: [IonicApp],
   entryComponents: [
