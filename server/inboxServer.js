@@ -24,19 +24,23 @@ inboxServer.init = (server)=>{
     });
     
     socket.on('message-received', (data)=>{
-      io.in(socket.inbox).emit('received',data);
-      InboxService.changeMessageStatus()
+      InboxService.changeMessageStatus(socket.inbox,data.message,socket.user,{name:"RECEIVED",date: new Date().toISOString()})
+        .then(()=>{
+          io.in(socket.inbox).emit('received',{message: data.message, user: socket.user});
+        });
     });
     
     socket.on('message-read', (data)=>{
-      io.in(socket.inbox).emit('read',data);
-      UserService.removeUnreadMessages(socket.user,socket.inbox);
+      UserService.removeUnreadMessages(socket.user,socket.inbox)
+        .then(()=>{
+          io.in(socket.inbox).emit('read',data);
+        });
     });
 
     socket.on('add-message', (message) => {
-      InboxService.saveMessage(socket.inbox, {content: message.text, author: socket.user, timestamps: {created: new Date(), modified: null}})
+      InboxService.saveMessage(socket.inbox, {content: message.text, author: socket.user, timestamps: {created: new Date().toISOString(), modified: null}})
         .then(()=>{
-          io.in(socket.inbox).emit('message', {content: message.text, author: socket.user, timestamps: {created: new Date(), modified: null}});
+          io.in(socket.inbox).emit('message', {content: message.text, author: socket.user, timestamps: {created: new Date().toISOString(), modified: null}});
         });
     });
   });
