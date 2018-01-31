@@ -50,4 +50,12 @@ inboxService.saveMessage = (id,message)=>{
   })  
 };
 
+inboxService.changeMessageStatus = (id,messageId,userId,status)=>{
+  return new Promise((resolve, reject)=>{
+    storageService.changeMessageStatus(id,messageId,userId,status).
+      then(inbox=>resolve(inbox)).
+      catch(error=>reject(error))        
+  }) 
+};
+
 module.exports = inboxService;
