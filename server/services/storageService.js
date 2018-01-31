@@ -174,4 +174,8 @@ storageService.saveMessage = (id,message)=>{
   return db.saveMessage(id,message);
 };
 
+storageService.changeMessageStatus = (id,messageId,userId,status)=>{
+  return db.changeMessageStatus(id,messageId,userId,status);
+};
+
 module.exports = storageService;
