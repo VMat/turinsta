@@ -54,6 +54,33 @@ InboxInterface.changeMessageStatus = (id,messageId,userId,status)=>{
       let targetStatus = targetMessage[0].status.filter((statusItem)=>{return statusItem.user.equals(userId)});
       targetStatus[0].name = status.name;
       targetStatus[0].date = status.date;
+    
+      let send = targetMessage[0].status.every((state)=>{
+        return state.name != null
+      });
+      if(!send){
+        targetMessage[0].generalState = null;
+      }
+      else{
+        let received = targetMessage[0].status.every((state)=>{
+          return state.name != null && state.name != 'SEND'
+        });
+        if(!received){
+          targetMessage[0].generalState = 'SEND';
+        }
+        else{
+          let read = targetMessage[0].status.every((state)=>{
+            return state.name == 'READ'
+          });
+          if(!read){
+            targetMessage[0].generalState = 'RECEIVED';
+          }
+          else{
+            targetMessage[0].generalState = 'READ';
+          }
+        }
+      }
+         
       return Commons.update(Inboxes,inbox);
     });
 };
