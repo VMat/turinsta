@@ -31,8 +31,8 @@ InboxInterface.deleteOne = (id)=>{
 InboxInterface.saveMessage = (id,message)=>{
   return Commons.getOne(Inboxes,id)
     .then((inbox)=>{
-      let status = inbox.participants.map((user)=>{if(!user.equals(message.author)){return {user: user, name: null, date: null}}});
-      inbox.messages.push({...message, status: status.filter((statusItem)=>{return Boolean(statusItem)})});
+      let status = inbox.participants.map((user)=>{if(!user.equals(message.author)){return {user: user, name: 'SEND', date: new Date().toISOString()}}});
+      inbox.messages.push({...message, status: status.filter((statusItem)=>{return Boolean(statusItem), generalState: 'SEND'})});
       return Commons.update(Inboxes,inbox)
     })
     .then(()=>{
@@ -42,7 +42,7 @@ InboxInterface.saveMessage = (id,message)=>{
             if(!user.equals(inboxUpdated.messages[inboxUpdated.messages.length - 1].author)){
               return UserInterface.addUnreadMessage(user,id,inboxUpdated.messages[inboxUpdated.messages.length - 1]);
             }
-          }))
+          }).filter((promise)=>{return Boolean(promise)}))
         })
     });
 };
@@ -55,32 +55,27 @@ InboxInterface.changeMessageStatus = (id,messageId,userId,status)=>{
       targetStatus[0].name = status.name;
       targetStatus[0].date = status.date;
     
-      let send = targetMessage[0].status.every((state)=>{
-        return state.name != null
-      });
-      if(!send){
-        targetMessage[0].generalState = null;
-      }
-      else{
-        let received = targetMessage[0].status.every((state)=>{
-          return state.name != null && state.name != 'SEND'
-        });
-        if(!received){
-          targetMessage[0].generalState = 'SEND';
+      switch(targetMessage[0].generalState){
+        case 'SEND': {
+          let received = targetMessage[0].status.every((state)=>{
+            return state.name == 'RECEIVED'
+          });
+          if(received){
+            targetMessage[0].generalState = 'RECEIVED';
+          }
+          break;
         }
-        else{
+        case 'RECEIVED':{
           let read = targetMessage[0].status.every((state)=>{
             return state.name == 'READ'
           });
-          if(!read){
-            targetMessage[0].generalState = 'RECEIVED';
-          }
-          else{
+          if(read){
             targetMessage[0].generalState = 'READ';
           }
-        }
-      }
-         
+          break;
+        }  
+      }    
+              
       return Commons.update(Inboxes,inbox);
     });
 };
