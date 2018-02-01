@@ -45,7 +45,6 @@ export class ChatPage {
       this.setMessageRead();
 
       this.getMessages().subscribe(message => {
-        alert(JSON.stringify(message));
         this.chat.messages.push(message);
         this.setMessageRead();
       });
@@ -78,20 +77,24 @@ export class ChatPage {
   }
 
   updateMessageStatus(status){
+    alert(JSON.stringify(status));
     let targetMessage = this.chat.messages.filter((message)=>{
       return message._id == status.message;
     });
     if(targetMessage.length>0){
+      alert(JSON.stringify(targetMessage[0]));
       let targetUser = targetMessage[0].status.filter((user)=>{
         return user.user == status.user;
       });
       if(targetUser.length>0){
+        alert(JSON.stringify(targetUser[0]));
         targetUser[0].name = status.status.name;
         targetUser[0].date = status.status.date;
       }
       if(targetMessage[0].status.every((statusItem)=>{
         return statusItem.name == status.name;
       })){targetMessage[0].generalState = status.name}
+      alert(targetMessage[0].generalState);
     }
   }
 
