@@ -32,7 +32,7 @@ InboxInterface.saveMessage = (id,message)=>{
   return Commons.getOne(Inboxes,id)
     .then((inbox)=>{
       let status = inbox.participants.map((user)=>{if(!user.equals(message.author)){return {user: user, name: 'SEND', date: new Date().toISOString()}}});
-      inbox.messages.push({...message, status: status.filter((statusItem)=>{return Boolean(statusItem), generalState: 'SEND'})});
+      inbox.messages.push({...message, status: status.filter((statusItem)=>{return Boolean(statusItem)}), generalState: 'SEND'});
       return Commons.update(Inboxes,inbox)
     })
     .then(()=>{
@@ -54,7 +54,7 @@ InboxInterface.changeMessageStatus = (id,messageId,userId,status)=>{
       let targetStatus = targetMessage[0].status.filter((statusItem)=>{return statusItem.user.equals(userId)});
       targetStatus[0].name = status.name;
       targetStatus[0].date = status.date;
-    
+
       switch(targetMessage[0].generalState){
         case 'SEND': {
           let received = targetMessage[0].status.every((state)=>{
@@ -73,9 +73,9 @@ InboxInterface.changeMessageStatus = (id,messageId,userId,status)=>{
             targetMessage[0].generalState = 'READ';
           }
           break;
-        }  
-      }    
-              
+        }
+      }
+
       return Commons.update(Inboxes,inbox);
     });
 };

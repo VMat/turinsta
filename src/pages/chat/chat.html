@@ -30,9 +30,9 @@
         <span class="user_name">{{ getUsername(message.author) }}:</span><br>
         <span>{{ message.content }}</span>
         <div class="time">{{message.timestamps.created | date:'dd.MM hh:mm'}}</div><br>
-        <ion-icon *ngIf="getMessageStatus(message.status) == 'SEND'" class="message-status" name="checkmark" color="light"></ion-icon>
-        <ion-icon *ngIf="getMessageStatus(message.status) == 'RECEIVED'" class="message-status" name="done-all" color="light"></ion-icon>
-        <ion-icon *ngIf="getMessageStatus(message.status) == 'READ'" class="message-status" name="done-all" color="secondary"></ion-icon>
+        <ion-icon *ngIf="message.generalState == 'SEND'" class="message-status" name="checkmark" color="light"></ion-icon>
+        <ion-icon *ngIf="message.generalState == 'RECEIVED'" class="message-status" name="done-all" color="light"></ion-icon>
+        <ion-icon *ngIf="message.generalState == 'READ'" class="message-status" name="done-all" color="secondary"></ion-icon>
       </ion-col>
 
     </ion-row>

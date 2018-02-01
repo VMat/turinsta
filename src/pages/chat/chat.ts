@@ -40,9 +40,10 @@ export class ChatPage {
       this.chatDescription = this.navParams.get("chatDescription");
       this.avatar = this.navParams.get("avatar");
       this.currentUser = this.commons.getUserId();
-      this.socket.connect();
-      this.socket.emit('set-inbox',{user: this.currentUser, inbox: this.chat._id});
-      this.storage.removeUnreadMessages(this.currentUser, this.chat._id);
+      this.connect();
+      this.setInbox();
+      this.setMessageRead();
+
       this.getMessages().subscribe(message => {
         this.chat.messages.push(message);
       });
@@ -52,8 +53,16 @@ export class ChatPage {
         this.chatInfo = targetUser[0].username + " está escribiendo";
       });
 
-      this.leftWriting().subscribe(()=>{
+      this.leftWriting().subscribe((data)=>{
         this.chatInfo = null;
+      });
+
+      this.getMessageReceived().subscribe((data)=>{
+        this.updateMessageStatus(data);
+      });
+
+      this.getMessageRead().subscribe((data)=>{
+        this.updateMessageStatus(data);
       });
     }
   }
@@ -66,31 +75,34 @@ export class ChatPage {
     return null;
   }
 
-  getMessageStatus(status){
-    let send = status.every((state)=>{
-      return state.name != null
+  updateMessageStatus(status){
+    let targetMessage = this.chat.messages.filter((message)=>{
+      return message._id == status.message;
     });
-    if(!send){
-      return null;
+    if(targetMessage.length>0){
+      let targetUser = targetMessage[0].status.filter((user)=>{
+        return user.user == status.user;
+      });
+      if(targetUser.length>0){
+        targetUser[0].name = status.status.name;
+        targetUser[0].date = status.status.date;
+      }
+      if(targetMessage[0].status.every((statusItem)=>{
+        return statusItem.name == status.name;
+      })){targetMessage[0].generalState = status.name}
     }
-    let received = status.every((state)=>{
-      return state.name != null && state.name != 'SEND'
-    })
-    if(!received){
-      return 'SEND'
-    }
-    let read = status.every((state)=>{
-      return state.name == 'READ'
-    })
-    if(!read){
-      return 'RECEIVED'
-    }
-    return 'READ';
   }
 
-  sendMessage() {
-    this.socket.emit('add-message', { text: this.message });
-    this.message = '';
+  connect(){
+    this.socket.connect();
+  }
+
+  setInbox(){
+    this.socket.emit('set-inbox',{user: this.currentUser, inbox: this.chat._id});
+  }
+
+  setMessageRead(){
+    this.socket.emit('message-read',{user: this.currentUser});
   }
 
   writing(){
@@ -101,9 +113,30 @@ export class ChatPage {
     this.socket.emit('stop-writing');
   }
 
+  sendMessage() {
+    this.socket.emit('add-message', { text: this.message });
+    this.message = '';
+  }
+
   getMessages() {
     return new Observable(observer => {
       this.socket.on('message', (data) => {
+        observer.next(data);
+      });
+    });
+  }
+
+  getMessageReceived(){
+    return new Observable(observer => {
+      this.socket.on('read', (data) => {
+        observer.next(data);
+      });
+    });
+  }
+
+  getMessageRead(){
+    return new Observable(observer => {
+      this.socket.on('received', (data) => {
         observer.next(data);
       });
     });

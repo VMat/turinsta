@@ -10,10 +10,10 @@ UserInterface.getAll = ()=>{
 };
 
 UserInterface.getOne = (id)=>{
-  return Commons.getOne(Users, id)        
+  return Commons.getOne(Users, id)
     .populate('publications');
 };
-    
+
 UserInterface.insert = (user)=>{
   return Commons.insert(new Users(user));
 };
@@ -21,7 +21,7 @@ UserInterface.insert = (user)=>{
 UserInterface.update = (user)=>{
   return Commons.update(Users, user);
 };
-    
+
 UserInterface.addFavoritePublication = (favorite)=>{
   return Commons.getOne(Users, favorite.user)
     .then((user)=>{
@@ -32,7 +32,7 @@ UserInterface.addFavoritePublication = (favorite)=>{
         })
     });
 };
-    
+
 UserInterface.removeFavoritePublication = (favorite)=>{
   return Commons.getOne(Users, favorite.user)
     .then((user)=>{
@@ -43,7 +43,7 @@ UserInterface.removeFavoritePublication = (favorite)=>{
         })
     });
 };
-    
+
 UserInterface.addUserFollower = (follower)=>{
   return Commons.getOne(Users, follower.follower)
     .then((user)=>{
@@ -58,7 +58,7 @@ UserInterface.addUserFollower = (follower)=>{
         })
     });
 };
-    
+
 UserInterface.removeUserFollower = (follower)=>{
   return Commons.getOne(Users, follower.follower)
     .then((followerUser)=>{
@@ -94,7 +94,7 @@ UserInterface.addUnreadMessage = (userId,inboxId,message)=>{
   const InboxInterface = require('./inboxInterface');
   return Commons.getOne(Users,userId)
     .then((user)=>{
-      let inbox = user.notifications.unreadMessages.filter((inbox)=>{return inbox.inbox.equals(inboxId)})
+      let inbox = user.notifications.unreadMessages.filter((inbox)=>{return inbox.inbox.equals(inboxId)});
       if(inbox.length > 0){
         inbox[0].messages.push(message);
       }
@@ -113,15 +113,20 @@ UserInterface.removeUnreadMessages = (userId,inboxId)=>{
   return Commons.getOne(Users,userId)
     .then((user)=>{
       let index = null;
-      user.notifications.unreadMessages.forEach((inbox,i)=>{if(inbox.inbox.equals(inboxId)){index=i}}); 
-      return Promise.all(user.notifications.unreadMessages[index].messages.map((message)=>{
-        return InboxInterface.changeMessageStatus(inboxId,message._id,userId,{name: "READ", date: new Date().toISOString()});
-      }))
-      .then(()=>{
-        user.notifications.unreadMessages.splice(index,1);
-        return Commons.update(Users, user);
-      })
+      user.notifications.unreadMessages.forEach((inbox,i)=>{if(inbox.inbox.equals(inboxId)){index=i}});
+      if(index!=null){
+        return Promise.all(user.notifications.unreadMessages[index].messages.map((message)=>{
+          return InboxInterface.changeMessageStatus(inboxId,message._id,userId,{name: "READ", date: new Date().toISOString()});
+        }))
+          .then(()=>{
+            user.notifications.unreadMessages.splice(index,1);
+            return Commons.update(Users, user);
+        })
+      }
+      else{
+        return Promise.resolve(null);
+      }
     });
 };
-            
+
 module.exports = UserInterface;

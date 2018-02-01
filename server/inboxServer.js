@@ -22,22 +22,24 @@ inboxServer.init = (server)=>{
     socket.on('stop-writing', ()=>{
       socket.broadcast.to(socket.inbox).emit('left-writing', {user: socket.user});
     });
-    
+
     socket.on('message-received', (data)=>{
       InboxService.changeMessageStatus(socket.inbox,data.message,socket.user,{name:"RECEIVED",date: new Date().toISOString()})
         .then(()=>{
-          io.in(socket.inbox).emit('received',{message: data.message, user: socket.user});
+          io.in(socket.inbox).emit('received',{message: data.message, user: socket.user, status: {name:"RECEIVED",date: new Date().toISOString()}});
         });
     });
-    
+
     socket.on('message-read', (data)=>{
       UserService.removeUnreadMessages(socket.user,socket.inbox)
         .then((updatedUser)=>{
-          let inboxTarget = updatedUser.notifications.unreadMessages.filter((inbox)=>{return inbox.inbox.equals(socket.inbox)});
-          if(inboxTarget.length>0){
-            inboxTarget[0].messages.forEach((message)=>{
-              io.in(socket.inbox).emit('read',{...data,message: message._id});
-            });  
+          if(updatedUser!=null){
+            let inboxTarget = updatedUser.notifications.unreadMessages.filter((inbox)=>{return inbox.inbox.equals(socket.inbox)});
+            if(inboxTarget.length>0){
+              inboxTarget[0].messages.forEach((message)=>{
+                io.in(socket.inbox).emit('read',{...data,message: message._id, status: {name:"READ",date: new Date().toISOString()}});
+              });
+            }
           }
         });
     });
