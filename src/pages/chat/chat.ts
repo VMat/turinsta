@@ -92,8 +92,8 @@ export class ChatPage {
         targetUser[0].date = status.status.date;
       }
       if(targetMessage[0].status.every((statusItem)=>{
-        return statusItem.name == status.name;
-      })){targetMessage[0].generalState = status.name}
+        return statusItem.name == status.status.name;
+      })){targetMessage[0].generalState = status.status.name}
       alert(targetMessage[0].generalState);
     }
   }
