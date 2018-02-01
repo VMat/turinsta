@@ -3,6 +3,7 @@ import {ModalController} from "ionic-angular";
 import {ChatPage} from "../../pages/chat/chat";
 import { Socket } from 'ng-socket-io';
 import {CommonsProvider} from "../../providers/commons/commons";
+import {StorageProvider} from "../../providers/storage/storage";
 /**
  * Generated class for the InboxComponent component.
  *
@@ -56,11 +57,14 @@ export class InboxComponent {
       if(targetUser.length == 1){
         this.avatar = targetUser[0].avatar;
       }
+      else{
+        this.avatar = StorageProvider.baseUrl.replace('/api/','') + '/assets/flags/francia.ico';
+      }
     }
   }
 
   openChat(){
-    let socket = new Socket({ url: 'https://turinsta-staging.herokuapp.com', options: {user: this.currentUser, inbox: this.data._id} });
+    let socket = new Socket({ url: StorageProvider.baseUrl.replace('/api/',''), options: {user: this.currentUser, inbox: this.data._id} });
     let publicationWritingModal = this.modalCtrl.create(ChatPage, {chat: this.data, chatDescription: this.chatDescription, avatar: this.avatar, socket: socket});
     publicationWritingModal.present();
   }

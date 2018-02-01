@@ -46,6 +46,7 @@ export class ChatPage {
 
       this.getMessages().subscribe(message => {
         this.chat.messages.push(message);
+        this.setMessageRead();
       });
 
       this.isWriting().subscribe((data)=>{
@@ -128,7 +129,7 @@ export class ChatPage {
 
   getMessageReceived(){
     return new Observable(observer => {
-      this.socket.on('read', (data) => {
+      this.socket.on('received', (data) => {
         observer.next(data);
       });
     });
@@ -136,7 +137,7 @@ export class ChatPage {
 
   getMessageRead(){
     return new Observable(observer => {
-      this.socket.on('received', (data) => {
+      this.socket.on('read', (data) => {
         observer.next(data);
       });
     });

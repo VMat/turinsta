@@ -103,7 +103,7 @@ UserInterface.addUnreadMessage = (userId,inboxId,message)=>{
       }
       return Commons.update(Users, user)
         .then(()=>{
-          return InboxInterface.changeMessageStatus(inboxId,message._id,userId,{name: "RECEIVED", date: new Date().toISOString()});
+          return Promise.resolve(message);
         })
     });
 };
