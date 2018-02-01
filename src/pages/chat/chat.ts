@@ -45,6 +45,7 @@ export class ChatPage {
       this.setMessageRead();
 
       this.getMessages().subscribe(message => {
+        alert(JSON.stringify(message));
         this.chat.messages.push(message);
         this.setMessageRead();
       });

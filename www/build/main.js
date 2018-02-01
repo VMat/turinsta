@@ -407,6 +407,7 @@ var ChatPage = (function () {
             this.setInbox();
             this.setMessageRead();
             this.getMessages().subscribe(function (message) {
+                alert(JSON.stringify(message));
                 _this.chat.messages.push(message);
                 _this.setMessageRead();
             });
