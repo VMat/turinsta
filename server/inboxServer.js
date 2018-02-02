@@ -33,6 +33,7 @@ inboxServer.init = (server)=>{
     socket.on('message-read', (data)=>{
       UserService.removeUnreadMessages(socket.user,socket.inbox)
         .then((updatedUser)=>{
+          console.log("updatedUser: " + JSON.stringify(updatedUser));
           if(updatedUser!=null){
             console.log("inbox: " + socket.inbox);
             console.log("unreadMessages: " + JSON.stringify(updatedUser.notifications.unreadMessages));
