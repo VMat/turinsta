@@ -57,6 +57,7 @@ import {ScoreHandlerComponent} from "../components/score-handler/score-handler";
 import {InboxListComponent} from "../components/inbox-list/inbox-list";
 import {InboxComponent} from "../components/inbox/inbox";
 import {ChatPage} from "../pages/chat/chat";
+import {InboxWritingPage} from "../pages/inbox-writing/inbox-writing";
 
 
 @NgModule({
@@ -77,6 +78,7 @@ import {ChatPage} from "../pages/chat/chat";
     PlaceSelectingPage,
     DescriptionWritingPage,
     ChatPage,
+    InboxWritingPage,
     PublicationHeaderComponent,
     PublicationBodyComponent,
     PublicationFooterComponent,
@@ -132,7 +134,8 @@ import {ChatPage} from "../pages/chat/chat";
     PublicationWritingPage,
     PlaceSelectingPage,
     DescriptionWritingPage,
-    ChatPage
+    ChatPage,
+    InboxWritingPage
   ],
   providers: [
     StatusBar,

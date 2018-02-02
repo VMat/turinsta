@@ -2,3 +2,10 @@
 <ion-list>
   <inbox *ngFor="let inbox of inboxes" [data]=inbox></inbox>
 </ion-list>
+<ion-fab bottom right>
+  <button ion-fab mini color="success"><ion-icon name="add"></ion-icon></button>
+  <ion-fab-list side="left">
+    <button ion-fab><ion-icon name="ios-people" (click)="presentNewInboxModal(true)"></ion-icon></button>
+    <button ion-fab><ion-icon name="ios-person" (click)="presentNewInboxModal(false)"></ion-icon></button>
+  </ion-fab-list>
+</ion-fab>

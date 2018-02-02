@@ -90,7 +90,7 @@ export class ChatPage {
       }
       if(targetMessage[0].status.every((statusItem)=>{
         return statusItem.name == status.status.name;
-      })){targetMessage[0].generalState = status.status.name;alert(targetMessage[0].generalState)}
+      })){targetMessage[0].generalState = status.status.name}
     }
   }
 
