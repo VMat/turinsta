@@ -63,7 +63,6 @@ export class ChatPage {
       });
 
       this.getMessageRead().subscribe((data)=>{
-        alert("read:" + JSON.stringify(data));
         this.updateMessageStatus(data);
       });
     }
@@ -81,17 +80,14 @@ export class ChatPage {
     let targetMessage = this.chat.messages.filter((message)=>{
       return message._id == status.message;
     });
-    alert(JSON.stringify(targetMessage));
     if(targetMessage.length>0){
       let targetUser = targetMessage[0].status.filter((user)=>{
         return user.user == status.user;
       });
-      alert(JSON.stringify(targetUser));
       if(targetUser.length>0){
         targetUser[0].name = status.status.name;
         targetUser[0].date = status.status.date;
       }
-      alert(JSON.stringify(targetMessage[0].status));
       if(targetMessage[0].status.every((statusItem)=>{
         return statusItem.name == status.status.name;
       })){targetMessage[0].generalState = status.status.name;alert(targetMessage[0].generalState)}

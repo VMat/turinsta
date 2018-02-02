@@ -115,7 +115,7 @@ UserInterface.removeUnreadMessages = (userId,inboxId)=>{
       let index = null;
       console.log("user.notifications.unreadMessages: ", JSON.stringify(user));
       console.log("inbox: ", inboxId);
-      user.notifications.unreadMessages.forEach((inbox,i)=>{if(inbox.inbox == inboxId){index=i}});
+      user.notifications.unreadMessages.forEach((inbox,i)=>{if(inbox.inbox.equals(inboxId)){index=i}});
       if(index!=null){
         return Promise.all(user.notifications.unreadMessages[index].messages.map((message)=>{
           return InboxInterface.changeMessageStatus(inboxId,message._id,userId,{name: "READ", date: new Date().toISOString()});
