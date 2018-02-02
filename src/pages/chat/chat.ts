@@ -63,6 +63,7 @@ export class ChatPage {
       });
 
       this.getMessageRead().subscribe((data)=>{
+        alert("read:" + JSON.stringify(data));
         this.updateMessageStatus(data);
       });
     }
