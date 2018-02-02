@@ -56,16 +56,16 @@ InboxInterface.changeMessageStatus = (id,messageId,userId,status)=>{
       targetStatus[0].date = status.date;
 
       switch(targetMessage[0].generalState){
-        case 'SEND': {
-          let received = targetMessage[0].status.every((state)=>{
-            return state.name == 'RECEIVED'
-          });
-          if(received){
-            targetMessage[0].generalState = 'RECEIVED';
-          }
-          break;
-        }
-        case 'RECEIVED':{
+        // case 'SEND': {
+        //   let received = targetMessage[0].status.every((state)=>{
+        //     return state.name == 'RECEIVED'
+        //   });
+        //   if(received){
+        //     targetMessage[0].generalState = 'RECEIVED';
+        //   }
+        //   break;
+        // }
+        case 'SEND':{
           let read = targetMessage[0].status.every((state)=>{
             return state.name == 'READ'
           });
