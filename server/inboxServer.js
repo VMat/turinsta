@@ -34,6 +34,7 @@ inboxServer.init = (server)=>{
       UserService.removeUnreadMessages(socket.user,socket.inbox)
         .then((updatedUser)=>{
           if(updatedUser!=null){
+            console.log(JSON.stringify(updatedUser));
             let inboxTarget = updatedUser.notifications.unreadMessages.filter((inbox)=>{return inbox.inbox.equals(socket.inbox)});
             if(inboxTarget.length>0){
               inboxTarget[0].messages.forEach((message)=>{
