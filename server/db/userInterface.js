@@ -2,6 +2,7 @@ const Users = require('../models/user');
 const Publications = require('../models/publication');
 const Commons = require('./commons');
 const PublicationInterface = require('./publicationInterface');
+const NotificationService = require('../services/notificationService');
 
 let UserInterface = {};
 
@@ -103,6 +104,9 @@ UserInterface.addUnreadMessage = (userId,inboxId,message)=>{
       }
       return Commons.update(Users, user)
         .then(()=>{
+          let notification = {'title': 'Hello, World', icon:'ic_launcher', body:'This is a notification that will be displayed if your app is in the background.'};
+          let data = {};  
+          NotificationService.send({notification: notification, data:data},[user.notificationKey]);
           return Promise.resolve(message);
         })
     });
