@@ -22,6 +22,7 @@ const userSchema = new schema({
   followers: [{type: schema.Types.ObjectId, "ref": 'Users'}],
   followedes: [{type: schema.Types.ObjectId, "ref": 'Users'}],
   bucketId: String,
+  notificationKey: String,
   language: {type: schema.Types.ObjectId, ref: 'Language'}
 });
 
