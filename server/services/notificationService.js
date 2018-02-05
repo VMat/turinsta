@@ -6,7 +6,7 @@ const sender = new gcm.Sender(gcmApiKey); //create a new sender
 
 let NotificationService = {};
 
-NotificationService.create = (data, device_tokens) => {
+NotificationService.send = (data, device_tokens) => {
  
   //create a new message
   let message = new gcm.Message(
