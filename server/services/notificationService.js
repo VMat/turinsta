@@ -18,9 +18,9 @@ NotificationService.send = (data, device_tokens) => {
  
   sender.send(message, { registrationTokens: device_tokens }, retry_times,(result)=>{
       console.log('push sent to: ' + device_tokens);
-  }, function (err) {
+  }, (err)=>{
       console.log('error: ' + err);
-  });
+  };
 });
 
 module.exports = NotificationService;
