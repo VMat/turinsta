@@ -55,7 +55,7 @@ storageService.getPublicationImage = (publicationId, imageUrl)=>{
 };
 
 storageService.getActivities = (userId,filters,limit)=>{
-  return db.getActivities(userId,limit);
+  return db.getActivities(userId,filters,limit);
 };
 
 storageService.getActivity = (id)=>{
