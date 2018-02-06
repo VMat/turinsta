@@ -21,6 +21,7 @@ NotificationService.send = (data, device_tokens) => {
   }, (err)=>{
       console.log('error: ' + err);
   };
-});
+
+};
 
 module.exports = NotificationService;
