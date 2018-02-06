@@ -4,7 +4,7 @@ let activityService = {};
 
 activityService.getActivities = (userId,filters,limit)=>{
   return new Promise((resolve, reject)=>{
-    storageService.getActivities(userId,limit).
+    storageService.getActivities(userId,filters,limit).
       then(activities=>resolve(activities)).
       catch(error=>reject(error))
   })
