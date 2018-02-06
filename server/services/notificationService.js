@@ -20,7 +20,7 @@ NotificationService.send = (data, device_tokens) => {
       console.log('push sent to: ' + device_tokens);
   }, (err)=>{
       console.log('error: ' + err);
-  };
+  });
 
 };
 
