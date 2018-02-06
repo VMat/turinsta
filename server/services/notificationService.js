@@ -9,12 +9,12 @@ let NotificationService = {};
 NotificationService.send = (data, device_tokens) => {
  
   //create a new message
-  let message = new gcm.Message(
-    priority = 'high',
-    delayWhileIdle = true,
+  let message = new gcm.Message({
+    priority: 'high',
+    delayWhileIdle: true,
     data: data.data,
     notification: data.notification
-  );
+  });
  
   sender.send(message, { registrationTokens: device_tokens }, retry_times,(result)=>{
       console.log('push sent to: ' + device_tokens);
