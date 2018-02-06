@@ -2,7 +2,7 @@ const storageService = require('./storageService');
 
 let activityService = {};
 
-activityService.getActivities = (userId,limit)=>{
+activityService.getActivities = (userId,filters,limit)=>{
   return new Promise((resolve, reject)=>{
     storageService.getActivities(userId,limit).
       then(activities=>resolve(activities)).
