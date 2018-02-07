@@ -1330,6 +1330,10 @@ module.exports = webpackAsyncContext;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_http__ = __webpack_require__(82);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_add_operator_map__ = __webpack_require__(83);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_add_operator_map___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_rxjs_add_operator_map__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__storage_storage__ = __webpack_require__(16);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__commons_commons__ = __webpack_require__(13);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_ng_socket_io__ = __webpack_require__(691);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_ng_socket_io___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_ng_socket_io__);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1342,6 +1346,9 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
+
+
+
 /*
   Generated class for the NotificationProvider provider.
 
@@ -1349,46 +1356,29 @@ var __metadata = (this && this.__metadata) || function (k, v) {
   and Angular DI.
 */
 var NotificationProvider = (function () {
-    function NotificationProvider(http) {
+    function NotificationProvider(http, commons) {
         this.http = http;
+        this.commons = commons;
         console.log('Hello NotificationProvider Provider');
     }
-    /**
-    * id?: number;
-    * title?: string;
-    * text?: string;
-    * every?: string;
-    * at?: any;
-    * firstAt?: any;
-    * badge?: number;
-    * sound?: string;
-    * data?: any;
-    * icon?: string;
-    * smallIcon?: string;
-    * color?: string;
-    * ongoing?: boolean;
-    * led?: string;
-    * priority?: number;
-    **/
-    NotificationProvider.prototype.create = function (data) {
-        // this.localNotifications.schedule({title: data.title, text: data.text});
-    };
-    NotificationProvider.prototype.hasPermission = function () {
-        alert("0");
-        // this.localNotifications.hasPermission().then((permission)=>{
-        //   alert("1");
-        //   alert(permission);
-        //   alert("2");
-        // });
-        // return this.localNotifications.registerPermission();
+    NotificationProvider.prototype.handleNotification = function (notification) {
+        if (notification.data.type == 'message') {
+            var currentUser = this.commons.getUserId();
+            var socket = new __WEBPACK_IMPORTED_MODULE_5_ng_socket_io__["Socket"]({ url: __WEBPACK_IMPORTED_MODULE_3__storage_storage__["a" /* StorageProvider */].baseUrl.replace('/api/', ''), options: { user: currentUser, inbox: notification.data.key } });
+            socket.connect();
+            socket.emit('set-inbox', { user: currentUser, inbox: notification.data.inbox });
+            socket.emit('message-received', { user: currentUser });
+            socket.disconnect();
+        }
     };
     return NotificationProvider;
 }());
 NotificationProvider = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Injectable"])(),
-    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* Http */]])
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* Http */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* Http */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_4__commons_commons__["a" /* CommonsProvider */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_4__commons_commons__["a" /* CommonsProvider */]) === "function" && _b || Object])
 ], NotificationProvider);
 
+var _a, _b;
 //# sourceMappingURL=notification.js.map
 
 /***/ }),
@@ -1969,6 +1959,7 @@ function publicationReducer(state, _a) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__pages_tabs_tabs__ = __webpack_require__(303);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__providers_imgcache_imgcache__ = __webpack_require__(94);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__ionic_native_push__ = __webpack_require__(305);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__providers_notification_notification__ = __webpack_require__(258);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1985,11 +1976,13 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
+
 var MyApp = (function () {
     // @ViewChild('nav') nav: Nav;
-    function MyApp(platform, statusBar, splashScreen, imgcacheService, push) {
+    function MyApp(platform, statusBar, splashScreen, imgcacheService, push, notifications) {
         var _this = this;
         this.push = push;
+        this.notifications = notifications;
         this.rootPage = __WEBPACK_IMPORTED_MODULE_4__pages_tabs_tabs__["a" /* TabsPage */];
         platform.ready().then(function () {
             // Okay, so the platform is ready and our plugins are available.
@@ -2010,9 +2003,11 @@ var MyApp = (function () {
                 },
                 windows: {}
             });
-            pushObject.on('notification').subscribe(function (notification) { return console.log('Received a notification', notification); });
+            pushObject.on('notification').subscribe(function (notification) {
+                console.log('Received a notification', notification);
+                _this.notifications.handleNotification(notification);
+            });
             pushObject.on('registration').subscribe(function (registration) {
-                // alert(JSON.stringify(registration));
                 console.log('Device registered', JSON.stringify(registration));
             });
             // pushObject.unregister().then((registration: any) => {
@@ -2027,9 +2022,10 @@ var MyApp = (function () {
 MyApp = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({template:/*ion-inline-start:"C:\Users\Matias\WebstormProjects\turinsta\src\app\app.html"*/'<ion-nav [root]="rootPage"></ion-nav>\n'/*ion-inline-end:"C:\Users\Matias\WebstormProjects\turinsta\src\app\app.html"*/
     }),
-    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* Platform */], __WEBPACK_IMPORTED_MODULE_2__ionic_native_status_bar__["a" /* StatusBar */], __WEBPACK_IMPORTED_MODULE_3__ionic_native_splash_screen__["a" /* SplashScreen */], __WEBPACK_IMPORTED_MODULE_5__providers_imgcache_imgcache__["a" /* ImgcacheService */], __WEBPACK_IMPORTED_MODULE_6__ionic_native_push__["a" /* Push */]])
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* Platform */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* Platform */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_2__ionic_native_status_bar__["a" /* StatusBar */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__ionic_native_status_bar__["a" /* StatusBar */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_3__ionic_native_splash_screen__["a" /* SplashScreen */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__ionic_native_splash_screen__["a" /* SplashScreen */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_5__providers_imgcache_imgcache__["a" /* ImgcacheService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_5__providers_imgcache_imgcache__["a" /* ImgcacheService */]) === "function" && _d || Object, typeof (_e = typeof __WEBPACK_IMPORTED_MODULE_6__ionic_native_push__["a" /* Push */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_6__ionic_native_push__["a" /* Push */]) === "function" && _e || Object, typeof (_f = typeof __WEBPACK_IMPORTED_MODULE_7__providers_notification_notification__["a" /* NotificationProvider */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_7__providers_notification_notification__["a" /* NotificationProvider */]) === "function" && _f || Object])
 ], MyApp);
 
+var _a, _b, _c, _d, _e, _f;
 //# sourceMappingURL=app.component.js.map
 
 /***/ }),

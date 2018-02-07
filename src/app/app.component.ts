@@ -5,6 +5,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { TabsPage } from '../pages/tabs/tabs';
 import { ImgcacheService } from '../providers/imgcache/imgcache';
 import {Push, PushObject} from '@ionic-native/push';
+import {NotificationProvider} from "../providers/notification/notification";
 
 
 @Component({
@@ -14,7 +15,7 @@ export class MyApp {
   rootPage:any = TabsPage;
   // @ViewChild('nav') nav: Nav;
 
-  constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen, imgcacheService: ImgcacheService, public push: Push) {
+  constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen, imgcacheService: ImgcacheService, public push: Push, private notifications: NotificationProvider) {
     platform.ready().then(() => {
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
@@ -36,9 +37,12 @@ export class MyApp {
         windows: {}
       });
 
-      pushObject.on('notification').subscribe((notification: any) => console.log('Received a notification', notification));
+      pushObject.on('notification').subscribe((notification: any) => {
+        console.log('Received a notification', notification);
+        this.notifications.handleNotification(notification);
+      });
+
       pushObject.on('registration').subscribe((registration: any) => {
-        // alert(JSON.stringify(registration));
         console.log('Device registered', JSON.stringify(registration));
       });
       // pushObject.unregister().then((registration: any) => {

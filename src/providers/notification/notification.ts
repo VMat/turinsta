@@ -1,6 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
 import 'rxjs/add/operator/map';
+import {StorageProvider} from "../storage/storage";
+import {CommonsProvider} from "../commons/commons";
+import { Socket } from 'ng-socket-io';
 
 /*
   Generated class for the NotificationProvider provider.
@@ -11,40 +14,18 @@ import 'rxjs/add/operator/map';
 @Injectable()
 export class NotificationProvider {
 
-  constructor(public http: Http) {
+  constructor(public http: Http,private commons: CommonsProvider) {
     console.log('Hello NotificationProvider Provider');
   }
 
-  /**
-  * id?: number;
-  * title?: string;
-  * text?: string;
-  * every?: string;
-  * at?: any;
-  * firstAt?: any;
-  * badge?: number;
-  * sound?: string;
-  * data?: any;
-  * icon?: string;
-  * smallIcon?: string;
-  * color?: string;
-  * ongoing?: boolean;
-  * led?: string;
-  * priority?: number;
-  **/
-
-  create(data){
-    // this.localNotifications.schedule({title: data.title, text: data.text});
+  handleNotification(notification){
+    if(notification.data.type == 'message'){
+      let currentUser = this.commons.getUserId();
+      let socket = new Socket({ url: StorageProvider.baseUrl.replace('/api/',''), options: {user: currentUser, inbox: notification.data.key} });
+      socket.connect();
+      socket.emit('set-inbox',{user: currentUser, inbox: notification.data.inbox});
+      socket.emit('message-received',{user: currentUser});
+      socket.disconnect();
+    }
   }
-
-  hasPermission(){
-    alert("0");
-    // this.localNotifications.hasPermission().then((permission)=>{
-    //   alert("1");
-    //   alert(permission);
-    //   alert("2");
-    // });
-    // return this.localNotifications.registerPermission();
-  }
-
 }

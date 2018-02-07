@@ -104,9 +104,9 @@ UserInterface.addUnreadMessage = (userId,inboxId,message)=>{
       }
       return Commons.update(Users, user)
         .then(()=>{
-          let notification = {'title': 'Hello, World', icon:'ic_launcher', body:'This is a notification that will be displayed if your app is in the background.'};
-          let data = {};  
-          NotificationService.send({notification: notification, data:data},[user.notificationKey]);
+          let notification = {title: 'Has recibido un mensaje nuevo', icon: 'ic_launcher', body: message.content};
+          let data = {type: 'message', key: inboxId};
+          NotificationService.send({notification: notification, data: data},[user.notificationKey]);
           return Promise.resolve(message);
         })
     });
