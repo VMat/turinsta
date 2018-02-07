@@ -5,7 +5,8 @@
   "repository": "https://Matias_Villalva@bitbucket.org/Matias_Villalva/turinsta.git",
   "license": "",
   "engines": {
-    "node": "5.9.1"
+    "node": "8.9.4",
+    "npm": "5.6.0"
   },
   "main": "index.js",
   "scripts": {},
