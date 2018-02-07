@@ -58,7 +58,8 @@ import {InboxListComponent} from "../components/inbox-list/inbox-list";
 import {InboxComponent} from "../components/inbox/inbox";
 import {ChatPage} from "../pages/chat/chat";
 import {InboxWritingPage} from "../pages/inbox-writing/inbox-writing";
-
+import { NotificationProvider } from '../providers/notification/notification';
+import {Push} from '@ionic-native/push';
 
 @NgModule({
   declarations: [
@@ -148,7 +149,9 @@ import {InboxWritingPage} from "../pages/inbox-writing/inbox-writing";
     FileTransfer,
     // FileUploadOptions,
     FileTransferObject,
-    File
+    File,
+    NotificationProvider,
+    Push
   ]
 })
 export class AppModule {}

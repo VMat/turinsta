@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import {IonicPage, NavController, NavParams, ViewController, ActionSheetController} from 'ionic-angular';
 import {StorageProvider} from "../../providers/storage/storage";
 import {CommonsProvider} from "../../providers/commons/commons";
+import {NotificationProvider} from "../../providers/notification/notification";
 
 /**
  * Generated class for the PublicationActionsMenuPage page.
@@ -17,7 +18,7 @@ import {CommonsProvider} from "../../providers/commons/commons";
 })
 export class PublicationActionsMenuPage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private viewCtrl: ViewController, private storageService: StorageProvider, private commons: CommonsProvider, private actionSheetCtrl: ActionSheetController) {}
+  constructor(public navCtrl: NavController, public navParams: NavParams, private viewCtrl: ViewController, private storageService: StorageProvider, private commons: CommonsProvider, private actionSheetCtrl: ActionSheetController, private notifications: NotificationProvider) {}
   followedPublication: boolean = null;
   followedUser: boolean = null;
   publication: string = null;
@@ -63,6 +64,15 @@ export class PublicationActionsMenuPage {
 
   locatePlace(){
     alert("Ubicando destino en mapa...");
+    // this.localNotifications.schedule({
+    //   title: "Test Title",
+    //   text: "Delayed Notification",
+    //   at: new Date(new Date().getTime() + 5 * 1000),
+    //   sound: null
+    // });
+    // this.notifications.hasPermission();
+
+    // this.notifications.create({title: "Localizando...", text: "Ubicando destino en mapa"});
   }
 
   presentShareActionSheet() {

@@ -1,6 +1,6 @@
 {
   "name": "turinsta",
-  "app_id": "com.turinsta.app",
+  "app_id": "e9c463fe",
   "type": "ionic-angular",
   "integrations": {
     "cordova": {}

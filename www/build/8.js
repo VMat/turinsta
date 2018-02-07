@@ -1,14 +1,14 @@
 webpackJsonp([8],{
 
-/***/ 714:
+/***/ 718:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "DescriptionWritingPageModule", function() { return DescriptionWritingPageModule; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ExperienceWritingPageModule", function() { return ExperienceWritingPageModule; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(8);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__description_writing__ = __webpack_require__(166);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(7);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__experience_writing__ = __webpack_require__(98);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -18,23 +18,23 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 
 
 
-var DescriptionWritingPageModule = (function () {
-    function DescriptionWritingPageModule() {
+var ExperienceWritingPageModule = (function () {
+    function ExperienceWritingPageModule() {
     }
-    return DescriptionWritingPageModule;
+    return ExperienceWritingPageModule;
 }());
-DescriptionWritingPageModule = __decorate([
+ExperienceWritingPageModule = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["NgModule"])({
         declarations: [
-            __WEBPACK_IMPORTED_MODULE_2__description_writing__["a" /* DescriptionWritingPage */],
+            __WEBPACK_IMPORTED_MODULE_2__experience_writing__["a" /* ExperienceWritingPage */],
         ],
         imports: [
-            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* IonicPageModule */].forChild(__WEBPACK_IMPORTED_MODULE_2__description_writing__["a" /* DescriptionWritingPage */]),
+            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* IonicPageModule */].forChild(__WEBPACK_IMPORTED_MODULE_2__experience_writing__["a" /* ExperienceWritingPage */]),
         ],
     })
-], DescriptionWritingPageModule);
+], ExperienceWritingPageModule);
 
-//# sourceMappingURL=description-writing.module.js.map
+//# sourceMappingURL=experience-writing.module.js.map
 
 /***/ })
 
