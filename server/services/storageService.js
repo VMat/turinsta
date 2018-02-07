@@ -150,6 +150,10 @@ storageService.getLanguage = (id)=>{
   return db.getLanguage(id);
 };
 
+storageService.getCaption = (language,captionKeys)=>{
+  return db.getCaption(language,captionKeys);
+};
+
 storageService.getInboxes = (user)=>{
   return db.getInboxes(user);
 };
