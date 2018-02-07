@@ -3,6 +3,7 @@ const Publications = require('../models/publication');
 const Commons = require('./commons');
 const PublicationInterface = require('./publicationInterface');
 const NotificationService = require('../services/notificationService');
+const LanguageService = require('../services/languageService');
 
 let UserInterface = {};
 
@@ -104,13 +105,17 @@ UserInterface.addUnreadMessage = (userId,updatedInbox)=>{
         user.notifications.unreadMessages.push({inbox:updatedInbox._id,messages:[message]});
       }
       return Commons.update(Users, user)
-        .then(()=>{
+        .then((updatedUser)=>{
           return Commons.getOne(Users,message.author)
             .then((author)=>{
-              let notification = {title: 'Has recibido un mensaje nuevo' + (updatedInbox.name ? (' de ' +  updatedInbox.name) : ''), icon: 'ic_launcher', body: author.username + ': ' + message.content};
-              let data = {type: 'message', subject: updatedInbox._id, key: message._id};
-              NotificationService.send({notification: notification, data: data},[user.notificationKey]);
-              return Promise.resolve(message);
+              return LanguageService.getCaption(updatedUser.language,["messageNotification"])
+                .then((caption)=>{
+                  let title = caption[0].replace(':inbox',(updatedInbox.name ? updatedInbox.name : author.username));
+                  let notification = {title: title, icon: 'ic_launcher', body: author.username + ': ' + message.content};
+                  let data = {type: 'message', subject: updatedInbox._id, key: message._id};
+                  NotificationService.send({notification: notification, data: data},[user.notificationKey]);
+                  return Promise.resolve(message);
+                })
             })
         })
     });
