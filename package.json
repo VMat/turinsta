@@ -14,7 +14,7 @@
     "start": "node server/index.js"
   },
   "dependencies": {
-    "@angular/common": "4.4.3",
+    /*"@angular/common": "4.4.3",
     "@angular/compiler": "4.4.3",
     "@angular/compiler-cli": "4.4.3",
     "@angular/core": "4.4.3",
@@ -59,7 +59,7 @@
     "tassign": "^1.0.0",
     "zone.js": "0.8.18",
     "cordova-android": "~6.3.0",
-    "cordova-browser": "~5.0.3"
+    "cordova-browser": "~5.0.3"*/
   },
   "devDependencies": {
     "@ionic/app-scripts": "3.0.0",
@@ -68,7 +68,7 @@
   "description": "An Ionic project",
   "cordova": {
     "plugins": {
-      "cordova-plugin-device": {},
+      /*"cordova-plugin-device": {},
       "cordova-plugin-ionic-webview": {},
       "cordova-plugin-splashscreen": {},
       "cordova-plugin-whitelist": {},
@@ -80,7 +80,7 @@
       "phonegap-plugin-push": {
         "SENDER_ID": "519496244550",
         "FCM_VERSION": "11.6.2"
-      }
+      }*/
     },
     "platforms": [
       "android",
