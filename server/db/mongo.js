@@ -574,6 +574,10 @@ db.getLanguage = (id)=>{
   return languageInterface.getOne(id);
 };
 
+db.getCaption = (language,captionKeys)=>{
+  return languageInterface.getCaption(language,captionKeys);
+};
+
 db.getInboxes = (user)=>{
   return inboxInterface.getN(user);
 };
