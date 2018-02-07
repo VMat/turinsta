@@ -5,6 +5,7 @@ const Schema = mongoose.Schema;
 // Mongoose inboxSchema definition
 const inboxSchema = new Schema({
   name: String,
+  avatar: String,
 	participants:[{type: Schema.Types.ObjectId, ref: 'Users'}],
 	messages: [{
     author:{type: Schema.Types.ObjectId, ref: 'Users'},
