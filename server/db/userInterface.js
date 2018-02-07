@@ -105,7 +105,7 @@ UserInterface.addUnreadMessage = (userId,inboxId,message)=>{
       return Commons.update(Users, user)
         .then(()=>{
           let notification = {title: 'Has recibido un mensaje nuevo', icon: 'ic_launcher', body: message.content};
-          let data = {type: 'message', key: inboxId};
+          let data = {type: 'message', subject: inboxId, key: message._id};
           NotificationService.send({notification: notification, data: data},[user.notificationKey]);
           return Promise.resolve(message);
         })
