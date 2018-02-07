@@ -91,23 +91,27 @@ UserInterface.removeActivity = (userId,activityId)=>{
     });
 };
 
-UserInterface.addUnreadMessage = (userId,inboxId,message)=>{
+UserInterface.addUnreadMessage = (userId,updatedInbox)=>{
   const InboxInterface = require('./inboxInterface');
   return Commons.getOne(Users,userId)
     .then((user)=>{
-      let inbox = user.notifications.unreadMessages.filter((inbox)=>{return inbox.inbox.equals(inboxId)});
+      let message = updatedInbox.messages[updatedInbox.messages.length - 1];
+      let inbox = user.notifications.unreadMessages.filter((inbox)=>{return inbox.inbox.equals(updatedInbox._id)});
       if(inbox.length > 0){
         inbox[0].messages.push(message);
       }
       else{
-        user.notifications.unreadMessages.push({inbox:inboxId,messages:[message]});
+        user.notifications.unreadMessages.push({inbox:updatedInbox._id,messages:[message]});
       }
       return Commons.update(Users, user)
         .then(()=>{
-          let notification = {title: 'Has recibido un mensaje nuevo', icon: 'ic_launcher', body: message.content};
-          let data = {type: 'message', subject: inboxId, key: message._id};
-          NotificationService.send({notification: notification, data: data},[user.notificationKey]);
-          return Promise.resolve(message);
+          Commons.getOne(Users,message.author)
+            .then((author)=>{
+              let notification = {title: 'Has recibido un mensaje nuevo' + (updatedInbox.name ? (' de ' +  updatedInbox.name) : ''), icon: 'ic_launcher', body: author.username + ': ' + message.content};
+              let data = {type: 'message', subject: updatedInbox._id, key: message._id};
+              NotificationService.send({notification: notification, data: data},[user.notificationKey]);
+              return Promise.resolve(message);
+            })
         })
     });
 };
