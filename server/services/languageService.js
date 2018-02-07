@@ -18,4 +18,12 @@ languageService.getLanguage = (id)=>{
   })                
 };
     
+languageService.getCaption = (language,captionKeys)=>{
+  return new Promise((resolve, reject)=>{
+    storageService.getCaption(language,captionKeys).
+      then(caption=>resolve(caption)).
+      catch(error=>reject(error))        
+  })  
+};
+
 module.exports = languageService;
