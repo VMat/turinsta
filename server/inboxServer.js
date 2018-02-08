@@ -24,6 +24,7 @@ inboxServer.init = (server)=>{
     });
 
     socket.on('message-received', (data)=>{
+      console.log("message-received: " + JSON.stringify(data));
       InboxService.changeMessageStatus(socket.inbox,data.message,socket.user,{name:"RECEIVED",date: new Date().toISOString()})
         .then(()=>{
           io.in(socket.inbox).emit('received',{message: data.message, user: socket.user, status: {name:"RECEIVED",date: new Date().toISOString()}});
