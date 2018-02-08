@@ -23,7 +23,7 @@ export class NotificationProvider {
       let currentUser = this.commons.getUserId();
       let socket = new Socket({ url: StorageProvider.baseUrl.replace('/api/',''), options: {user: currentUser, inbox: notification.additionalData.subject} });
       socket.connect();
-      socket.emit('set-inbox',{user: currentUser, inbox: notification.data.inbox});
+      socket.emit('set-inbox',{user: currentUser, inbox: notification.additionalData.subject});
       socket.emit('message-received',{message: notification.additionalData.key});
       socket.disconnect();
     }

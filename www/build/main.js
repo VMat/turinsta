@@ -213,7 +213,7 @@ var NotificationProvider = (function () {
             var currentUser = this.commons.getUserId();
             var socket = new __WEBPACK_IMPORTED_MODULE_5_ng_socket_io__["Socket"]({ url: __WEBPACK_IMPORTED_MODULE_3__storage_storage__["a" /* StorageProvider */].baseUrl.replace('/api/', ''), options: { user: currentUser, inbox: notification.additionalData.subject } });
             socket.connect();
-            socket.emit('set-inbox', { user: currentUser, inbox: notification.data.inbox });
+            socket.emit('set-inbox', { user: currentUser, inbox: notification.additionalData.subject });
             socket.emit('message-received', { message: notification.additionalData.key });
             socket.disconnect();
         }
@@ -222,9 +222,10 @@ var NotificationProvider = (function () {
 }());
 NotificationProvider = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Injectable"])(),
-    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* Http */], __WEBPACK_IMPORTED_MODULE_4__commons_commons__["a" /* CommonsProvider */]])
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* Http */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* Http */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_4__commons_commons__["a" /* CommonsProvider */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_4__commons_commons__["a" /* CommonsProvider */]) === "function" && _b || Object])
 ], NotificationProvider);
 
+var _a, _b;
 //# sourceMappingURL=notification.js.map
 
 /***/ }),

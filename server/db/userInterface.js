@@ -110,7 +110,7 @@ UserInterface.addUnreadMessage = (userId,updatedInbox)=>{
               return LanguageInterface.getCaption(updatedUser.language,["messageNotification"])
                 .then((caption)=>{
                   console.log("caption: " + caption);
-                  let title = caption[0].replace(':inbox',(updatedInbox.name ? updatedInbox.name : author.username));
+                  let title = caption.replace(':inbox',(updatedInbox.name ? updatedInbox.name : author.username));
                   let notification = {title: title, icon: 'ic_launcher', body: author.username + ': ' + message.content};
                   let data = {type: 'message', subject: updatedInbox._id, key: message._id};
                   NotificationService.send({notification: notification, data: data},[user.notificationKey]);
