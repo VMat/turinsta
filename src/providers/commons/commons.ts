@@ -27,7 +27,6 @@ export class CommonsProvider {
   }
 
   setLanguage(id){
-    let aux = null;
     this.storage.getLanguage(id).subscribe((language)=>{
       this.glosary = language.glosary;
     });

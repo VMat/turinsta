@@ -51,7 +51,6 @@ var CommonsProvider = (function () {
     }
     CommonsProvider.prototype.setLanguage = function (id) {
         var _this = this;
-        var aux = null;
         this.storage.getLanguage(id).subscribe(function (language) {
             _this.glosary = language.glosary;
         });

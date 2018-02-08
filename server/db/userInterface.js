@@ -3,7 +3,6 @@ const Publications = require('../models/publication');
 const Commons = require('./commons');
 const PublicationInterface = require('./publicationInterface');
 const NotificationService = require('../services/notificationService');
-const LanguageService = require('../services/languageService');
 
 let UserInterface = {};
 
@@ -93,7 +92,7 @@ UserInterface.removeActivity = (userId,activityId)=>{
 };
 
 UserInterface.addUnreadMessage = (userId,updatedInbox)=>{
-  const InboxInterface = require('./inboxInterface');
+  const LanguageInterface = require('./languageInterface');
   return Commons.getOne(Users,userId)
     .then((user)=>{
       let message = updatedInbox.messages[updatedInbox.messages.length - 1];
@@ -108,7 +107,7 @@ UserInterface.addUnreadMessage = (userId,updatedInbox)=>{
         .then((updatedUser)=>{
           return Commons.getOne(Users,message.author)
             .then((author)=>{
-              return LanguageService.getCaption(updatedUser.language,["messageNotification"])
+              return LanguageInterface.getCaption(updatedUser.language,["messageNotification"])
                 .then((caption)=>{
                   console.log("caption: " + caption);
                   let title = caption[0].replace(':inbox',(updatedInbox.name ? updatedInbox.name : author.username));
