@@ -77,7 +77,6 @@ export class ChatPage {
   }
 
   updateMessageStatus(status){
-    alert(JSON.stringify(status));
     let targetMessage = this.chat.messages.filter((message)=>{
       return message._id == status.message;
     });

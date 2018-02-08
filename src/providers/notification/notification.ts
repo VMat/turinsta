@@ -19,7 +19,6 @@ export class NotificationProvider {
   }
 
   handleNotification(notification){
-    alert(JSON.stringify(notification));
     if(notification.additionalData.type == 'message'){
       let currentUser = this.commons.getUserId();
       let socket = new Socket({ url: StorageProvider.baseUrl.replace('/api/',''), options: {user: currentUser, inbox: notification.additionalData.subject} });
