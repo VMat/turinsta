@@ -15,8 +15,8 @@ LanguageInterface.getCaption = (id,captionKeys)=>{
   return Commons.getOne(Languages,id)
     .then((language)=>{
       let caption = language.glosary;
-      for(let key in captionKeys){
-        caption = caption[key];       
+      for(let i=0; i<captionKeys.length; ++i){
+        caption = caption[captionKeys[i]];
       }
       return Promise.resolve(caption);
     })
