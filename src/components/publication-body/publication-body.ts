@@ -29,7 +29,7 @@ export class PublicationBodyComponent {
   }
 
   ngOnChanges(...args: any[]) {
-    if(this.slides!=undefined){
+    if(this.slides){
       if(this.slides.getActiveIndex() >= this.slides.length()){
         this.slides.slideTo(0);
       }

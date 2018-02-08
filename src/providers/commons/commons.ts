@@ -14,7 +14,7 @@ import {StorageProvider} from "../storage/storage";
 @Injectable()
 export class CommonsProvider {
 
-  glosary: any = {};
+  glosary: any = null;
 
   constructor(public http: Http, public toastCtrl: ToastController, public alertCtrl: AlertController, private localStorage: Storage, private storage: StorageProvider) {
     console.log('Hello CommonsProvider Provider');
@@ -26,9 +26,10 @@ export class CommonsProvider {
     // this.setLanguage("5a5d0ace734d1d3471842c83"); //Italiano
   }
 
+
   setLanguage(id){
     this.storage.getLanguage(id).subscribe((language)=>{
-      this.glosary = language.glosary;
+      this.glosary = language
     });
   }
 
@@ -88,6 +89,10 @@ export class CommonsProvider {
   }
 
   getAntiquity(dateSince){
+    if(!this.glosary){
+      return null;
+    }
+    // alert(JSON.stringify(this.glosary));
     let diffInSeconds = this.dateDiff(dateSince,(new Date()));
 
     if(diffInSeconds<0){

@@ -6,6 +6,7 @@ import { TabsPage } from '../pages/tabs/tabs';
 import { ImgcacheService } from '../providers/imgcache/imgcache';
 import {Push, PushObject} from '@ionic-native/push';
 import {NotificationProvider} from "../providers/notification/notification";
+import {CommonsProvider} from "../providers/commons/commons";
 
 
 @Component({
@@ -15,7 +16,7 @@ export class MyApp {
   rootPage:any = TabsPage;
   // @ViewChild('nav') nav: Nav;
 
-  constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen, imgcacheService: ImgcacheService, public push: Push, private notifications: NotificationProvider) {
+  constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen, imgcacheService: ImgcacheService, public push: Push, private notifications: NotificationProvider, private commons: CommonsProvider) {
     platform.ready().then(() => {
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.

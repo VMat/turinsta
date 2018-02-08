@@ -1,5 +1,5 @@
 <!-- Generated template for the PublicationBodyComponent component -->
-<ion-slides align="center">
+<ion-slides align="center" *ngIf="publication.images && publication.images.length" pager="{{publication.images.length>1}}">
   <ion-slide *ngFor="let image of publication.images">
     <publication-actions class="publication-actions-button" [publication]="publication" [user]="user"></publication-actions>
     <publication-image [id]=image._id [url]=image.url></publication-image>
