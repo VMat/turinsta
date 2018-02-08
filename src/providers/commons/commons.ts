@@ -26,10 +26,10 @@ export class CommonsProvider {
     // this.setLanguage("5a5d0ace734d1d3471842c83"); //Italiano
   }
 
-
   setLanguage(id){
+    let aux = null;
     this.storage.getLanguage(id).subscribe((language)=>{
-      this.glosary = language
+      this.glosary = language.glosary;
     });
   }
 
@@ -89,10 +89,11 @@ export class CommonsProvider {
   }
 
   getAntiquity(dateSince){
-    if(!this.glosary){
+
+    if(!Boolean(this.glosary)){
       return null;
     }
-    // alert(JSON.stringify(this.glosary));
+
     let diffInSeconds = this.dateDiff(dateSince,(new Date()));
 
     if(diffInSeconds<0){
