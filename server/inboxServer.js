@@ -40,7 +40,6 @@ inboxServer.init = (server)=>{
                 io.in(socket.inbox).emit('read',{...data,message: message._id, status: {name:"READ",date: new Date().toISOString()}});
               });
             }
-          }
         });
     });
 
