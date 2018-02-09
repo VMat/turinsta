@@ -115,7 +115,7 @@ UserInterface.addUnreadMessage = (userId,updatedInbox)=>{
                   let notification = {title: title, icon: 'ic_launcher', body: author.username + ': ' + message.content};
                   console.log("updatedInbox: " + updatedInbox);
                   console.log("updatedInbox._id: " + updatedInbox._id);
-                  let data = {type: 'message', subject: updatedInbox._id, key: message._id};
+                  let data = {type: 'message', category: updatedInbox._id, key: message._id};
                   NotificationService.send({notification: notification, data: data},[user.notificationKey]);
                   return Promise.resolve(message);
                 })

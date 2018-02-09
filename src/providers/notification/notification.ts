@@ -21,10 +21,10 @@ export class NotificationProvider {
   handleNotification(notification){
     if(notification.additionalData.type == 'message'){
       let currentUser = this.commons.getUserId();
-      alert(JSON.stringify(notification));
-      let socket = new Socket({ url: StorageProvider.baseUrl.replace('/api/',''), options: {user: currentUser, inbox: notification.additionalData.subject} });
+      alert(JSON.stringify(notification.additionalData));
+      let socket = new Socket({ url: StorageProvider.baseUrl.replace('/api/',''), options: {user: currentUser, inbox: notification.additionalData.category}});
       socket.connect();
-      socket.emit('set-inbox',{user: currentUser, inbox: notification.additionalData.subject});
+      socket.emit('set-inbox',{user: currentUser, inbox: notification.additionalData.category});
       socket.emit('message-received',{message: notification.additionalData.key});
       socket.disconnect();
     }
