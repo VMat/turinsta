@@ -128,7 +128,10 @@ UserInterface.removeUnreadMessages = (userId,inboxId)=>{
     .then((user)=>{
       console.log('USER: ' + user);
       let index = null;
+      console.log('USER_NOTIFICATIONS: ' + user.notifications);
       user.notifications.unreadMessages.forEach((inbox,i)=>{if(inbox.inbox.equals(inboxId)){index=i}});
+      console.log('USER_NOTIFICATIONS2: ' + user.notifications);
+      console.log('INDEX: ' + index);
       if(index!=null){
         console.log('Promise.all: ' + user.notifications);
         return Promise.all(user.notifications.unreadMessages[index].messages.map((message)=>{
