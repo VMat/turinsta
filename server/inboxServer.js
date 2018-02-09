@@ -32,15 +32,17 @@ inboxServer.init = (server)=>{
     });
 
     socket.on('message-read', (data)=>{
-      UserService.removeUnreadMessages(socket.user,socket.inbox)
-        .then((updatedUser)=>{
-            let inboxTarget = updatedUser.notifications.unreadMessages.filter((inbox)=>{return inbox.inbox.equals(socket.inbox)});
-            if(inboxTarget.length>0){
-              inboxTarget[0].messages.forEach((message)=>{
-                io.in(socket.inbox).emit('read',{...data,message: message._id, status: {name:"READ",date: new Date().toISOString()}});
-              });
-            }
-        });
+      if(data.user != socket.user){
+        UserService.removeUnreadMessages(socket.user,socket.inbox)
+          .then((updatedUser)=>{
+              let inboxTarget = updatedUser.notifications.unreadMessages.filter((inbox)=>{return inbox.inbox.equals(socket.inbox)});
+              if(inboxTarget.length>0){
+                inboxTarget[0].messages.forEach((message)=>{
+                  io.in(socket.inbox).emit('read',{...data,message: message._id, status: {name:"READ",date: new Date().toISOString()}});
+                });
+              }
+          });
+      }
     });
 
     socket.on('add-message', (message) => {
