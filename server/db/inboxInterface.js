@@ -58,10 +58,10 @@ InboxInterface.changeMessageStatus = (id,messageId,userId,status)=>{
       switch(targetMessage[0].generalState){
         case 'SEND': {
           let received = targetMessage[0].status.every((state)=>{
-            return state.name == 'READ'
+            return state.name == 'RECEIVED'
           });
           if(received){
-            targetMessage[0].generalState = 'READ';
+            targetMessage[0].generalState = 'RECEIVED';
           }
           break;
         }
