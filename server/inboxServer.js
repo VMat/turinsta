@@ -32,7 +32,7 @@ inboxServer.init = (server)=>{
     });
 
     socket.on('message-read', (data)=>{
-      if(data.user != socket.user){
+      if(data.user == socket.user){
         UserService.removeUnreadMessages(socket.user,socket.inbox)
           .then((updatedUser)=>{
               let inboxTarget = updatedUser.notifications.unreadMessages.filter((inbox)=>{return inbox.inbox.equals(socket.inbox)});
