@@ -123,8 +123,10 @@ UserInterface.addUnreadMessage = (userId,updatedInbox)=>{
 
 UserInterface.removeUnreadMessages = (userId,inboxId)=>{
   const InboxInterface = require('./inboxInterface');
+  console.log('USER_ID: ' + userId);
   return Commons.getOne(Users,userId)
     .then((user)=>{
+      console.log('USER: ' + user);
       let index = null;
       user.notifications.unreadMessages.forEach((inbox,i)=>{if(inbox.inbox.equals(inboxId)){index=i}});
       if(index!=null){
