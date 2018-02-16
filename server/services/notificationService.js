@@ -12,7 +12,7 @@ NotificationService.send = (data, device_tokens) => {
   let message = new gcm.Message({
     priority: 'high',
     delayWhileIdle: true,
-    data: data.data,
+    data: {...data.data, image: "https://turinsta-staging.herokuapp.com/assets/flags/españa.ico"},
     notification: data.notification
   });
  
