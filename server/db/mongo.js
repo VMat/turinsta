@@ -6,6 +6,7 @@ const userInterface = require('./userInterface');
 const experienceInterface = require('./experienceInterface');
 const languageInterface = require('./languageInterface');
 const inboxInterface = require('./inboxInterface');
+const NotificationService = require('../services/notificationService');
 
 let db = {};
 
@@ -112,7 +113,20 @@ db.addPublicationAssessment = (assessment)=>{
         timestamps: {created: new Date().toISOString(), modified: null},
         seen: false
       };
-      return Promise.all([activityInterface.insert(newOutActivity),activityInterface.insert(newInActivity)]);
+      userInterface.getOne(updatedPublication.user)
+      .then((targetUser)=>{
+        LanguageInterface.getCaption(targetUser.language,["publicationAssessmentAddedNotification"])
+        .then((caption)=>{
+          userInterface.getOne(assessment.user)
+          .then((sender)=>{
+            let title = caption.replace(':user', sender.username).replace(':number', assessment.value);
+            let notification = {title: title, icon: 'ic_launcher', body: ''};
+            let data = {type: 'assessment', category: '', key: ''};
+            NotificationService.send({notification: notification, data: data},[targetUser.notificationKey]);
+          }); 
+        });
+      });
+      return Promise.all([activityInterface.insert(newOutActivity),activityInterface.insert(newInActivity)])
     });
 };
 
@@ -139,6 +153,19 @@ db.modifyPublicationAssessment = (assessment)=>{
         timestamps: {created: new Date().toISOString(), modified: null},
         seen: false
       };
+      userInterface.getOne(updatedPublication.user)
+      .then((targetUser)=>{
+        LanguageInterface.getCaption(targetUser.language,["publicationAssessmentUpdatedNotification"])
+        .then((caption)=>{
+          userInterface.getOne(assessment.user)
+          .then((sender)=>{
+            let title = caption.replace(':user', sender.username).replace(':number', assessment.value);
+            let notification = {title: title, icon: 'ic_launcher', body: ''};
+            let data = {type: 'assessment', category: '', key: ''};
+            NotificationService.send({notification: notification, data: data},[targetUser.notificationKey]);
+          }); 
+        });
+      });
       return Promise.all([activityInterface.insert(newOutActivity),activityInterface.insert(newInActivity)]);
   });
 };
@@ -166,6 +193,19 @@ db.deletePublicationAssessment = (assessment)=>{
         timestamps: {created: new Date().toISOString(), modified: null},
         seen: false
       };
+      userInterface.getOne(updatedPublication.user)
+      .then((targetUser)=>{
+        LanguageInterface.getCaption(targetUser.language,["publicationAssessmentDeletedNotification"])
+        .then((caption)=>{
+          userInterface.getOne(assessment.user)
+          .then((sender)=>{
+            let title = caption.replace(':user', sender.username);
+            let notification = {title: title, icon: 'ic_launcher', body: ''};
+            let data = {type: 'assessment', category: '', key: ''};
+            NotificationService.send({notification: notification, data: data},[targetUser.notificationKey]);
+          }); 
+        });
+      });
       return Promise.all([activityInterface.insert(newOutActivity),activityInterface.insert(newInActivity)]);
   });
 };
@@ -230,28 +270,48 @@ db.createComment = (comment)=>{
           timestamps: {created: new Date().toISOString(), modified: null},
           seen: false
         };
+        userInterface.getOne(response.user._id)
+        .then((targetUser)=>{
+        LanguageInterface.getCaption(targetUser.language,["commentResponseAddedNotification"])
+          .then((caption)=>{
+            let title = caption.replace(':user', comment.user.username);
+            let notification = {title: title, icon: 'ic_launcher', body: ''};
+            let data = {type: 'comment', category: '', key: ''};
+            NotificationService.send({notification: notification, data: data},[targetUser.notificationKey]);
+          });
+        });
       }
       else{
         let newOutActivity = {
           user: comment.user,
           direction: "OUT",
           caption: "publicationCommentGiven",
-          params: {":user": respose.user},
-          relatedUsers: [respose.user],
-          publication: respose._id,
+          params: {":user": response.user},
+          relatedUsers: [response.user],
+          publication: response._id,
           timestamps: {created: new Date().toISOString(), modified: null},
           seen: true
         };
         let newInActivity = {
-          user: respose.user,
+          user: response.user,
           direction: "IN",
           caption: "publicationCommentAddedNotification",
           params: {":user": comment.user},
           relatedUsers: [comment.user],
-          publication: respose._id,
+          publication: response._id,
           timestamps: {created: new Date().toISOString(), modified: null},
           seen: false
         };
+        userInterface.getOne(response.user._id)
+        .then((targetUser)=>{
+        LanguageInterface.getCaption(targetUser.language,["publicationCommentAddedNotification"])
+          .then((caption)=>{
+            let title = caption.replace(':user', comment.user.username);
+            let notification = {title: title, icon: 'ic_launcher', body: ''};
+            let data = {type: 'comment', category: '', key: ''};
+            NotificationService.send({notification: notification, data: data},[targetUser.notificationKey]);
+          });
+        });
       }
     return Promise.all([activityInterface.insert(newOutActivity),activityInterface.insert(newInActivity)]);
   });
@@ -283,6 +343,19 @@ db.updateComment = (comment)=>{
               timestamps: {created: new Date().toISOString(), modified: null},
               seen: false
             };
+            userInterface.getOne(publication.user._id)
+            .then((targetUser)=>{
+              LanguageInterface.getCaption(targetUser.language,["commentResponseUpdatedNotification"])
+                .then((caption)=>{
+                userInterface.getOne(comment.user)
+                  .then((sender)=>{
+                    let title = caption.replace(':user', sender.username);
+                    let notification = {title: title, icon: 'ic_launcher', body: ''};
+                    let data = {type: 'comment', category: '', key: ''};
+                    NotificationService.send({notification: notification, data: data},[targetUser.notificationKey]);
+                  });
+                });
+            });
           }
           else{
             let newOutActivity = {
@@ -305,6 +378,19 @@ db.updateComment = (comment)=>{
               timestamps: {created: new Date().toISOString(), modified: null},
               seen: false
             };
+            userInterface.getOne(publication.user._id)
+            .then((targetUser)=>{
+              LanguageInterface.getCaption(targetUser.language,["publicationCommentUpdatedNotification"])
+                .then((caption)=>{
+                userInterface.getOne(comment.user)
+                  .then((sender)=>{
+                    let title = caption.replace(':user', sender.username);
+                    let notification = {title: title, icon: 'ic_launcher', body: ''};
+                    let data = {type: 'comment', category: '', key: ''};
+                    NotificationService.send({notification: notification, data: data},[targetUser.notificationKey]);
+                  });
+                });
+            });
           }
 
           return Promise.all([activityInterface.insert(newOutActivity),activityInterface.insert(newInActivity)]);
@@ -340,6 +426,19 @@ db.deleteComment = (id)=>{
                   timestamps: {created: new Date().toISOString(), modified: null},
                   seen: false
                 };
+                userInterface.getOne(publication.user._id)
+                .then((targetUser)=>{
+                  LanguageInterface.getCaption(targetUser.language,["commentResponseDeletedNotification"])
+                  .then((caption)=>{
+                      userInterface.getOne(deletedComment.user)
+                      .then((sender)=>{
+                        let title = caption.replace(':user', sender.username);
+                        let notification = {title: title, icon: 'ic_launcher', body: ''};
+                        let data = {type: 'comment', category: '', key: ''};
+                        NotificationService.send({notification: notification, data: data},[targetUser.notificationKey]);
+                      });
+                  });
+                });
               }
               else{
                 let newOutActivity = {
@@ -362,6 +461,19 @@ db.deleteComment = (id)=>{
                   timestamps: {created: new Date().toISOString(), modified: null},
                   seen: false
                 };
+                userInterface.getOne(publication.user._id)
+                .then((targetUser)=>{
+                  LanguageInterface.getCaption(targetUser.language,["publicationCommentDeletedNotification"])
+                  .then((caption)=>{
+                    userInterface.getOne(deletedComment.user)
+                    .then((sender)=>{
+                      let title = caption.replace(':user', sender.username);
+                      let notification = {title: title, icon: 'ic_launcher', body: ''};
+                      let data = {type: 'comment', category: '', key: ''};
+                      NotificationService.send({notification: notification, data: data},[targetUser.notificationKey]);
+                    });
+                  });
+                });
               }
 
               return Promise.all([activityInterface.insert(newOutActivity),activityInterface.insert(newInActivity)]);
@@ -473,6 +585,20 @@ db.addFavoritePublication = (favorite)=>{
         timestamps: {created: new Date().toISOString(), modified: null},
         seen: false
       };
+    
+      userInterface.getOne(updatedPublication.user)
+      .then((targetUser)=>{
+        LanguageInterface.getCaption(targetUser.language,["favoritePublicationAddedNotification"])
+        .then((caption)=>{
+          userInterface.getOne(favorite.user)
+          .then((sender)=>{
+            let title = caption.replace(':user', sender.username);
+            let notification = {title: title, icon: 'ic_launcher', body: ''};
+            let data = {type: 'favorite', category: '', key: ''};
+            NotificationService.send({notification: notification, data: data},[targetUser.notificationKey]);
+          });
+        });
+      });
 
       return Promise.all([activityInterface.insert(newOutActivity),activityInterface.insert(newInActivity)]);
     });
@@ -502,6 +628,20 @@ db.removeFavoritePublication = (favorite)=>{
         seen: false
       };
 
+      userInterface.getOne(updatedPublication.user)
+      .then((targetUser)=>{
+        LanguageInterface.getCaption(targetUser.language,["favoritePublicationDeletedNotification"])
+        .then((caption)=>{
+          userInterface.getOne(favorite.user)
+          .then((sender)=>{
+            let title = caption.replace(':user', sender.username);
+            let notification = {title: title, icon: 'ic_launcher', body: ''};
+            let data = {type: 'favorite', category: '', key: ''};
+            NotificationService.send({notification: notification, data: data},[targetUser.notificationKey]);
+          });
+        });
+      });
+    
       return Promise.all([activityInterface.insert(newOutActivity),activityInterface.insert(newInActivity)]);
     });
 };
@@ -530,6 +670,20 @@ db.addUserFollower = (follower)=>{
         seen: false
       };
 
+      userInterface.getOne(follower.followed)
+      .then((targetUser)=>{
+        LanguageInterface.getCaption(targetUser.language,["userFollowerAddedNotification"])
+        .then((caption)=>{
+          userInterface.getOne(follower.follower)
+          .then((sender)=>{
+            let title = caption.replace(':user', sender.username);
+            let notification = {title: title, icon: 'ic_launcher', body: ''};
+            let data = {type: 'follower', category: '', key: ''};
+            NotificationService.send({notification: notification, data: data},[targetUser.notificationKey]);
+          });
+        });
+      });
+    
       return Promise.all([activityInterface.insert(newOutActivity),activityInterface.insert(newInActivity)]);
     });
 };
@@ -557,6 +711,20 @@ db.removeUserFollower = (follower)=>{
         timestamps: {created: new Date().toISOString(), modified: null},
         seen: false
       };
+    
+      userInterface.getOne(follower.followed)
+      .then((targetUser)=>{
+        LanguageInterface.getCaption(targetUser.language,["userFollowerDeletedNotification"])
+        .then((caption)=>{
+          userInterface.getOne(follower.follower)
+          .then((sender)=>{
+            let title = caption.replace(':user', sender.username);
+            let notification = {title: title, icon: 'ic_launcher', body: ''};
+            let data = {type: 'follower', category: '', key: ''};
+            NotificationService.send({notification: notification, data: data},[targetUser.notificationKey]);
+          });
+        });
+      });
 
       return Promise.all([activityInterface.insert(newOutActivity),activityInterface.insert(newInActivity)]);
     });
