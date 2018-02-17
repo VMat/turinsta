@@ -153,20 +153,22 @@ db.modifyPublicationAssessment = (assessment)=>{
         timestamps: {created: new Date().toISOString(), modified: null},
         seen: false
       };
-      userInterface.getOne(updatedPublication.user)
-      .then((targetUser)=>{
-        LanguageInterface.getCaption(targetUser.language,["publicationAssessmentUpdatedNotification"])
-        .then((caption)=>{
-          userInterface.getOne(assessment.user)
-          .then((sender)=>{
-            let title = caption.replace(':user', sender.username).replace(':number', assessment.value);
-            let notification = {title: title, icon: 'ic_launcher', body: ''};
-            let data = {type: 'assessment', category: '', key: ''};
-            NotificationService.send({notification: notification, data: data},[targetUser.notificationKey]);
-          }); 
+      return Promise.all([activityInterface.insert(newOutActivity),activityInterface.insert(newInActivity)])
+        .then(()=>{
+          return userInterface.getOne(updatedPublication.user)
+            .then((targetUser)=>{
+              return LanguageInterface.getCaption(targetUser.language,["publicationAssessmentUpdatedNotification"])
+                .then((caption)=>{
+                  return userInterface.getOne(assessment.user)
+                    .then((sender)=>{
+                      let title = caption.replace(':user', sender.username).replace(':number', assessment.value);
+                      let notification = {title: title, icon: 'ic_launcher', body: ''};
+                      let data = {type: 'assessment', category: '', key: ''};
+                      return NotificationService.send({notification: notification, data: data},[targetUser.notificationKey]);
+                  }); 
+                });
+            });
         });
-      });
-      return Promise.all([activityInterface.insert(newOutActivity),activityInterface.insert(newInActivity)]);
   });
 };
 
