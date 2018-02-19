@@ -115,7 +115,7 @@ db.addPublicationAssessment = (assessment)=>{
       };
       userInterface.getOne(updatedPublication.user)
       .then((targetUser)=>{
-        LanguageInterface.getCaption(targetUser.language,["publicationAssessmentAddedNotification"])
+        languageInterface.getCaption(targetUser.language,["publicationAssessmentAddedNotification"])
         .then((caption)=>{
           userInterface.getOne(assessment.user)
           .then((sender)=>{
@@ -159,7 +159,7 @@ db.modifyPublicationAssessment = (assessment)=>{
           return userInterface.getOne(updatedPublication.user)
             .then((targetUser)=>{
               console.log("targetUser: " + JSON.stringify(targetUser));
-              return LanguageInterface.getCaption(targetUser.language,["publicationAssessmentUpdatedNotification"])
+              return languageInterface.getCaption(targetUser.language,["publicationAssessmentUpdatedNotification"])
                 .then((caption)=>{
                   console.log("caption: " + JSON.stringify(caption));
                   return userInterface.getOne(assessment.user)
@@ -202,7 +202,7 @@ db.deletePublicationAssessment = (assessment)=>{
       };
       userInterface.getOne(updatedPublication.user)
       .then((targetUser)=>{
-        LanguageInterface.getCaption(targetUser.language,["publicationAssessmentDeletedNotification"])
+        languageInterface.getCaption(targetUser.language,["publicationAssessmentDeletedNotification"])
         .then((caption)=>{
           userInterface.getOne(assessment.user)
           .then((sender)=>{
@@ -279,7 +279,7 @@ db.createComment = (comment)=>{
         };
         userInterface.getOne(response.user._id)
         .then((targetUser)=>{
-        LanguageInterface.getCaption(targetUser.language,["commentResponseAddedNotification"])
+        languageInterface.getCaption(targetUser.language,["commentResponseAddedNotification"])
           .then((caption)=>{
             let title = caption.replace(':user', comment.user.username);
             let notification = {title: title, icon: 'ic_launcher', body: ''};
@@ -311,7 +311,7 @@ db.createComment = (comment)=>{
         };
         userInterface.getOne(response.user._id)
         .then((targetUser)=>{
-        LanguageInterface.getCaption(targetUser.language,["publicationCommentAddedNotification"])
+        languageInterface.getCaption(targetUser.language,["publicationCommentAddedNotification"])
           .then((caption)=>{
             let title = caption.replace(':user', comment.user.username);
             let notification = {title: title, icon: 'ic_launcher', body: ''};
@@ -352,7 +352,7 @@ db.updateComment = (comment)=>{
             };
             userInterface.getOne(publication.user._id)
             .then((targetUser)=>{
-              LanguageInterface.getCaption(targetUser.language,["commentResponseUpdatedNotification"])
+              languageInterface.getCaption(targetUser.language,["commentResponseUpdatedNotification"])
                 .then((caption)=>{
                 userInterface.getOne(comment.user)
                   .then((sender)=>{
@@ -387,7 +387,7 @@ db.updateComment = (comment)=>{
             };
             userInterface.getOne(publication.user._id)
             .then((targetUser)=>{
-              LanguageInterface.getCaption(targetUser.language,["publicationCommentUpdatedNotification"])
+              languageInterface.getCaption(targetUser.language,["publicationCommentUpdatedNotification"])
                 .then((caption)=>{
                 userInterface.getOne(comment.user)
                   .then((sender)=>{
@@ -435,7 +435,7 @@ db.deleteComment = (id)=>{
                 };
                 userInterface.getOne(publication.user._id)
                 .then((targetUser)=>{
-                  LanguageInterface.getCaption(targetUser.language,["commentResponseDeletedNotification"])
+                  languageInterface.getCaption(targetUser.language,["commentResponseDeletedNotification"])
                   .then((caption)=>{
                       userInterface.getOne(deletedComment.user)
                       .then((sender)=>{
@@ -470,7 +470,7 @@ db.deleteComment = (id)=>{
                 };
                 userInterface.getOne(publication.user._id)
                 .then((targetUser)=>{
-                  LanguageInterface.getCaption(targetUser.language,["publicationCommentDeletedNotification"])
+                  languageInterface.getCaption(targetUser.language,["publicationCommentDeletedNotification"])
                   .then((caption)=>{
                     userInterface.getOne(deletedComment.user)
                     .then((sender)=>{
@@ -595,7 +595,7 @@ db.addFavoritePublication = (favorite)=>{
     
       userInterface.getOne(updatedPublication.user)
       .then((targetUser)=>{
-        LanguageInterface.getCaption(targetUser.language,["favoritePublicationAddedNotification"])
+        languageInterface.getCaption(targetUser.language,["favoritePublicationAddedNotification"])
         .then((caption)=>{
           userInterface.getOne(favorite.user)
           .then((sender)=>{
@@ -637,7 +637,7 @@ db.removeFavoritePublication = (favorite)=>{
 
       userInterface.getOne(updatedPublication.user)
       .then((targetUser)=>{
-        LanguageInterface.getCaption(targetUser.language,["favoritePublicationDeletedNotification"])
+        languageInterface.getCaption(targetUser.language,["favoritePublicationDeletedNotification"])
         .then((caption)=>{
           userInterface.getOne(favorite.user)
           .then((sender)=>{
@@ -679,7 +679,7 @@ db.addUserFollower = (follower)=>{
 
       userInterface.getOne(follower.followed)
       .then((targetUser)=>{
-        LanguageInterface.getCaption(targetUser.language,["userFollowerAddedNotification"])
+        languageInterface.getCaption(targetUser.language,["userFollowerAddedNotification"])
         .then((caption)=>{
           userInterface.getOne(follower.follower)
           .then((sender)=>{
@@ -721,7 +721,7 @@ db.removeUserFollower = (follower)=>{
     
       userInterface.getOne(follower.followed)
       .then((targetUser)=>{
-        LanguageInterface.getCaption(targetUser.language,["userFollowerDeletedNotification"])
+        languageInterface.getCaption(targetUser.language,["userFollowerDeletedNotification"])
         .then((caption)=>{
           userInterface.getOne(follower.follower)
           .then((sender)=>{
