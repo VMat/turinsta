@@ -155,10 +155,13 @@ db.modifyPublicationAssessment = (assessment)=>{
       };
       return Promise.all([activityInterface.insert(newOutActivity),activityInterface.insert(newInActivity)])
         .then(()=>{
+          console.log("promise all");
           return userInterface.getOne(updatedPublication.user)
             .then((targetUser)=>{
+              console.log("targetUser: " + JSON.stringify(targetUser));
               return LanguageInterface.getCaption(targetUser.language,["publicationAssessmentUpdatedNotification"])
                 .then((caption)=>{
+                  console.log("caption: " + JSON.stringify(caption));
                   return userInterface.getOne(assessment.user)
                     .then((sender)=>{
                       let title = caption.replace(':user', sender.username).replace(':number', assessment.value);
