@@ -164,6 +164,8 @@ db.modifyPublicationAssessment = (assessment)=>{
                       let title = caption.replace(':user', sender.username).replace(':number', assessment.value);
                       let notification = {title: title, icon: 'ic_launcher', body: ''};
                       let data = {type: 'assessment', category: '', key: ''};
+                      console.log("publication modified: " + JSON.stringify(notification));
+                      console.log("publication data: " + JSON.stringify(data));
                       return NotificationService.send({notification: notification, data: data},[targetUser.notificationKey]);
                   }); 
                 });
