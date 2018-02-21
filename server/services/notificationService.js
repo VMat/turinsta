@@ -22,7 +22,7 @@ NotificationService.send = (data, device_tokens) => {
   const message = new gcm.Message();
   message.addData('title', data.notification.title);
   message.addData('message', data.notification.body);
-  message.addData('image', 'https://pbs.twimg.com/profile_images/837060031895896065/VHIQ4oUf_400x400.jpg');
+  message.addData('image', 'icono2');
   message.addData('image-type', 'circular');
   message.addData('type', data.data.type);
   message.addData('category', data.data.category);
