@@ -15,8 +15,7 @@ NotificationService.send = (data, device_tokens) => {
   let message = new gcm.Message({
     priority: 'high',
     delayWhileIdle: true,
-    data: {...data.data, image: "https://turinsta-staging.herokuapp.com/assets/flags/españa.ico", ...data.notification},
-    "content-available": '1',
+    data: {...data.data, ...data.notification}
   });
  
   sender.send(message, { registrationTokens: device_tokens }, retry_times,(result)=>{
