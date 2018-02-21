@@ -10,7 +10,7 @@ NotificationService.send = (data, device_tokens) => {
  
   delete data.notification.icon;
   data.notification.image = "https://turinsta-staging.herokuapp.com/assets/flags/españa.ico";
-  data["image-type"] = "circle";
+  //data["image-type"] = "circle";
   
   //create a new message
   let message = new gcm.Message({
