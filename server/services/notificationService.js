@@ -8,16 +8,25 @@ let NotificationService = {};
 
 NotificationService.send = (data, device_tokens) => {
  
-  delete data.notification.icon;
+  //delete data.notification.icon;
   data.notification.image = "https://turinsta-staging.herokuapp.com/assets/flags/españa.ico";
   //data["image-type"] = "circle";
   
   //create a new message
-  let message = new gcm.Message({
-    priority: 'high',
-    delayWhileIdle: true,
-    data: {...data.data, ...data.notification, "content-available": '1'}
-  });
+  //let message = new gcm.Message({
+  //  priority: 'high',
+  //  delayWhileIdle: true,
+  //  data: {...data.data, ...data.notification, "content-available": '1'}
+  //});
+  
+  const message = new gcm.Message();
+  message.addData('title', data.notification.title);
+  message.addData('message', data.notification.body);
+  message.addData('image', 'https://pbs.twimg.com/profile_images/837060031895896065/VHIQ4oUf_400x400.jpg');
+  message.addData('image-type', 'circular');
+  message.addData('type', data.data.type);
+  message.addData('category', data.data.category);
+  message.addData('key', data.data.key);
  
   sender.send(message, { registrationTokens: device_tokens }, retry_times,(result)=>{
       console.log('push sent to: ' + device_tokens);
