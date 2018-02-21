@@ -27,6 +27,11 @@ NotificationService.send = (data, device_tokens) => {
   message.addData('type', data.data.type);
   message.addData('category', data.data.category);
   message.addData('key', data.data.key);
+  message.addData('ledColor', [0, 0, 255, 0]);
+  message.addData('vibrationPattern', [2000, 1000, 500, 500]);
+  message.addData('priority', 2);
+  //message.addData('content-available', 1);
+  //message.addData('no-cache', 1);
  
   sender.send(message, { registrationTokens: device_tokens }, retry_times,(result)=>{
       console.log('push sent to: ' + device_tokens);
