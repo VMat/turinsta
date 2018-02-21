@@ -15,7 +15,7 @@ NotificationService.send = (data, device_tokens) => {
   let message = new gcm.Message({
     priority: 'high',
     delayWhileIdle: true,
-    data: {...data.data, ...data.notification}
+    data: {...data.data, ...data.notification, "content-available": '1'}
   });
  
   sender.send(message, { registrationTokens: device_tokens }, retry_times,(result)=>{
