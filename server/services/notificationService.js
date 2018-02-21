@@ -16,7 +16,8 @@ NotificationService.send = (data, device_tokens) => {
     priority: 'high',
     delayWhileIdle: true,
     data: {...data.data, image: "https://turinsta-staging.herokuapp.com/assets/flags/españa.ico"},
-    notification: data.notification
+    notification: data.notification,
+    "content-available": '1',
   });
  
   sender.send(message, { registrationTokens: device_tokens }, retry_times,(result)=>{
