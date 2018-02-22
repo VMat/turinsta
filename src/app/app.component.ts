@@ -28,8 +28,6 @@ export class MyApp {
 
       const pushObject: PushObject = this.push.init({
         android: {
-          "icon": "icono2",
-		      "iconColor": "blue",
           senderID: "519496244550"
         },
         ios: {
