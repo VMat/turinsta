@@ -121,7 +121,7 @@ db.addPublicationAssessment = (assessment)=>{
           .then((sender)=>{
             let title = caption.replace(':user', sender.username).replace(':number', assessment.value);
             let notification = {title: title, body: ''};
-            let data = {type: 'assessment', category: '', key: ''};
+            let data = {type: 'assessment', category: updatedPublication._id, key: ''};
             NotificationService.send({notification: notification, data: data},[targetUser.notificationKey]);
           }); 
         });
@@ -166,7 +166,7 @@ db.modifyPublicationAssessment = (assessment)=>{
                     .then((sender)=>{
                       let title = caption.replace(':user', sender.username).replace(':number', assessment.value);
                       let notification = {title: title, body: ''};
-                      let data = {type: 'assessment', category: '', key: ''};
+                      let data = {type: 'assessment', category: updatedPublication._id, key: ''};
                       console.log("publication modified: " + JSON.stringify(notification));
                       console.log("publication data: " + JSON.stringify(data));
                       return NotificationService.send({notification: notification, data: data},[targetUser.notificationKey]);
@@ -208,7 +208,7 @@ db.deletePublicationAssessment = (assessment)=>{
           .then((sender)=>{
             let title = caption.replace(':user', sender.username);
             let notification = {title: title, body: ''};
-            let data = {type: 'assessment', category: '', key: ''};
+            let data = {type: 'assessment', category: updatedPublication._id, key: ''};
             NotificationService.send({notification: notification, data: data},[targetUser.notificationKey]);
           }); 
         });
@@ -283,7 +283,7 @@ db.createComment = (comment)=>{
           .then((caption)=>{
             let title = caption.replace(':user', comment.user.username);
             let notification = {title: title, body: ''};
-            let data = {type: 'comment', category: '', key: ''};
+            let data = {type: 'comment', category: response.publication, key: ''};
             NotificationService.send({notification: notification, data: data},[targetUser.notificationKey]);
           });
         });
@@ -295,7 +295,7 @@ db.createComment = (comment)=>{
           caption: "publicationCommentGiven",
           params: {":user": response.user},
           relatedUsers: [response.user],
-          publication: response._id,
+          publication: response.publication,
           timestamps: {created: new Date().toISOString(), modified: null},
           seen: true
         };
@@ -305,7 +305,7 @@ db.createComment = (comment)=>{
           caption: "publicationCommentAddedNotification",
           params: {":user": comment.user},
           relatedUsers: [comment.user],
-          publication: response._id,
+          publication: response.publication,
           timestamps: {created: new Date().toISOString(), modified: null},
           seen: false
         };
@@ -315,7 +315,7 @@ db.createComment = (comment)=>{
           .then((caption)=>{
             let title = caption.replace(':user', comment.user.username);
             let notification = {title: title, body: ''};
-            let data = {type: 'comment', category: '', key: ''};
+            let data = {type: 'comment', category: response.publication, key: ''};
             NotificationService.send({notification: notification, data: data},[targetUser.notificationKey]);
           });
         });
@@ -358,7 +358,7 @@ db.updateComment = (comment)=>{
                   .then((sender)=>{
                     let title = caption.replace(':user', sender.username);
                     let notification = {title: title, body: ''};
-                    let data = {type: 'comment', category: '', key: ''};
+                    let data = {type: 'comment', category: publication._id, key: ''};
                     NotificationService.send({notification: notification, data: data},[targetUser.notificationKey]);
                   });
                 });
@@ -393,7 +393,7 @@ db.updateComment = (comment)=>{
                   .then((sender)=>{
                     let title = caption.replace(':user', sender.username);
                     let notification = {title: title, body: ''};
-                    let data = {type: 'comment', category: '', key: ''};
+                    let data = {type: 'comment', category: publication._id, key: ''};
                     NotificationService.send({notification: notification, data: data},[targetUser.notificationKey]);
                   });
                 });
@@ -441,7 +441,7 @@ db.deleteComment = (id)=>{
                       .then((sender)=>{
                         let title = caption.replace(':user', sender.username);
                         let notification = {title: title, body: ''};
-                        let data = {type: 'comment', category: '', key: ''};
+                        let data = {type: 'comment', category: publication._id, key: ''};
                         NotificationService.send({notification: notification, data: data},[targetUser.notificationKey]);
                       });
                   });
@@ -476,7 +476,7 @@ db.deleteComment = (id)=>{
                     .then((sender)=>{
                       let title = caption.replace(':user', sender.username);
                       let notification = {title: title, body: ''};
-                      let data = {type: 'comment', category: '', key: ''};
+                      let data = {type: 'comment', category: publication._id, key: ''};
                       NotificationService.send({notification: notification, data: data},[targetUser.notificationKey]);
                     });
                   });
@@ -601,7 +601,7 @@ db.addFavoritePublication = (favorite)=>{
           .then((sender)=>{
             let title = caption.replace(':user', sender.username);
             let notification = {title: title, body: ''};
-            let data = {type: 'favorite', category: '', key: ''};
+            let data = {type: 'favorite', category: updatedPublication._id, key: ''};
             NotificationService.send({notification: notification, data: data},[targetUser.notificationKey]);
           });
         });
@@ -643,7 +643,7 @@ db.removeFavoritePublication = (favorite)=>{
           .then((sender)=>{
             let title = caption.replace(':user', sender.username);
             let notification = {title: title, body: ''};
-            let data = {type: 'favorite', category: '', key: ''};
+            let data = {type: 'favorite', category: updatedPublication._id, key: ''};
             NotificationService.send({notification: notification, data: data},[targetUser.notificationKey]);
           });
         });
@@ -685,7 +685,7 @@ db.addUserFollower = (follower)=>{
           .then((sender)=>{
             let title = caption.replace(':user', sender.username);
             let notification = {title: title, body: ''};
-            let data = {type: 'follower', category: '', key: ''};
+            let data = {type: 'follower', category: follower.follower, key: ''};
             NotificationService.send({notification: notification, data: data},[targetUser.notificationKey]);
           });
         });
@@ -727,7 +727,7 @@ db.removeUserFollower = (follower)=>{
           .then((sender)=>{
             let title = caption.replace(':user', sender.username);
             let notification = {title: title, body: ''};
-            let data = {type: 'follower', category: '', key: ''};
+            let data = {type: 'follower', category: follower.follower, key: ''};
             NotificationService.send({notification: notification, data: data},[targetUser.notificationKey]);
           });
         });
