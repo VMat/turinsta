@@ -7,22 +7,23 @@ const sender = new gcm.Sender(gcmApiKey); //create a new sender
 let NotificationService = {};
 
 NotificationService.send = (data, device_tokens) => {
- 
-  //delete data.notification.icon;
-  data.notification.image = "https://turinsta-staging.herokuapp.com/assets/flags/españa.ico";
-  //data["image-type"] = "circle";
+  
+  let icon = 'www/assets/imgs/';
+  switch(data.data.type){
+    case 'message': {
+      icon += 'message-icon.png'
+      break;
+    }
+    default:{
+      icon += 'notification-icon.png'
+    }
+  }
   
   //create a new message
-  //let message = new gcm.Message({
-  //  priority: 'high',
-  //  delayWhileIdle: true,
-  //  data: {...data.data, ...data.notification, "content-available": '1'}
-  //});
-  
   const message = new gcm.Message();
   message.addData('title', data.notification.title);
   message.addData('message', data.notification.body);
-  message.addData('image', 'www/assets/imgs/message-icon.png');
+  message.addData('image', icon);
   message.addData('image-type', 'circular');
   message.addData('type', data.data.type);
   message.addData('category', data.data.category);
