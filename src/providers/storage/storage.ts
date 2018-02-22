@@ -125,8 +125,12 @@ export class StorageProvider {
       .map((res:Response) => res.json());
   }
 
-  getActivities(userId,limit){
-    return this.http.get(StorageProvider.baseUrl + 'activities/user/' + userId + '/count/' + limit)
+  getActivities(userId,filters,limit){
+    let params = new URLSearchParams();
+    filters.forEach((filter)=>{
+      params.set(filter.key, JSON.stringify({value: filter.value, operation: filter.operation}));
+    });
+    return this.http.get(StorageProvider.baseUrl + 'activities/user/' + userId + '/count/' + limit, {params: params, headers: StorageProvider.headers})
       .map((res:Response) => res.json());
   }
 

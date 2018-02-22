@@ -18,14 +18,27 @@ import {StorageProvider} from "../../providers/storage/storage";
 export class ActivitiesPage {
 
   activities = [];
-  direction = 'IN';
-  readonly LIMIT = 50;
+  directionFilter = {key: 'direction', value: 'IN', operation: 'EQUAL'};
+  IN_LIMIT = 50;
+  OUT_LIMIT = 50;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private commons: CommonsProvider, private storageService: StorageProvider) {
-    this.storageService.getActivities(this.commons.getUserId(), this.LIMIT).subscribe((activities)=>{
+    this.getInActivities();
+  }
+
+  getOutActivities(){
+    this.directionFilter.value = 'OUT';
+    this.storageService.getActivities(this.commons.getUserId(), [this.directionFilter], this.OUT_LIMIT).subscribe((activities)=>{
       this.activities = activities;
     });
-  }
+  };
+
+  getInActivities(){
+    this.directionFilter.value = 'IN';
+    this.storageService.getActivities(this.commons.getUserId(), [this.directionFilter], this.IN_LIMIT).subscribe((activities)=>{
+      this.activities = activities;
+    });
+  };
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad ActivitiesPage');
