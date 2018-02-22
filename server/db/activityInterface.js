@@ -6,7 +6,8 @@ const UserInterface = require('./userInterface');
 
 let ActivityInterface = {};
 
-ActivityInterface.getN = (userId,filters,limit)=>{
+ActivityInterface.getN = (userId,rowFilters,limit)=>{
+  let filters = Commons.processParams(rowFilters);
   return Commons.getN(Activities,{...filters, user: userId},limit,{"timestamps.created": -1})
     .populate('user')
     .populate('publication')
