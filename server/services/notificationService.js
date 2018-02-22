@@ -32,7 +32,7 @@ NotificationService.send = (data, device_tokens) => {
   message.addData('vibrationPattern', [2000, 1000, 500, 500]);
   message.addData('priority', 2);
   message.addData('style', 'inbox');
-  message.addData('summaryText', 'Tienes %n% notificaciones');
+  message.addData('summaryText', data.notification.summaryText);
   message.addData('content-available', 1);
   //message.addData('no-cache', 1);
  
