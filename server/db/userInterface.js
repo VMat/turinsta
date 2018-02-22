@@ -109,12 +109,9 @@ UserInterface.addUnreadMessage = (userId,updatedInbox)=>{
             .then((author)=>{
               return LanguageInterface.getCaption(updatedUser.language,["messageNotification"])
                 .then((caption)=>{
-                  console.log("caption: " + caption);
                   let title = caption.replace(':inbox',(updatedInbox.name ? updatedInbox.name : author.username));
                   title = "Mensaje nuevo";
                   let notification = {title: title, icon: 'ic_launcher', body: author.username + ': ' + message.content};
-                  console.log("updatedInbox: " + updatedInbox);
-                  console.log("updatedInbox._id: " + updatedInbox._id);
                   let data = {type: 'message', category: updatedInbox._id, key: message._id};
                   NotificationService.send({notification: notification, data: data},[user.notificationKey]);
                   return Promise.resolve(message);
@@ -129,20 +126,19 @@ UserInterface.removeUnreadMessages = (userId,inboxId)=>{
   return Commons.getOne(Users,userId)
     .then((user)=>{
       let index = null;
-      console.log("user.notifications.unreadMessages: ", JSON.stringify(user));
-      console.log("inbox: ", inboxId);
       user.notifications.unreadMessages.forEach((inbox,i)=>{if(inbox.inbox.equals(inboxId)){index=i}});
       if(index!=null){
         return Promise.all(user.notifications.unreadMessages[index].messages.map((message)=>{
           return InboxInterface.changeMessageStatus(inboxId,message._id,userId,{name: "READ", date: new Date().toISOString()});
         }))
           .then(()=>{
+            console.log('then: ' + user.notifications);
             user.notifications.unreadMessages.splice(index,1);
             return Commons.update(Users, user);
         })
       }
       else{
-        return Promise.resolve(null);
+        return Promise.resolve(user);
       }
     });
 };
