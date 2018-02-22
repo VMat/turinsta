@@ -111,7 +111,7 @@ UserInterface.addUnreadMessage = (userId,updatedInbox)=>{
                 .then((caption)=>{
                   let title = caption.replace(':inbox',(updatedInbox.name ? updatedInbox.name : author.username));
                   title = "Mensaje nuevo";
-                  let notification = {title: title, icon: 'message-icon.png', body: author.username + ': ' + message.content};
+                  let notification = {title: title, body: author.username + ': ' + message.content};
                   let data = {type: 'message', category: updatedInbox._id, key: message._id};
                   NotificationService.send({notification: notification, data: data},[user.notificationKey]);
                   return Promise.resolve(message);
