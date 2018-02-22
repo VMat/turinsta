@@ -62,6 +62,13 @@ InboxInterface.changeMessageStatus = (id,messageId,userId,status)=>{
           });
           if(received){
             targetMessage[0].generalState = 'RECEIVED';
+            break;
+          }
+          let read = targetMessage[0].status.every((state)=>{
+            return state.name == 'READ'
+          });
+          if(read){
+            targetMessage[0].generalState = 'READ';
           }
           break;
         }

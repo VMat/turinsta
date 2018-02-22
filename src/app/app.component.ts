@@ -40,6 +40,12 @@ export class MyApp {
 
       pushObject.on('notification').subscribe((notification: any) => {
         console.log('Received a notification', notification);
+        pushObject.getApplicationIconBadgeNumber().then((count)=>{
+          console.log("Icon badge: " + count);
+          pushObject.setApplicationIconBadgeNumber(++count).then((iconBadge)=>{
+            console.log("Icon setted:" + iconBadge);
+          });
+        });
         this.notifications.handleNotification(notification);
       });
 
