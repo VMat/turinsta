@@ -33,7 +33,7 @@ NotificationService.send = (data, device_tokens) => {
   message.addData('priority', 2);
   message.addData('style', 'inbox');
   message.addData('summaryText', 'Tienes %n% notificaciones');
-  //message.addData('content-available', 1);
+  message.addData('content-available', 1);
   //message.addData('no-cache', 1);
  
   sender.send(message, { registrationTokens: device_tokens }, retry_times,(result)=>{
