@@ -24,7 +24,7 @@ NotificationService.send = (data, device_tokens) => {
   message.addData('title', data.notification.title);
   message.addData('message', data.notification.body);
   message.addData('image', icon);
-  message.addData('image-type', 'circular');
+  //message.addData('image-type', 'circular');
   message.addData('type', data.data.type);
   message.addData('category', data.data.category);
   message.addData('key', data.data.key);
