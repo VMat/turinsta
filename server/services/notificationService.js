@@ -36,8 +36,9 @@ NotificationService.send = (data, device_tokens) => {
   message.addData('content-available', 1);
   message.addData('no-cache', 1);
 
-  return sender.send(message, { registrationTokens: device_tokens }, retry_times);
-
+  sender.send(message, { registrationTokens: device_tokens }, retry_times);
+  
+  return Promise.resolve(null);
 };
 
 module.exports = NotificationService;
