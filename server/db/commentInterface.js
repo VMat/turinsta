@@ -3,7 +3,6 @@ const Users = require('../models/user');
 const Publications = require('../models/publication');
 const Commons = require('./commons');
 const UserInterface = require('./userInterface');
-const PublicationInterface = require('./publicationInterface');
 
 let CommentInterface = {};
 
@@ -38,6 +37,7 @@ CommentInterface.insert = (comment)=>{
             })
           }
           else{
+            const PublicationInterface = require('./publicationInterface');
             return PublicationInterface.getOne(insertedComment.publication)
             .then(publication=>{
               publication.commentIds.push(insertedComment._id);
@@ -86,6 +86,7 @@ CommentInterface.deleteOne = (id)=>{
       else{
         return Commons.getOne(Publications, comment.publication)
           .then(publication=>{
+            const PublicationInterface = require('./publicationInterface');
             publication.commentIds.splice(publication.commentIds.indexOf(comment._id), 1);
             return PublicationInterface.update(publication)
               .then(()=>{
