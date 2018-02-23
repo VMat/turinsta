@@ -35,9 +35,6 @@ NotificationService.send = (data, device_tokens) => {
   message.addData('summaryText', data.notification.summaryText);
   message.addData('content-available', 1);
   message.addData('no-cache', 1);
-
-  //sender.send(message, { registrationTokens: device_tokens }, retry_times);
-  //return Promise.resolve(null);
   
   return new Promise((resolve, reject) => {
     sender.send(message, { registrationTokens: device_tokens }, retry_times, (err, response)=>{
