@@ -277,7 +277,7 @@ db.getComment = (id)=>{
 db.createComment = (comment)=>{
   return commentInterface.insert(comment)
     .then((response)=>{
-      return userInterface.getOne(publication.user._id)
+      return publicationInterface.getOne(response.publication)
         .then((publication)=>{
           if(response.parent!=null){
             let newOutActivity = {
