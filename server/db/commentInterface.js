@@ -11,6 +11,7 @@ CommentInterface.getOne = (id)=>{
 };
 
 CommentInterface.insert = (comment)=>{
+  console.log("insert comment: " + JSON.stringify(comment));
   return UserInterface.getOne(comment.user)
     .then(user=>{
       let oComment = {};
