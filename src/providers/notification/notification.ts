@@ -19,6 +19,7 @@ export class NotificationProvider {
   }
 
   handleNotification(notification){
+    //todo update badges
     if(notification.additionalData.type == 'message'){
       let currentUser = this.commons.getUserId();
       console.log("notification.additionalData: " + JSON.stringify(notification.additionalData));
@@ -30,5 +31,9 @@ export class NotificationProvider {
         socket.disconnect();
       });
     }
+    if(notification.additionalData.coldstart){
+      return {view: notification.additionalData.type, category: notification.additionalData.category, key: notification.additionalData.key}
+    }
+    return null;
   }
 }

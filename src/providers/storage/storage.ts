@@ -29,6 +29,11 @@ export class StorageProvider {
       .map((res:Response) => res.json());
   }
 
+  getPublication(id){
+    return this.http.get(StorageProvider.baseUrl + 'publications/' + id, {headers: StorageProvider.headers})
+      .map((res:Response) => res.json());
+  }
+
   createComment(comment){
     return this.http.post(StorageProvider.baseUrl + 'comments',comment,{headers: StorageProvider.headers})
       .map((res:Response) => res.json());
@@ -136,6 +141,11 @@ export class StorageProvider {
 
   getInboxes(userId){
     return this.http.get(StorageProvider.baseUrl + 'inboxes/user/' + userId)
+      .map((res: Response) => res.json());
+  }
+
+  getInbox(id){
+    return this.http.get(StorageProvider.baseUrl + 'inboxes/' + id)
       .map((res: Response) => res.json());
   }
 }

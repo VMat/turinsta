@@ -22,6 +22,12 @@ router.get('/count/:count/sort/:field/:way',(req, res)=>{
     .catch(error=>{res.status(500).send(error)})
 });
 
+router.get('/:id', (req, res)=>{
+  publicationService.getPublication(req.params.id)
+    .then(publication=>{res.status(200).json(publication)})
+    .catch(error=>{res.status(500).send(error)})
+});
+
 router.post('/',(req, res)=>{
   publicationService.createPublication(req.body)
     .then(publication=>{res.status(200).json(publication)})

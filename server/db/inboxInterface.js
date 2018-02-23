@@ -10,7 +10,8 @@ InboxInterface.getN = (user)=>{
 };
 
 InboxInterface.getOne = (id)=>{
-  return Commons.getOne(Inboxes, id);
+  return Commons.getOne(Inboxes, id)
+    .populate('participants');
 };
 
 InboxInterface.insert = (inbox)=>{
