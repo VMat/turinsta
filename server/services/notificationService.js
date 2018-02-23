@@ -7,18 +7,18 @@ const sender = new gcm.Sender(gcmApiKey); //create a new sender
 let NotificationService = {};
 
 NotificationService.send = (data, device_tokens) => {
-  
+
   let icon = 'www/assets/imgs/';
   switch(data.data.type){
     case 'message': {
-      icon += 'message-icon.png'
+      icon += 'message-icon.png';
       break;
     }
     default:{
-      icon += 'notification-icon.png'
+      icon += 'notification-icon.png';
     }
   }
-  
+
   //create a new message
   const message = new gcm.Message();
   message.addData('title', data.notification.title);
@@ -35,7 +35,7 @@ NotificationService.send = (data, device_tokens) => {
   message.addData('summaryText', data.notification.summaryText);
   message.addData('content-available', 1);
   message.addData('no-cache', 1);
- 
+
   sender.send(message, { registrationTokens: device_tokens }, retry_times,(result)=>{
       console.log('push sent to: ' + device_tokens);
   }, (err)=>{
