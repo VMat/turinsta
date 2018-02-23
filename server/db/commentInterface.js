@@ -38,7 +38,7 @@ CommentInterface.insert = (comment)=>{
           }
           else{
             const PublicationInterface = require('./publicationInterface');
-            return PublicationInterface.getOne(insertedComment.publication)
+            return Commons.getOne(Publications,insertedComment.publication)
             .then(publication=>{
               publication.commentIds.push(insertedComment._id);
               return PublicationInterface.update(publication)
