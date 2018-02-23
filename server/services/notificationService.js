@@ -36,10 +36,12 @@ NotificationService.send = (data, device_tokens) => {
   message.addData('content-available', 1);
   message.addData('no-cache', 1);
 
-  sender.send(message, { registrationTokens: device_tokens }, retry_times,(result)=>{
+  return sender.send(message, { registrationTokens: device_tokens }, retry_times,(result)=>{
       console.log('push sent to: ' + device_tokens);
+      return Promise.resolve(null);
   }, (err)=>{
       console.log('error: ' + err);
+      return Promise.resolve(null);
   });
 
 };
