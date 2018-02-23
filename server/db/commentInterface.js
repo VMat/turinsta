@@ -38,11 +38,10 @@ CommentInterface.insert = (comment)=>{
             })
           }
           else{
-            const PublicationInterface = require('./publicationInterface');
             return Commons.getOne(Publications,insertedComment.publication)
             .then(publication=>{
               publication.commentIds.push(insertedComment._id);
-              return PublicationInterface.update(publication)
+              return Commons.update(Publications,publication)
             })
           }
       });
@@ -87,9 +86,8 @@ CommentInterface.deleteOne = (id)=>{
       else{
         return Commons.getOne(Publications, comment.publication)
           .then(publication=>{
-            const PublicationInterface = require('./publicationInterface');
             publication.commentIds.splice(publication.commentIds.indexOf(comment._id), 1);
-            return PublicationInterface.update(publication)
+            return Commons.update(Publications,publication)
               .then(()=>{
                 return Commons.removeOne(Comments, comment);
               })
