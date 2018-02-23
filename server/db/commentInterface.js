@@ -11,7 +11,6 @@ CommentInterface.getOne = (id)=>{
 };
 
 CommentInterface.insert = (comment)=>{
-  console.log("insert comment: " + JSON.stringify(comment));
   return UserInterface.getOne(comment.user)
     .then(user=>{
       let oComment = {};
@@ -35,6 +34,9 @@ CommentInterface.insert = (comment)=>{
                 content: insertedComment.content
               });
               return Commons.update(Comments,comment)
+                .then(()=>{
+                  return Promise.resolve(insertedComment);
+                });
             })
           }
           else{
@@ -42,6 +44,9 @@ CommentInterface.insert = (comment)=>{
             .then(publication=>{
               publication.commentIds.push(insertedComment._id);
               return Commons.update(Publications,publication)
+                .then(()=>{
+                  return Promise.resolve(insertedComment);
+                });
             })
           }
       });
