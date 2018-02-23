@@ -367,8 +367,10 @@ db.createComment = (comment)=>{
                             let title = caption.replace(':user', comment.user.username);
                             let notification = {title: title, body: '', summaryText: summaryCaption};
                             let data = {type: 'comment', category: response.publication, key: publication._id};
+                            console.log("Enviando notificación");
                             return NotificationService.send({notification: notification, data: data},[targetUser.notificationKey])
                               .then(()=>{
+                                console.log("Notificación enviada: " + JSON.stringify(response));
                                 return Promise.resolve(response)
                               });
                           });
