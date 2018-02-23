@@ -2,7 +2,12 @@ const router = require('express').Router();
 const activityService = require('../services/activityService');
 
 router.get('/user/:user/count/:count',(req, res)=>{
-  activityService.getActivities(req.params.user,req.query,req.params.count)
+  let rowSearchParams = JSON.parse(decodeURI(JSON.stringify(req.query)));
+  let searchParams = {};
+  for(let i in rowSearchParams){
+    searchParams[i] = JSON.parse(rowSearchParams[i]);
+  }
+  activityService.getActivities(req.params.user,searchParams,req.params.count)
     .then(activities=>{res.status(200).json(activities)})
     .catch(error=>{res.status(500).send(error)})
 });

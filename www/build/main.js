@@ -42,8 +42,8 @@ var CommonsProvider = (function () {
         this.storage = storage;
         this.glosary = null;
         console.log('Hello CommonsProvider Provider');
-        this.setUserId("59f7562af36d282363087270"); //Pedro
-        // this.setUserId("59f7588ef36d282363087491"); //Laura
+        //this.setUserId("59f7562af36d282363087270"); //Pedro
+        this.setUserId("59f7588ef36d282363087491"); //Laura
         // this.setUserId("5a00bb48eea55b00126725f8"); //Julieta
         // this.setLanguage("5a5cf928734d1d3471842007"); //Inglés
         this.setLanguage("5a5e6f98734d1d3471851836"); //Español

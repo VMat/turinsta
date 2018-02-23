@@ -108,13 +108,14 @@ UserInterface.addUnreadMessage = (userId,updatedInbox)=>{
           return Commons.getOne(Users,message.author)
             .then((author)=>{
               return LanguageInterface.getCaption(updatedUser.language,["messageNotification"])
-                .then((caption)=>{
-                  let title = caption.replace(':inbox',(updatedInbox.name ? updatedInbox.name : author.username));
-                  title = "Mensaje nuevo";
-                  let notification = {title: title, icon: 'ic_launcher', body: author.username + ': ' + message.content};
-                  let data = {type: 'message', category: updatedInbox._id, key: message._id};
-                  NotificationService.send({notification: notification, data: data},[user.notificationKey]);
-                  return Promise.resolve(message);
+                .then((messageCaption)=>{
+                  return LanguageInterface.getCaption(updatedUser.language,["summaryTextNotification"])
+                    .then((summaryCaption)=>{
+                      let notification = {title: messageCaption, body: author.username + ': ' + message.content, summaryText: summaryCaption};
+                      let data = {type: 'message', category: updatedInbox._id, key: message._id};
+                      NotificationService.send({notification: notification, data: data},[user.notificationKey]);
+                      return Promise.resolve(message);
+                    })
                 })
             })
         })

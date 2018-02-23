@@ -117,13 +117,16 @@ db.addPublicationAssessment = (assessment)=>{
       .then((targetUser)=>{
         languageInterface.getCaption(targetUser.language,["publicationAssessmentAddedNotification"])
         .then((caption)=>{
-          userInterface.getOne(assessment.user)
-          .then((sender)=>{
-            let title = caption.replace(':user', sender.username).replace(':number', assessment.value);
-            let notification = {title: title, icon: 'ic_launcher', body: ''};
-            let data = {type: 'assessment', category: '', key: ''};
-            NotificationService.send({notification: notification, data: data},[targetUser.notificationKey]);
-          }); 
+          languageInterface.getCaption(targetUser.language,["summaryTextNotification"])
+          .then((summaryCaption)=>{
+            userInterface.getOne(assessment.user)
+            .then((sender)=>{
+              let title = caption.replace(':user', sender.username).replace(':number', assessment.value);
+              let notification = {title: title, body: '', summaryText: summaryCaption};
+              let data = {type: 'assessment', category: updatedPublication._id, key: ''};
+              NotificationService.send({notification: notification, data: data},[targetUser.notificationKey]);
+            }); 
+          });
         });
       });
       return Promise.all([activityInterface.insert(newOutActivity),activityInterface.insert(newInActivity)])
@@ -161,16 +164,18 @@ db.modifyPublicationAssessment = (assessment)=>{
               console.log("targetUser: " + JSON.stringify(targetUser));
               return languageInterface.getCaption(targetUser.language,["publicationAssessmentUpdatedNotification"])
                 .then((caption)=>{
-                  console.log("caption: " + JSON.stringify(caption));
-                  return userInterface.getOne(assessment.user)
-                    .then((sender)=>{
-                      let title = caption.replace(':user', sender.username).replace(':number', assessment.value);
-                      let notification = {title: title, icon: 'ic_launcher', body: ''};
-                      let data = {type: 'assessment', category: '', key: ''};
-                      console.log("publication modified: " + JSON.stringify(notification));
-                      console.log("publication data: " + JSON.stringify(data));
-                      return NotificationService.send({notification: notification, data: data},[targetUser.notificationKey]);
-                  }); 
+                  return languageInterface.getCaption(targetUser.language,["summaryTextNotification"])
+                    .then((summaryCaption)=>{
+                      return userInterface.getOne(assessment.user)
+                        .then((sender)=>{
+                          let title = caption.replace(':user', sender.username).replace(':number', assessment.value);
+                          let notification = {title: title, body: '', summaryText: summaryCaption};
+                          let data = {type: 'assessment', category: updatedPublication._id, key: ''};
+                          console.log("publication modified: " + JSON.stringify(notification));
+                          console.log("publication data: " + JSON.stringify(data));
+                          return NotificationService.send({notification: notification, data: data},[targetUser.notificationKey]);
+                        }); 
+                    });
                 });
             });
         });
@@ -204,13 +209,16 @@ db.deletePublicationAssessment = (assessment)=>{
       .then((targetUser)=>{
         languageInterface.getCaption(targetUser.language,["publicationAssessmentDeletedNotification"])
         .then((caption)=>{
-          userInterface.getOne(assessment.user)
-          .then((sender)=>{
-            let title = caption.replace(':user', sender.username);
-            let notification = {title: title, icon: 'ic_launcher', body: ''};
-            let data = {type: 'assessment', category: '', key: ''};
-            NotificationService.send({notification: notification, data: data},[targetUser.notificationKey]);
-          }); 
+          languageInterface.getCaption(targetUser.language,["summaryTextNotification"])
+          .then((summaryCaption)=>{
+            userInterface.getOne(assessment.user)
+            .then((sender)=>{
+              let title = caption.replace(':user', sender.username);
+              let notification = {title: title, body: '', summaryText: summaryCaption};
+              let data = {type: 'assessment', category: updatedPublication._id, key: ''};
+              NotificationService.send({notification: notification, data: data},[targetUser.notificationKey]);
+            });
+          });
         });
       });
       return Promise.all([activityInterface.insert(newOutActivity),activityInterface.insert(newInActivity)]);
@@ -281,10 +289,13 @@ db.createComment = (comment)=>{
         .then((targetUser)=>{
         languageInterface.getCaption(targetUser.language,["commentResponseAddedNotification"])
           .then((caption)=>{
-            let title = caption.replace(':user', comment.user.username);
-            let notification = {title: title, icon: 'ic_launcher', body: ''};
-            let data = {type: 'comment', category: '', key: ''};
-            NotificationService.send({notification: notification, data: data},[targetUser.notificationKey]);
+            languageInterface.getCaption(targetUser.language,["summaryTextNotification"])
+              .then((summaryCaption)=>{
+                let title = caption.replace(':user', comment.user.username);
+                let notification = {title: title, body: '', summaryText: summaryCaption};
+                let data = {type: 'comment', category: response.publication, key: ''};
+                NotificationService.send({notification: notification, data: data},[targetUser.notificationKey]);
+              });
           });
         });
       }
@@ -295,7 +306,7 @@ db.createComment = (comment)=>{
           caption: "publicationCommentGiven",
           params: {":user": response.user},
           relatedUsers: [response.user],
-          publication: response._id,
+          publication: response.publication,
           timestamps: {created: new Date().toISOString(), modified: null},
           seen: true
         };
@@ -305,7 +316,7 @@ db.createComment = (comment)=>{
           caption: "publicationCommentAddedNotification",
           params: {":user": comment.user},
           relatedUsers: [comment.user],
-          publication: response._id,
+          publication: response.publication,
           timestamps: {created: new Date().toISOString(), modified: null},
           seen: false
         };
@@ -313,10 +324,13 @@ db.createComment = (comment)=>{
         .then((targetUser)=>{
         languageInterface.getCaption(targetUser.language,["publicationCommentAddedNotification"])
           .then((caption)=>{
-            let title = caption.replace(':user', comment.user.username);
-            let notification = {title: title, icon: 'ic_launcher', body: ''};
-            let data = {type: 'comment', category: '', key: ''};
-            NotificationService.send({notification: notification, data: data},[targetUser.notificationKey]);
+            languageInterface.getCaption(targetUser.language,["summaryTextNotification"])
+              .then((summaryCaption)=>{
+                let title = caption.replace(':user', comment.user.username);
+                let notification = {title: title, body: '', summaryText: summaryCaption};
+                let data = {type: 'comment', category: response.publication, key: ''};
+                NotificationService.send({notification: notification, data: data},[targetUser.notificationKey]);
+              });
           });
         });
       }
@@ -354,13 +368,16 @@ db.updateComment = (comment)=>{
             .then((targetUser)=>{
               languageInterface.getCaption(targetUser.language,["commentResponseUpdatedNotification"])
                 .then((caption)=>{
-                userInterface.getOne(comment.user)
-                  .then((sender)=>{
-                    let title = caption.replace(':user', sender.username);
-                    let notification = {title: title, icon: 'ic_launcher', body: ''};
-                    let data = {type: 'comment', category: '', key: ''};
-                    NotificationService.send({notification: notification, data: data},[targetUser.notificationKey]);
-                  });
+                  languageInterface.getCaption(targetUser.language,["summaryTextNotification"])
+                    .then((summaryCaption)=>{
+                      userInterface.getOne(comment.user)
+                        .then((sender)=>{
+                          let title = caption.replace(':user', sender.username);
+                          let notification = {title: title, body: '', summaryText: summaryCaption};
+                          let data = {type: 'comment', category: publication._id, key: ''};
+                          NotificationService.send({notification: notification, data: data},[targetUser.notificationKey]);
+                        });
+                    });
                 });
             });
           }
@@ -389,13 +406,16 @@ db.updateComment = (comment)=>{
             .then((targetUser)=>{
               languageInterface.getCaption(targetUser.language,["publicationCommentUpdatedNotification"])
                 .then((caption)=>{
-                userInterface.getOne(comment.user)
-                  .then((sender)=>{
-                    let title = caption.replace(':user', sender.username);
-                    let notification = {title: title, icon: 'ic_launcher', body: ''};
-                    let data = {type: 'comment', category: '', key: ''};
-                    NotificationService.send({notification: notification, data: data},[targetUser.notificationKey]);
-                  });
+                  languageInterface.getCaption(targetUser.language,["summaryTextNotification"])
+                    .then((summaryCaption)=>{
+                      userInterface.getOne(comment.user)
+                        .then((sender)=>{
+                          let title = caption.replace(':user', sender.username);
+                          let notification = {title: title, body: '', summaryText: summaryCaption};
+                          let data = {type: 'comment', category: publication._id, key: ''};
+                          NotificationService.send({notification: notification, data: data},[targetUser.notificationKey]);
+                        });
+                    });
                 });
             });
           }
@@ -437,12 +457,15 @@ db.deleteComment = (id)=>{
                 .then((targetUser)=>{
                   languageInterface.getCaption(targetUser.language,["commentResponseDeletedNotification"])
                   .then((caption)=>{
-                      userInterface.getOne(deletedComment.user)
-                      .then((sender)=>{
-                        let title = caption.replace(':user', sender.username);
-                        let notification = {title: title, icon: 'ic_launcher', body: ''};
-                        let data = {type: 'comment', category: '', key: ''};
-                        NotificationService.send({notification: notification, data: data},[targetUser.notificationKey]);
+                    languageInterface.getCaption(targetUser.language,["summaryTextNotification"])
+                      .then((summaryCaption)=>{
+                        userInterface.getOne(deletedComment.user)
+                        .then((sender)=>{
+                          let title = caption.replace(':user', sender.username);
+                          let notification = {title: title, body: '', summaryText: summaryCaption};
+                          let data = {type: 'comment', category: publication._id, key: ''};
+                          NotificationService.send({notification: notification, data: data},[targetUser.notificationKey]);
+                        });
                       });
                   });
                 });
@@ -472,13 +495,16 @@ db.deleteComment = (id)=>{
                 .then((targetUser)=>{
                   languageInterface.getCaption(targetUser.language,["publicationCommentDeletedNotification"])
                   .then((caption)=>{
-                    userInterface.getOne(deletedComment.user)
-                    .then((sender)=>{
-                      let title = caption.replace(':user', sender.username);
-                      let notification = {title: title, icon: 'ic_launcher', body: ''};
-                      let data = {type: 'comment', category: '', key: ''};
-                      NotificationService.send({notification: notification, data: data},[targetUser.notificationKey]);
-                    });
+                    languageInterface.getCaption(targetUser.language,["summaryTextNotification"])
+                      .then((summaryCaption)=>{
+                        userInterface.getOne(deletedComment.user)
+                        .then((sender)=>{
+                          let title = caption.replace(':user', sender.username);
+                          let notification = {title: title, body: '', summaryText: summaryCaption};
+                          let data = {type: 'comment', category: publication._id, key: ''};
+                          NotificationService.send({notification: notification, data: data},[targetUser.notificationKey]);
+                        });
+                      });
                   });
                 });
               }
@@ -597,13 +623,16 @@ db.addFavoritePublication = (favorite)=>{
       .then((targetUser)=>{
         languageInterface.getCaption(targetUser.language,["favoritePublicationAddedNotification"])
         .then((caption)=>{
-          userInterface.getOne(favorite.user)
-          .then((sender)=>{
-            let title = caption.replace(':user', sender.username);
-            let notification = {title: title, icon: 'ic_launcher', body: ''};
-            let data = {type: 'favorite', category: '', key: ''};
-            NotificationService.send({notification: notification, data: data},[targetUser.notificationKey]);
-          });
+          languageInterface.getCaption(targetUser.language,["summaryTextNotification"])
+            .then((summaryCaption)=>{
+              userInterface.getOne(favorite.user)
+              .then((sender)=>{
+                let title = caption.replace(':user', sender.username);
+                let notification = {title: title, body: '', summaryText: summaryCaption};
+                let data = {type: 'favorite', category: updatedPublication._id, key: ''};
+                NotificationService.send({notification: notification, data: data},[targetUser.notificationKey]);
+              });
+            });
         });
       });
 
@@ -639,13 +668,16 @@ db.removeFavoritePublication = (favorite)=>{
       .then((targetUser)=>{
         languageInterface.getCaption(targetUser.language,["favoritePublicationDeletedNotification"])
         .then((caption)=>{
-          userInterface.getOne(favorite.user)
-          .then((sender)=>{
-            let title = caption.replace(':user', sender.username);
-            let notification = {title: title, icon: 'ic_launcher', body: ''};
-            let data = {type: 'favorite', category: '', key: ''};
-            NotificationService.send({notification: notification, data: data},[targetUser.notificationKey]);
-          });
+          languageInterface.getCaption(targetUser.language,["summaryTextNotification"])
+            .then((summaryCaption)=>{
+              userInterface.getOne(favorite.user)
+              .then((sender)=>{
+                let title = caption.replace(':user', sender.username);
+                let notification = {title: title, body: '', summaryText: summaryCaption};
+                let data = {type: 'favorite', category: updatedPublication._id, key: ''};
+                NotificationService.send({notification: notification, data: data},[targetUser.notificationKey]);
+              });
+            });
         });
       });
     
@@ -681,13 +713,16 @@ db.addUserFollower = (follower)=>{
       .then((targetUser)=>{
         languageInterface.getCaption(targetUser.language,["userFollowerAddedNotification"])
         .then((caption)=>{
-          userInterface.getOne(follower.follower)
-          .then((sender)=>{
-            let title = caption.replace(':user', sender.username);
-            let notification = {title: title, icon: 'ic_launcher', body: ''};
-            let data = {type: 'follower', category: '', key: ''};
-            NotificationService.send({notification: notification, data: data},[targetUser.notificationKey]);
-          });
+          languageInterface.getCaption(targetUser.language,["summaryTextNotification"])
+            .then((summaryCaption)=>{
+              userInterface.getOne(follower.follower)
+              .then((sender)=>{
+                let title = caption.replace(':user', sender.username);
+                let notification = {title: title, body: '', summaryText: summaryCaption};
+                let data = {type: 'follower', category: follower.follower, key: ''};
+                NotificationService.send({notification: notification, data: data},[targetUser.notificationKey]);
+              });
+            });
         });
       });
     
@@ -723,13 +758,16 @@ db.removeUserFollower = (follower)=>{
       .then((targetUser)=>{
         languageInterface.getCaption(targetUser.language,["userFollowerDeletedNotification"])
         .then((caption)=>{
-          userInterface.getOne(follower.follower)
-          .then((sender)=>{
-            let title = caption.replace(':user', sender.username);
-            let notification = {title: title, icon: 'ic_launcher', body: ''};
-            let data = {type: 'follower', category: '', key: ''};
-            NotificationService.send({notification: notification, data: data},[targetUser.notificationKey]);
-          });
+          languageInterface.getCaption(targetUser.language,["summaryTextNotification"])
+            .then((summaryCaption)=>{
+              userInterface.getOne(follower.follower)
+              .then((sender)=>{
+                let title = caption.replace(':user', sender.username);
+                let notification = {title: title, body: '', summaryText: summaryCaption};
+                let data = {type: 'follower', category: follower.follower, key: ''};
+                NotificationService.send({notification: notification, data: data},[targetUser.notificationKey]);
+              });
+            });
         });
       });
 
