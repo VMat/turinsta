@@ -13,6 +13,7 @@ Commons.getN = (Collection,filters,n,order)=>{
 };
 
 Commons.getOne = (Collection,id,fields)=>{
+  console.log("FIELDS: " + fields);
   if(fields){
     return Collection.findById(id).select(fields);
   }
