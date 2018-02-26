@@ -14,14 +14,16 @@ import {PublicationWritingPage} from "../publication-writing/publication-writing
 export class HomePage{
 
   publications : Observable<any>;
-  unreadMessagesCount: number = null;
+  unreadMessagesCount: any = null;
   @ViewChild(Slides) slides: Slides;
 
   constructor(public storageService:StorageProvider, public navCtrl: NavController, private store: Store<any>, private modalCtrl: ModalController) {
     this.store.dispatch(getPublications());
     this.publications = store.select("publications");
-    store.select("user","unreadMessages").subscribe((unreadMessagesCount)=>{
-      this.unreadMessagesCount = unreadMessagesCount;
+    this.store.select("user","unreadMessages").subscribe((unreadMessages)=>{
+      this.unreadMessagesCount = unreadMessages.reduce((acum,item)=>{
+        return acum + item.messages.length;
+      },0);
     });
   }
 

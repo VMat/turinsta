@@ -23,7 +23,7 @@ export class TabsPage {
 
   constructor(private store: Store<any>){
     this.store.select("user","unseenActivities").subscribe((unseenActivities)=>{
-      this.unseenActivitiesCount = unseenActivities.length;
+      this.unseenActivitiesCount = unseenActivities.length ? unseenActivities.length : null;
     })
   }
 
