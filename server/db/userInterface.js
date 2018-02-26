@@ -17,7 +17,7 @@ UserInterface.getOne = (id,fields)=>{
     .populate('publications');
   }
 
-  return return Commons.getOne(Users, id, fields);
+  return Commons.getOne(Users, id, fields);
 };
 
 UserInterface.insert = (user)=>{
