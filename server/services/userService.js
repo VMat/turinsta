@@ -10,9 +10,9 @@ userService.getUsers = ()=>{
   })                
 };  
       
-userService.getUser = (id)=>{
+userService.getUser = (id,fields)=>{
   return new Promise((resolve, reject)=>{
-    storageService.getUser(id).
+    storageService.getUser(id,fields).
       then(users=>resolve(users)).
       catch(error=>reject(error))        
   })                
