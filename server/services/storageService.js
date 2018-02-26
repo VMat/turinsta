@@ -110,8 +110,8 @@ storageService.getUsers = ()=>{
   return db.getUsers();
 };
 
-storageService.getUser = (id)=>{
-  return db.getUser(id);
+storageService.getUser = (id,fields)=>{
+  return db.getUser(id,fields);
 };
 
 storageService.createUser = (user)=>{
