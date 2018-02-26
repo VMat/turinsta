@@ -155,12 +155,16 @@ export class StorageProvider {
   }
   
   getUnreadMessages(userId){
-    return this.http.get(StorageProvider.baseUrl + 'users/' + userId + '/unreadMessages')
+    let params = new URLSearchParams();
+    params.set('notifications.unreadMessages', 1);
+    return this.http.get(StorageProvider.baseUrl + 'users/' + userId, {params: params})
       .map((res: Response) => res.json());
   }
   
   getUnseenActivities(userId){
-    return this.http.get(StorageProvider.baseUrl + 'users/' + userId + '/unseenActivities')
+    let params = new URLSearchParams();
+    params.set('notifications.unseenActivities', 1);
+    return this.http.get(StorageProvider.baseUrl + 'users/' + userId, {params: params})
       .map((res: Response) => res.json());
   }
   
