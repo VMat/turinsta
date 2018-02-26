@@ -23,6 +23,7 @@ export class TabsPage {
 
   constructor(private store: Store<any>){
     this.store.select("user","unseenActivities").subscribe((unseenActivities)=>{
+      console.log("unseenActivitiesBadge: " + unseenActivities);
       this.unseenActivitiesCount = unseenActivities.length ? unseenActivities.length : null;
     })
   }
