@@ -153,4 +153,15 @@ export class StorageProvider {
     return this.http.get(StorageProvider.baseUrl + 'users/' + id)
       .map((res: Response) => res.json());
   }
+  
+  getUnreadMessages(userId){
+    return this.http.get(StorageProvider.baseUrl + 'users/' + userId + '/unreadMessages')
+      .map((res: Response) => res.json());
+  }
+  
+  getUnseenActivities(userId){
+    return this.http.get(StorageProvider.baseUrl + 'users/' + userId + '/unseenActivities')
+      .map((res: Response) => res.json());
+  }
+  
 }
