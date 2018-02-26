@@ -3,6 +3,8 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import {CommonsProvider} from "../../providers/commons/commons";
 import {Observable} from "rxjs";
 import {StorageProvider} from "../../providers/storage/storage";
+import {Store} from "@ngrx/store";
+import {setUnreadMessages} from "../../providers/reducers/user.reducer";
 
 /**
  * Generated class for the ChatPage page.
@@ -26,7 +28,7 @@ export class ChatPage {
   currentUser: string = null;
   chatInfo: string = null;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private commons: CommonsProvider, private storage: StorageProvider) {}
+  constructor(public navCtrl: NavController, public navParams: NavParams, private commons: CommonsProvider, private store: Store<any>) {}
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad ChatPage');
@@ -65,6 +67,10 @@ export class ChatPage {
       this.getMessageRead().subscribe((data)=>{
         this.updateMessageStatus(data);
       });
+
+      this.readMessagesCount().subscribe((data)=>{
+          this.updateUnreadMessagesCounter(data);
+      });
     }
   }
 
@@ -92,6 +98,12 @@ export class ChatPage {
         return statusItem.name == status.status.name;
       })){targetMessage[0].generalState = status.status.name}
     }
+  }
+
+  updateUnreadMessagesCounter(data){
+    this.store.select("user","unreadMessages").first().subscribe((unreadMessagesCount)=>{
+      this.store.dispatch(setUnreadMessages(unreadMessagesCount-data.readMessagesCount));
+    });
   }
 
   connect(){
@@ -154,6 +166,14 @@ export class ChatPage {
   leftWriting(){
     return new Observable(observer => {
       this.socket.on('left-writing', (data) => {
+        observer.next(data);
+      });
+    });
+  }
+
+  readMessagesCount(){
+    return new Observable(observer => {
+      this.socket.on('read-count', (data) => {
         observer.next(data);
       });
     });

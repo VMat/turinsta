@@ -148,4 +148,9 @@ export class StorageProvider {
     return this.http.get(StorageProvider.baseUrl + 'inboxes/' + id)
       .map((res: Response) => res.json());
   }
+
+  getUser(id){
+    return this.http.get(StorageProvider.baseUrl + 'users/' + id)
+      .map((res: Response) => res.json());
+  }
 }

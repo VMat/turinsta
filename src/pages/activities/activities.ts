@@ -37,6 +37,7 @@ export class ActivitiesPage {
     this.directionFilter.value = 'IN';
     this.storageService.getActivities(this.commons.getUserId(), [this.directionFilter], this.IN_LIMIT).subscribe((activities)=>{
       this.activities = activities;
+      sessionStorage.setItem("activities", JSON.stringify(activities));
     });
   };
 

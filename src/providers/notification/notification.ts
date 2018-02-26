@@ -4,6 +4,8 @@ import 'rxjs/add/operator/map';
 import {StorageProvider} from "../storage/storage";
 import {CommonsProvider} from "../commons/commons";
 import { Socket } from 'ng-socket-io';
+import {Store} from "@ngrx/store";
+import {addUnreadMessages, addUnseenActivities} from "../reducers/user.reducer";
 
 /*
   Generated class for the NotificationProvider provider.
@@ -14,12 +16,12 @@ import { Socket } from 'ng-socket-io';
 @Injectable()
 export class NotificationProvider {
 
-  constructor(public http: Http,private commons: CommonsProvider) {
+  constructor(public http: Http,private commons: CommonsProvider, private store: Store<any>) {
     console.log('Hello NotificationProvider Provider');
   }
 
   handleNotification(notification){
-    //todo update badges
+
     if(notification.additionalData.type == 'message'){
       let currentUser = this.commons.getUserId();
       console.log("notification.additionalData: " + JSON.stringify(notification.additionalData));
@@ -27,10 +29,14 @@ export class NotificationProvider {
       socket.connect();
       socket.emit('set-inbox',{user: currentUser, inbox: notification.additionalData.category});
       socket.emit('message-received',{message: notification.additionalData.key},()=>{
-        alert("dwadwa");
         socket.disconnect();
       });
+      this.store.dispatch(addUnreadMessages());
     }
+    else{
+      this.store.dispatch(addUnseenActivities());
+    }
+
     if(notification.additionalData.coldstart){
       return {view: notification.additionalData.type, category: notification.additionalData.category, key: notification.additionalData.key}
     }

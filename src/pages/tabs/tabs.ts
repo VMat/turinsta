@@ -1,8 +1,9 @@
-import { Component } from '@angular/core';
+import {Component, ChangeDetectionStrategy} from '@angular/core';
 import { HomePage } from '../home/home';
 import { PlacesPage } from '../places/places';
 import { ActivitiesPage } from '../activities/activities';
 import { AccountPage } from '../account/account';
+import {Store} from "@ngrx/store";
 
 
 @Component({
@@ -18,11 +19,15 @@ export class TabsPage {
   activeTab: string = null;
 
   showFilters: boolean = false;
+  unseenActivitiesCount: number = null;
 
-  constructor(){}
+  constructor(private store: Store<any>){
+    this.store.select("user","unseenActivities").subscribe((unseenActivitiesCount)=>{
+      this.unseenActivitiesCount = unseenActivitiesCount;
+    })
+  }
 
   setActiveTab(tab){
     this.activeTab = tab;
   }
-
 }

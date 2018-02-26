@@ -4,6 +4,9 @@ import 'rxjs/add/operator/map';
 import {ToastController, AlertController} from "ionic-angular";
 import {Storage} from '@ionic/storage';
 import {StorageProvider} from "../storage/storage";
+import {Store} from "@ngrx/store";
+import {User} from "../models/user.model";
+import {setUnreadMessages, setUnseenActivities} from "../reducers/user.reducer";
 
 /*
   Generated class for the CommonsProvider provider.
@@ -16,14 +19,21 @@ export class CommonsProvider {
 
   glosary: any = null;
 
-  constructor(public http: Http, public toastCtrl: ToastController, public alertCtrl: AlertController, private localStorage: Storage, private storage: StorageProvider) {
+  constructor(public http: Http, public toastCtrl: ToastController, public alertCtrl: AlertController,
+              private localStorage: Storage, private storage: StorageProvider, private userStore: Store<User>) {
     console.log('Hello CommonsProvider Provider');
     // this.setUserId("59f7562af36d282363087270"); //Pedro
     this.setUserId("59f7588ef36d282363087491"); //Laura
     // this.setUserId("5a00bb48eea55b00126725f8"); //Julieta
-    // this.setLanguage("5a5cf928734d1d3471842007"); //Inglés
-    this.setLanguage("5a5e6f98734d1d3471851836"); //Español
-    // this.setLanguage("5a5d0ace734d1d3471842c83"); //Italiano
+    this.setUserData();
+  }
+
+  setUserData(){
+    this.storage.getUser(this.getUserId()).subscribe((user)=>{
+      this.setLanguage(user.language);
+      this.userStore.dispatch(setUnreadMessages(user.notifications.unreadMessages.length));
+      this.userStore.dispatch(setUnseenActivities(user.notifications.unseenActivities.length));
+    });
   }
 
   setLanguage(id){
@@ -146,5 +156,43 @@ export class CommonsProvider {
       return targetAssessment.length > 0 ? targetAssessment[0].value : null;
     }
     return null;
+  }
+
+  getChatDescription(inbox){
+    let currentUser = this.getUserId();
+    let chatDescription = null;
+    if(!inbox.name){
+      chatDescription = inbox.participants.reduce((acum,item)=>{
+        if(item._id!=currentUser){
+          return (acum != '' ? acum + ', ' + item.username : item.username);
+        }
+        return acum;
+      },'');
+    }
+    else{
+      chatDescription = inbox.name;
+    }
+    return chatDescription;
+  }
+
+  getAvatar(inbox){
+    let currentUser = this.getUserId();
+    let avatar = null;
+    if(Boolean(inbox.avatar)){
+      avatar = inbox.avatar;
+    }
+    else{
+      let targetUser = inbox.participants.filter((user)=>{
+        return user._id != currentUser
+      });
+
+      if(targetUser.length == 1){
+        avatar = targetUser[0].avatar;
+      }
+      else{
+        avatar = StorageProvider.baseUrl.replace('/api/','') + '/assets/flags/francia.ico';
+      }
+    }
+    return avatar;
   }
 }

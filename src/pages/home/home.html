@@ -11,6 +11,9 @@
         <!--<publication [data]="publication"></publication>-->
         <!--</ion-item>-->
         <!--</ion-list>-->
+        <ion-fab *ngIf="unreadMessagesCount" top right edge>
+          <button ion-fab mini color="danger">{{unreadMessagesCount}}</button>
+        </ion-fab>
         <ion-fab bottom right edge>
           <button ion-fab mini color="success"><ion-icon name="add"></ion-icon></button>
           <ion-fab-list side="left">

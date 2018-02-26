@@ -60,6 +60,7 @@ import {ChatPage} from "../pages/chat/chat";
 import {InboxWritingPage} from "../pages/inbox-writing/inbox-writing";
 import { NotificationProvider } from '../providers/notification/notification';
 import {Push} from '@ionic-native/push';
+import {userReducer} from "../providers/reducers/user.reducer";
 
 @NgModule({
   declarations: [
@@ -107,7 +108,8 @@ import {Push} from '@ionic-native/push';
     IonicModule.forRoot(MyApp),
     HttpModule,
     StoreModule.forRoot({
-      publications: publicationReducer
+      publications: publicationReducer,
+      user: userReducer
     }),
     EffectsModule.forRoot([
         PublicationEffects

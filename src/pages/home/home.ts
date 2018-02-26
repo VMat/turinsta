@@ -4,7 +4,6 @@ import {StorageProvider} from "../../providers/storage/storage";
 import {Observable} from "rxjs";
 import {Store} from "@ngrx/store";
 import {getPublications, incrementPublicationRange} from "../../providers/reducers/publication.reducer";
-import {AppState} from "../../providers/models/publication.model";
 import {PublicationWritingPage} from "../publication-writing/publication-writing";
 
 @Component({
@@ -15,10 +14,14 @@ import {PublicationWritingPage} from "../publication-writing/publication-writing
 export class HomePage{
 
   publications : Observable<any>;
+  unreadMessagesCount: number = null;
 
-  constructor(public storageService:StorageProvider, public navCtrl: NavController, private store: Store<AppState>, private modalCtrl: ModalController) {
+  constructor(public storageService:StorageProvider, public navCtrl: NavController, private store: Store<any>, private modalCtrl: ModalController) {
     this.store.dispatch(getPublications());
     this.publications = store.select("publications");
+    store.select("user","unreadMessages").subscribe((unreadMessagesCount)=>{
+      this.unreadMessagesCount = unreadMessagesCount;
+    });
   }
 
   presentPublicationWritingModal(){

@@ -11,6 +11,9 @@ import {ChatPage} from "../pages/chat/chat";
 import {StorageProvider} from "../providers/storage/storage";
 import { Socket } from 'ng-socket-io';
 import {PublicationWritingPage} from "../pages/publication-writing/publication-writing";
+import {Store} from "@ngrx/store";
+import {User} from "../providers/models/user.model";
+import {addUnreadMessages, addUnseenActivities} from "../providers/reducers/user.reducer";
 
 
 @Component({
@@ -20,7 +23,9 @@ export class MyApp {
   rootPage:any = TabsPage;
   @ViewChild('nav') nav: Nav;
 
-  constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen, imgcacheService: ImgcacheService, public push: Push, private notifications: NotificationProvider, private commons: CommonsProvider, private storageService: StorageProvider) {
+  constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen, imgcacheService: ImgcacheService, public push: Push,
+              private notifications: NotificationProvider, private commons: CommonsProvider, private storageService: StorageProvider,
+              private store: Store<User>) {
     platform.ready().then(() => {
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
@@ -45,18 +50,15 @@ export class MyApp {
       pushObject.on('notification').subscribe((notification: any) => {
         console.log('Received a notification', notification);
         pushObject.getApplicationIconBadgeNumber().then((count)=>{
-          console.log("Icon badge: " + count);
-          pushObject.setApplicationIconBadgeNumber(++count).then((iconBadge)=>{
-            console.log("Icon setted:" + iconBadge);
-          });
+          pushObject.setApplicationIconBadgeNumber(++count);
         });
         let action = this.notifications.handleNotification(notification);
         if(Boolean(action)){
           switch(action.view){
             case 'message':{
               this.storageService.getInbox(action.category).subscribe((inbox)=>{
-                this.nav.setRoot(ChatPage,{chat: inbox, chatDescription: "lalala",
-                  avatar: StorageProvider.baseUrl.replace('/api/','') + '/assets/flags/francia.ico',
+                this.nav.setRoot(ChatPage,{chat: inbox, chatDescription: this.commons.getChatDescription(inbox),
+                  avatar: this.commons.getAvatar(inbox),
                   socket: new Socket({ url: StorageProvider.baseUrl.replace('/api/','')})
                 });
               });
@@ -70,7 +72,7 @@ export class MyApp {
             }
             case 'publication':{
               this.storageService.getPublication(action.category).subscribe((publication)=>{
-                this.nav.setRoot(PublicationWritingPage,{user: this.commons.getUserId(), publication: publication,
+                this.nav.setRoot(PublicationWritingPage,{user: publication.user, publication: publication,
                 experiences: publication.experiences, comments: publication.comments});
               });
               break;

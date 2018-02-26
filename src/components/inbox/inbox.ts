@@ -27,40 +27,8 @@ export class InboxComponent {
   }
 
   ngOnInit(){
-    this.getChatDescription();
-    this.getAvatar();
-  }
-
-  getChatDescription(){
-    if(!this.data.name){
-      this.chatDescription = this.data.participants.reduce((acum,item)=>{
-        if(item._id!=this.currentUser){
-          return (acum != '' ? acum + ', ' + item.username : item.username);
-        }
-        return acum;
-      },'');
-    }
-    else{
-      this.chatDescription = this.data.name;
-    }
-  }
-
-  getAvatar(){
-    if(Boolean(this.data.avatar)){
-      this.avatar = this.data.avatar;
-    }
-    else{
-      let targetUser = this.data.participants.filter((user)=>{
-        return user._id != this.currentUser
-      });
-
-      if(targetUser.length == 1){
-        this.avatar = targetUser[0].avatar;
-      }
-      else{
-        this.avatar = StorageProvider.baseUrl.replace('/api/','') + '/assets/flags/francia.ico';
-      }
-    }
+    this.chatDescription = this.commons.getChatDescription(this.data);
+    this.avatar = this.commons.getAvatar(this.data);
   }
 
   openChat(){
