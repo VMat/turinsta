@@ -13,9 +13,9 @@ Commons.getN = (Collection,filters,n,order)=>{
 };
 
 Commons.getOne = (Collection,id,fields)=>{
-  if(Object.keys(fields).length !== 0){
-    return Collection.findById(id).select(fields);
-  }
+  //if(Object.keys(fields).length !== 0){
+  //  return Collection.findById(id).select(fields);
+  //}
   return Collection.findById(id);
 };
 
