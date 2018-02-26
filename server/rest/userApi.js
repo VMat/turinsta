@@ -13,6 +13,18 @@ router.get('/:id',(req, res)=>{
     .catch(error=>{res.status(500).send(error)})
 });
 
+router.get('/:id/unreadMessages',(req, res)=>{
+  userService.getUnreadMessages(req.params.id)
+    .then(user=>{res.status(200).json(user)})
+    .catch(error=>{res.status(500).send(error)})
+});
+
+router.get('/:id/unseenActivities',(req, res)=>{
+  userService.getUnseenActivities(req.params.id)
+    .then(user=>{res.status(200).json(user)})
+    .catch(error=>{res.status(500).send(error)})
+});
+
 router.post('/',(req, res)=>{
   userService.createUser(req.body)
     .then(user=>{res.status(200).json(user)})
