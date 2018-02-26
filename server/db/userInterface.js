@@ -10,8 +10,8 @@ UserInterface.getAll = ()=>{
   return Commons.getAll(Users);
 };
 
-UserInterface.getOne = (id)=>{
-  return Commons.getOne(Users, id)
+UserInterface.getOne = (id,fields)=>{
+  return Commons.getOne(Users, id, fields)
     .populate('publications');
 };
 
