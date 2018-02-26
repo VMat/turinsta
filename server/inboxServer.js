@@ -39,7 +39,7 @@ inboxServer.init = (server)=>{
               inboxTarget[0].messages.forEach((message)=>{
                 io.in(socket.inbox).emit('read',{...data,message: message._id, status: {name:"READ",date: new Date().toISOString()}});
               });
-              socket.emit('read-count',{readMessagesCount: inboxTarget.length})
+              socket.emit('update-unread-messages')
             }
         });
     });

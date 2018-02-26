@@ -1,6 +1,6 @@
 <!-- Generated template for the InboxListComponent component -->
 <ion-list>
-  <inbox *ngFor="let inbox of inboxes" [data]=inbox></inbox>
+  <inbox *ngFor="let inbox of inboxes" [data]=inbox [unreadMessagesCount]="getUnreadMessagesFromInbox()"></inbox>
 </ion-list>
 <ion-fab bottom right>
   <button ion-fab mini color="success"><ion-icon name="add"></ion-icon></button>

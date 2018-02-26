@@ -17,6 +17,7 @@ import {StorageProvider} from "../../providers/storage/storage";
 export class InboxComponent {
 
   @Input() data :any = null;
+  @Input() unreadMessagesCount :number = null;
   chatDescription :string = null;
   avatar :string = null;
   currentUser :string = null;

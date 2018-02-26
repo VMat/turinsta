@@ -13,7 +13,6 @@ import { Socket } from 'ng-socket-io';
 import {PublicationWritingPage} from "../pages/publication-writing/publication-writing";
 import {Store} from "@ngrx/store";
 import {User} from "../providers/models/user.model";
-import {addUnreadMessages, addUnseenActivities} from "../providers/reducers/user.reducer";
 
 
 @Component({

@@ -5,7 +5,6 @@ import {StorageProvider} from "../storage/storage";
 import {CommonsProvider} from "../commons/commons";
 import { Socket } from 'ng-socket-io';
 import {Store} from "@ngrx/store";
-import {addUnreadMessages, addUnseenActivities} from "../reducers/user.reducer";
 
 /*
   Generated class for the NotificationProvider provider.
@@ -31,10 +30,10 @@ export class NotificationProvider {
       socket.emit('message-received',{message: notification.additionalData.key},()=>{
         socket.disconnect();
       });
-      this.store.dispatch(addUnreadMessages());
+      this.commons.getUnreadMessages();
     }
     else{
-      this.store.dispatch(addUnseenActivities());
+      this.commons.getUnseenActivities();
     }
 
     if(notification.additionalData.coldstart){

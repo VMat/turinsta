@@ -1,4 +1,4 @@
 export interface User {
-  unreadMessages: number;
-  unseenActivities: number
+  unreadMessages: any;
+  unseenActivities: any
 }

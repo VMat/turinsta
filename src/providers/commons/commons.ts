@@ -22,8 +22,8 @@ export class CommonsProvider {
   constructor(public http: Http, public toastCtrl: ToastController, public alertCtrl: AlertController,
               private localStorage: Storage, private storage: StorageProvider, private userStore: Store<User>) {
     console.log('Hello CommonsProvider Provider');
-    // this.setUserId("59f7562af36d282363087270"); //Pedro
-    this.setUserId("59f7588ef36d282363087491"); //Laura
+    this.setUserId("59f7562af36d282363087270"); //Pedro
+    // this.setUserId("59f7588ef36d282363087491"); //Laura
     // this.setUserId("5a00bb48eea55b00126725f8"); //Julieta
     this.setUserData();
   }
@@ -31,8 +31,20 @@ export class CommonsProvider {
   setUserData(){
     this.storage.getUser(this.getUserId()).subscribe((user)=>{
       this.setLanguage(user.language);
-      this.userStore.dispatch(setUnreadMessages(user.notifications.unreadMessages.length));
-      this.userStore.dispatch(setUnseenActivities(user.notifications.unseenActivities.length));
+      this.userStore.dispatch(setUnreadMessages(user.notifications.unreadMessages));
+      this.userStore.dispatch(setUnseenActivities(user.notifications.unseenActivities));
+    });
+  }
+
+  getUnreadMessages(){
+    this.storage.getUser(this.getUserId()).subscribe((user)=>{
+      this.userStore.dispatch(setUnreadMessages(user.notifications.unreadMessages));
+    });
+  }
+
+  getUnseenActivities(){
+    this.storage.getUser(this.getUserId()).subscribe((user)=>{
+      this.userStore.dispatch(setUnseenActivities(user.notifications.unseenActivities));
     });
   }
 

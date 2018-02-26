@@ -68,8 +68,8 @@ export class ChatPage {
         this.updateMessageStatus(data);
       });
 
-      this.readMessagesCount().subscribe((data)=>{
-          this.updateUnreadMessagesCounter(data);
+      this.updateUnreadMessages().subscribe(()=>{
+          this.updateUnreadMessagesCounter();
       });
     }
   }
@@ -100,10 +100,8 @@ export class ChatPage {
     }
   }
 
-  updateUnreadMessagesCounter(data){
-    this.store.select("user","unreadMessages").first().subscribe((unreadMessagesCount)=>{
-      this.store.dispatch(setUnreadMessages(unreadMessagesCount-data.readMessagesCount));
-    });
+  updateUnreadMessagesCounter(){
+    this.commons.getUnreadMessages();
   }
 
   connect(){
@@ -171,9 +169,9 @@ export class ChatPage {
     });
   }
 
-  readMessagesCount(){
+  updateUnreadMessages(){
     return new Observable(observer => {
-      this.socket.on('read-count', (data) => {
+      this.socket.on('update-unread-messages', (data) => {
         observer.next(data);
       });
     });

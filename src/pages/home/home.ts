@@ -1,5 +1,5 @@
-import {Component, ChangeDetectionStrategy} from '@angular/core';
-import {NavController, ModalController} from 'ionic-angular';
+import {Component, ChangeDetectionStrategy, ViewChild} from '@angular/core';
+import {NavController, ModalController, Slides} from 'ionic-angular';
 import {StorageProvider} from "../../providers/storage/storage";
 import {Observable} from "rxjs";
 import {Store} from "@ngrx/store";
@@ -15,6 +15,7 @@ export class HomePage{
 
   publications : Observable<any>;
   unreadMessagesCount: number = null;
+  @ViewChild(Slides) slides: Slides;
 
   constructor(public storageService:StorageProvider, public navCtrl: NavController, private store: Store<any>, private modalCtrl: ModalController) {
     this.store.dispatch(getPublications());
@@ -22,6 +23,10 @@ export class HomePage{
     store.select("user","unreadMessages").subscribe((unreadMessagesCount)=>{
       this.unreadMessagesCount = unreadMessagesCount;
     });
+  }
+
+  openInboxPage(){
+    this.slides.slideTo(this.slides.length()-1);
   }
 
   presentPublicationWritingModal(){
