@@ -12,7 +12,10 @@ Commons.getN = (Collection,filters,n,order)=>{
       .limit(Number(n));
 };
 
-Commons.getOne = (Collection,id)=>{
+Commons.getOne = (Collection,id,fields)=>{
+  if(fields){
+    return Collection.findById(id).select(fields);
+  }
   return Collection.findById(id);
 };
 
