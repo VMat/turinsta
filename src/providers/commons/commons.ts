@@ -37,13 +37,13 @@ export class CommonsProvider {
   }
 
   getUnreadMessages(){
-    this.storage.getUser(this.getUserId()).subscribe((user)=>{
+    this.storage.getUnreadMessages(this.getUserId()).subscribe((user)=>{
       this.userStore.dispatch(setUnreadMessages(user.notifications.unreadMessages));
     });
   }
 
   getUnseenActivities(){
-    this.storage.getUser(this.getUserId()).subscribe((user)=>{
+    this.storage.getUnseenActivities(this.getUserId()).subscribe((user)=>{
       this.userStore.dispatch(setUnseenActivities(user.notifications.unseenActivities));
     });
   }
