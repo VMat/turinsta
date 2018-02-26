@@ -13,7 +13,10 @@ Commons.getN = (Collection,filters,n,order)=>{
 };
 
 Commons.getOne = (Collection,id,fields)=>{
-  return Collection.findById(id).select(fields);
+  if(fields){
+    return Collection.findById(id).select(fields);
+  }
+  return Collection.findById(id);
 };
 
 Commons.insert = (newPublication)=>{
