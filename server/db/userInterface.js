@@ -11,8 +11,13 @@ UserInterface.getAll = ()=>{
 };
 
 UserInterface.getOne = (id,fields)=>{
-  return Commons.getOne(Users, id, fields)
+  
+  if(fields.hasOwnProperty('publications') || Object.keys(fields).length === 0){
+    return Commons.getOne(Users, id, fields)
     .populate('publications');
+  }
+
+  return return Commons.getOne(Users, id, fields);
 };
 
 UserInterface.insert = (user)=>{
