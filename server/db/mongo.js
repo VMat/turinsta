@@ -620,8 +620,8 @@ db.getUsers = ()=>{
   return userInterface.getAll();
 };
 
-db.getUser = (id)=>{
-  return userInterface.getOne(id);
+db.getUser = (id,fields)=>{
+  return userInterface.getOne(id,fields);
 };
 
 db.createUser = (user)=>{
