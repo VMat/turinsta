@@ -8,7 +8,7 @@ router.get('/',(req, res)=>{
 });
 
 router.get('/:id',(req, res)=>{
-  userService.getUser(req.params.id)
+  userService.getUser(req.params.id,req.query)
     .then(user=>{res.status(200).json(user)})
     .catch(error=>{res.status(500).send(error)})
 });
