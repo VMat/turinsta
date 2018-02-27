@@ -53,6 +53,9 @@ export class MyApp {
         });
         let action = this.notifications.handleNotification(notification);
         if(Boolean(action)){
+          pushObject.getApplicationIconBadgeNumber().then((count)=>{
+            pushObject.setApplicationIconBadgeNumber(--count);
+          });
           switch(action.view){
             case 'message':{
               this.storageService.getInbox(action.category).subscribe((inbox)=>{
