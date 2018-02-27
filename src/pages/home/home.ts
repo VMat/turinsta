@@ -14,13 +14,14 @@ import {PublicationWritingPage} from "../publication-writing/publication-writing
 export class HomePage{
 
   publications : Observable<any>;
-  unreadMessagesCount: any = null;
+  unreadMessagesCount: number = null;
   @ViewChild(Slides) slides: Slides;
 
   constructor(public storageService:StorageProvider, public navCtrl: NavController, private store: Store<any>, private modalCtrl: ModalController) {
     this.store.dispatch(getPublications());
     this.publications = store.select("publications");
     this.store.select("user","unreadMessages").subscribe((unreadMessages)=>{
+      console.log(unreadMessages);
       this.unreadMessagesCount = unreadMessages.reduce((acum,item)=>{
         return acum + item.messages.length;
       },0);

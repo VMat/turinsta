@@ -13,7 +13,10 @@ Commons.getN = (Collection,filters,n,order)=>{
 };
 
 Commons.getOne = (Collection,id,fields)=>{
-  return Collection.findById(id).select(fields);  
+  for(let key in fields){
+    fields[key] = Number(fields[key]);
+  }
+  return Collection.findById(id).select(fields);
 };
 
 Commons.insert = (newPublication)=>{
@@ -23,7 +26,7 @@ Commons.insert = (newPublication)=>{
 Commons.patch = (Collection,id,fields)=>{
   return Collection.findByIdAndUpdate(id,{$set: fields});
 };
-    
+
 Commons.update = (Collection,doc)=>{
   return Collection.findByIdAndUpdate(doc._id, doc, {upsert:false});
 };
@@ -31,7 +34,7 @@ Commons.update = (Collection,doc)=>{
 Commons.removeAll = (Collection)=>{
   return Collection.remove();
 };
-    
+
 Commons.removeWithFilter = (Collection,filter)=>{
   return Collection.remove(filter);
 };

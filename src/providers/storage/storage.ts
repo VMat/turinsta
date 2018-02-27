@@ -153,19 +153,19 @@ export class StorageProvider {
     return this.http.get(StorageProvider.baseUrl + 'users/' + id)
       .map((res: Response) => res.json());
   }
-  
+
   getUnreadMessages(userId){
     let params = new URLSearchParams();
-    params.set('notifications.unreadMessages', 1);
+    params.set('notifications.unreadMessages', '1');
     return this.http.get(StorageProvider.baseUrl + 'users/' + userId, {params: params})
       .map((res: Response) => res.json());
   }
-  
+
   getUnseenActivities(userId){
     let params = new URLSearchParams();
-    params.set('notifications.unseenActivities', 1);
+    params.set('notifications.unseenActivities', '1');
     return this.http.get(StorageProvider.baseUrl + 'users/' + userId, {params: params})
       .map((res: Response) => res.json());
   }
-  
+
 }
