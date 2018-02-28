@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import {IonicPage, NavController, NavParams, ViewController, AlertController} from 'ionic-angular';
+import {StorageProvider} from "../../providers/storage/storage";
+import {CommonsProvider} from "../../providers/commons/commons";
 
 /**
  * Generated class for the InboxWritingPage page.
@@ -16,8 +18,11 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 export class InboxWritingPage {
 
   multipleSelection: boolean = null;
+  followedes: any = null;
+  followedesLimit: number = 50;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private viewCtrl: ViewController,
+              private alertCtrl: AlertController, private storage: StorageProvider, private commons: CommonsProvider) {
   }
 
   ionViewDidLoad() {
@@ -26,6 +31,55 @@ export class InboxWritingPage {
 
   ionViewWillLoad(){
     this.multipleSelection = this.navParams.get("multipleSelection");
+    this.storage.getFollowedes(this.commons.getUserId(),this.followedesLimit).subscribe((followedes)=>{
+      this.followedes = followedes;
+    });
   }
 
+  dismiss(){
+    this.viewCtrl.dismiss();
+  }
+
+  checkNeededField(){
+    return true;
+  }
+
+  confirmSave() {
+    if(this.checkNeededField()){
+      let confirm = this.alertCtrl.create({
+        title: 'Confirmar operación',
+        message: '¿Está seguro que desea grabar los cambios?',
+        buttons: [
+          {
+            text: 'Aceptar',
+            handler: () => {
+              this.saveInbox();
+            }
+          },
+          {
+            text: 'Cancelar',
+            handler: () => {
+            }
+          }
+        ]
+      });
+      confirm.present();
+    }
+    else{
+
+    }
+  }
+
+  saveInbox(){
+    alert("Inbox created!");
+    this.viewCtrl.dismiss();
+  }
+
+  doInfinite(event){
+    this.followedesLimit += 50;
+    this.storage.getFollowedes(this.commons.getUserId(),this.followedesLimit).subscribe((followedes)=>{
+      this.followedes = followedes;
+      event.complete();
+    });
+  }
 }
