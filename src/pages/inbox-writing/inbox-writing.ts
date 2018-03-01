@@ -20,6 +20,8 @@ export class InboxWritingPage {
   multipleSelection: boolean = null;
   followedes: any = null;
   followedesLimit: number = 50;
+  selectedUsers: any = [];
+  inboxName: string = null;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private viewCtrl: ViewController,
               private alertCtrl: AlertController, private storage: StorageProvider, private commons: CommonsProvider) {
@@ -37,6 +39,16 @@ export class InboxWritingPage {
     });
   }
 
+  updateSelectedUsers(userId){
+    let index = this.selectedUsers.indexOf(userId);
+    if(index!=-1){
+      this.selectedUsers.splice(index,1);
+    }
+    else{
+      this.selectedUsers.push(userId)
+    }
+  }
+
   dismiss(){
     this.viewCtrl.dismiss();
   }
@@ -47,31 +59,11 @@ export class InboxWritingPage {
 
   confirmSave() {
     if(this.checkNeededField()){
-      let confirm = this.alertCtrl.create({
-        title: 'Confirmar operación',
-        message: '¿Está seguro que desea grabar los cambios?',
-        buttons: [
-          {
-            text: 'Aceptar',
-            handler: () => {
-              this.saveInbox();
-            }
-          },
-          {
-            text: 'Cancelar',
-            handler: () => {
-            }
-          }
-        ]
-      });
-      confirm.present();
-    }
-    else{
-
+      this.saveInbox({name: this.inboxName, users: this.selectedUsers});
     }
   }
 
-  saveInbox(){
+  saveInbox(inbox){
     alert("Inbox created!");
     this.viewCtrl.dismiss();
   }

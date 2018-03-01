@@ -23,9 +23,26 @@
 </ion-header>
 
 <ion-content padding>
-  MultipleSelectionActivated: {{multipleSelection}}
-  <ion-list>
-    <ion-item *ngFor="let followed of followedes"></ion-item>
+  <ion-list-header *ngIf="multipleSelection">
+    <ion-input [(ngModel)]="inboxName" placeholder="Ingrese nombre del grupo"></ion-input>
+  </ion-list-header>
+  <ion-list *ngIf="!multipleSelection" radio-group [(ngModel)]="selectedUsers">
+    <ion-item *ngFor="let followed of followedes">
+      <ion-avatar item-start>
+        <img src="{{followed.avatar}}"/>
+      </ion-avatar>
+      <ion-label>{{followed.username}}</ion-label>
+      <ion-radio  value="{{[followed._id]}}"></ion-radio>
+    </ion-item>
+  </ion-list>
+  <ion-list *ngIf="multipleSelection">
+    <ion-item *ngFor="let followed of followedes">
+      <ion-avatar item-start>
+        <img src="{{followed.avatar}}"/>
+      </ion-avatar>
+      <ion-label>{{followed.username}}</ion-label>
+      <ion-checkbox item-end color="primary" (ionChange)="updateSelectedUsers(followed._id)"></ion-checkbox>
+    </ion-item>
   </ion-list>
   <ion-infinite-scroll (ionInfinite)="doInfinite($event)">
     <ion-infinite-scroll-content
