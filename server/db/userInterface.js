@@ -25,7 +25,7 @@ UserInterface.getFollowedes = (id, n)=>{
   console.log("FILTERS: " + JSON.stringify(filters));
   return Users.aggregate([
     { $group: {_id: '$username'  }},
-    ...filters,
+    // ...filters,
     {$sort: {username: 1}},
     {$limit: Number(n)}
   ]).exec();
