@@ -849,9 +849,7 @@ var InboxWritingPage = (function () {
     InboxWritingPage.prototype.ionViewWillLoad = function () {
         var _this = this;
         this.multipleSelection = this.navParams.get("multipleSelection");
-        alert("0");
         this.storage.getFollowedes(this.commons.getUserId(), this.followedesLimit).subscribe(function (followedes) {
-            alert("1");
             sessionStorage.setItem("followedes", JSON.stringify(followedes));
             _this.followedes = followedes;
         });
