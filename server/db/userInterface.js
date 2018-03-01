@@ -21,13 +21,14 @@ UserInterface.getOne = (id,fields)=>{
 };
 
 UserInterface.getFollowedes = (id, n)=>{
-  let filters = Commons.processAggregateParams({"_id": {operation: "EQUAL", value: id}});
-  console.log("FILTERS: " + JSON.stringify(filters));
-  return Users.aggregate([
-    // ...filters,
-    {$sort: {"user.username": 1}},
-    {$limit: Number(n)}
-  ]).exec();
+  return Commons.getN(Users,{followers: id},n,{username: 1});
+  // let filters = Commons.processAggregateParams({"_id": {operation: "EQUAL", value: id}});
+  // console.log("FILTERS: " + JSON.stringify(filters));
+  // return Users.aggregate([
+  //   // ...filters,
+  //   {$sort: {"user.username": 1}},
+  //   {$limit: Number(n)}
+  // ]).exec();
 };
 
 UserInterface.insert = (user)=>{
