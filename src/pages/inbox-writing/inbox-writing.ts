@@ -31,7 +31,9 @@ export class InboxWritingPage {
 
   ionViewWillLoad(){
     this.multipleSelection = this.navParams.get("multipleSelection");
+    alert("0");
     this.storage.getFollowedes(this.commons.getUserId(),this.followedesLimit).subscribe((followedes)=>{
+      alert("1");
       sessionStorage.setItem("followedes", JSON.stringify(followedes));
       this.followedes = followedes;
     });

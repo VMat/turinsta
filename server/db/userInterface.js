@@ -21,7 +21,8 @@ UserInterface.getOne = (id,fields)=>{
 };
 
 UserInterface.getFollowedes = (id, n)=>{
-  let filters = Commons.processAggregateParams({followedes: {operation: "CONTAINS", value: id}});
+  let filters = Commons.processAggregateParams({followers: {operation: "CONTAINS", value: id}});
+  console.log("FILTERS: " + JSON.stringify(filters));
   return Users.aggregate([
     {},
     ...filters,
