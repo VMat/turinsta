@@ -24,8 +24,11 @@ UserInterface.getFollowedes = (id, n)=>{
   let filters = Commons.processAggregateParams({"_id": {operation: "EQUAL", value: id}});
   console.log("FILTERS: " + JSON.stringify(filters));
   return Users.aggregate([
+    {$group: {
+    _id: "$_id"
+    }},
     ...filters,
-    {$sort: {"username": 1}},
+    // {$sort: {"username": 1}},
     {$limit: Number(n)}
   ]).exec();
 };
