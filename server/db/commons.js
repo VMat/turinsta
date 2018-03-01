@@ -12,7 +12,7 @@ Commons.getN = (Collection,filters,n,order)=>{
       .limit(Number(n));
 };
 
-Commons.getOne = (Collection,id,fields)=>{
+Commons.getOne = (Collection,id,fields={})=>{
   for(let key in fields){
     fields[key] = Number(fields[key]);
   }

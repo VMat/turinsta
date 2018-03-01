@@ -11,13 +11,23 @@ UserInterface.getAll = ()=>{
 };
 
 UserInterface.getOne = (id,fields)=>{
-  
+
   if(fields.hasOwnProperty('publications') || Object.keys(fields).length === 0){
     return Commons.getOne(Users, id, fields)
     .populate('publications');
   }
 
   return Commons.getOne(Users, id, fields);
+};
+
+UserInterface.getFollowedes = (id, n)=>{
+  let filters = Commons.processAggregateParams({followedes: {operation: "CONTAINS", value: id}});
+  return Users.aggregate([
+    {},
+    ...filters,
+    {$sort: "username"},
+    {$limit: Number(n)}
+  ]).exec();
 };
 
 UserInterface.insert = (user)=>{

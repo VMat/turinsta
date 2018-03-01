@@ -522,7 +522,7 @@ db.deleteComment = (id)=>{
                   timestamps: {created: new Date().toISOString(), modified: null},
                   seen: false
                 };
-                return Promise.all([activityInterface.insert(newOutActivity),activityInterface.insert(newInActivity)]);   
+                return Promise.all([activityInterface.insert(newOutActivity),activityInterface.insert(newInActivity)]);
               }
               else{
                 let newOutActivity = {
@@ -622,6 +622,10 @@ db.getUsers = ()=>{
 
 db.getUser = (id,fields)=>{
   return userInterface.getOne(id,fields);
+};
+
+db.getFollowedes = (id,count)=>{
+  return userInterface.getFollowedes(id,count);
 };
 
 db.createUser = (user)=>{

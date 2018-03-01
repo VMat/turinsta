@@ -114,6 +114,10 @@ storageService.getUser = (id,fields)=>{
   return db.getUser(id,fields);
 };
 
+storageService.getFollowedes = (id,count)=>{
+  return db.getFollowedes(id,count);
+};
+
 storageService.createUser = (user)=>{
   return db.createUser(user);
 };

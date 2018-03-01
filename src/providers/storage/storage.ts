@@ -169,7 +169,7 @@ export class StorageProvider {
   }
 
   getFollowedes(userId,count){
-    return this.http.get(StorageProvider.baseUrl + 'users/' + userId + '/followedes/count' + count)
+    return this.http.get(StorageProvider.baseUrl + 'users/' + userId + '/followedes/count/' + count)
       .map((res: Response) => res.json());
   }
 
