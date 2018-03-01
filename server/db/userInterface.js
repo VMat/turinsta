@@ -21,14 +21,14 @@ UserInterface.getOne = (id,fields)=>{
 };
 
 UserInterface.getFollowedes = (id, n)=>{
-  let filters = Commons.processAggregateParams({"user.followers": {operation: "CONTAINS", value: id}});
+  let filters = Commons.processAggregateParams({"$user.followers": {operation: "CONTAINS", value: id}});
   console.log("FILTERS: " + JSON.stringify(filters));
   return Users.aggregate([
     {$group: {
       user: {$first: "$$ROOT"}
     }},
     ...filters,
-    {$sort: {"user.username": 1}},
+    {$sort: {"$user.username": 1}},
     {$limit: Number(n)}
   ]).exec();
 };
