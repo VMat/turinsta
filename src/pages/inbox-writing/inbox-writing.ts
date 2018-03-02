@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import {IonicPage, NavController, NavParams, ViewController, AlertController} from 'ionic-angular';
 import {StorageProvider} from "../../providers/storage/storage";
 import {CommonsProvider} from "../../providers/commons/commons";
+import {ImagePicker} from "@ionic-native/image-picker";
+import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-native/file-transfer';
 
 /**
  * Generated class for the InboxWritingPage page.
@@ -26,7 +28,8 @@ export class InboxWritingPage {
   readonly PARTICIPANTS_LIMIT = 20;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private viewCtrl: ViewController,
-              private alertCtrl: AlertController, private storage: StorageProvider, private commons: CommonsProvider) {
+              private alertCtrl: AlertController, private storage: StorageProvider, private commons: CommonsProvider,
+              private imagePicker: ImagePicker, private transfer: FileTransfer) {
   }
 
   ionViewDidLoad() {
@@ -54,6 +57,38 @@ export class InboxWritingPage {
         this.commons.presentToast("Has alcanzado el límite de 20 participantes");
       }
     }
+  }
+
+  openImagePicker(){
+    let options = {
+      maximumImagesCount: 1,
+      width: 500,
+      height: 500,
+      quality: 100
+    };
+
+    this.imagePicker.getPictures(options).then(
+      // file_uris => this._navCtrl.push(GalleryPage, {images: file_uris}),
+      file_uris => {
+        if(file_uris.length==0){
+          return false;
+        }
+        this.inboxAvatar = file_uris[0];
+      }
+    );
+  }
+
+  uploadPic(image) {
+    let uri = StorageProvider.baseUrl + 'inboxes/avatar';
+    let options: FileUploadOptions = {
+      fileKey: 'turinstafile',
+      fileName: this.inboxName,
+      chunkedMode: true,
+      mimeType: "image/jpeg",
+      headers: {}
+    };
+    const ft: FileTransferObject = this.transfer.create();
+    return ft.upload(image, uri, options);
   }
 
   openInbox(user){
@@ -101,7 +136,16 @@ export class InboxWritingPage {
 
   saveInbox(){
     this.selectedUsers.push(this.commons.getUserId());
-    this.viewCtrl.dismiss({name: this.inboxName, participants: this.selectedUsers, avatar: this.inboxAvatar, messages: []});
+
+    if(this.inboxAvatar){
+      this.uploadPic(this.inboxAvatar).then((avatarUrl)=>{
+        alert(JSON.stringify(avatarUrl));
+        this.viewCtrl.dismiss({name: this.inboxName, participants: this.selectedUsers, avatar: avatarUrl, messages: []});
+      })
+    }
+    else{
+      this.viewCtrl.dismiss({name: this.inboxName, participants: this.selectedUsers, avatar: this.inboxAvatar, messages: []});
+    }
   }
 
   doInfinite(event){

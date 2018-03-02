@@ -165,22 +165,20 @@ var CommonsProvider = (function () {
         var _this = this;
         this.storage.getUser(this.getUserId()).subscribe(function (user) {
             _this.setLanguage(user.language);
-            _this.userStore.dispatch(Object(__WEBPACK_IMPORTED_MODULE_7__reducers_user_reducer__["a" /* setAvatar */])(user.avatar));
-            _this.userStore.dispatch(Object(__WEBPACK_IMPORTED_MODULE_7__reducers_user_reducer__["d" /* setUsername */])(user.username));
-            _this.userStore.dispatch(Object(__WEBPACK_IMPORTED_MODULE_7__reducers_user_reducer__["b" /* setUnreadMessages */])(user.notifications.unreadMessages));
-            _this.userStore.dispatch(Object(__WEBPACK_IMPORTED_MODULE_7__reducers_user_reducer__["c" /* setUnseenActivities */])(user.notifications.unseenActivities));
+            _this.userStore.dispatch(Object(__WEBPACK_IMPORTED_MODULE_7__reducers_user_reducer__["a" /* setUnreadMessages */])(user.notifications.unreadMessages));
+            _this.userStore.dispatch(Object(__WEBPACK_IMPORTED_MODULE_7__reducers_user_reducer__["b" /* setUnseenActivities */])(user.notifications.unseenActivities));
         });
     };
     CommonsProvider.prototype.getUnreadMessages = function () {
         var _this = this;
         this.storage.getUnreadMessages(this.getUserId()).subscribe(function (user) {
-            _this.userStore.dispatch(Object(__WEBPACK_IMPORTED_MODULE_7__reducers_user_reducer__["b" /* setUnreadMessages */])(user.notifications.unreadMessages));
+            _this.userStore.dispatch(Object(__WEBPACK_IMPORTED_MODULE_7__reducers_user_reducer__["a" /* setUnreadMessages */])(user.notifications.unreadMessages));
         });
     };
     CommonsProvider.prototype.getUnseenActivities = function () {
         var _this = this;
         this.storage.getUnseenActivities(this.getUserId()).subscribe(function (user) {
-            _this.userStore.dispatch(Object(__WEBPACK_IMPORTED_MODULE_7__reducers_user_reducer__["c" /* setUnseenActivities */])(user.notifications.unseenActivities));
+            _this.userStore.dispatch(Object(__WEBPACK_IMPORTED_MODULE_7__reducers_user_reducer__["b" /* setUnseenActivities */])(user.notifications.unseenActivities));
         });
     };
     CommonsProvider.prototype.setLanguage = function (id) {
@@ -329,10 +327,10 @@ var CommonsProvider = (function () {
 }());
 CommonsProvider = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Injectable"])(),
-    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* Http */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* Http */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_3_ionic_angular__["q" /* ToastController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3_ionic_angular__["q" /* ToastController */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_3_ionic_angular__["b" /* AlertController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3_ionic_angular__["b" /* AlertController */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_4__ionic_storage__["b" /* Storage */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_4__ionic_storage__["b" /* Storage */]) === "function" && _d || Object, typeof (_e = typeof __WEBPACK_IMPORTED_MODULE_5__storage_storage__["a" /* StorageProvider */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_5__storage_storage__["a" /* StorageProvider */]) === "function" && _e || Object, typeof (_f = typeof __WEBPACK_IMPORTED_MODULE_6__ngrx_store__["h" /* Store */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_6__ngrx_store__["h" /* Store */]) === "function" && _f || Object])
+    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* Http */], __WEBPACK_IMPORTED_MODULE_3_ionic_angular__["q" /* ToastController */], __WEBPACK_IMPORTED_MODULE_3_ionic_angular__["b" /* AlertController */],
+        __WEBPACK_IMPORTED_MODULE_4__ionic_storage__["b" /* Storage */], __WEBPACK_IMPORTED_MODULE_5__storage_storage__["a" /* StorageProvider */], __WEBPACK_IMPORTED_MODULE_6__ngrx_store__["h" /* Store */]])
 ], CommonsProvider);
 
-var _a, _b, _c, _d, _e, _f;
 //# sourceMappingURL=commons.js.map
 
 /***/ }),
@@ -546,10 +544,6 @@ var StorageProvider = StorageProvider_1 = (function () {
         return this.http.get(StorageProvider_1.baseUrl + 'inboxes/' + id)
             .map(function (res) { return res.json(); });
     };
-    StorageProvider.prototype.createInbox = function (inbox) {
-        return this.http.post(StorageProvider_1.baseUrl + 'inboxes/', inbox, { headers: StorageProvider_1.headers })
-            .map(function (res) { return res.json(); });
-    };
     StorageProvider.prototype.getUser = function (id) {
         return this.http.get(StorageProvider_1.baseUrl + 'users/' + id)
             .map(function (res) { return res.json(); });
@@ -576,10 +570,10 @@ StorageProvider.baseUrl = 'https://turinsta-staging.herokuapp.com/api/';
 StorageProvider.headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["a" /* Headers */]();
 StorageProvider = StorageProvider_1 = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Injectable"])(),
-    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* Http */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* Http */]) === "function" && _a || Object])
+    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* Http */]])
 ], StorageProvider);
 
-var StorageProvider_1, _a;
+var StorageProvider_1;
 //# sourceMappingURL=storage.js.map
 
 /***/ }),
@@ -818,6 +812,8 @@ DescriptionWritingPage = __decorate([
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(7);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_storage_storage__ = __webpack_require__(14);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_commons_commons__ = __webpack_require__(12);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__ionic_native_image_picker__ = __webpack_require__(276);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__ionic_native_file_transfer__ = __webpack_require__(278);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -831,6 +827,8 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
+
+
 /**
  * Generated class for the InboxWritingPage page.
  *
@@ -838,13 +836,15 @@ var __metadata = (this && this.__metadata) || function (k, v) {
  * Ionic pages and navigation.
  */
 var InboxWritingPage = (function () {
-    function InboxWritingPage(navCtrl, navParams, viewCtrl, alertCtrl, storage, commons) {
+    function InboxWritingPage(navCtrl, navParams, viewCtrl, alertCtrl, storage, commons, imagePicker, transfer) {
         this.navCtrl = navCtrl;
         this.navParams = navParams;
         this.viewCtrl = viewCtrl;
         this.alertCtrl = alertCtrl;
         this.storage = storage;
         this.commons = commons;
+        this.imagePicker = imagePicker;
+        this.transfer = transfer;
         this.multipleSelection = null;
         this.followedes = null;
         this.followedesLimit = 50;
@@ -877,6 +877,35 @@ var InboxWritingPage = (function () {
                 this.commons.presentToast("Has alcanzado el límite de 20 participantes");
             }
         }
+    };
+    InboxWritingPage.prototype.openImagePicker = function () {
+        var _this = this;
+        var options = {
+            maximumImagesCount: 1,
+            width: 500,
+            height: 500,
+            quality: 100
+        };
+        this.imagePicker.getPictures(options).then(
+        // file_uris => this._navCtrl.push(GalleryPage, {images: file_uris}),
+        function (file_uris) {
+            if (file_uris.length == 0) {
+                return false;
+            }
+            _this.inboxAvatar = file_uris[0];
+        });
+    };
+    InboxWritingPage.prototype.uploadPic = function (image) {
+        var uri = __WEBPACK_IMPORTED_MODULE_2__providers_storage_storage__["a" /* StorageProvider */].baseUrl + 'inboxes/avatar';
+        var options = {
+            fileKey: 'turinstafile',
+            fileName: this.inboxName,
+            chunkedMode: true,
+            mimeType: "image/jpeg",
+            headers: {}
+        };
+        var ft = this.transfer.create();
+        return ft.upload(image, uri, options);
     };
     InboxWritingPage.prototype.openInbox = function (user) {
         this.viewCtrl.dismiss({ name: this.inboxName, participants: [user], avatar: this.inboxAvatar, messages: [] });
@@ -919,8 +948,17 @@ var InboxWritingPage = (function () {
         }
     };
     InboxWritingPage.prototype.saveInbox = function () {
+        var _this = this;
         this.selectedUsers.push(this.commons.getUserId());
-        this.viewCtrl.dismiss({ name: this.inboxName, participants: this.selectedUsers, avatar: this.inboxAvatar, messages: [] });
+        if (this.inboxAvatar) {
+            this.uploadPic(this.inboxAvatar).then(function (avatarUrl) {
+                alert(avatarUrl);
+                _this.viewCtrl.dismiss({ name: _this.inboxName, participants: _this.selectedUsers, avatar: avatarUrl, messages: [] });
+            });
+        }
+        else {
+            this.viewCtrl.dismiss({ name: this.inboxName, participants: this.selectedUsers, avatar: this.inboxAvatar, messages: [] });
+        }
     };
     InboxWritingPage.prototype.doInfinite = function (event) {
         var _this = this;
@@ -934,12 +972,12 @@ var InboxWritingPage = (function () {
 }());
 InboxWritingPage = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
-        selector: 'page-inbox-writing',template:/*ion-inline-start:"C:\Users\Matias\WebstormProjects\turinsta\src\pages\inbox-writing\inbox-writing.html"*/'<!--\n  Generated template for the InboxWritingPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-header>\n\n  <ion-navbar>\n    <ion-item no-lines style="text-align: center">\n      <button item-start ion-button clear (click)="dismiss()">\n        <ion-icon name="close"></ion-icon>\n      </button>\n      <ion-title>Nuevo chat</ion-title>\n      <div *ngIf="multipleSelection" item-end>\n        <button ion-button clear (click)="confirmSave()">\n          <ion-icon name="checkmark" color="success"></ion-icon>\n        </button>\n      </div>\n    </ion-item>\n  </ion-navbar>\n\n</ion-header>\n\n<ion-content padding>\n  <ion-list-header *ngIf="multipleSelection">\n    <ion-input [(ngModel)]="inboxName" placeholder="Ingrese nombre del grupo"></ion-input>\n  </ion-list-header>\n  <ion-list *ngIf="!multipleSelection">\n    <ion-item *ngFor="let followed of followedes" (click)="openInbox(followed)">\n      <ion-avatar item-start>\n        <img src="{{followed.avatar}}"/>\n      </ion-avatar>\n      <ion-label>{{followed.username}}</ion-label>\n    </ion-item>\n  </ion-list>\n  <ion-list *ngIf="multipleSelection">\n    <ion-item *ngFor="let followed of followedes">\n      <ion-avatar item-start>\n        <img src="{{followed.avatar}}"/>\n      </ion-avatar>\n      <ion-label>{{followed.username}}</ion-label>\n      <ion-checkbox item-end color="primary" (ionChange)="updateSelectedUsers(followed._id)"></ion-checkbox>\n    </ion-item>\n  </ion-list>\n  <ion-infinite-scroll (ionInfinite)="doInfinite($event)">\n    <ion-infinite-scroll-content\n      loadingSpinner="bubbles"\n      loadingText="Obteniendo más información...">\n    </ion-infinite-scroll-content>\n  </ion-infinite-scroll>\n</ion-content>\n'/*ion-inline-end:"C:\Users\Matias\WebstormProjects\turinsta\src\pages\inbox-writing\inbox-writing.html"*/,
+        selector: 'page-inbox-writing',template:/*ion-inline-start:"C:\Users\Matias\WebstormProjects\turinsta\src\pages\inbox-writing\inbox-writing.html"*/'<!--\n  Generated template for the InboxWritingPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-header>\n\n  <ion-navbar>\n    <ion-item no-lines style="text-align: center">\n      <button item-start ion-button clear (click)="dismiss()">\n        <ion-icon name="close"></ion-icon>\n      </button>\n      <ion-title>Nuevo chat</ion-title>\n      <div *ngIf="multipleSelection" item-end>\n        <button ion-button clear (click)="confirmSave()">\n          <ion-icon name="checkmark" color="success"></ion-icon>\n        </button>\n      </div>\n    </ion-item>\n  </ion-navbar>\n\n</ion-header>\n\n<ion-content padding>\n  <ion-list-header *ngIf="multipleSelection">\n    <ion-item no-lines>\n      <ion-avatar>\n        <img src="{{inboxAvatar}}"/>\n      </ion-avatar>\n      <ion-input [(ngModel)]="inboxName" placeholder="Ingrese el nombre del grupo..."></ion-input>\n      <button item-end (click)="openImagePicker()" ion-button icon-only clear><ion-icon name="image"></ion-icon></button>\n    </ion-item>\n  </ion-list-header>\n  <ion-list *ngIf="!multipleSelection">\n    <ion-item *ngFor="let followed of followedes" (click)="openInbox(followed)">\n      <ion-avatar item-start>\n        <img src="{{followed.avatar}}"/>\n      </ion-avatar>\n      <ion-label>{{followed.username}}</ion-label>\n    </ion-item>\n  </ion-list>\n  <ion-list *ngIf="multipleSelection">\n    <ion-item *ngFor="let followed of followedes">\n      <ion-avatar item-start>\n        <img src="{{followed.avatar}}"/>\n      </ion-avatar>\n      <ion-label>{{followed.username}}</ion-label>\n      <ion-checkbox item-end color="primary" (ionChange)="updateSelectedUsers(followed._id)"></ion-checkbox>\n    </ion-item>\n  </ion-list>\n  <ion-infinite-scroll (ionInfinite)="doInfinite($event)">\n    <ion-infinite-scroll-content\n      loadingSpinner="bubbles"\n      loadingText="Obteniendo más información...">\n    </ion-infinite-scroll-content>\n  </ion-infinite-scroll>\n</ion-content>\n'/*ion-inline-end:"C:\Users\Matias\WebstormProjects\turinsta\src\pages\inbox-writing\inbox-writing.html"*/,
     }),
-    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* NavController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* NavController */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* NavParams */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* NavParams */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["r" /* ViewController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["r" /* ViewController */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["b" /* AlertController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["b" /* AlertController */]) === "function" && _d || Object, typeof (_e = typeof __WEBPACK_IMPORTED_MODULE_2__providers_storage_storage__["a" /* StorageProvider */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__providers_storage_storage__["a" /* StorageProvider */]) === "function" && _e || Object, typeof (_f = typeof __WEBPACK_IMPORTED_MODULE_3__providers_commons_commons__["a" /* CommonsProvider */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__providers_commons_commons__["a" /* CommonsProvider */]) === "function" && _f || Object])
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* NavController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* NavController */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* NavParams */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* NavParams */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["r" /* ViewController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["r" /* ViewController */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["b" /* AlertController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["b" /* AlertController */]) === "function" && _d || Object, typeof (_e = typeof __WEBPACK_IMPORTED_MODULE_2__providers_storage_storage__["a" /* StorageProvider */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__providers_storage_storage__["a" /* StorageProvider */]) === "function" && _e || Object, typeof (_f = typeof __WEBPACK_IMPORTED_MODULE_3__providers_commons_commons__["a" /* CommonsProvider */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__providers_commons_commons__["a" /* CommonsProvider */]) === "function" && _f || Object, typeof (_g = typeof __WEBPACK_IMPORTED_MODULE_4__ionic_native_image_picker__["a" /* ImagePicker */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_4__ionic_native_image_picker__["a" /* ImagePicker */]) === "function" && _g || Object, typeof (_h = typeof __WEBPACK_IMPORTED_MODULE_5__ionic_native_file_transfer__["a" /* FileTransfer */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_5__ionic_native_file_transfer__["a" /* FileTransfer */]) === "function" && _h || Object])
 ], InboxWritingPage);
 
-var _a, _b, _c, _d, _e, _f;
+var _a, _b, _c, _d, _e, _f, _g, _h;
 //# sourceMappingURL=inbox-writing.js.map
 
 /***/ }),
@@ -1529,32 +1567,16 @@ module.exports = webpackAsyncContext;
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* unused harmony export SET_AVATAR */
-/* unused harmony export SET_USERNAME */
 /* unused harmony export SET_UNREAD_MESSAGES */
 /* unused harmony export SET_UNSEEN_ACTIVITIES */
-/* harmony export (immutable) */ __webpack_exports__["a"] = setAvatar;
-/* harmony export (immutable) */ __webpack_exports__["d"] = setUsername;
-/* harmony export (immutable) */ __webpack_exports__["b"] = setUnreadMessages;
-/* harmony export (immutable) */ __webpack_exports__["c"] = setUnseenActivities;
-/* harmony export (immutable) */ __webpack_exports__["e"] = userReducer;
+/* harmony export (immutable) */ __webpack_exports__["a"] = setUnreadMessages;
+/* harmony export (immutable) */ __webpack_exports__["b"] = setUnseenActivities;
+/* harmony export (immutable) */ __webpack_exports__["c"] = userReducer;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_tassign__ = __webpack_require__(231);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_tassign___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_tassign__);
 
-var SET_AVATAR = "SET_AVATAR";
-var SET_USERNAME = "SET_USERNAME";
 var SET_UNREAD_MESSAGES = "SET_UNREAD_MESSAGES";
 var SET_UNSEEN_ACTIVITIES = "SET_UNSEEN_ACTIVITIES";
-function setAvatar(payload) {
-    return {
-        type: SET_AVATAR, payload: payload
-    };
-}
-function setUsername(payload) {
-    return {
-        type: SET_USERNAME, payload: payload
-    };
-}
 function setUnreadMessages(payload) {
     return {
         type: SET_UNREAD_MESSAGES, payload: payload
@@ -1566,8 +1588,6 @@ function setUnseenActivities(payload) {
     };
 }
 var initialState = {
-    avatar: null,
-    username: null,
     unreadMessages: [],
     unseenActivities: []
 };
@@ -1575,12 +1595,6 @@ function userReducer(state, _a) {
     if (state === void 0) { state = initialState; }
     var type = _a.type, payload = _a.payload;
     switch (type) {
-        case SET_AVATAR: {
-            return Object(__WEBPACK_IMPORTED_MODULE_0_tassign__["tassign"])(state, { avatar: payload });
-        }
-        case SET_USERNAME: {
-            return Object(__WEBPACK_IMPORTED_MODULE_0_tassign__["tassign"])(state, { username: payload });
-        }
         case SET_UNREAD_MESSAGES: {
             return Object(__WEBPACK_IMPORTED_MODULE_0_tassign__["tassign"])(state, { unreadMessages: payload });
         }
@@ -1940,7 +1954,7 @@ AppModule = __decorate([
             __WEBPACK_IMPORTED_MODULE_13__angular_http__["c" /* HttpModule */],
             __WEBPACK_IMPORTED_MODULE_17__ngrx_store__["i" /* StoreModule */].forRoot({
                 publications: __WEBPACK_IMPORTED_MODULE_18__providers_reducers_publication_reducer__["h" /* publicationReducer */],
-                user: __WEBPACK_IMPORTED_MODULE_59__providers_reducers_user_reducer__["e" /* userReducer */]
+                user: __WEBPACK_IMPORTED_MODULE_59__providers_reducers_user_reducer__["c" /* userReducer */]
             }),
             __WEBPACK_IMPORTED_MODULE_19__ngrx_effects__["c" /* EffectsModule */].forRoot([
                 __WEBPACK_IMPORTED_MODULE_20__providers_storage_publication_effects__["a" /* PublicationEffects */]
@@ -3861,9 +3875,6 @@ ScoreHandlerComponent = __decorate([
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__pages_inbox_writing_inbox_writing__ = __webpack_require__(169);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_ionic_angular__ = __webpack_require__(7);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__ngrx_store__ = __webpack_require__(23);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_ng_socket_io__ = __webpack_require__(139);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_ng_socket_io___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6_ng_socket_io__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__pages_chat_chat__ = __webpack_require__(98);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -3873,8 +3884,6 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-
-
 
 
 
@@ -3896,8 +3905,6 @@ var InboxListComponent = (function () {
         this.store = store;
         this.inboxes = [];
         this.unreadMessages = [];
-        this.avatar = null;
-        this.username = null;
         this.inboxToAutoOpen = null;
         console.log('Hello InboxListComponent Component');
         this.storage.getInboxes(this.commons.getUserId()).subscribe(function (inboxes) {
@@ -3905,12 +3912,6 @@ var InboxListComponent = (function () {
         });
         this.store.select("user", "unreadMessages").subscribe(function (unreadMessages) {
             _this.unreadMessages = unreadMessages;
-        });
-        this.store.select("user", "avatar").subscribe(function (avatar) {
-            _this.avatar = avatar;
-        });
-        this.store.select("user", "username").subscribe(function (username) {
-            _this.username = username;
         });
     }
     InboxListComponent.prototype.getUnreadMessagesFromInbox = function (inboxId) {
@@ -3923,9 +3924,6 @@ var InboxListComponent = (function () {
     InboxListComponent.prototype.hasToAutoOpen = function (inboxId) {
         return this.inboxToAutoOpen == inboxId;
     };
-    InboxListComponent.prototype.alreadyAutoOpen = function (event) {
-        this.inboxToAutoOpen = null;
-    };
     InboxListComponent.prototype.presentNewInboxModal = function (multiple) {
         var _this = this;
         var inboxWritingModal = this.modalCtrl.create(__WEBPACK_IMPORTED_MODULE_3__pages_inbox_writing_inbox_writing__["a" /* InboxWritingPage */], { multipleSelection: multiple });
@@ -3937,7 +3935,7 @@ var InboxListComponent = (function () {
                     var index_1 = null;
                     if (_this.inboxes.some(function (inbox, i) {
                         exists_1 = inbox.participants.every(function (participant) {
-                            return participant._id == newInbox.participants[0]._id || participant._id == _this.commons.getUserId();
+                            return participant == inbox.participants[0];
                         });
                         if (exists_1) {
                             index_1 = i;
@@ -3947,32 +3945,9 @@ var InboxListComponent = (function () {
                         _this.inboxToAutoOpen = _this.inboxes[index_1]._id;
                     }
                     else {
-                        var socket = new __WEBPACK_IMPORTED_MODULE_6_ng_socket_io__["Socket"]({ url: __WEBPACK_IMPORTED_MODULE_2__providers_storage_storage__["a" /* StorageProvider */].baseUrl.replace('/api/', '') });
-                        newInbox.participants.push({ _id: _this.commons.getUserId(), avatar: _this.avatar, username: _this.username });
-                        var chatPage = _this.modalCtrl.create(__WEBPACK_IMPORTED_MODULE_7__pages_chat_chat__["a" /* ChatPage */], { chat: newInbox, chatDescription: _this.commons.getChatDescription(newInbox), avatar: _this.commons.getAvatar(newInbox), socket: socket });
-                        chatPage.present();
-                        chatPage.onDidDismiss(function () {
-                            _this.storage.getInboxes(_this.commons.getUserId()).subscribe(function (inboxes) {
-                                _this.inboxes = inboxes;
-                            });
-                        });
                     }
                 }
-                else {
-                    sessionStorage.setItem("GroupInbox", JSON.stringify(newInbox));
-                    _this.storage.createInbox(newInbox).subscribe(function (newInbox) {
-                        _this.storage.getInbox(newInbox._id).subscribe(function (inbox) {
-                            var socket = new __WEBPACK_IMPORTED_MODULE_6_ng_socket_io__["Socket"]({ url: __WEBPACK_IMPORTED_MODULE_2__providers_storage_storage__["a" /* StorageProvider */].baseUrl.replace('/api/', '') });
-                            var chatPage = _this.modalCtrl.create(__WEBPACK_IMPORTED_MODULE_7__pages_chat_chat__["a" /* ChatPage */], { chat: inbox, chatDescription: _this.commons.getChatDescription(inbox), avatar: _this.commons.getAvatar(inbox), socket: socket });
-                            chatPage.present();
-                            chatPage.onDidDismiss(function () {
-                                _this.storage.getInboxes(_this.commons.getUserId()).subscribe(function (inboxes) {
-                                    _this.inboxes = inboxes;
-                                });
-                            });
-                        });
-                    });
-                }
+                // this.inboxes.push(newInbox);
             }
         });
     };
@@ -3982,10 +3957,9 @@ InboxListComponent = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
         selector: 'inbox-list',template:/*ion-inline-start:"C:\Users\Matias\WebstormProjects\turinsta\src\components\inbox-list\inbox-list.html"*/'<!-- Generated template for the InboxListComponent component -->\n<ion-list>\n  <inbox *ngFor="let inbox of inboxes" [data]=inbox [unreadMessagesCount]="getUnreadMessagesFromInbox(inbox._id)" [autoOpen]="hasToAutoOpen(inbox._id)" (alreadyAutoOpen)="alreadyAutoOpen($event)"></inbox>\n</ion-list>\n<ion-fab bottom right>\n  <button ion-fab mini color="success"><ion-icon name="add"></ion-icon></button>\n  <ion-fab-list side="left">\n    <button ion-fab><ion-icon name="ios-people" (click)="presentNewInboxModal(true)"></ion-icon></button>\n    <button ion-fab><ion-icon name="ios-person" (click)="presentNewInboxModal(false)"></ion-icon></button>\n  </ion-fab-list>\n</ion-fab>\n'/*ion-inline-end:"C:\Users\Matias\WebstormProjects\turinsta\src\components\inbox-list\inbox-list.html"*/
     }),
-    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_2__providers_storage_storage__["a" /* StorageProvider */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__providers_storage_storage__["a" /* StorageProvider */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1__providers_commons_commons__["a" /* CommonsProvider */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__providers_commons_commons__["a" /* CommonsProvider */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_4_ionic_angular__["i" /* ModalController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_4_ionic_angular__["i" /* ModalController */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_5__ngrx_store__["h" /* Store */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_5__ngrx_store__["h" /* Store */]) === "function" && _d || Object])
+    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_2__providers_storage_storage__["a" /* StorageProvider */], __WEBPACK_IMPORTED_MODULE_1__providers_commons_commons__["a" /* CommonsProvider */], __WEBPACK_IMPORTED_MODULE_4_ionic_angular__["i" /* ModalController */], __WEBPACK_IMPORTED_MODULE_5__ngrx_store__["h" /* Store */]])
 ], InboxListComponent);
 
-var _a, _b, _c, _d;
 //# sourceMappingURL=inbox-list.js.map
 
 /***/ }),
@@ -4030,7 +4004,6 @@ var InboxComponent = (function () {
         this.data = null;
         this.unreadMessagesCount = null;
         this.autoOpen = false;
-        this.alreadyAutoOpen = new __WEBPACK_IMPORTED_MODULE_0__angular_core__["EventEmitter"]();
         this.chatDescription = null;
         this.avatar = null;
         this.currentUser = null;
@@ -4044,13 +4017,12 @@ var InboxComponent = (function () {
     InboxComponent.prototype.ngOnChanges = function () {
         if (this.autoOpen) {
             this.openChat();
-            this.alreadyAutoOpen.emit('');
         }
     };
     InboxComponent.prototype.openChat = function () {
         var socket = new __WEBPACK_IMPORTED_MODULE_3_ng_socket_io__["Socket"]({ url: __WEBPACK_IMPORTED_MODULE_5__providers_storage_storage__["a" /* StorageProvider */].baseUrl.replace('/api/', ''), options: { user: this.currentUser, inbox: this.data._id } });
-        var chatPage = this.modalCtrl.create(__WEBPACK_IMPORTED_MODULE_2__pages_chat_chat__["a" /* ChatPage */], { chat: this.data, chatDescription: this.chatDescription, avatar: this.avatar, socket: socket });
-        chatPage.present();
+        var publicationWritingModal = this.modalCtrl.create(__WEBPACK_IMPORTED_MODULE_2__pages_chat_chat__["a" /* ChatPage */], { chat: this.data, chatDescription: this.chatDescription, avatar: this.avatar, socket: socket });
+        publicationWritingModal.present();
     };
     return InboxComponent;
 }());
@@ -4066,18 +4038,13 @@ __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Input"])(),
     __metadata("design:type", Boolean)
 ], InboxComponent.prototype, "autoOpen", void 0);
-__decorate([
-    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Output"])(),
-    __metadata("design:type", Object)
-], InboxComponent.prototype, "alreadyAutoOpen", void 0);
 InboxComponent = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
         selector: 'inbox',template:/*ion-inline-start:"C:\Users\Matias\WebstormProjects\turinsta\src\components\inbox\inbox.html"*/'<!-- Generated template for the InboxComponent component -->\n<ion-item (click)="openChat()">\n  <ion-avatar item-start>\n    <img src="{{avatar}}">\n  </ion-avatar>\n  <p>{{chatDescription}}</p>\n  <button *ngIf="unreadMessagesCount" item-end ion-fab mini color="danger">{{unreadMessagesCount}}</button>\n</ion-item>\n'/*ion-inline-end:"C:\Users\Matias\WebstormProjects\turinsta\src\components\inbox\inbox.html"*/
     }),
-    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* ModalController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* ModalController */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_4__providers_commons_commons__["a" /* CommonsProvider */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_4__providers_commons_commons__["a" /* CommonsProvider */]) === "function" && _b || Object])
+    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* ModalController */], __WEBPACK_IMPORTED_MODULE_4__providers_commons_commons__["a" /* CommonsProvider */]])
 ], InboxComponent);
 
-var _a, _b;
 //# sourceMappingURL=inbox.js.map
 
 /***/ }),
@@ -4189,7 +4156,7 @@ var PublicationWritingPage = (function () {
     PublicationWritingPage.prototype.confirmSave = function () {
         var _this = this;
         if (this.checkNeededField()) {
-            var confirm = this.alertCtrl.create({
+            var confirm_1 = this.alertCtrl.create({
                 title: 'Confirmar operación',
                 message: '¿Está seguro que desea guardar la publicación?',
                 buttons: [
@@ -4206,7 +4173,9 @@ var PublicationWritingPage = (function () {
                     }
                 ]
             });
-            confirm.present();
+            confirm_1.present();
+        }
+        else {
         }
     };
     PublicationWritingPage.prototype.confirmDelete = function () {
@@ -4412,16 +4381,18 @@ var PublicationWritingPage = (function () {
 }());
 __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["ViewChild"])(__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["p" /* Slides */]),
-    __metadata("design:type", typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["p" /* Slides */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["p" /* Slides */]) === "function" && _a || Object)
+    __metadata("design:type", __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["p" /* Slides */])
 ], PublicationWritingPage.prototype, "slides", void 0);
 PublicationWritingPage = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
         selector: 'page-publication-writing',template:/*ion-inline-start:"C:\Users\Matias\WebstormProjects\turinsta\src\pages\publication-writing\publication-writing.html"*/'<!--\n  Generated template for the PublicationWritingPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-header>\n  <ion-navbar>\n    <ion-item no-lines style="text-align: center">\n      <button item-start ion-button clear (click)="dismissPublication()">\n        <ion-icon name="close"></ion-icon>\n      </button>\n      <ion-title *ngIf="!publication._id">Nueva publicación</ion-title>\n      <ion-title *ngIf="publication._id">Ver publicación</ion-title>\n      <div *ngIf="checkEditPermission() && publication._id" item-end>\n        <button ion-button clear (click)="confirmDelete()">\n          <ion-icon name="trash" color="danger"></ion-icon>\n        </button>\n      </div>\n      <div *ngIf="!publication._id" item-end>\n        <button ion-button clear (click)="confirmSave()">\n          <ion-icon name="checkmark" color="success"></ion-icon>\n        </button>\n      </div>\n    </ion-item>\n  </ion-navbar>\n</ion-header>\n<ion-content padding>\n  <publication-header [user]=user [publication]=publication [edit]="checkEditPermission()" (changePlace)="setPlace($event)"></publication-header>\n  <ion-item *ngIf="!publication._id  && !publication.images" no-lines>\n    <button (click)="addImage()" ion-button icon-only clear item-start><ion-icon name="images"></ion-icon></button>\n    <p class="publication-important-text" item-left>Agregar imágenes</p>\n  </ion-item>\n  <ion-slides *ngIf="publication._id || publication.images">\n    <ion-slide style="align-items: start" *ngFor="let image of publication.images">\n      <div class="image-action-buttons" *ngIf="checkEditPermission()">\n        <button ion-button icon-only clear (click)="addImage()">\n          <ion-icon name="add" color="success"></ion-icon>\n        </button>\n        <button ion-button icon-only clear (click)="confirmDeleteImage()">\n          <ion-icon name="remove" color="danger"></ion-icon>\n        </button>\n      </div>\n      <publication-image [id]=image._id [url]=image.url></publication-image>\n    </ion-slide>\n  </ion-slides>\n  <ion-item no-lines no-padding>\n    <p *ngIf="publication.description" item-start class="publication-description"><b>{{user.username}}</b>&nbsp;{{publication.description}}</p>\n    <div *ngIf="checkEditPermission() && publication.description" item-right>\n      <button ion-button icon-only clear (click)="presentDescriptionWriting()">\n        <ion-icon name="create"></ion-icon>\n      </button>\n      <button ion-button icon-only clear (click)="confirmDeleteDescription()">\n        <ion-icon name="trash" color="danger"></ion-icon>\n      </button>\n    </div>\n    <div *ngIf="checkEditPermission() && !publication.description" ion-item>\n      <p class="publication-important-text">Agregar descripción</p>\n      <button ion-button icon-only clear (click)="presentDescriptionWriting()" item-left>\n        <ion-icon name="add" color="success"></ion-icon>\n      </button>\n    </div>\n    <p *ngIf="publication.timestamps" item-end>{{prettyDate(publication.timestamps.created)}}</p>\n  </ion-item>\n  <ion-item>\n    <ion-item no-lines>\n      <p>Experiencias (<span>{{experiences.length}}</span>)</p>\n      <button item-end ion-button icon-only clear (click)="toogleExperienceList()">\n        <ion-icon name="{{experienceListOpened ? \'ios-arrow-dropdown\' : \'ios-arrow-dropright\'}}"></ion-icon>\n      </button>\n    </ion-item>\n    <experience-list *ngIf="experienceListOpened" [experiences]=experiences [publicationOwner]=user._id [publicationId]=publication._id></experience-list>\n  </ion-item>\n  <ion-item *ngIf="publication._id">\n    <ion-item no-lines>\n      <p>Comentarios (<span>{{comments.length}}</span>)</p>\n      <button item-end ion-button icon-only clear (click)="toogleCommentList()">\n        <ion-icon name="{{commentListOpened ? \'ios-arrow-dropdown\' : \'ios-arrow-dropright\'}}"></ion-icon>\n      </button>\n    </ion-item>\n    <comment-list *ngIf="publication._id != undefined && commentListOpened" [comments]=comments [publicationId]=publication._id [publicationOwner]=user._id></comment-list>\n  </ion-item>\n  <ion-item *ngIf="publication._id && !checkEditPermission()">\n    <score-handler [publicationScore]="scoreGivenFromUser()" [publicationId]="publication._id" [scoreInputShowed]=true></score-handler>\n  </ion-item>\n</ion-content>\n'/*ion-inline-end:"C:\Users\Matias\WebstormProjects\turinsta\src\pages\publication-writing\publication-writing.html"*/,
     }),
-    __metadata("design:paramtypes", [typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* NavController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* NavController */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* NavParams */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* NavParams */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["r" /* ViewController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["r" /* ViewController */]) === "function" && _d || Object, typeof (_e = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["b" /* AlertController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["b" /* AlertController */]) === "function" && _e || Object, typeof (_f = typeof __WEBPACK_IMPORTED_MODULE_2__providers_storage_storage__["a" /* StorageProvider */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__providers_storage_storage__["a" /* StorageProvider */]) === "function" && _f || Object, typeof (_g = typeof __WEBPACK_IMPORTED_MODULE_3__providers_commons_commons__["a" /* CommonsProvider */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__providers_commons_commons__["a" /* CommonsProvider */]) === "function" && _g || Object, typeof (_h = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* ModalController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* ModalController */]) === "function" && _h || Object, typeof (_j = typeof __WEBPACK_IMPORTED_MODULE_5__ionic_native_image_picker__["a" /* ImagePicker */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_5__ionic_native_image_picker__["a" /* ImagePicker */]) === "function" && _j || Object, typeof (_k = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* LoadingController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* LoadingController */]) === "function" && _k || Object, typeof (_l = typeof __WEBPACK_IMPORTED_MODULE_6__ionic_native_file_transfer__["a" /* FileTransfer */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_6__ionic_native_file_transfer__["a" /* FileTransfer */]) === "function" && _l || Object])
+    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* NavParams */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["r" /* ViewController */],
+        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["b" /* AlertController */], __WEBPACK_IMPORTED_MODULE_2__providers_storage_storage__["a" /* StorageProvider */], __WEBPACK_IMPORTED_MODULE_3__providers_commons_commons__["a" /* CommonsProvider */],
+        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* ModalController */], __WEBPACK_IMPORTED_MODULE_5__ionic_native_image_picker__["a" /* ImagePicker */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* LoadingController */],
+        __WEBPACK_IMPORTED_MODULE_6__ionic_native_file_transfer__["a" /* FileTransfer */]])
 ], PublicationWritingPage);
 
-var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l;
 //# sourceMappingURL=publication-writing.js.map
 
 /***/ }),
@@ -4551,16 +4522,7 @@ ImgcacheService = __decorate([
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_commons_commons__ = __webpack_require__(12);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs__ = __webpack_require__(232);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_rxjs__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__providers_storage_storage__ = __webpack_require__(14);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__ngrx_store__ = __webpack_require__(23);
-var __assign = (this && this.__assign) || Object.assign || function(t) {
-    for (var s, i = 1, n = arguments.length; i < n; i++) {
-        s = arguments[i];
-        for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
-            t[p] = s[p];
-    }
-    return t;
-};
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__ngrx_store__ = __webpack_require__(23);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -4575,7 +4537,6 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
-
 /**
  * Generated class for the ChatPage page.
  *
@@ -4583,12 +4544,11 @@ var __metadata = (this && this.__metadata) || function (k, v) {
  * Ionic pages and navigation.
  */
 var ChatPage = (function () {
-    function ChatPage(navCtrl, navParams, commons, store, storage) {
+    function ChatPage(navCtrl, navParams, commons, store) {
         this.navCtrl = navCtrl;
         this.navParams = navParams;
         this.commons = commons;
         this.store = store;
-        this.storage = storage;
         this.socket = null;
         this.chat = null;
         this.message = null;
@@ -4608,9 +4568,9 @@ var ChatPage = (function () {
             this.chatDescription = this.navParams.get("chatDescription");
             this.avatar = this.navParams.get("avatar");
             this.currentUser = this.commons.getUserId();
-            if (this.chat._id) {
-                this.initCommunication();
-            }
+            this.connect();
+            this.setInbox();
+            this.setMessageRead();
             this.getMessages().subscribe(function (message) {
                 _this.chat.messages.push(message);
                 _this.setMessageRead();
@@ -4632,11 +4592,6 @@ var ChatPage = (function () {
                 _this.updateUnreadMessagesCounter();
             });
         }
-    };
-    ChatPage.prototype.initCommunication = function () {
-        this.connect();
-        this.setInbox();
-        this.setMessageRead();
     };
     ChatPage.prototype.getUsername = function (userId) {
         var targetUser = this.chat.participants.filter(function (user) { return userId == user._id; });
@@ -4683,21 +4638,8 @@ var ChatPage = (function () {
         this.socket.emit('stop-writing');
     };
     ChatPage.prototype.sendMessage = function () {
-        var _this = this;
-        if (this.chat._id) {
-            this.socket.emit('add-message', { text: this.message });
-            this.message = '';
-        }
-        else {
-            var participantsIds = this.chat.participants.map(function (participant) { return participant._id; });
-            this.storage.createInbox(__assign({}, this.chat, { participants: participantsIds })).subscribe(function (inbox) {
-                var participants = _this.chat.participants;
-                _this.chat = inbox;
-                _this.chat.participants = participants;
-                _this.initCommunication();
-                _this.sendMessage();
-            });
-        }
+        this.socket.emit('add-message', { text: this.message });
+        this.message = '';
     };
     ChatPage.prototype.getMessages = function () {
         var _this = this;
@@ -4756,10 +4698,9 @@ ChatPage = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
         selector: 'page-chat',template:/*ion-inline-start:"C:\Users\Matias\WebstormProjects\turinsta\src\pages\chat\chat.html"*/'<!--\n  Generated template for the ChatPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-header>\n  <ion-navbar>\n    <ion-item no-lines>\n      <ion-avatar item-start>\n        <img src="{{avatar}}">\n      </ion-avatar>\n      <ion-title>{{chatDescription}}</ion-title>\n      <span class="chat-info">&nbsp;{{chatInfo}}</span>\n    </ion-item>\n  </ion-navbar>\n</ion-header>\n\n<ion-content padding>\n  <ion-grid>\n    <ion-row *ngFor="let message of chat.messages">\n\n      <ion-col col-9 *ngIf="message.author !== currentUser" class="message" [ngClass]="{\'my_message\': message.author === currentUser, \'other_message\': message.author !== currentUser}">\n        <span class="user_name">{{ getUsername(message.author) }}:</span><br>\n        <span>{{ message.content }}</span>\n        <div class="time">{{message.timestamps.created | date:\'dd.MM hh:mm\'}}</div>\n      </ion-col>\n\n      <ion-col offset-3 col-9 *ngIf="message.author === currentUser" class="message" [ngClass]="{\'my_message\': message.author === currentUser, \'other_message\': message.author !== currentUser}">\n        <span class="user_name">{{ getUsername(message.author) }}:</span><br>\n        <span>{{ message.content }}</span>\n        <div class="time">{{message.timestamps.created | date:\'dd.MM hh:mm\'}}</div><br>\n        <ion-icon *ngIf="message.generalState == \'SEND\'" class="message-status" name="checkmark" color="light"></ion-icon>\n        <ion-icon *ngIf="message.generalState == \'RECEIVED\'" class="message-status" name="done-all" color="light"></ion-icon>\n        <ion-icon *ngIf="message.generalState == \'READ\'" class="message-status" name="done-all" color="secondary"></ion-icon>\n      </ion-col>\n\n    </ion-row>\n  </ion-grid>\n</ion-content>\n\n<ion-footer>\n  <ion-toolbar>\n    <ion-row class="message_row">\n      <ion-col col-9>\n        <ion-item no-lines>\n          <ion-input type="text" placeholder="Mensaje" [(ngModel)]="message" (keypress)="writing()" (keyup)="stopWriting()"></ion-input>\n        </ion-item>\n      </ion-col>\n      <ion-col col-3>\n        <button ion-button clear color="primary" (click)="sendMessage()" [disabled]="message === \'\'">\n          Enviar\n        </button>\n      </ion-col>\n    </ion-row>\n  </ion-toolbar>\n</ion-footer>\n'/*ion-inline-end:"C:\Users\Matias\WebstormProjects\turinsta\src\pages\chat\chat.html"*/,
     }),
-    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* NavController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* NavController */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* NavParams */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* NavParams */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_2__providers_commons_commons__["a" /* CommonsProvider */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__providers_commons_commons__["a" /* CommonsProvider */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_5__ngrx_store__["h" /* Store */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_5__ngrx_store__["h" /* Store */]) === "function" && _d || Object, typeof (_e = typeof __WEBPACK_IMPORTED_MODULE_4__providers_storage_storage__["a" /* StorageProvider */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_4__providers_storage_storage__["a" /* StorageProvider */]) === "function" && _e || Object])
+    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* NavParams */], __WEBPACK_IMPORTED_MODULE_2__providers_commons_commons__["a" /* CommonsProvider */], __WEBPACK_IMPORTED_MODULE_4__ngrx_store__["h" /* Store */]])
 ], ChatPage);
 
-var _a, _b, _c, _d, _e;
 //# sourceMappingURL=chat.js.map
 
 /***/ }),

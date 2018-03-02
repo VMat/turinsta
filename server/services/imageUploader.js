@@ -71,6 +71,50 @@ ImgUpload.uploadToGcs = (req, res, next) => {
     })
 };
 
+ImgUpload.genericUploadToGcs = (req, res, next) => {
+
+  if(!req.files) return next();
+
+  bucketName = req.params.user.bucketId;
+  bucket = gcs.bucket(bucketName);
+  bucket.acl.default.add(aclOptions, (err, aclObject)=>{});
+
+  let gcsname = [];
+  let bucketFile = [];
+  let stream = [];
+
+  let pending = req.files.length;
+
+  req.files.map((file,i)=>{
+    gcsname[i] = file.filename + '-' + Date.now();
+    bucketFile[i] = bucket.file(gcsname[i]);
+    stream[i] = bucketFile[i].createWriteStream({
+      metadata: {
+        contentType: file.mimetype
+      }
+    });
+    stream[i].on('error', (err) => {
+      console.log("Upload failed");
+      file.cloudStorageError = err;
+      next(err);
+    });
+
+    stream[i].on('finish', () => {
+      file.cloudStorageObject = gcsname[i];
+      file.cloudStoragePublicUrl = getPublicUrl(gcsname[i]);
+      console.log("Upload finished");
+      if(pending==1){
+        next();
+      }
+      else{
+        --pending;
+      }
+    });
+
+    stream[i].end(file.buffer);
+  });
+};
+
 ImgUpload.removeFromGcs = (bucketId,imageUrl)=>{
   bucketName = bucketId;
   bucket = gcs.bucket(bucketName);

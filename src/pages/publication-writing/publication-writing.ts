@@ -8,8 +8,6 @@ import {CommonsProvider} from "../../providers/commons/commons";
 import {DescriptionWritingPage} from "../description-writing/description-writing";
 import {ImagePicker} from "@ionic-native/image-picker";
 import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-native/file-transfer';
-import {Observable} from "rxjs";
-import {toPromise} from "rxjs/operator/toPromise";
 
 /**
  * Generated class for the PublicationWritingPage page.
