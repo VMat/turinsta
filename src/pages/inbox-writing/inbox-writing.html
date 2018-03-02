@@ -12,7 +12,7 @@
         <ion-icon name="close"></ion-icon>
       </button>
       <ion-title>Nuevo chat</ion-title>
-      <div item-end>
+      <div *ngIf="multipleSelection" item-end>
         <button ion-button clear (click)="confirmSave()">
           <ion-icon name="checkmark" color="success"></ion-icon>
         </button>
@@ -26,13 +26,12 @@
   <ion-list-header *ngIf="multipleSelection">
     <ion-input [(ngModel)]="inboxName" placeholder="Ingrese nombre del grupo"></ion-input>
   </ion-list-header>
-  <ion-list *ngIf="!multipleSelection" radio-group [(ngModel)]="selectedUsers">
-    <ion-item *ngFor="let followed of followedes">
+  <ion-list *ngIf="!multipleSelection">
+    <ion-item *ngFor="let followed of followedes" (click)="openInbox(followed)">
       <ion-avatar item-start>
         <img src="{{followed.avatar}}"/>
       </ion-avatar>
       <ion-label>{{followed.username}}</ion-label>
-      <ion-radio  value="{{[followed._id]}}"></ion-radio>
     </ion-item>
   </ion-list>
   <ion-list *ngIf="multipleSelection">

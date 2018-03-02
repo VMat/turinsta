@@ -22,6 +22,8 @@ export class InboxWritingPage {
   followedesLimit: number = 50;
   selectedUsers: any = [];
   inboxName: string = null;
+  inboxAvatar: string = null;
+  readonly PARTICIPANTS_LIMIT = 20;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private viewCtrl: ViewController,
               private alertCtrl: AlertController, private storage: StorageProvider, private commons: CommonsProvider) {
@@ -45,8 +47,17 @@ export class InboxWritingPage {
       this.selectedUsers.splice(index,1);
     }
     else{
-      this.selectedUsers.push(userId)
+      if(this.selectedUsers.length<this.PARTICIPANTS_LIMIT){
+        this.selectedUsers.push(userId)
+      }
+      else{
+        this.commons.presentToast("Has alcanzado el límite de 20 participantes");
+      }
     }
+  }
+
+  openInbox(user){
+    this.viewCtrl.dismiss({name: this.inboxName, participants: [user], avatar: this.inboxAvatar, messages: []});
   }
 
   dismiss(){
@@ -54,18 +65,43 @@ export class InboxWritingPage {
   }
 
   checkNeededField(){
+    if(this.selectedUsers.length==0){
+      this.commons.presentToast("Debe seleccionar al menos un usuario");
+      return false;
+    }
+    if(!this.inboxName){
+      this.commons.presentToast("Debe proporcionar un nombre al grupo");
+      return false;
+    }
     return true;
   }
 
   confirmSave() {
     if(this.checkNeededField()){
-      this.saveInbox({name: this.inboxName, users: this.selectedUsers});
+      let confirm = this.alertCtrl.create({
+        title: 'Confirmar operación',
+        message: '¿Está seguro que desea crear el grupo?',
+        buttons: [
+          {
+            text: 'Aceptar',
+            handler: () => {
+              this.saveInbox();
+            }
+          },
+          {
+            text: 'Cancelar',
+            handler: () => {
+            }
+          }
+        ]
+      });
+      confirm.present();
     }
   }
 
-  saveInbox(inbox){
-    alert("Inbox created!");
-    this.viewCtrl.dismiss();
+  saveInbox(){
+    this.selectedUsers.push(this.commons.getUserId());
+    this.viewCtrl.dismiss({name: this.inboxName, participants: this.selectedUsers, avatar: this.inboxAvatar, messages: []});
   }
 
   doInfinite(event){

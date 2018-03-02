@@ -28,7 +28,7 @@ export class ChatPage {
   currentUser: string = null;
   chatInfo: string = null;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private commons: CommonsProvider, private store: Store<any>) {}
+  constructor(public navCtrl: NavController, public navParams: NavParams, private commons: CommonsProvider, private store: Store<any>, private storage: StorageProvider) {}
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad ChatPage');
@@ -42,9 +42,10 @@ export class ChatPage {
       this.chatDescription = this.navParams.get("chatDescription");
       this.avatar = this.navParams.get("avatar");
       this.currentUser = this.commons.getUserId();
-      this.connect();
-      this.setInbox();
-      this.setMessageRead();
+
+      if(this.chat._id){
+        this.initCommunication();
+      }
 
       this.getMessages().subscribe(message => {
         this.chat.messages.push(message);
@@ -72,6 +73,12 @@ export class ChatPage {
           this.updateUnreadMessagesCounter();
       });
     }
+  }
+
+  initCommunication(){
+    this.connect();
+    this.setInbox();
+    this.setMessageRead();
   }
 
   getUsername(userId){
@@ -125,8 +132,20 @@ export class ChatPage {
   }
 
   sendMessage() {
-    this.socket.emit('add-message', { text: this.message });
-    this.message = '';
+    if(this.chat._id){
+      this.socket.emit('add-message', { text: this.message });
+      this.message = '';
+    }
+    else{
+      let participantsIds = this.chat.participants.map((participant)=>{return participant._id});
+      this.storage.createInbox({...this.chat,participants: participantsIds}).subscribe((inbox)=>{
+        let participants = this.chat.participants;
+        this.chat = inbox;
+        this.chat.participants = participants;
+        this.initCommunication();
+        this.sendMessage();
+      });
+    }
   }
 
   getMessages() {

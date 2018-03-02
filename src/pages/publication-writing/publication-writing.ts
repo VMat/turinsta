@@ -112,9 +112,6 @@ export class PublicationWritingPage {
       });
       confirm.present();
     }
-    else{
-
-    }
   }
 
   confirmDelete() {

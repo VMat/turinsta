@@ -4,6 +4,8 @@ import {StorageProvider} from "../../providers/storage/storage";
 import {InboxWritingPage} from "../../pages/inbox-writing/inbox-writing";
 import {ModalController} from "ionic-angular";
 import {Store} from "@ngrx/store";
+import { Socket } from 'ng-socket-io';
+import {ChatPage} from "../../pages/chat/chat";
 
 /**
  * Generated class for the InboxListComponent component.
@@ -19,6 +21,9 @@ export class InboxListComponent {
 
   inboxes: any = [];
   unreadMessages: any = [];
+  avatar: string = null;
+  username: string = null;
+  inboxToAutoOpen: string = null;
 
   constructor(private storage: StorageProvider, private commons: CommonsProvider, private modalCtrl: ModalController, private store: Store<any>) {
     console.log('Hello InboxListComponent Component');
@@ -27,6 +32,12 @@ export class InboxListComponent {
     });
     this.store.select("user","unreadMessages").subscribe((unreadMessages)=>{
       this.unreadMessages = unreadMessages;
+    });
+    this.store.select("user","avatar").subscribe((avatar)=>{
+      this.avatar = avatar;
+    });
+    this.store.select("user","username").subscribe((username)=>{
+      this.username = username;
     });
   }
 
@@ -38,12 +49,60 @@ export class InboxListComponent {
     return null;
   }
 
+  hasToAutoOpen(inboxId){
+    return this.inboxToAutoOpen == inboxId;
+  }
+
+  alreadyAutoOpen(event){
+    this.inboxToAutoOpen = null;
+  }
+
   presentNewInboxModal(multiple){
     let inboxWritingModal = this.modalCtrl.create(InboxWritingPage, {multipleSelection: multiple});
     inboxWritingModal.present();
     inboxWritingModal.onDidDismiss((newInbox)=>{
       if(Boolean(newInbox)){
-        this.inboxes.push(newInbox);
+        if(!multiple){
+          let exists = false;
+          let index = null;
+          if(this.inboxes.some((inbox,i)=>{
+            exists = inbox.participants.every((participant)=>{
+              return participant._id == newInbox.participants[0]._id || participant._id == this.commons.getUserId();
+            });
+            if(exists){
+              index = i;
+            }
+            return exists;
+          })){
+            this.inboxToAutoOpen = this.inboxes[index]._id;
+          }
+          else{
+            let socket = new Socket({url: StorageProvider.baseUrl.replace('/api/','')});
+            newInbox.participants.push({_id: this.commons.getUserId(), avatar: this.avatar, username: this.username});
+            let chatPage = this.modalCtrl.create(ChatPage, {chat: newInbox, chatDescription: this.commons.getChatDescription(newInbox), avatar: this.commons.getAvatar(newInbox), socket: socket});
+            chatPage.present();
+            chatPage.onDidDismiss(()=>{
+              this.storage.getInboxes(this.commons.getUserId()).subscribe((inboxes)=>{
+                this.inboxes = inboxes;
+              });
+            });
+          }
+        }
+        else{
+          sessionStorage.setItem("GroupInbox", JSON.stringify(newInbox));
+          this.storage.createInbox(newInbox).subscribe((newInbox)=>{
+            this.storage.getInbox(newInbox._id).subscribe((inbox)=>{
+              let socket = new Socket({url: StorageProvider.baseUrl.replace('/api/','')});
+              let chatPage = this.modalCtrl.create(ChatPage, {chat: inbox, chatDescription: this.commons.getChatDescription(inbox), avatar: this.commons.getAvatar(inbox), socket: socket});
+              chatPage.present();
+              chatPage.onDidDismiss(()=>{
+                this.storage.getInboxes(this.commons.getUserId()).subscribe((inboxes)=>{
+                  this.inboxes = inboxes;
+                });
+              });
+            });
+          });
+        }
       }
     });
   }

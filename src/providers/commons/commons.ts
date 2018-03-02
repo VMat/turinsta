@@ -6,7 +6,7 @@ import {Storage} from '@ionic/storage';
 import {StorageProvider} from "../storage/storage";
 import {Store} from "@ngrx/store";
 import {User} from "../models/user.model";
-import {setUnreadMessages, setUnseenActivities} from "../reducers/user.reducer";
+import {setUnreadMessages, setUnseenActivities, setAvatar, setUsername} from "../reducers/user.reducer";
 
 /*
   Generated class for the CommonsProvider provider.
@@ -31,6 +31,8 @@ export class CommonsProvider {
   setUserData(){
     this.storage.getUser(this.getUserId()).subscribe((user)=>{
       this.setLanguage(user.language);
+      this.userStore.dispatch(setAvatar(user.avatar));
+      this.userStore.dispatch(setUsername(user.username));
       this.userStore.dispatch(setUnreadMessages(user.notifications.unreadMessages));
       this.userStore.dispatch(setUnseenActivities(user.notifications.unseenActivities));
     });

@@ -841,6 +841,7 @@ db.getInbox = (id)=>{
 };
 
 db.createInbox = (inbox)=>{
+  inbox.timestamps = {created: new Date().toISOString(), modified: null};
   return inboxInterface.insert(inbox);
 };
 

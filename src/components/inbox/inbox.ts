@@ -1,4 +1,4 @@
-import {Component, Input} from '@angular/core';
+import {Component, Input, Output, EventEmitter} from '@angular/core';
 import {ModalController} from "ionic-angular";
 import {ChatPage} from "../../pages/chat/chat";
 import { Socket } from 'ng-socket-io';
@@ -18,6 +18,8 @@ export class InboxComponent {
 
   @Input() data :any = null;
   @Input() unreadMessagesCount :number = null;
+  @Input() autoOpen :boolean = false;
+  @Output() alreadyAutoOpen = new EventEmitter<any>();
   chatDescription :string = null;
   avatar :string = null;
   currentUser :string = null;
@@ -32,9 +34,16 @@ export class InboxComponent {
     this.avatar = this.commons.getAvatar(this.data);
   }
 
+  ngOnChanges(){
+    if(this.autoOpen){
+      this.openChat();
+      this.alreadyAutoOpen.emit('');
+    }
+  }
+
   openChat(){
     let socket = new Socket({ url: StorageProvider.baseUrl.replace('/api/',''), options: {user: this.currentUser, inbox: this.data._id} });
-    let publicationWritingModal = this.modalCtrl.create(ChatPage, {chat: this.data, chatDescription: this.chatDescription, avatar: this.avatar, socket: socket});
-    publicationWritingModal.present();
+    let chatPage = this.modalCtrl.create(ChatPage, {chat: this.data, chatDescription: this.chatDescription, avatar: this.avatar, socket: socket});
+    chatPage.present();
   }
 }
