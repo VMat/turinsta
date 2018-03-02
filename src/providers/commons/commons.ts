@@ -189,6 +189,10 @@ export class CommonsProvider {
     return chatDescription;
   }
 
+  getDefaultInboxAvatar(){
+    return StorageProvider.baseUrl.replace('/api/','') + '/assets/avatar-images/unknown-group.png';
+  }
+
   getAvatar(inbox){
     let currentUser = this.getUserId();
     let avatar = null;
@@ -204,7 +208,7 @@ export class CommonsProvider {
         avatar = targetUser[0].avatar;
       }
       else{
-        avatar = StorageProvider.baseUrl.replace('/api/','') + '/assets/flags/francia.ico';
+        avatar = this.getDefaultInboxAvatar();
       }
     }
     return avatar;

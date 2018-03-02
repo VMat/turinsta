@@ -38,6 +38,7 @@ export class InboxWritingPage {
 
   ionViewWillLoad(){
     this.multipleSelection = this.navParams.get("multipleSelection");
+    this.inboxAvatar = this.commons.getDefaultInboxAvatar();
     this.storage.getFollowedes(this.commons.getUserId(),this.followedesLimit).subscribe((followedes)=>{
       sessionStorage.setItem("followedes", JSON.stringify(followedes));
       this.followedes = followedes;
@@ -75,7 +76,10 @@ export class InboxWritingPage {
         }
         this.inboxAvatar = file_uris[0];
       }
-    );
+    )
+    .catch(()=>{
+      this.commons.presentToast("Se ha producido un error al cargar las imágenes");
+    });
   }
 
   uploadPic(image) {
