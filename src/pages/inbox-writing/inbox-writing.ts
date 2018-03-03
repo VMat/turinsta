@@ -144,8 +144,9 @@ export class InboxWritingPage {
     this.selectedUsers.push(this.commons.getUserId());
 
     if(this.inboxAvatar){
-      this.uploadPic(this.inboxAvatar).then((avatarUrl)=>{
-        alert(JSON.stringify(avatarUrl));
+      this.uploadPic(this.inboxAvatar).then((uploadingResponse)=>{
+        let avatarUrl = JSON.parse(uploadingResponse[0]["response"]);
+        alert(avatarUrl);
         this.viewCtrl.dismiss({name: this.inboxName, participants: this.selectedUsers, avatar: avatarUrl, messages: []});
       })
       .catch((error)=>{
