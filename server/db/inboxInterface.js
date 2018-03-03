@@ -35,17 +35,17 @@ InboxInterface.saveMessage = (id,message)=>{
       let status = inbox.participants.map((user)=>{if(!user.equals(message.author)){return {user: user, name: 'SEND', date: new Date().toISOString()}}});
       inbox.messages.push({...message, status: status.filter((statusItem)=>{return Boolean(statusItem)}), generalState: 'SEND'});
       return Commons.update(Inboxes,inbox)
+        .then(()=>{
+          return Commons.getOne(Inboxes,id)
+            .then((inboxUpdated)=>{
+              return Promise.all(inboxUpdated.participants.map((user)=>{
+                if(!user.equals(inboxUpdated.messages[inboxUpdated.messages.length - 1].author)){
+                  return UserInterface.addUnreadMessage(user,inboxUpdated);
+                }
+              }).filter((promise)=>{return Boolean(promise)}))
+            })
+        });
     })
-    .then(()=>{
-      return Commons.getOne(Inboxes,id)
-        .then((inboxUpdated)=>{
-          return Promise.all(inboxUpdated.participants.map((user)=>{
-            if(!user.equals(inboxUpdated.messages[inboxUpdated.messages.length - 1].author)){
-              return UserInterface.addUnreadMessage(user,inboxUpdated);
-            }
-          }).filter((promise)=>{return Boolean(promise)}))
-        })
-    });
 };
 
 InboxInterface.changeMessageStatus = (id,messageId,userId,status)=>{
