@@ -25,7 +25,7 @@ export class PublicationFooterComponent{
   sections: any = [{name: "Experiences", show: false}, {name: "Comments", show: false}];
   scoreInputShowed: boolean = false;
 
-  constructor(public events: Events, private storageService: StorageProvider, private commons: CommonsProvider, private modalCtrl: ModalController){
+  constructor(public events: Events, private commons: CommonsProvider, private modalCtrl: ModalController){
     console.log('Hello PublicationFooterComponent Component');
   }
 
@@ -38,6 +38,10 @@ export class PublicationFooterComponent{
     });
     this.sections[i].show = !this.sections[i].show;
   };
+
+  checkNotOwner(){
+    return this.commons.getUserId() != this.user._id;
+  }
 
   toogleScoreInput(){
     this.scoreInputShowed = !this.scoreInputShowed;

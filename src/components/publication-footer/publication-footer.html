@@ -11,7 +11,7 @@
         <ion-badge *ngIf="comments.length >0" class="publication-badge">{{comments.length}}</ion-badge>
       </ion-icon>
     </button>
-    <button item-left class="publication-button" (click)="toogleScoreInput()" ion-button clear>
+    <button *ngIf="checkNotOwner()" item-left class="publication-button" (click)="toogleScoreInput()" ion-button clear>
       <ion-icon class="publication-icon" name="ios-star" color="secondary" isActive="{{scoreInputShowed}}"></ion-icon>
     </button>
     <ion-note item-right>{{getAntiquity(publication.timestamps.created)}}</ion-note>

@@ -6,7 +6,7 @@
 -->
 <ion-content no-padding>
   <ion-list>
-    <ion-item (click)="handleFavorite()">
+    <ion-item *ngIf="checkNotOwner()" (click)="handleFavorite()">
       <ion-icon item-start name="heart"></ion-icon>
       <p *ngIf="!followedPublication">Agregar a favoritos</p>
       <p *ngIf="followedPublication">Quitar de favoritos</p>
@@ -19,16 +19,16 @@
       <ion-icon item-start class="publication-icon" name="share" color="secondary"></ion-icon>
       <p>Compartir</p>
     </ion-item>
-    <ion-item (click)="handleUser()">
+    <ion-item *ngIf="checkNotOwner()" (click)="handleUser()">
       <ion-icon item-start name="person-add"></ion-icon>
       <p *ngIf="!followedUser">Seguir usuario</p>
       <p *ngIf="followedUser">Dejar de seguir usuario</p>
     </ion-item>
-    <ion-item (click)="viewUser()">
+    <ion-item *ngIf="checkNotOwner()" (click)="viewUser()">
       <ion-icon item-start name="contact"></ion-icon>
       <p>Ver perfil de usuario</p>
     </ion-item>
-    <ion-item (click)="denunciate()">
+    <ion-item *ngIf="checkNotOwner()" (click)="denunciate()">
       <ion-icon item-start name="alert"></ion-icon>
       <p>Denunciar</p>
     </ion-item>

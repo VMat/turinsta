@@ -32,6 +32,10 @@ export class PublicationActionsMenuPage {
     this.user = this.navParams.get("user");
   }
 
+  checkNotOwner(){
+    return this.user != this.commons.getUserId();
+  }
+
   handleFavorite(){
     if(!this.followedPublication){
       this.storageService.addPublicationFollower({publication: this.publication, user: this.commons.getUserId()}).subscribe((favoriteAdded)=>{
