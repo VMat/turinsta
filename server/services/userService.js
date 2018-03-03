@@ -42,6 +42,14 @@ userService.updateUser = (user)=>{
   })
 };
 
+userService.patchUser = (user)=>{
+  return new Promise((resolve, reject)=>{
+    storageService.patchUser(user).
+      then(updatedUser=>resolve(updatedUser)).
+      catch(error=>reject(error))
+  })
+};
+
 userService.addFavoritePublication = (favorite)=>{
   return new Promise((resolve, reject)=>{
     storageService.addFavoritePublication(favorite).

@@ -95,6 +95,7 @@ export class MyApp {
 
       pushObject.on('registration').subscribe((registration: any) => {
         console.log('Device registered', JSON.stringify(registration));
+        this.storageService.patchUser(this.commons.getUserId(),{notificationKey: registration.registrationId}).subscribe(()=>{});
       });
       // pushObject.unregister().then((registration: any) => {
       //   alert(JSON.stringify(registration));

@@ -24,12 +24,11 @@ export class InboxListComponent {
   avatar: string = null;
   username: string = null;
   inboxToAutoOpen: string = null;
+  messagesAlreadyAdded: any = [];
 
   constructor(private storage: StorageProvider, private commons: CommonsProvider, private modalCtrl: ModalController, private store: Store<any>) {
     console.log('Hello InboxListComponent Component');
-    this.storage.getInboxes(this.commons.getUserId()).subscribe((inboxes)=>{
-      this.inboxes = inboxes;
-    });
+
     this.store.select("user","unreadMessages").subscribe((unreadMessages)=>{
       this.unreadMessages = unreadMessages;
     });
@@ -41,9 +40,11 @@ export class InboxListComponent {
     });
   }
 
-  getUnreadMessagesFromInbox(inboxId){
-    let inboxTarget = this.unreadMessages.filter((inbox)=>{return inbox.inbox==inboxId});
+  getUnreadMessagesFromInbox(inbox){
+    let inboxTarget = this.unreadMessages.filter((unreadInbox)=>{return unreadInbox.inbox==inbox._id});
     if(inboxTarget.length>0){
+      let unreadMessageToAdd = inboxTarget[0].messages.filter((unreadMessage)=>{return !inbox.messages.some((message)=>{return message._id==unreadMessage._id}) });
+      inbox.messages = inbox.messages.concat(unreadMessageToAdd);
       return inboxTarget[0].messages.length;
     }
     return null;

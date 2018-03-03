@@ -178,4 +178,9 @@ export class StorageProvider {
       .map((res: Response) => res.json());
   }
 
+  patchUser(userId,fields){
+    return this.http.patch(StorageProvider.baseUrl + 'users/' + userId, fields, {headers: StorageProvider.headers})
+      .map((res: Response) => res.json());
+  }
+
 }
