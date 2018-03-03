@@ -126,8 +126,8 @@ storageService.updateUser = (user)=>{
   return db.updateUser(user);
 };
 
-storageService.patchUser = (user)=>{
-  return db.patchUser(user);
+storageService.patchUser = (id,user)=>{
+  return db.patchUser(id,user);
 };
 
 storageService.addFavoritePublication = (favorite)=>{

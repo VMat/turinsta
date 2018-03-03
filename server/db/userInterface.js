@@ -33,8 +33,8 @@ UserInterface.update = (user)=>{
   return Commons.update(Users, user);
 };
 
-UserInterface.patch = (user)=>{
-  return Commons.patch(Users, user);
+UserInterface.patch = (id,user)=>{
+  return Commons.patch(Users, id, user);
 };
 
 UserInterface.addFavoritePublication = (favorite)=>{

@@ -636,8 +636,8 @@ db.updateUser = (user)=>{
   return userInterface.update(user);
 };
 
-db.patchUser = (user)=>{
-  return userInterface.patch(user);
+db.patchUser = (id,user)=>{
+  return userInterface.patch(id,user);
 };
 
 db.addFavoritePublication = (favorite)=>{

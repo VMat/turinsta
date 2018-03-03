@@ -42,6 +42,9 @@ export class TabsPage {
   }
 
   setActiveTab(tab){
+    if(tab=='activities'){
+      this.clearUnseenActivities();
+    }
     this.activeTab = tab;
   }
 }

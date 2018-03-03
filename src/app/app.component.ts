@@ -46,6 +46,8 @@ export class MyApp {
         windows: {}
       });
 
+      // pushObject.setApplicationIconBadgeNumber(0);
+
       pushObject.on('notification').subscribe((notification: any) => {
         console.log('Received a notification', notification);
         pushObject.getApplicationIconBadgeNumber().then((count)=>{

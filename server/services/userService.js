@@ -42,9 +42,9 @@ userService.updateUser = (user)=>{
   })
 };
 
-userService.patchUser = (user)=>{
+userService.patchUser = (id,user)=>{
   return new Promise((resolve, reject)=>{
-    storageService.patchUser(user).
+    storageService.patchUser(id,user).
       then(updatedUser=>resolve(updatedUser)).
       catch(error=>reject(error))
   })

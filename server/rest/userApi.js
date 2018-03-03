@@ -38,8 +38,8 @@ router.put('/',(req, res)=>{
     .catch(error=>{res.status(500).send(error)})
 });
 
-router.patch('/',(req, res)=>{
-  userService.patchUser(req.body)
+router.patch('/:id',(req, res)=>{
+  userService.patchUser(req.params.id, req.body)
     .then(user=>{res.status(200).json(user)})
     .catch(error=>{res.status(500).send(error)})
 });
