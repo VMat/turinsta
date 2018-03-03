@@ -96,6 +96,10 @@ export class StorageProvider {
     return this.http.delete(StorageProvider.baseUrl + 'users/' + userId+ '/inbox/' + inboxId,{headers: StorageProvider.headers});
   }
 
+  removeUnseenActivities(userId){
+    return this.http.patch(StorageProvider.baseUrl + 'users/' + userId, {"notifications.unseenActivities": []}, {headers: StorageProvider.headers});
+  }
+
   createPublication(publication){
     return this.http.post(StorageProvider.baseUrl + 'publications/',publication,{headers: StorageProvider.headers});
   }

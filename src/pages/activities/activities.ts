@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import {CommonsProvider} from "../../providers/commons/commons";
 import {StorageProvider} from "../../providers/storage/storage";
+import {Badge} from "@ionic-native/badge";
 
 /**
  * Generated class for the ActivitiesPage page.
@@ -22,7 +23,8 @@ export class ActivitiesPage {
   IN_LIMIT = 50;
   OUT_LIMIT = 50;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private commons: CommonsProvider, private storageService: StorageProvider) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private commons: CommonsProvider,
+              private storageService: StorageProvider){
     this.getInActivities();
   }
 

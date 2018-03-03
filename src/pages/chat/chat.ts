@@ -6,6 +6,7 @@ import {StorageProvider} from "../../providers/storage/storage";
 import {Store} from "@ngrx/store";
 import {setUnreadMessages} from "../../providers/reducers/user.reducer";
 import { Content } from "ionic-angular";
+import {Badge} from "@ionic-native/badge";
 /**
  * Generated class for the ChatPage page.
  *
@@ -29,7 +30,8 @@ export class ChatPage {
   chatInfo: string = null;
   @ViewChild(Content) content: Content;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private commons: CommonsProvider, private store: Store<any>, private storage: StorageProvider) {}
+  constructor(public navCtrl: NavController, public navParams: NavParams, private commons: CommonsProvider,
+              private storage: StorageProvider, private badge: Badge) {}
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad ChatPage');
@@ -38,7 +40,7 @@ export class ChatPage {
   scrollToBottom() {
     setTimeout(() => {
       this.content.scrollToBottom(0);
-    }, 200);
+    }, 300);
   }
 
   ionViewWillLoad(){
@@ -56,6 +58,7 @@ export class ChatPage {
 
       this.getMessages().subscribe(message => {
         this.chat.messages.push(message);
+        this.scrollToBottom();
         this.setMessageRead();
       });
 
@@ -128,6 +131,7 @@ export class ChatPage {
   }
 
   setMessageRead(){
+    this.badge.decrease(1);
     this.socket.emit('message-read',{user: this.currentUser});
   }
 

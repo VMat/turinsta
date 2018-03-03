@@ -61,6 +61,7 @@ import {InboxWritingPage} from "../pages/inbox-writing/inbox-writing";
 import { NotificationProvider } from '../providers/notification/notification';
 import {Push} from '@ionic-native/push';
 import {userReducer} from "../providers/reducers/user.reducer";
+import {Badge} from "@ionic-native/badge";
 
 @NgModule({
   declarations: [
@@ -153,7 +154,8 @@ import {userReducer} from "../providers/reducers/user.reducer";
     FileTransferObject,
     File,
     NotificationProvider,
-    Push
+    Push,
+    Badge
   ]
 })
 export class AppModule {}

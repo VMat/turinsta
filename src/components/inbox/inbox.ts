@@ -4,6 +4,7 @@ import {ChatPage} from "../../pages/chat/chat";
 import { Socket } from 'ng-socket-io';
 import {CommonsProvider} from "../../providers/commons/commons";
 import {StorageProvider} from "../../providers/storage/storage";
+import {Badge} from "@ionic-native/badge";
 /**
  * Generated class for the InboxComponent component.
  *
@@ -24,7 +25,7 @@ export class InboxComponent {
   avatar :string = null;
   currentUser :string = null;
 
-  constructor(private modalCtrl: ModalController, private commons: CommonsProvider) {
+  constructor(private modalCtrl: ModalController, private commons: CommonsProvider, private badge: Badge) {
     console.log('Hello InboxComponent Component');
     this.currentUser = this.commons.getUserId();
   }
@@ -44,6 +45,9 @@ export class InboxComponent {
   openChat(){
     let socket = new Socket({ url: StorageProvider.baseUrl.replace('/api/',''), options: {user: this.currentUser, inbox: this.data._id} });
     let chatPage = this.modalCtrl.create(ChatPage, {chat: this.data, chatDescription: this.chatDescription, avatar: this.avatar, socket: socket});
-    chatPage.present();
+    chatPage.present()
+    .then(()=>{
+      this.badge.decrease(this.unreadMessagesCount);
+    })
   }
 }
