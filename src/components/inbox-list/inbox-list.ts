@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, Input, EventEmitter, Output} from '@angular/core';
 import {CommonsProvider} from "../../providers/commons/commons";
 import {StorageProvider} from "../../providers/storage/storage";
 import {InboxWritingPage} from "../../pages/inbox-writing/inbox-writing";
@@ -19,6 +19,8 @@ import {ChatPage} from "../../pages/chat/chat";
 })
 export class InboxListComponent {
 
+  @Input() updateInboxes: boolean = null;
+  @Output() inboxesUpdated: any = new EventEmitter<any>();
   inboxes: any = [];
   unreadMessages: any = [];
   avatar: string = null;
@@ -28,7 +30,6 @@ export class InboxListComponent {
 
   constructor(private storage: StorageProvider, private commons: CommonsProvider, private modalCtrl: ModalController, private store: Store<any>) {
     console.log('Hello InboxListComponent Component');
-
     this.store.select("user","unreadMessages").subscribe((unreadMessages)=>{
       this.unreadMessages = unreadMessages;
     });
@@ -38,6 +39,19 @@ export class InboxListComponent {
     this.store.select("user","username").subscribe((username)=>{
       this.username = username;
     });
+  }
+
+  ngOnChanges(){
+    if(this.updateInboxes){
+      this.storage.getInboxes(this.commons.getUserId()).subscribe((inboxes)=>{
+        this.inboxes = inboxes;
+        this.inboxesUpdated.emit(false);
+      });
+    }
+  }
+
+  ionViewDidLoad() {
+    console.log('ionViewDidLoad ActivitiesPage');
   }
 
   getUnreadMessagesFromInbox(inbox){

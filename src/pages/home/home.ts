@@ -15,6 +15,7 @@ export class HomePage{
 
   publications : Observable<any>;
   unreadMessagesCount: number = null;
+  updateInboxes: boolean = true;
   @ViewChild(Slides) slides: Slides;
 
   constructor(public storageService:StorageProvider, public navCtrl: NavController, private store: Store<any>, private modalCtrl: ModalController) {
@@ -26,6 +27,10 @@ export class HomePage{
         return acum + item.messages.length;
       },0);
     });
+  }
+
+  toogleUpdateInboxes(value){
+    this.updateInboxes = value;
   }
 
   openInboxPage(){

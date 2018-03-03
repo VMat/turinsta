@@ -1,5 +1,5 @@
 <ion-content>
-  <ion-slides class="home-slides">
+  <ion-slides class="home-slides" (ionSlideReachEnd)="toogleUpdateInboxes(true)">
     <ion-slide>
       <ion-header no-margin no-padding>
         <filters-bar></filters-bar>
@@ -37,7 +37,7 @@
         </ion-navbar>
       </ion-header>
       <ion-content>
-        <inbox-list></inbox-list>
+        <inbox-list [updateInboxes]=updateInboxes (inboxesUpdated)="toogleUpdateInboxes($event)"></inbox-list>
       </ion-content>
     </ion-slide>
   </ion-slides>
