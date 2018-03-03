@@ -38,7 +38,9 @@ export class InboxWritingPage {
 
   ionViewWillLoad(){
     this.multipleSelection = this.navParams.get("multipleSelection");
-    this.inboxAvatar = this.commons.getDefaultInboxAvatar();
+    if(this.multipleSelection){
+      this.inboxAvatar = this.commons.getDefaultInboxAvatar();
+    }
     this.storage.getFollowedes(this.commons.getUserId(),this.followedesLimit).subscribe((followedes)=>{
       sessionStorage.setItem("followedes", JSON.stringify(followedes));
       this.followedes = followedes;
@@ -83,7 +85,7 @@ export class InboxWritingPage {
   }
 
   uploadPic(image) {
-    let uri = StorageProvider.baseUrl + 'inboxes/avatar';
+    let uri = StorageProvider.baseUrl + 'inboxes/avatar/user/' + this.commons.getUserId();
     let options: FileUploadOptions = {
       fileKey: 'turinstafile',
       fileName: this.inboxName,
@@ -146,6 +148,10 @@ export class InboxWritingPage {
         alert(JSON.stringify(avatarUrl));
         this.viewCtrl.dismiss({name: this.inboxName, participants: this.selectedUsers, avatar: avatarUrl, messages: []});
       })
+      .catch((error)=>{
+        alert(JSON.stringify(error));
+        this.commons.presentToast("Se ha producido un error al guardar el avatar");
+      });
     }
     else{
       this.viewCtrl.dismiss({name: this.inboxName, participants: this.selectedUsers, avatar: this.inboxAvatar, messages: []});

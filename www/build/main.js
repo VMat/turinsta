@@ -261,8 +261,8 @@ var CommonsProvider = (function () {
         this.userStore = userStore;
         this.glosary = null;
         console.log('Hello CommonsProvider Provider');
-        // this.setUserId("59f7562af36d282363087270"); //Pedro
-        this.setUserId("59f7588ef36d282363087491"); //Laura
+        this.setUserId("59f7562af36d282363087270"); //Pedro
+        // this.setUserId("59f7588ef36d282363087491"); //Laura
         // this.setUserId("5a00bb48eea55b00126725f8"); //Julieta
         this.setUserData();
     }
@@ -973,7 +973,9 @@ var InboxWritingPage = (function () {
     InboxWritingPage.prototype.ionViewWillLoad = function () {
         var _this = this;
         this.multipleSelection = this.navParams.get("multipleSelection");
-        this.inboxAvatar = this.commons.getDefaultInboxAvatar();
+        if (this.multipleSelection) {
+            this.inboxAvatar = this.commons.getDefaultInboxAvatar();
+        }
         this.storage.getFollowedes(this.commons.getUserId(), this.followedesLimit).subscribe(function (followedes) {
             sessionStorage.setItem("followedes", JSON.stringify(followedes));
             _this.followedes = followedes;
@@ -1014,7 +1016,7 @@ var InboxWritingPage = (function () {
         });
     };
     InboxWritingPage.prototype.uploadPic = function (image) {
-        var uri = __WEBPACK_IMPORTED_MODULE_2__providers_storage_storage__["a" /* StorageProvider */].baseUrl + 'inboxes/avatar';
+        var uri = __WEBPACK_IMPORTED_MODULE_2__providers_storage_storage__["a" /* StorageProvider */].baseUrl + 'inboxes/avatar/user/' + this.commons.getUserId();
         var options = {
             fileKey: 'turinstafile',
             fileName: this.inboxName,
@@ -1072,6 +1074,10 @@ var InboxWritingPage = (function () {
             this.uploadPic(this.inboxAvatar).then(function (avatarUrl) {
                 alert(JSON.stringify(avatarUrl));
                 _this.viewCtrl.dismiss({ name: _this.inboxName, participants: _this.selectedUsers, avatar: avatarUrl, messages: [] });
+            })
+                .catch(function (error) {
+                alert(JSON.stringify(error));
+                _this.commons.presentToast("Se ha producido un error al guardar el avatar");
             });
         }
         else {

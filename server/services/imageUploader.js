@@ -3,6 +3,7 @@ const storage = require('@google-cloud/storage');
 const fs = require('fs');
 const path = require('path');
 const publicationService = require('./publicationService');
+const userService = require('./userService');
 
 
 const gcs = storage({
@@ -75,44 +76,47 @@ ImgUpload.genericUploadToGcs = (req, res, next) => {
 
   if(!req.files) return next();
 
-  bucketName = req.params.user.bucketId;
-  bucket = gcs.bucket(bucketName);
-  bucket.acl.default.add(aclOptions, (err, aclObject)=>{});
+  userService.getUser(req.params.user,{bucketId: 1})
+    .then((user)=>{
+      bucketName = user.bucketId;
+      bucket = gcs.bucket(bucketName);
+      bucket.acl.default.add(aclOptions, (err, aclObject)=>{});
 
-  let gcsname = [];
-  let bucketFile = [];
-  let stream = [];
+      let gcsname = [];
+      let bucketFile = [];
+      let stream = [];
 
-  let pending = req.files.length;
+      let pending = req.files.length;
 
-  req.files.map((file,i)=>{
-    gcsname[i] = file.filename + '-' + Date.now();
-    bucketFile[i] = bucket.file(gcsname[i]);
-    stream[i] = bucketFile[i].createWriteStream({
-      metadata: {
-        contentType: file.mimetype
-      }
+      req.files.map((file,i)=>{
+        gcsname[i] = file.filename + '-' + Date.now();
+        bucketFile[i] = bucket.file(gcsname[i]);
+        stream[i] = bucketFile[i].createWriteStream({
+          metadata: {
+            contentType: file.mimetype
+          }
+        });
+        stream[i].on('error', (err) => {
+          console.log("Upload failed");
+          file.cloudStorageError = err;
+          next(err);
+        });
+
+        stream[i].on('finish', () => {
+          file.cloudStorageObject = gcsname[i];
+          file.cloudStoragePublicUrl = getPublicUrl(gcsname[i]);
+          console.log("Upload finished");
+          if(pending==1){
+            next();
+          }
+          else{
+            --pending;
+          }
+        });
+
+        stream[i].end(file.buffer);
+      });
     });
-    stream[i].on('error', (err) => {
-      console.log("Upload failed");
-      file.cloudStorageError = err;
-      next(err);
-    });
-
-    stream[i].on('finish', () => {
-      file.cloudStorageObject = gcsname[i];
-      file.cloudStoragePublicUrl = getPublicUrl(gcsname[i]);
-      console.log("Upload finished");
-      if(pending==1){
-        next();
-      }
-      else{
-        --pending;
-      }
-    });
-
-    stream[i].end(file.buffer);
-  });
 };
 
 ImgUpload.removeFromGcs = (bucketId,imageUrl)=>{

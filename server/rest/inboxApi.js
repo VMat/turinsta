@@ -38,7 +38,7 @@ router.delete('/:id',(req, res)=>{
     .catch(error=>{res.status(500).send(error)})
 });
 
-router.post('/avatar',uploadHandler.any(),imageUploader.genericUploadToGcs,(request, response)=>{
+router.post('/avatar/user/:user',uploadHandler.any(),imageUploader.genericUploadToGcs,(request, response)=>{
   const cloudStoragePublicUrls = request.files.map((file)=>{return file.cloudStoragePublicUrl});
   if(cloudStoragePublicUrls){
     if(cloudStoragePublicUrls.length>0){
