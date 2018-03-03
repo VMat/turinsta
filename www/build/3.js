@@ -29,7 +29,7 @@ PublicationActionsMenuPageModule = __decorate([
             __WEBPACK_IMPORTED_MODULE_2__publication_actions_menu__["a" /* PublicationActionsMenuPage */],
         ],
         imports: [
-            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* IonicPageModule */].forChild(__WEBPACK_IMPORTED_MODULE_2__publication_actions_menu__["a" /* PublicationActionsMenuPage */]),
+            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* IonicPageModule */].forChild(__WEBPACK_IMPORTED_MODULE_2__publication_actions_menu__["a" /* PublicationActionsMenuPage */]),
         ],
     })
 ], PublicationActionsMenuPageModule);

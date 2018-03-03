@@ -29,7 +29,7 @@ PublicationUserFilterPageModule = __decorate([
             __WEBPACK_IMPORTED_MODULE_2__publication_user_filter__["a" /* PublicationUserFilterPage */],
         ],
         imports: [
-            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* IonicPageModule */].forChild(__WEBPACK_IMPORTED_MODULE_2__publication_user_filter__["a" /* PublicationUserFilterPage */]),
+            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* IonicPageModule */].forChild(__WEBPACK_IMPORTED_MODULE_2__publication_user_filter__["a" /* PublicationUserFilterPage */]),
         ],
     })
 ], PublicationUserFilterPageModule);

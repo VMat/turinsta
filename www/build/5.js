@@ -29,7 +29,7 @@ PlaceSelectingPageModule = __decorate([
             __WEBPACK_IMPORTED_MODULE_2__place_selecting__["a" /* PlaceSelectingPage */],
         ],
         imports: [
-            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* IonicPageModule */].forChild(__WEBPACK_IMPORTED_MODULE_2__place_selecting__["a" /* PlaceSelectingPage */]),
+            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* IonicPageModule */].forChild(__WEBPACK_IMPORTED_MODULE_2__place_selecting__["a" /* PlaceSelectingPage */]),
         ],
     })
 ], PlaceSelectingPageModule);

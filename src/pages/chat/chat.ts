@@ -1,11 +1,11 @@
-import { Component } from '@angular/core';
+import {Component, ViewChild} from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import {CommonsProvider} from "../../providers/commons/commons";
 import {Observable} from "rxjs";
 import {StorageProvider} from "../../providers/storage/storage";
 import {Store} from "@ngrx/store";
 import {setUnreadMessages} from "../../providers/reducers/user.reducer";
-
+import { Content } from "ionic-angular";
 /**
  * Generated class for the ChatPage page.
  *
@@ -27,11 +27,18 @@ export class ChatPage {
   avatar: string = null;
   currentUser: string = null;
   chatInfo: string = null;
+  @ViewChild(Content) content: Content;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private commons: CommonsProvider, private store: Store<any>, private storage: StorageProvider) {}
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad ChatPage');
+  }
+
+  scrollToBottom() {
+    setTimeout(() => {
+      this.content.scrollToBottom(0);
+    }, 200);
   }
 
   ionViewWillLoad(){
@@ -79,6 +86,7 @@ export class ChatPage {
     this.connect();
     this.setInbox();
     this.setMessageRead();
+    this.scrollToBottom();
   }
 
   getUsername(userId){

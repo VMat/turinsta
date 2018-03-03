@@ -29,7 +29,7 @@ CommentWritingPageModule = __decorate([
             __WEBPACK_IMPORTED_MODULE_2__comment_writing__["a" /* CommentWritingPage */],
         ],
         imports: [
-            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* IonicPageModule */].forChild(__WEBPACK_IMPORTED_MODULE_2__comment_writing__["a" /* CommentWritingPage */]),
+            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* IonicPageModule */].forChild(__WEBPACK_IMPORTED_MODULE_2__comment_writing__["a" /* CommentWritingPage */]),
         ],
     })
 ], CommentWritingPageModule);

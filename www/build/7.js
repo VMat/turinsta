@@ -1,6 +1,6 @@
 webpackJsonp([7],{
 
-/***/ 719:
+/***/ 720:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -29,7 +29,7 @@ InboxWritingPageModule = __decorate([
             __WEBPACK_IMPORTED_MODULE_2__inbox_writing__["a" /* InboxWritingPage */],
         ],
         imports: [
-            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* IonicPageModule */].forChild(__WEBPACK_IMPORTED_MODULE_2__inbox_writing__["a" /* InboxWritingPage */]),
+            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* IonicPageModule */].forChild(__WEBPACK_IMPORTED_MODULE_2__inbox_writing__["a" /* InboxWritingPage */]),
         ],
     })
 ], InboxWritingPageModule);
