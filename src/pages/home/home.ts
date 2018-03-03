@@ -39,6 +39,8 @@ export class HomePage{
 
   doInfinite(event){
     this.store.dispatch(incrementPublicationRange());
-    event.complete();
+    setTimeout(()=>{
+      event.complete();
+    },2000)
   }
 }
