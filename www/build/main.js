@@ -1073,7 +1073,6 @@ var InboxWritingPage = (function () {
         if (this.inboxAvatar) {
             this.uploadPic(this.inboxAvatar).then(function (uploadingResponse) {
                 var avatarUrl = JSON.parse(uploadingResponse["response"]);
-                alert(avatarUrl);
                 _this.viewCtrl.dismiss({ name: _this.inboxName, participants: _this.selectedUsers, avatar: avatarUrl, messages: [] });
             })
                 .catch(function (error) {

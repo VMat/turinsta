@@ -146,7 +146,6 @@ export class InboxWritingPage {
     if(this.inboxAvatar){
       this.uploadPic(this.inboxAvatar).then((uploadingResponse)=>{
         let avatarUrl = JSON.parse(uploadingResponse["response"]);
-        alert(avatarUrl);
         this.viewCtrl.dismiss({name: this.inboxName, participants: this.selectedUsers, avatar: avatarUrl, messages: []});
       })
       .catch((error)=>{
