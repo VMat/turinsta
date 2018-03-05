@@ -101,6 +101,7 @@ export class StorageProvider {
   }
 
   createPublication(publication){
+    console.log("POST publication: " + JSON.stringify(publication));
     return this.http.post(StorageProvider.baseUrl + 'publications/',publication,{headers: StorageProvider.headers});
   }
 

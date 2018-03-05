@@ -63,6 +63,10 @@ export class PlaceFilterComponent {
     }
   }
 
+  cancelAutocomplete(){
+    this.showAutocomplete = false;
+  }
+
   onSearchClear(event){
     if(this.placeSelecting){
       this.placeSelected.emit(null);

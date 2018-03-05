@@ -10,8 +10,8 @@ storageService.getPublications = (searchParams,count,order)=>{
   return db.getPublications(searchParams,count,order);
 };
 
-storageService.getPublication = (id,fields)=>{
-  return db.getPublication(id,fields);
+storageService.getPublication = (id)=>{
+  return db.getPublication(id);
 };
 
 storageService.createPublication = (publication)=>{
