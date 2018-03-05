@@ -91,7 +91,7 @@ PublicationInterface.getN = (searchParams,n,order)=>{
 };
 
 PublicationInterface.getOne = (id)=>{
-  return Commons.getOne(Publications, id, {})
+  return Commons.getOne(Publications, id)
     .populate('user')
     .populate('experiences')
     .populate('comments');

@@ -42,7 +42,10 @@ db.createPublication = (publication)=>{
         timestamps: {created: new Date().toISOString(), modified: null},
         seen: true
       };
-      return activityInterface.insert(newActivity);
+      return activityInterface.insert(newActivity)
+        .then(()=>{
+          return Promise.resolve(publication)
+        });
     });
 };
 
