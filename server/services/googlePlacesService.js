@@ -1,6 +1,6 @@
 const googlePlaces = require('googleplaces');
-const googlePlacesMethods = googlePlaces(googleApiKey,"json"); // GET METHODS
 const googleApiKey = 'AIzaSyCCHGZytVbnHddlS_Bk1mmUnABAxMVpwy0'; // GOOGLE API KEY OF YOUR GOOGLE CONSOLE PROJECT
+const googlePlacesMethods = googlePlaces(googleApiKey,"json"); // GET METHODS
 
 let GooglePlacesService = {};
 
