@@ -190,4 +190,16 @@ storageService.changeMessageStatus = (id,messageId,userId,status)=>{
   return db.changeMessageStatus(id,messageId,userId,status);
 };
 
+storageService.getPlaces = ()=>{
+  return db.getPlaces();
+};
+
+storageService.getPlace = (id)=>{
+  return db.getPlace(id);
+};
+
+storageService.createPlace = (place)=>{
+  return db.createPlace(place);
+};
+
 module.exports = storageService;

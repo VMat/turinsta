@@ -2,7 +2,7 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-// Mongoose inboxSchema definition
+// Mongoose placeSchema definition
 const inboxSchema = new Schema({
   name: String,
   avatar: String,
@@ -17,6 +17,6 @@ const inboxSchema = new Schema({
   timestamps: {created: String, modified: String}
 });
 
-const Inboxes = mongoose.model('Inboxes', inboxSchema, 'Inboxes');
+const Inboxes = mongoose.model('Places', inboxSchema, 'Places');
 
 module.exports = Inboxes;

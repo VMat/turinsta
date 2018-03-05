@@ -3,6 +3,7 @@ import {Select} from "ionic-angular";
 import {cleanFilters, addFilter} from "../../providers/reducers/publication.reducer";
 import {AppState} from "../../providers/models/publication.model";
 import {Store} from "@ngrx/store";
+import {StorageProvider} from "../../providers/storage/storage";
 
 /**
  * Generated class for the PlaceFilterComponent component.
@@ -16,14 +17,15 @@ import {Store} from "@ngrx/store";
 })
 export class PlaceFilterComponent {
   searchInput: string = null;
-  places = [{name: "Bariloche, Argentina"}, {name:"Madrid, España"}, {name:"Sydney, Australia"}, {name:"Tokio, Japón"}];
+  // places = [{name: "Bariloche, Argentina"}, {name:"Madrid, España"}, {name:"Sydney, Australia"}, {name:"Tokio, Japón"}];
+  places = [];
   placeFilter = null;
   showAutocomplete = false;
   @ViewChild(Select) select: Select;
   @Input() placeSelecting: boolean = false;
   @Output() placeSelected = new EventEmitter<string>();
 
-  constructor(public store: Store<AppState>) {
+  constructor(private store: Store<AppState>, private storageService: StorageProvider) {
     console.log('Hello PlaceFilterComponent Component');
   }
 
@@ -40,15 +42,19 @@ export class PlaceFilterComponent {
 
   onSearchInput(event){
     if(this.searchInput != null ? (this.searchInput.trim()).length >=3: false){
-      setTimeout(() => {
-        if(this.select._options.length){
-          this.showAutocomplete = true;
-          this.select.open();
-        }
-        else{
-          this.showAutocomplete = false;
-        }
-      },150);
+      this.storageService.searchPlace(this.searchInput).subscribe((places)=>{
+        sessionStorage.setItem("places", JSON.stringify(places));
+        this.places = places;
+        setTimeout(() => {
+          if(this.select._options.length){
+            this.showAutocomplete = true;
+            this.select.open();
+          }
+          else{
+            this.showAutocomplete = false;
+          }
+        },150);
+      });
     }
     else{
       this.showAutocomplete = false;

@@ -187,4 +187,11 @@ export class StorageProvider {
       .map((res: Response) => res.json());
   }
 
+  searchPlace(searchInput){
+    let params = new URLSearchParams();
+    params.set("input", searchInput);
+    return this.http.get(StorageProvider.baseUrl + 'places/search', {params: params, headers: StorageProvider.headers})
+      .map((res: Response) => res.json());
+  }
+
 }

@@ -6,6 +6,7 @@ const userInterface = require('./userInterface');
 const experienceInterface = require('./experienceInterface');
 const languageInterface = require('./languageInterface');
 const inboxInterface = require('./inboxInterface');
+const placeInterface = require('./placeInterface');
 const NotificationService = require('../services/notificationService');
 
 let db = {};
@@ -863,6 +864,18 @@ db.saveMessage = (id,message)=>{
 
 db.changeMessageStatus = (id,messageId,userId,status)=>{
   return inboxInterface.changeMessageStatus(id,messageId,userId,status);
+};
+
+db.getPlaces = ()=>{
+  return placeInterface.getAll();
+};
+
+db.getPlace = (id)=>{
+  return placeInterface.getOne(id);
+};
+
+db.createPlace = (place)=>{
+  return placeInterface.insert(place);
 };
 
 module.exports = db;
