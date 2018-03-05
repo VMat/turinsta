@@ -44,7 +44,7 @@ export class PlaceFilterComponent {
     if(this.searchInput != null ? (this.searchInput.trim()).length >=3: false){
       this.storageService.searchPlace(this.searchInput).subscribe((places)=>{
         sessionStorage.setItem("places", JSON.stringify(places));
-        this.places = places;
+        this.places = places.predictions;
         setTimeout(() => {
           if(this.select._options.length){
             this.showAutocomplete = true;

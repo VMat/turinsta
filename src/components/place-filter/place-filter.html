@@ -11,6 +11,6 @@
                  (ionClear)="onSearchClear($event)">
   </ion-searchbar>
   <ion-select no-padding no-margin item-end [disabled]="!showAutocomplete" [(ngModel)]="placeFilter" interface="action-sheet" (ionChange)="setPlaceFilter()" cancelText="Cancelar" style="width: 2%">
-    <ion-option *ngFor="let place of places | containsFilter:{key: 'name', value: searchInput}" value="{{place.name}}">{{place.name}}</ion-option>
+    <ion-option *ngFor="let place of places" value="{{place.description}}">{{place.description}}</ion-option>
   </ion-select>
 </ion-item>
