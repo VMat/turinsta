@@ -44,7 +44,7 @@ db.createPublication = (publication)=>{
       };
       return activityInterface.insert(newActivity)
         .then(()=>{
-          return Promise.resolve(publication)
+          return Promise.resolve(newPublication)
         });
     });
 };

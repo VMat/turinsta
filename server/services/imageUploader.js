@@ -28,10 +28,8 @@ let ImgUpload = {};
 ImgUpload.uploadToGcs = (req, res, next) => {
 
   if(!req.files) return next();
-  console.log("PUBLICATION ID: " + req.params.publication);
   publicationService.getPublication(req.params.publication)
     .then((publication)=>{
-      console.log("PUBLICATION: " + JSON.stringify(publication));
       bucketName = publication.user.bucketId;
       bucket = gcs.bucket(bucketName);
       bucket.acl.default.add(aclOptions, (err, aclObject)=>{});
