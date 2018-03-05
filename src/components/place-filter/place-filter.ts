@@ -30,13 +30,15 @@ export class PlaceFilterComponent {
   }
 
   setPlaceFilter(){
-    this.searchInput = {place_id: this.places[this.placeFilter].place_id, name: this.places[this.placeFilter].description};
-    this.showAutocomplete = false;
-    if(this.placeSelecting){
-      this.placeSelected.emit(this.searchInput);
-    }
-    else{
-      this.store.dispatch(addFilter({key:"publication.places.name", value: this.placeFilter.description, operation: "EQUAL"}));
+    if(this.placeFilter){
+      this.searchInput = {place_id: this.places[this.placeFilter].place_id, name: this.places[this.placeFilter].description};
+      this.showAutocomplete = false;
+      if(this.placeSelecting){
+        this.placeSelected.emit(this.searchInput);
+      }
+      else{
+        this.store.dispatch(addFilter({key:"publication.places.name", value: this.placeFilter.description, operation: "EQUAL"}));
+      }
     }
   }
 
@@ -46,6 +48,7 @@ export class PlaceFilterComponent {
         this.places = places.predictions;
         setTimeout(() => {
           if(this.select._options.length){
+            this.placeFilter = null;
             this.showAutocomplete = true;
             this.select.open();
           }
