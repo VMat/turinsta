@@ -6,7 +6,7 @@ const experienceApi = require('../rest/experienceApi');
 const userApi = require('../rest/userApi');
 const languageApi = require('../rest/languageApi');
 const inboxApi = require('../rest/inboxApi');
-const placesApi = require('../rest/placesApi');
+const placesApi = require('../rest/placeApi');
 
 routeServer.get('/', function (req, res){
   res.json(200, {msg: 'OK' });
