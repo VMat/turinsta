@@ -1,7 +1,7 @@
 <!-- Generated template for the PlaceFilterComponent component -->
 <ion-item no-padding no-lines>
   <ion-searchbar item-start
-                 [(ngModel)]="searchInput"
+                 [(ngModel)]="searchInput.name"
                  [animated]=true
                  [autocomplete]="on"
                  [autocorrect]="on"
@@ -11,6 +11,6 @@
                  (ionClear)="onSearchClear($event)">
   </ion-searchbar>
   <ion-select no-padding no-margin item-end [disabled]="!showAutocomplete" [(ngModel)]="placeFilter" interface="action-sheet" (ionChange)="setPlaceFilter()" cancelText="Cancelar" style="width: 2%">
-    <ion-option *ngFor="let place of places" value="{{place.description}}">{{place.description}}</ion-option>
+    <ion-option *ngFor="let place of places; let i = index" value="{{i}}">{{place.description}}</ion-option>
   </ion-select>
 </ion-item>

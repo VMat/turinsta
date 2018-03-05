@@ -16,7 +16,7 @@ import {StorageProvider} from "../../providers/storage/storage";
   templateUrl: 'place-filter.html'
 })
 export class PlaceFilterComponent {
-  searchInput: string = null;
+  searchInput: any = {place_id: null, name: null};
   // places = [{name: "Bariloche, Argentina"}, {name:"Madrid, España"}, {name:"Sydney, Australia"}, {name:"Tokio, Japón"}];
   places = [];
   placeFilter = null;
@@ -30,20 +30,19 @@ export class PlaceFilterComponent {
   }
 
   setPlaceFilter(){
-    this.searchInput = this.placeFilter;
+    this.searchInput = {place_id: this.places[this.placeFilter].place_id, name: this.places[this.placeFilter].description};
     this.showAutocomplete = false;
     if(this.placeSelecting){
-      this.placeSelected.emit(this.placeFilter);
+      this.placeSelected.emit(this.searchInput);
     }
     else{
-      this.store.dispatch(addFilter({key:"publication.places.name", value: this.placeFilter, operation: "EQUAL"}));
+      this.store.dispatch(addFilter({key:"publication.places.name", value: this.placeFilter.description, operation: "EQUAL"}));
     }
   }
 
   onSearchInput(event){
-    if(this.searchInput != null ? (this.searchInput.trim()).length >=3: false){
-      this.storageService.searchPlace(this.searchInput).subscribe((places)=>{
-        sessionStorage.setItem("places", JSON.stringify(places));
+    if(this.searchInput.name != null ? (this.searchInput.name.trim()).length >=3: false){
+      this.storageService.searchPlace(this.searchInput.name).subscribe((places)=>{
         this.places = places.predictions;
         setTimeout(() => {
           if(this.select._options.length){
@@ -53,7 +52,7 @@ export class PlaceFilterComponent {
           else{
             this.showAutocomplete = false;
           }
-        },150);
+        },300);
       });
     }
     else{

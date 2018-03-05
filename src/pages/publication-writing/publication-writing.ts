@@ -207,7 +207,7 @@ export class PublicationWritingPage {
   }
 
   setPlace(event){
-    this.publication.places = [{name: event}];
+    this.publication.places = [event];
   }
 
   uploadPics(images) {

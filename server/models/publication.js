@@ -7,6 +7,7 @@ const publicationSchema = new schema({
 		type: schema.Types.ObjectId, ref: 'Users'
 	},
 	places:[{
+    place_id: String,
     name: String
   }],
 	images:[{

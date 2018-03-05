@@ -23,8 +23,8 @@ export class CommonsProvider {
               private localStorage: Storage, private storage: StorageProvider, private userStore: Store<User>) {
     console.log('Hello CommonsProvider Provider');
     // this.setUserId("59f7562af36d282363087270"); //Pedro
-    // this.setUserId("59f7588ef36d282363087491"); //Laura
-    this.setUserId("5a00bb48eea55b00126725f8"); //Julieta
+    this.setUserId("59f7588ef36d282363087491"); //Laura
+    // this.setUserId("5a00bb48eea55b00126725f8"); //Julieta
     this.setUserData();
   }
 
