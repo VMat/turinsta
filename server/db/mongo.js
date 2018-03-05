@@ -32,19 +32,26 @@ db.getPublication = (id)=>{
 db.createPublication = (publication)=>{
   return publicationInterface.insert(publication)
     .then((newPublication)=>{
-      let newActivity = {
-        user: newPublication.user,
-        direction: "OUT",
-        caption: "publicationCreated",
-        params: null,
-        relatedUsers: null,
-        publication: newPublication._id,
-        timestamps: {created: new Date().toISOString(), modified: null},
-        seen: true
-      };
-      return activityInterface.insert(newActivity)
-        .then(()=>{
-          return Promise.resolve(newPublication)
+      return userInterface.getOne(newPublication.user)
+        .then((user)=>{
+          user.publications.push(newPublication._id);
+          return userInterface.update(user)
+            .then(()=>{
+              let newActivity = {
+                user: newPublication.user,
+                direction: "OUT",
+                caption: "publicationCreated",
+                params: null,
+                relatedUsers: null,
+                publication: newPublication._id,
+                timestamps: {created: new Date().toISOString(), modified: null},
+                seen: true
+              };
+              return activityInterface.insert(newActivity)
+                .then(()=>{
+                  return Promise.resolve(newPublication)
+                });
+            });
         });
     });
 };
