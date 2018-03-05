@@ -1,3 +1,4 @@
+const Publications = require('../models/publication');
 const Places = require('../models/place');
 const Commons = require('./commons');
 
