@@ -10,7 +10,7 @@ UserInterface.getAll = ()=>{
   return Commons.getAll(Users);
 };
 
-UserInterface.getOne = (id,fields)=>{
+UserInterface.getOne = (id,fields={})=>{
 
   if(fields.hasOwnProperty('publications') || Object.keys(fields).length === 0){
     return Commons.getOne(Users, id, fields)
