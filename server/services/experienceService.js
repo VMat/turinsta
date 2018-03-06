@@ -10,7 +10,7 @@ experienceService.getExperience = (id)=>{
   })
 };
 
-experienceService.getExperienceCategories = (id)=>{
+experienceService.getExperienceCategories = ()=>{
   return new Promise((resolve, reject)=>{
     storageService.getExperienceCategories().
       then(experienceCategories=>resolve(experienceCategories)).

@@ -25,6 +25,7 @@ export class ExperienceWritingPage {
   ionViewDidLoad() {
     console.log('ionViewDidLoad ExperienceWritingPage');
     this.storageService.getExperienceCategories().subscribe((categories)=>{
+      sessionStorage.setItem("categories", JSON.stringify(categories));
       this.categories = categories;
       if(Boolean(this.navParams.get("experience"))){
         this.experience = {...this.navParams.get("experience")}
