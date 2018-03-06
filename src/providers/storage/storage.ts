@@ -49,6 +49,11 @@ export class StorageProvider {
       .map((res:Response) => res.json());
   }
 
+  getExperienceCategories(){
+    return this.http.get(StorageProvider.baseUrl + 'experiences/categories',{headers: StorageProvider.headers})
+      .map((res:Response) => res.json());
+  }
+
   createExperience(experience){
     return this.http.post(StorageProvider.baseUrl + 'experiences',experience,{headers: StorageProvider.headers})
       .map((res:Response) => res.json());

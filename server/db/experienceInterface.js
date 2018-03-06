@@ -1,5 +1,6 @@
 const Publications = require('../models/publication');
 const Experiences = require('../models/experience');
+const Categories = require('../models/experienceCategory');
 const Commons = require('./commons');
 const PublicationInterface = require('./publicationInterface');
 
@@ -7,6 +8,10 @@ let ExperienceInterface = {};
 
 ExperienceInterface.getOne = (id)=>{
   return Commons.getOne(Experiences, id);
+};
+
+ExperienceInterface.getCategories = ()=>{
+  return Commons.getAll(Categories);
 };
 
 ExperienceInterface.insert = (experience)=>{

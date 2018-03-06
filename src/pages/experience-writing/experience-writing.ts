@@ -17,15 +17,19 @@ import {CommonsProvider} from "../../providers/commons/commons";
 })
 export class ExperienceWritingPage {
 
+  categories: any = [];
   experience: any = {};
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private viewCtrl: ViewController, private storageService: StorageProvider, private commons: CommonsProvider, private alertCtrl: AlertController) {}
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad ExperienceWritingPage');
-    if(Boolean(this.navParams.get("experience"))){
-      this.experience = {...this.navParams.get("experience")}
-    }
+    this.storageService.getExperienceCategories().subscribe((categories)=>{
+      this.categories = categories;
+      if(Boolean(this.navParams.get("experience"))){
+        this.experience = {...this.navParams.get("experience")}
+      }
+    });
   }
 
   dismissExperience(){

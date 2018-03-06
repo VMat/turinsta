@@ -10,6 +10,14 @@ experienceService.getExperience = (id)=>{
   })
 };
 
+experienceService.getExperienceCategories = (id)=>{
+  return new Promise((resolve, reject)=>{
+    storageService.getExperienceCategories().
+      then(experienceCategories=>resolve(experienceCategories)).
+      catch(error=>reject(error))
+  })
+};
+
 experienceService.createExperience = (experience)=>{
   return new Promise((resolve, reject)=>{
     storageService.createExperience(experience).

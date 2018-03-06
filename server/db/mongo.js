@@ -567,6 +567,10 @@ db.getExperience = (id)=>{
   return experienceInterface.getOne(id);
 };
 
+db.getExperienceCategories = ()=>{
+  return experienceInterface.getCategories();
+};
+
 db.createExperience = (experience)=>{
   return experienceInterface.insert(experience)
     .then((updatedPublication)=>{

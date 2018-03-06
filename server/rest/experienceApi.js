@@ -7,6 +7,12 @@ router.get('/:id',(req, res)=>{
     .catch(error=>{res.status(500).send(error)})
 });
 
+router.get('/categories',(req, res)=>{
+  experienceService.getExperienceCategories()
+    .then(experienceCategories=>{res.status(200).json(experienceCategories)})
+    .catch(error=>{res.status(500).send(error)})
+});
+
 router.post('/',(req, res)=>{
   experienceService.createExperience(req.body)
     .then(experience=>{res.status(200).json(experience)})

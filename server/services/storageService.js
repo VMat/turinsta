@@ -94,6 +94,10 @@ storageService.getExperience = (id)=>{
   return db.getExperience(id);
 };
 
+storageService.getExperienceCategories = ()=>{
+  return db.getExperienceCategories();
+};
+
 storageService.createExperience = (experience)=>{
   return db.createExperience(experience);
 };

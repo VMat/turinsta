@@ -22,7 +22,15 @@
   <ion-list style="height: 100%">
     <ion-item style="height: 20%">
       <ion-label stacked>Categoría</ion-label>
-      <ion-input [(ngModel)]="experience.category"></ion-input>
+      <ion-select [(ngModel)]="experience.category">
+        <ion-option *ngFor="let category of categories" value="{{category.description}}">
+          <ion-item>
+            <ion-icon item-start name="{{category.icon}}"></ion-icon>
+            <p class="publication-important-text">{{category.description}}</p>
+          </ion-item>
+        </ion-option>
+      </ion-select>
+      <!--<ion-input [(ngModel)]="experience.category"></ion-input>-->
     </ion-item>
     <ion-item style="height: 65%">
       <ion-label stacked>Contenido</ion-label>

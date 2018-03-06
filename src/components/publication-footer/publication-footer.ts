@@ -22,7 +22,7 @@ export class PublicationFooterComponent{
   @Input() user: any = null;
   @Output() showScoreInputChanged = new EventEmitter<any>();
 
-  sections: any = [{name: "Experiences", show: false}, {name: "Comments", show: false}];
+  sections: any = [{name: "ExperienceCategories", show: false}, {name: "Comments", show: false}];
   scoreInputShowed: boolean = false;
 
   constructor(public events: Events, private commons: CommonsProvider, private modalCtrl: ModalController){
