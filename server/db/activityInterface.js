@@ -18,7 +18,7 @@ ActivityInterface.getOne = (id)=>{
   return Commons.getOne(Activities, id)
     .populate('user')
     .populate('relatedUsers')
-    .populate('AppState');
+    .populate('publication');
 };
 
 ActivityInterface.insert = (activity)=>{
