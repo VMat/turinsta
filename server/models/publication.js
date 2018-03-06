@@ -13,7 +13,7 @@ const publicationSchema = new schema({
 	images:[{
 		url: String
 	}],
-	experienceIds:[{type: schema.Types.ObjectId, ref: 'ExperienceCategories'}],
+	experienceIds:[{type: schema.Types.ObjectId, ref: 'Experiences'}],
 	commentIds:[{type: schema.Types.ObjectId, ref: 'Comments'}],
 	timestamps: {
     created: String,

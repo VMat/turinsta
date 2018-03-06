@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const schema = mongoose.Schema;
 
-// Mongoose experienceCategorySchema definition
+// Mongoose experienceSchema definition
 const experienceSchema = new schema({
   publication: {type: schema.Types.ObjectId, ref: 'Publications'},
 	category: String,
