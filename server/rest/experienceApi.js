@@ -1,15 +1,15 @@
 const router = require('express').Router();
 const experienceService = require('../services/experienceService');
 
-router.get('/:id',(req, res)=>{
-  experienceService.getExperience(req.params.id)
-    .then(experience=>{res.status(200).json(experience)})
-    .catch(error=>{res.status(500).send(error)})
-});
-
 router.get('/categories',(req, res)=>{
   experienceService.getExperienceCategories()
     .then(experienceCategories=>{res.status(200).json(experienceCategories)})
+    .catch(error=>{res.status(500).send(error)})
+});
+
+router.get('/:id',(req, res)=>{
+  experienceService.getExperience(req.params.id)
+    .then(experience=>{res.status(200).json(experience)})
     .catch(error=>{res.status(500).send(error)})
 });
 
