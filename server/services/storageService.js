@@ -98,6 +98,10 @@ storageService.getExperienceCategories = ()=>{
   return db.getExperienceCategories();
 };
 
+storageService.getExperienceTypes = ()=>{
+  return db.getExperienceTypes();
+};
+
 storageService.createExperience = (experience)=>{
   return db.createExperience(experience);
 };

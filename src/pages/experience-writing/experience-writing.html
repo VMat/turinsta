@@ -21,16 +21,22 @@
 <ion-content no-padding no-margin style="height: 100%">
   <ion-list style="height: 100%">
     <ion-item style="height: 20%">
-      <ion-label stacked>Categoría</ion-label>
-      <ion-select [(ngModel)]="experience.category">
-        <ion-option *ngFor="let category of categories" value="{{category.description}}">
-          <ion-item>
-            <ion-icon item-start name="{{category.icon}}"></ion-icon>
-            <p class="publication-important-text">{{category.description}}</p>
-          </ion-item>
-        </ion-option>
-      </ion-select>
+      <!--<ion-label stacked>Categoría</ion-label>-->
+      <!--<ion-select [(ngModel)]="experience.category">-->
+        <!--<ion-option *ngFor="let category of categories" value="{{category.description}}">-->
+      <!--<p item-start class="publication-important-text">Categoría</p>-->
+      <button *ngFor="let category of categories" ion-button clear icon-only (click)="setCategory(category.description)">
+        <ion-icon  name="{{category.icon}}" color="{{experience.category==category.description? 'primary': 'gray'}}"></ion-icon>
+      </button>
+          <!--<p class="publication-important-text"><ion-icon name="{{category.icon}}"></ion-icon>{{category.icon}}</p>-->
+        <!--</ion-option>-->
+      <!--</ion-select>-->
       <!--<ion-input [(ngModel)]="experience.category"></ion-input>-->
+    </ion-item>
+    <ion-item>
+      <button *ngFor="let type of types" ion-button clear icon-only (click)="setType(type)">
+        <ion-icon  name="{{type.icon}}" color="{{experience.type?(experience.type._id==type._id? type.color: 'gray'): 'gray'}}"></ion-icon>
+      </button>
     </ion-item>
     <ion-item style="height: 65%">
       <ion-label stacked>Contenido</ion-label>

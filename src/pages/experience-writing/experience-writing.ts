@@ -18,6 +18,7 @@ import {CommonsProvider} from "../../providers/commons/commons";
 export class ExperienceWritingPage {
 
   categories: any = [];
+  types: any = [];
   experience: any = {};
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private viewCtrl: ViewController, private storageService: StorageProvider, private commons: CommonsProvider, private alertCtrl: AlertController) {}
@@ -25,11 +26,13 @@ export class ExperienceWritingPage {
   ionViewDidLoad() {
     console.log('ionViewDidLoad ExperienceWritingPage');
     this.storageService.getExperienceCategories().subscribe((categories)=>{
-      sessionStorage.setItem("categories", JSON.stringify(categories));
       this.categories = categories;
-      if(Boolean(this.navParams.get("experience"))){
-        this.experience = {...this.navParams.get("experience")}
-      }
+      this.storageService.getExperienceTypes().subscribe((types)=>{
+        this.types = types;
+        if(Boolean(this.navParams.get("experience"))){
+          this.experience = {...this.navParams.get("experience")}
+        }
+      });
     });
   }
 
@@ -58,24 +61,49 @@ export class ExperienceWritingPage {
     confirm.present();
   }
 
-  saveExperience(){
-    if(Boolean(this.experience._id)){
-      this.storageService.updateExperience(this.experience).subscribe((editedExperience)=>{
-        this.commons.presentToast("La experiencia ha sido actualizada con éxito");
-        this.viewCtrl.dismiss(this.experience);
-      });
+  checkNeededField(){
+    if(!this.experience.category){
+      this.commons.presentToast("Debe seleccionar una categoría");
+      return false;
     }
-    else{
-      if(this.experience.publication){
-        this.storageService.createExperience(this.experience).subscribe((newExperience)=>{
-          this.commons.presentToast("La experiencia ha sido grabada con éxito");
+    if(!this.experience.type){
+      this.commons.presentToast("Debe seleccionar un tipo de experiencia");
+      return false;
+    }
+    return true;
+  }
+
+  saveExperience(){
+    if(this.checkNeededField()){
+      let unpopulatedExperience = {...this.experience};
+      unpopulatedExperience.category = this.experience.category._id;
+      unpopulatedExperience.type = this.experience.type._id;
+      if(Boolean(this.experience._id)){
+        this.storageService.updateExperience(unpopulatedExperience).subscribe((editedExperience)=>{
+          this.commons.presentToast("La experiencia ha sido actualizada con éxito");
           this.viewCtrl.dismiss(this.experience);
         });
       }
       else{
-        this.viewCtrl.dismiss(this.experience);
+        if(this.experience.publication){
+          this.storageService.createExperience(unpopulatedExperience).subscribe((newExperience)=>{
+            this.commons.presentToast("La experiencia ha sido grabada con éxito");
+            this.viewCtrl.dismiss(this.experience);
+          });
+        }
+        else{
+          this.viewCtrl.dismiss(this.experience);
+        }
       }
     }
+  }
+
+  setCategory(category){
+    this.experience.category = category;
+  }
+
+  setType(type){
+    this.experience.type = type;
   }
 
 }

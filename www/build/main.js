@@ -265,17 +265,20 @@ var ExperienceWritingPage = (function () {
         this.commons = commons;
         this.alertCtrl = alertCtrl;
         this.categories = [];
+        this.types = [];
         this.experience = {};
     }
     ExperienceWritingPage.prototype.ionViewDidLoad = function () {
         var _this = this;
         console.log('ionViewDidLoad ExperienceWritingPage');
         this.storageService.getExperienceCategories().subscribe(function (categories) {
-            sessionStorage.setItem("categories", JSON.stringify(categories));
             _this.categories = categories;
-            if (Boolean(_this.navParams.get("experience"))) {
-                _this.experience = __assign({}, _this.navParams.get("experience"));
-            }
+            _this.storageService.getExperienceTypes().subscribe(function (types) {
+                _this.types = types;
+                if (Boolean(_this.navParams.get("experience"))) {
+                    _this.experience = __assign({}, _this.navParams.get("experience"));
+                }
+            });
         });
     };
     ExperienceWritingPage.prototype.dismissExperience = function () {
@@ -302,31 +305,53 @@ var ExperienceWritingPage = (function () {
         });
         confirm.present();
     };
+    ExperienceWritingPage.prototype.checkNeededField = function () {
+        if (!this.experience.category) {
+            this.commons.presentToast("Debe seleccionar una categoría");
+            return false;
+        }
+        if (!this.experience.type) {
+            this.commons.presentToast("Debe seleccionar un tipo de experiencia");
+            return false;
+        }
+        return true;
+    };
     ExperienceWritingPage.prototype.saveExperience = function () {
         var _this = this;
-        if (Boolean(this.experience._id)) {
-            this.storageService.updateExperience(this.experience).subscribe(function (editedExperience) {
-                _this.commons.presentToast("La experiencia ha sido actualizada con éxito");
-                _this.viewCtrl.dismiss(_this.experience);
-            });
-        }
-        else {
-            if (this.experience.publication) {
-                this.storageService.createExperience(this.experience).subscribe(function (newExperience) {
-                    _this.commons.presentToast("La experiencia ha sido grabada con éxito");
+        if (this.checkNeededField()) {
+            var unpopulatedExperience = __assign({}, this.experience);
+            unpopulatedExperience.category = this.experience.category._id;
+            unpopulatedExperience.type = this.experience.type._id;
+            if (Boolean(this.experience._id)) {
+                this.storageService.updateExperience(unpopulatedExperience).subscribe(function (editedExperience) {
+                    _this.commons.presentToast("La experiencia ha sido actualizada con éxito");
                     _this.viewCtrl.dismiss(_this.experience);
                 });
             }
             else {
-                this.viewCtrl.dismiss(this.experience);
+                if (this.experience.publication) {
+                    this.storageService.createExperience(unpopulatedExperience).subscribe(function (newExperience) {
+                        _this.commons.presentToast("La experiencia ha sido grabada con éxito");
+                        _this.viewCtrl.dismiss(_this.experience);
+                    });
+                }
+                else {
+                    this.viewCtrl.dismiss(this.experience);
+                }
             }
         }
+    };
+    ExperienceWritingPage.prototype.setCategory = function (category) {
+        this.experience.category = category;
+    };
+    ExperienceWritingPage.prototype.setType = function (type) {
+        this.experience.type = type;
     };
     return ExperienceWritingPage;
 }());
 ExperienceWritingPage = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
-        selector: 'page-experience-writing',template:/*ion-inline-start:"C:\Users\Matias\WebstormProjects\turinsta\src\pages\experience-writing\experience-writing.html"*/'<!--\n  Generated template for the ExperienceWritingPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-header>\n  <ion-navbar>\n    <ion-item no-lines style="text-align: center">\n      <button item-start ion-button clear (click)="dismissExperience()">\n        <ion-icon name="close"></ion-icon>\n      </button>\n      <ion-title *ngIf="!experience._id">Nueva experiencia</ion-title>\n      <ion-title *ngIf="experience._id">Editar experiencia</ion-title>\n      <button item-end ion-button clear (click)="confirmSave()">\n        <ion-icon name="checkmark" color="success"></ion-icon>\n      </button>\n    </ion-item>\n  </ion-navbar>\n</ion-header>\n<ion-content no-padding no-margin style="height: 100%">\n  <ion-list style="height: 100%">\n    <ion-item style="height: 20%">\n      <ion-label stacked>Categoría</ion-label>\n      <ion-select [(ngModel)]="experience.category">\n        <ion-option *ngFor="let category of categories" value="{{category.description}}">\n          <ion-item>\n            <ion-icon item-start name="{{category.icon}}"></ion-icon>\n            <p class="publication-important-text">{{category.description}}</p>\n          </ion-item>\n        </ion-option>\n      </ion-select>\n      <!--<ion-input [(ngModel)]="experience.category"></ion-input>-->\n    </ion-item>\n    <ion-item style="height: 65%">\n      <ion-label stacked>Contenido</ion-label>\n        <ion-textarea class="form-control" [(ngModel)]="experience.content" style="width: 100%"></ion-textarea>\n    </ion-item>\n    <ion-item style="height: 15%">\n      <my-emoji-picker item-end [data]=experience></my-emoji-picker>\n    </ion-item>\n  </ion-list>\n</ion-content>\n'/*ion-inline-end:"C:\Users\Matias\WebstormProjects\turinsta\src\pages\experience-writing\experience-writing.html"*/,
+        selector: 'page-experience-writing',template:/*ion-inline-start:"C:\Users\Matias\WebstormProjects\turinsta\src\pages\experience-writing\experience-writing.html"*/'<!--\n  Generated template for the ExperienceWritingPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-header>\n  <ion-navbar>\n    <ion-item no-lines style="text-align: center">\n      <button item-start ion-button clear (click)="dismissExperience()">\n        <ion-icon name="close"></ion-icon>\n      </button>\n      <ion-title *ngIf="!experience._id">Nueva experiencia</ion-title>\n      <ion-title *ngIf="experience._id">Editar experiencia</ion-title>\n      <button item-end ion-button clear (click)="confirmSave()">\n        <ion-icon name="checkmark" color="success"></ion-icon>\n      </button>\n    </ion-item>\n  </ion-navbar>\n</ion-header>\n<ion-content no-padding no-margin style="height: 100%">\n  <ion-list style="height: 100%">\n    <ion-item style="height: 20%">\n      <!--<ion-label stacked>Categoría</ion-label>-->\n      <!--<ion-select [(ngModel)]="experience.category">-->\n        <!--<ion-option *ngFor="let category of categories" value="{{category.description}}">-->\n      <!--<p item-start class="publication-important-text">Categoría</p>-->\n      <button *ngFor="let category of categories" ion-button clear icon-only (click)="setCategory(category.description)">\n        <ion-icon  name="{{category.icon}}" color="{{experience.category==category.description? \'primary\': \'gray\'}}"></ion-icon>\n      </button>\n          <!--<p class="publication-important-text"><ion-icon name="{{category.icon}}"></ion-icon>{{category.icon}}</p>-->\n        <!--</ion-option>-->\n      <!--</ion-select>-->\n      <!--<ion-input [(ngModel)]="experience.category"></ion-input>-->\n    </ion-item>\n    <ion-item>\n      <button *ngFor="let type of types" ion-button clear icon-only (click)="setType(type)">\n        <ion-icon  name="{{type.icon}}" color="{{experience.type?(experience.type._id==type._id? type.color: \'gray\'): \'gray\'}}"></ion-icon>\n      </button>\n    </ion-item>\n    <ion-item style="height: 65%">\n      <ion-label stacked>Contenido</ion-label>\n        <ion-textarea class="form-control" [(ngModel)]="experience.content" style="width: 100%"></ion-textarea>\n    </ion-item>\n    <ion-item style="height: 15%">\n      <my-emoji-picker item-end [data]=experience></my-emoji-picker>\n    </ion-item>\n  </ion-list>\n</ion-content>\n'/*ion-inline-end:"C:\Users\Matias\WebstormProjects\turinsta\src\pages\experience-writing\experience-writing.html"*/,
     }),
     __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* NavController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* NavController */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* NavParams */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* NavParams */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["s" /* ViewController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["s" /* ViewController */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_2__providers_storage_storage__["a" /* StorageProvider */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__providers_storage_storage__["a" /* StorageProvider */]) === "function" && _d || Object, typeof (_e = typeof __WEBPACK_IMPORTED_MODULE_3__providers_commons_commons__["a" /* CommonsProvider */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__providers_commons_commons__["a" /* CommonsProvider */]) === "function" && _e || Object, typeof (_f = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["b" /* AlertController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["b" /* AlertController */]) === "function" && _f || Object])
 ], ExperienceWritingPage);

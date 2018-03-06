@@ -1,16 +1,23 @@
 const Publications = require('../models/publication');
 const Experiences = require('../models/experience');
 const Categories = require('../models/experienceCategory');
+const Types = require('../models/experienceType');
 const Commons = require('./commons');
 
 let ExperienceInterface = {};
 
 ExperienceInterface.getOne = (id)=>{
-  return Commons.getOne(Experiences, id);
+  return Commons.getOne(Experiences, id)
+    .populate('category')
+    .populate('type')
 };
 
 ExperienceInterface.getCategories = ()=>{
   return Commons.getAll(Categories);
+};
+
+ExperienceInterface.getTypes = ()=>{
+  return Commons.getAll(Types);
 };
 
 ExperienceInterface.insert = (experience)=>{
