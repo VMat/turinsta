@@ -2,7 +2,6 @@ const Publications = require('../models/publication');
 const Experiences = require('../models/experience');
 const Categories = require('../models/experienceCategory');
 const Commons = require('./commons');
-const PublicationInterface = require('./publicationInterface');
 
 let ExperienceInterface = {};
 

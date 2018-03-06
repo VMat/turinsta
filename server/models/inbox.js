@@ -17,6 +17,6 @@ const inboxSchema = new Schema({
   timestamps: {created: String, modified: String}
 });
 
-const Inboxes = mongoose.model('Places', inboxSchema, 'Places');
+const Inboxes = mongoose.model('Inboxes', inboxSchema, 'Inboxes');
 
 module.exports = Inboxes;

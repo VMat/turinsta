@@ -9,6 +9,6 @@ const experienceSchema = new schema({
 	score: Number
 });
 
-const Experiences = mongoose.model('ExperienceCategories', experienceSchema, 'ExperienceCategories');
+const Experiences = mongoose.model('Experiences', experienceSchema, 'Experiences');
 
 module.exports = Experiences;

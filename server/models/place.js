@@ -7,6 +7,6 @@ const placeSchema = new Schema({
   publications:[{type: Schema.Types.ObjectId, ref: 'Publications'}]
 });
 
-const Places = mongoose.model('usedPlaces', placeSchema, 'usedPlaces');
+const Places = mongoose.model('Places', placeSchema, 'Places');
 
 module.exports = Places;
