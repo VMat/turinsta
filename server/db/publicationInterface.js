@@ -1,6 +1,8 @@
 const Publications = require('../models/publication');
 const Users = require('../models/user');
 const Experiences = require('../models/experience');
+const ExperienceCategory = require('../models/experienceCategory');
+const ExperienceType = require('../models/experienceType');
 const Comments = require('../models/comment');
 const Places = require('../models/place');
 const Commons = require('./commons');
@@ -13,6 +15,8 @@ PublicationInterface.getAll = ()=>{
   return Commons.getAll(Publications)
     .populate('user')
     .populate('experiences')
+    .populate('experiences.category')
+    .populate('experiences.type')
     .populate('comments');
 };
 
