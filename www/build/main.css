@@ -39686,6 +39686,12 @@ p {
   font-weight: bold !important;
 }
 
+.text-with-ellipsis {
+  white-space: nowrap !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+}
+
 publication ion-card {
   width: 100%;
   margin: 0 auto;

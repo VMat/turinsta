@@ -44,7 +44,7 @@
       <publication-image [id]=image._id [url]=image.url></publication-image>
     </ion-slide>
   </ion-slides>
-  <ion-item no-lines no-padding>
+  <ion-item no-lines no-padding class="text-with-ellipsis" style="width: 100%">
     <p *ngIf="publication.description" item-start class="publication-description"><b>{{user.username}}</b>&nbsp;{{publication.description}}</p>
     <div *ngIf="checkEditPermission() && publication.description" item-right>
       <button ion-button icon-only clear (click)="presentDescriptionWriting()">
@@ -60,7 +60,7 @@
       </button>
       <p class="publication-important-text">Agregar descripción</p>
     </div>
-    <p *ngIf="publication.timestamps" item-end>{{prettyDate(publication.timestamps.created)}}</p>
+    <p *ngIf="publication.timestamps" item-end class="text-with-ellipsis">{{prettyDate(publication.timestamps.created)}}</p>
   </ion-item>
   <ion-item>
     <ion-item no-lines>

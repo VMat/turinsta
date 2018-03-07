@@ -65,7 +65,7 @@ db.patchPublication = (id,fields)=>{
       if(fields.hasOwnProperty('places')){
         return placeInterface.update(editedPublication)
           .then(()=>{
-            return placeInterface.insert({...editedPublication, places: fields.places})
+            return placeInterface.insert({...editedPublication, _id: id, places: fields.places})
               .then(()=>{
                 let newActivity = {
                   user: editedPublication.user,

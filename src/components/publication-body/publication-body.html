@@ -6,6 +6,6 @@
     <score-handler [scoreInputShowed]="showScoreInput" [publicationScore]="scoreGivenFromUser()" [publicationId]="publication._id"></score-handler>
   </ion-slide>
 </ion-slides>
-<p item-start class="publication-description"><span *ngIf="publication.description"><b>{{user.username}}</b>&nbsp;{{publication.description}}</span></p>
+<p item-start class="publication-description text-with-ellipsis" style="max-width: 80%" ><span *ngIf="publication.description"><b>{{user.username}}</b>&nbsp;{{publication.description}}</span></p>
 
 
