@@ -106,7 +106,10 @@ PublicationInterface.getN = (searchParams,n,order)=>{
     ...filters,
     {$sort: order},
     {$limit: Number(n)}
-  ]).exec();
+  ]).exec((err, publications)=>{
+    return publications.populate('experiences.category')
+    .populate('experiences.type')
+  })
 };
 
 PublicationInterface.getOne = (id)=>{
