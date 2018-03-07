@@ -168,10 +168,7 @@ PublicationInterface.deleteOne = (id)=>{
                 user.publications.splice(index,1);
                 return Commons.update(Users, user)
                   .then(()=>{
-                    return Commons.getN(Places,{googlePlacesId: publication.places[0].place_id},1)
-                      .then(()=>{
-                        return Commons.removeOne(Publications,publication);
-                      });
+                    return Commons.removeOne(Publications,publication);
                   })
               })
             })
