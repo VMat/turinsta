@@ -30,7 +30,9 @@ export class ExperienceWritingPage {
       this.storageService.getExperienceTypes().subscribe((types)=>{
         this.types = types;
         if(Boolean(this.navParams.get("experience"))){
-          this.experience = {...this.navParams.get("experience")}
+          this.experience = {...this.navParams.get("experience")};
+          this.experience.category = this.experience.category? this.experience.category[0] :null;
+          this.experience.type = this.experience.type? this.experience.type[0] :null;
         }
       });
     });
@@ -81,14 +83,14 @@ export class ExperienceWritingPage {
       if(Boolean(this.experience._id)){
         this.storageService.updateExperience(unpopulatedExperience).subscribe((editedExperience)=>{
           this.commons.presentToast("La experiencia ha sido actualizada con éxito");
-          this.viewCtrl.dismiss(this.experience);
+          this.viewCtrl.dismiss({...this.experience, category: [this.experience.category], type: [this.experience.type]});
         });
       }
       else{
         if(this.experience.publication){
           this.storageService.createExperience(unpopulatedExperience).subscribe((newExperience)=>{
             this.commons.presentToast("La experiencia ha sido grabada con éxito");
-            this.viewCtrl.dismiss(this.experience);
+            this.viewCtrl.dismiss({...this.experience, category: [this.experience.category], type: [this.experience.type]});
           });
         }
         else{
