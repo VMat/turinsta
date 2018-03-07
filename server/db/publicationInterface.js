@@ -65,7 +65,7 @@ PublicationInterface.getN = (searchParams,n,order)=>{
     {
       $lookup: {
         from: "ExperienceTypes",
-        localField: "experiences.types",
+        localField: "experiences.type",
         foreignField: "_id",
         as: "experiences.type"
       }
