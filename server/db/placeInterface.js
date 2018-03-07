@@ -23,10 +23,10 @@ PlaceInterface.insert = (publication)=>{
     })
 };
 
-PlaceInterface.update = (oldPublication)=> {
+PlaceInterface.delete = (oldPublication)=> {
   return Commons.getN(Places, {googlePlacesId: oldPublication.places[0].place_id}, 1)
     .then((places) => {
-      if (places.length > 0) {
+      if(places.length > 0){
         let index = null;
         places[0].publications.forEach((publicationToCompare,i)=>{
           if(publicationToCompare._id==oldPublication._id){

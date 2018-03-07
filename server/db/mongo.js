@@ -63,7 +63,7 @@ db.patchPublication = (id,fields)=>{
   return publicationInterface.patch(id,fields)
     .then((editedPublication)=>{
       if(fields.hasOwnProperty('places')){
-        return placeInterface.update(editedPublication)
+        return placeInterface.delete(editedPublication)
           .then(()=>{
             return placeInterface.insert({...editedPublication, _id: id, places: fields.places})
               .then(()=>{
@@ -101,28 +101,27 @@ db.updatePublication = (publication)=>{
   return publicationInterface.update(publication);
 };
 
-db.deletePublications = ()=>{
-  return publicationInterface.deleteAll();
-};
-
 db.deletePublication = (id)=>{
   return publicationInterface.getOne(id)
     .then((deletedPublication)=>{
-      return publicationInterface.deleteOne(id)
-      .then(()=>{
-        let newActivity = {
-          user: deletedPublication.user,
-          direction: "OUT",
-          caption: "publicationDeleted",
-          params: null,
-          relatedUsers: null,
-          publication: null,
-          timestamps: {created: new Date().toISOString(), modified: null},
-          seen: true
-        };
-        return activityInterface.insert(newActivity);
-      });
-    })
+      return placeInterface.delete(deletedPublication)
+        .then(()=>{
+          return publicationInterface.deleteOne(id)
+            .then(()=>{
+              let newActivity = {
+                user: deletedPublication.user,
+                direction: "OUT",
+                caption: "publicationDeleted",
+                params: null,
+                relatedUsers: null,
+                publication: null,
+                timestamps: {created: new Date().toISOString(), modified: null},
+                seen: true
+              };
+              return activityInterface.insert(newActivity);
+            });
+        });
+    });
 };
 
 db.addPublicationAssessment = (assessment)=>{

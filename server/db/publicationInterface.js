@@ -109,13 +109,6 @@ PublicationInterface.getN = (searchParams,n,order)=>{
     {$sort: order},
     {$limit: Number(n)}
   ]).exec();
-
-  // exec(function(err, transactions) {
-  //   ExperienceCategory.populate(transactions, {"experiences.category": '_id'}, function(err, populatedTransactions) {
-  //     // Your populated translactions are inside populatedTransactions
-  //     return Promise.resolve(populatedTransactions);
-  //   });
-  // })
 };
 
 PublicationInterface.getOne = (id)=>{
@@ -176,18 +169,9 @@ PublicationInterface.deleteOne = (id)=>{
                 return Commons.update(Users, user)
                   .then(()=>{
                     return Commons.getN(Places,{googlePlacesId: publication.places[0].place_id},1)
-                      .then((place)=>{
-                        place.publications.forEach((publication,i)=>{
-                          if(publication._id == publication._id){
-                            index = i;
-                          }
-                        });
-                        place.publications.splice(index,1);
-                        return Commons.update(Places, place)
-                          .then(()=>{
-                            return Commons.removeOne(Publications,publication);
-                          })
-                    });
+                      .then(()=>{
+                        return Commons.removeOne(Publications,publication);
+                      });
                   })
               })
             })
