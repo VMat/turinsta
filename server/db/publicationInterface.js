@@ -49,23 +49,23 @@ PublicationInterface.getN = (searchParams,n,order)=>{
       }
     },
     {
+      $unwind: {
+        path: "$experiences",
+        preserveNullAndEmptyArrays: true
+      }
+    },
+    {
       $lookup: {
         from: "ExperienceCategories",
-        localField: "category",
+        localField: "$experiences.category",
         foreignField: "_id"
       }
     },
     {
       $lookup: {
         from: "ExperienceTypes",
-        localField: "types",
+        localField: "$experiences.types",
         foreignField: "_id"
-      }
-    },
-    {
-      $unwind: {
-        path: "$experiences",
-        preserveNullAndEmptyArrays: true
       }
     },
     {
@@ -106,12 +106,14 @@ PublicationInterface.getN = (searchParams,n,order)=>{
     ...filters,
     {$sort: order},
     {$limit: Number(n)}
-  ]).exec(function(err, transactions) {
-    ExperienceCategory.populate(transactions, {"experiences.category": '_id'}, function(err, populatedTransactions) {
-      // Your populated translactions are inside populatedTransactions
-      return Promise.resolve(populatedTransactions);
-    });
-  })
+  ]).exec();
+
+  // exec(function(err, transactions) {
+  //   ExperienceCategory.populate(transactions, {"experiences.category": '_id'}, function(err, populatedTransactions) {
+  //     // Your populated translactions are inside populatedTransactions
+  //     return Promise.resolve(populatedTransactions);
+  //   });
+  // })
 };
 
 PublicationInterface.getOne = (id)=>{
