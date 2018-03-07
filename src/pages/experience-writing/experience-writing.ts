@@ -94,7 +94,7 @@ export class ExperienceWritingPage {
           });
         }
         else{
-          this.viewCtrl.dismiss(this.experience);
+          this.viewCtrl.dismiss({...this.experience, category: [this.experience.category], type: [this.experience.type]});
         }
       }
     }
