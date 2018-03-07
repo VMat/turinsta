@@ -175,7 +175,7 @@ export class PublicationWritingPage {
         this.uploadPics(images).then(()=>{
           Promise.all(
             this.experiences.map((experience)=>{
-              return this.storageService.createExperience({...experience, publication: this.publication._id}).toPromise();
+              return this.storageService.createExperience({...experience, category: experience.category[0]._id, type: experience.type[0]._id, publication: this.publication._id}).toPromise();
             })
           )
           .then(()=>{
