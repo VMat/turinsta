@@ -59,7 +59,7 @@ PublicationInterface.getN = (searchParams,n,order)=>{
         from: "ExperienceCategories",
         localField: "experiences.category",
         foreignField: "_id",
-        as: "$experiences.category"
+        as: "experiences.category"
       }
     },
     {
@@ -67,7 +67,7 @@ PublicationInterface.getN = (searchParams,n,order)=>{
         from: "ExperienceTypes",
         localField: "experiences.types",
         foreignField: "_id",
-        as: "$experiences.type"
+        as: "experiences.type"
       }
     },
     {
