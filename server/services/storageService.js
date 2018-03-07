@@ -210,4 +210,8 @@ storageService.createPlace = (place)=>{
   return db.createPlace(place);
 };
 
+storageService.updatePlace = (place)=>{
+  return db.updatePlace(place);
+};
+
 module.exports = storageService;

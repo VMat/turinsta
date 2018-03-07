@@ -37,21 +37,24 @@ db.createPublication = (publication)=>{
           user.publications.push(newPublication._id);
           return userInterface.update(user)
             .then(()=>{
-              let newActivity = {
-                user: newPublication.user,
-                direction: "OUT",
-                caption: "publicationCreated",
-                params: null,
-                relatedUsers: null,
-                publication: newPublication._id,
-                timestamps: {created: new Date().toISOString(), modified: null},
-                seen: true
-              };
-              return activityInterface.insert(newActivity)
+              placeInterface.insert(newPublication)
                 .then(()=>{
-                  return Promise.resolve(newPublication)
+                  let newActivity = {
+                    user: newPublication.user,
+                    direction: "OUT",
+                    caption: "publicationCreated",
+                    params: null,
+                    relatedUsers: null,
+                    publication: newPublication._id,
+                    timestamps: {created: new Date().toISOString(), modified: null},
+                    seen: true
+                  };
+                  return activityInterface.insert(newActivity)
+                    .then(()=>{
+                      return Promise.resolve(newPublication)
+                    });
                 });
-            });
+            })
         });
     });
 };
@@ -59,17 +62,38 @@ db.createPublication = (publication)=>{
 db.patchPublication = (id,fields)=>{
   return publicationInterface.patch(id,fields)
     .then((editedPublication)=>{
-      let newActivity = {
-        user: editedPublication.user,
-        direction: "OUT",
-        caption: "publicationEdited",
-        params: null,
-        relatedUsers: null,
-        publication: editedPublication._id,
-        timestamps: {created: new Date().toISOString(), modified: null},
-        seen: true
-      };
-      return activityInterface.insert(newActivity);
+      if(fields.hasOwnProperty('places')){
+        return placeInterface.update(editedPublication)
+          .then(()=>{
+            return placeInterface.insert({...editedPublication, places: fields.places})
+              .then(()=>{
+                let newActivity = {
+                  user: editedPublication.user,
+                  direction: "OUT",
+                  caption: "publicationEdited",
+                  params: null,
+                  relatedUsers: null,
+                  publication: editedPublication._id,
+                  timestamps: {created: new Date().toISOString(), modified: null},
+                  seen: true
+                };
+                return activityInterface.insert(newActivity);
+              })
+            })
+      }
+      else{
+        let newActivity = {
+          user: editedPublication.user,
+          direction: "OUT",
+          caption: "publicationEdited",
+          params: null,
+          relatedUsers: null,
+          publication: editedPublication._id,
+          timestamps: {created: new Date().toISOString(), modified: null},
+          seen: true
+        };
+        return activityInterface.insert(newActivity);
+      }
     });
 };
 
@@ -894,6 +918,10 @@ db.getPlace = (id)=>{
 
 db.createPlace = (place)=>{
   return placeInterface.insert(place);
+};
+
+db.updatePlace = (place)=>{
+  return placeInterface.update(place);
 };
 
 module.exports = db;

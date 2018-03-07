@@ -4,6 +4,7 @@ const Schema = mongoose.Schema;
 // Mongoose placeSchema definition
 const placeSchema = new Schema({
   name: String,
+  googlePlacesId: String,
   publications:[{type: Schema.Types.ObjectId, ref: 'Publications'}]
 });
 

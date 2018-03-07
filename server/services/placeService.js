@@ -35,4 +35,12 @@ placeService.createPlace = (place)=>{
   })
 };
 
+placeService.updatePlace = (place)=>{
+  return new Promise((resolve, reject)=>{
+    storageService.updatePlace(place).
+    then(place=>resolve(place)).
+    catch(error=>reject(error))
+  })
+};
+
 module.exports = placeService;

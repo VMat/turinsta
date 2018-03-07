@@ -2,6 +2,7 @@ const Publications = require('../models/publication');
 const Users = require('../models/user');
 const Experiences = require('../models/experience');
 const Comments = require('../models/comment');
+const Places = require('../models/place');
 const Commons = require('./commons');
 const ExperienceInterface = require('./experienceInterface');
 const CommentInterface = require('./commentInterface');
@@ -128,7 +129,7 @@ PublicationInterface.deleteOne = (id)=>{
       .then(()=>{
         return CommentInterface.deleteFromPublication(id)
         .then(()=>{
-          Commons.getOne(Users, publication.user)
+          return Commons.getOne(Users, publication.user)
             .then((user)=>{
               return Promise.all(
                 publication.images.map((image)=>{
@@ -136,7 +137,29 @@ PublicationInterface.deleteOne = (id)=>{
                 })
               )
               .then(()=>{
-                return Commons.removeOne(Publications,publication);
+                let index = null;
+                user.publications.forEach((publication,i)=>{
+                  if(publication._id == publication._id){
+                    index = i;
+                  }
+                });
+                user.publications.splice(index,1);
+                return Commons.update(Users, user)
+                  .then(()=>{
+                    return Commons.getN(Places,{googlePlacesId: publication.places[0].place_id},1)
+                      .then((place)=>{
+                        place.publications.forEach((publication,i)=>{
+                          if(publication._id == publication._id){
+                            index = i;
+                          }
+                        });
+                        place.publications.splice(index,1);
+                        return Commons.update(Places, place)
+                          .then(()=>{
+                            return Commons.removeOne(Publications,publication);
+                          })
+                    });
+                  })
               })
             })
         })

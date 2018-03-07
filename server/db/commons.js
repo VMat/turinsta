@@ -6,7 +6,7 @@ Commons.getAll = (Collection)=>{
   return Collection.find()
 };
 
-Commons.getN = (Collection,filters,n,order)=>{
+Commons.getN = (Collection,filters,n,order={"_id":1})=>{
   return Collection.find(filters)
       .sort(order)
       .limit(Number(n));
