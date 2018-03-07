@@ -37,7 +37,7 @@ db.createPublication = (publication)=>{
           user.publications.push(newPublication._id);
           return userInterface.update(user)
             .then(()=>{
-              placeInterface.insert(newPublication)
+              return placeInterface.insert(newPublication)
                 .then(()=>{
                   let newActivity = {
                     user: newPublication.user,
