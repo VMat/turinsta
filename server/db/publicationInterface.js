@@ -49,6 +49,20 @@ PublicationInterface.getN = (searchParams,n,order)=>{
       }
     },
     {
+      $lookup: {
+        from: "ExperienceCategories",
+        localField: "category",
+        foreignField: "_id"
+      }
+    },
+    {
+      $lookup: {
+        from: "ExperienceTypes",
+        localField: "types",
+        foreignField: "_id"
+      }
+    },
+    {
       $unwind: {
         path: "$experiences",
         preserveNullAndEmptyArrays: true
@@ -99,6 +113,8 @@ PublicationInterface.getOne = (id)=>{
   return Commons.getOne(Publications, id)
     .populate('user')
     .populate('experiences')
+    .populate('experiences.category')
+    .populate('experiences.type')
     .populate('comments');
 };
 
