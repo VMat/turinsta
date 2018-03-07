@@ -25,7 +25,7 @@ export class CommentListComponent{
 
   constructor(public storageService: StorageProvider, public commonsService: CommonsProvider, public store: Store<AppState>, private modalCtrl: ModalController) {}
 
-  presentCommentWritingModal(event){
+  presentCommentWritingModal(){
     let experienceWritingModal = this.modalCtrl.create(CommentWritingPage,{comment: {user: this.commonsService.getUserId(),publication: this.publicationId, parent: this.commentId}});
     experienceWritingModal.present();
   }

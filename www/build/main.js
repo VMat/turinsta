@@ -409,8 +409,8 @@ var CommonsProvider = (function () {
         this.userStore = userStore;
         this.glosary = null;
         console.log('Hello CommonsProvider Provider');
-        this.setUserId("59f7562af36d282363087270"); //Yo
-        // this.setUserId("59f7588ef36d282363087491"); //Cor
+        // this.setUserId("59f7562af36d282363087270"); //Yo
+        this.setUserId("59f7588ef36d282363087491"); //Cor
         // this.setUserId("5a00bb48eea55b00126725f8"); //Cele
         this.setUserData();
     }
@@ -3015,8 +3015,7 @@ var CommentListComponent = (function () {
         this.publicationOwner = null;
         this.commentId = null;
     }
-    CommentListComponent.prototype.presentCommentWritingModal = function (event) {
-        event.preventDefault();
+    CommentListComponent.prototype.presentCommentWritingModal = function () {
         var experienceWritingModal = this.modalCtrl.create(__WEBPACK_IMPORTED_MODULE_4__pages_comment_writing_comment_writing__["a" /* CommentWritingPage */], { comment: { user: this.commonsService.getUserId(), publication: this.publicationId, parent: this.commentId } });
         experienceWritingModal.present();
     };
