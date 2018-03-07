@@ -62,6 +62,7 @@ import { NotificationProvider } from '../providers/notification/notification';
 import {Push} from '@ionic-native/push';
 import {userReducer} from "../providers/reducers/user.reducer";
 import {Badge} from "@ionic-native/badge";
+import {EmptyContentComponent} from "../components/empty-content/empty-content";
 
 @NgModule({
   declarations: [
@@ -102,7 +103,8 @@ import {Badge} from "@ionic-native/badge";
     ScoreHandlerComponent,
     InboxListComponent,
     InboxComponent,
-    ContainsFilterPipe
+    ContainsFilterPipe,
+    EmptyContentComponent
   ],
   imports: [
     BrowserModule,

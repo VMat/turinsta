@@ -50,6 +50,10 @@ p{
   text-overflow: ellipsis !important;
 }
 
+.fullscreen-loading{
+  background-color: color($colors,light,base);
+}
+
 publication ion-card{
   width: 100%;
   margin: 0 auto;

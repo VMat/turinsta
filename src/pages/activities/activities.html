@@ -29,6 +29,7 @@
           <img *ngIf="activity.publication" src="{{activity.publication.images[0].url}}">
         </ion-thumbnail>
       </ion-item>
+      <ion-icon *ngIf="emptyActivities('IN')" name="sad" style="font-size: xx-large" color="light"></ion-icon>
     </ion-list>
     <ion-list *ngSwitchCase="'OUT'">
       <ion-item *ngFor="let activity of activities | containsFilter:{'key':'direction', 'value':'OUT'}">
@@ -38,6 +39,7 @@
           <img *ngIf="activity.publication" src="{{activity.publication.images[0].url}}">
         </ion-thumbnail>
       </ion-item>
+      <ion-icon *ngIf="emptyActivities('OUT')" name="sad" style="font-size: xx-large" color="light"></ion-icon>
     </ion-list>
   </div>
 </ion-content>

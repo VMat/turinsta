@@ -22,9 +22,9 @@ export class CommonsProvider {
   constructor(public http: Http, public toastCtrl: ToastController, public alertCtrl: AlertController,
               private localStorage: Storage, private storage: StorageProvider, private userStore: Store<User>) {
     console.log('Hello CommonsProvider Provider');
-    // this.setUserId("59f7562af36d282363087270"); //Pedro
-    this.setUserId("59f7588ef36d282363087491"); //Laura
-    // this.setUserId("5a00bb48eea55b00126725f8"); //Julieta
+    // this.setUserId("59f7562af36d282363087270"); //Matías
+    this.setUserId("59f7588ef36d282363087491"); //Cor
+    // this.setUserId("5a00bb48eea55b00126725f8"); //Cele
     this.setUserData();
   }
 

@@ -156,7 +156,8 @@ export class PublicationWritingPage {
 
   savePublication(){
     let loader = this.loadingCtrl.create({
-      content: "Guardando publicación..."
+      content: "Guardando publicación...",
+      cssClass: "fullscreen-loading"
     });
     loader.present();
     sessionStorage.setItem("this.publication",JSON.stringify(this.publication));

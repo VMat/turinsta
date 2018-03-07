@@ -43,6 +43,12 @@ export class ActivitiesPage {
     });
   };
 
+  emptyActivities(direction){
+    return !this.activities.some((activity)=>{
+      return activity.direction == direction
+    });
+  }
+
   ionViewDidLoad() {
     console.log('ionViewDidLoad ActivitiesPage');
   }

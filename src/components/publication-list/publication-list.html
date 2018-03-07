@@ -2,3 +2,5 @@
 <ion-list>
   <publication *ngFor="let publication of data.publications" [data]="publication"></publication>
 </ion-list>
+<empty-content *ngIf="!data.publications.length"></empty-content>
+

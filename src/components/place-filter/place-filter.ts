@@ -37,7 +37,7 @@ export class PlaceFilterComponent {
         this.placeSelected.emit(this.searchInput);
       }
       else{
-        this.store.dispatch(addFilter({key:"publication.places.name", value: this.placeFilter.description, operation: "EQUAL"}));
+        this.store.dispatch(addFilter({key:"publication.places.place_id", value: this.places[this.placeFilter].place_id, operation: "EQUAL"}));
       }
     }
   }

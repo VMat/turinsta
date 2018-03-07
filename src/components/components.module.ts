@@ -19,6 +19,7 @@ import { PublicationActionsComponent } from './publication-actions/publication-a
 import { ScoreHandlerComponent } from './score-handler/score-handler';
 import { InboxListComponent } from './inbox-list/inbox-list';
 import { InboxComponent } from './inbox/inbox';
+import { EmptyContentComponent } from './empty-content/empty-content';
 @NgModule({
 	declarations: [PublicationComponent,
     ExperienceComponent,
@@ -40,7 +41,8 @@ import { InboxComponent } from './inbox/inbox';
     ScoreHandlerComponent,
     ScoreHandlerComponent,
     InboxListComponent,
-    InboxComponent],
+    InboxComponent,
+    EmptyContentComponent],
 	imports: [],
 	exports: [PublicationComponent,
     ExperienceComponent,
@@ -62,6 +64,7 @@ import { InboxComponent } from './inbox/inbox';
     ScoreHandlerComponent,
     ScoreHandlerComponent,
     InboxListComponent,
-    InboxComponent]
+    InboxComponent,
+    EmptyContentComponent]
 })
 export class ComponentsModule {}

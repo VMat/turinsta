@@ -39692,6 +39692,10 @@ p {
   text-overflow: ellipsis !important;
 }
 
+.fullscreen-loading {
+  background-color: #f4f4f4;
+}
+
 publication ion-card {
   width: 100%;
   margin: 0 auto;
