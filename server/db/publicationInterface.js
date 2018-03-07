@@ -106,9 +106,11 @@ PublicationInterface.getN = (searchParams,n,order)=>{
     ...filters,
     {$sort: order},
     {$limit: Number(n)}
-  ]).exec((err, publications)=>{
-    return publications.populate('experiences.category')
-    .populate('experiences.type')
+  ]).exec(function(err, transactions) {
+    ExperienceCategory.populate(transactions, {"experiences.category": '_id'}, function(err, populatedTransactions) {
+      // Your populated translactions are inside populatedTransactions
+      return Promise.resolve(populatedTransactions);
+    });
   })
 };
 
