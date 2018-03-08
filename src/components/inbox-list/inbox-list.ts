@@ -104,8 +104,9 @@ export class InboxListComponent {
           }
         }
         else{
-          this.storage.createInbox(newInbox).subscribe((newInbox)=>{
-            this.storage.getInbox(newInbox._id).subscribe((inbox)=>{
+          sessionStorage.setItem("newInbox", JSON.stringify(newInbox));
+          this.storage.createInbox(newInbox).subscribe((createdInbox)=>{
+            this.storage.getInbox(createdInbox._id).subscribe((inbox)=>{
               let socket = new Socket({url: StorageProvider.baseUrl.replace('/api/','')});
               let chatPage = this.modalCtrl.create(ChatPage, {chat: inbox, chatDescription: this.commons.getChatDescription(inbox), avatar: this.commons.getAvatar(inbox), socket: socket});
               chatPage.present();

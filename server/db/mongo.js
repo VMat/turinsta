@@ -937,7 +937,7 @@ db.updateInbox = (inbox)=>{
   return inboxInterface.update(inbox);
 };
 
-db.patchInbox = (inbox)=>{
+db.patchInbox = (id,fields)=>{
   return inboxInterface.patch(id,fields);
 };
 

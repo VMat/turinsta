@@ -21,10 +21,7 @@ export class ChatActionsComponent {
     console.log('Hello ChatActionsComponent Component');
   }
 
-  popoverActionsMenu(myEvent){
-    // let loggedUser = this.commons.getUserId();
-    // this.followedPublication = this.publication.followers.indexOf(loggedUser)!=-1;
-    // this.followedUser =  this.user.followers.indexOf(loggedUser)!=-1;
+  popoverActionsMenu(){
     let popover = this.popoverCtrl.create(ChatActionsMenuPage, {chat: this.chat});
     popover.present();
     popover.onDidDismiss((updatedInbox)=>{

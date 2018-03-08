@@ -184,7 +184,7 @@ export class InboxWritingPage {
       });
     }
     else{
-      if(this.inboxAvatar){
+      if(this.inboxAvatar!=this.commons.getDefaultInboxAvatar()){
         this.uploadPic(this.inboxAvatar).then((uploadingResponse)=>{
           let avatarUrl = JSON.parse(uploadingResponse["response"]);
           this.viewCtrl.dismiss({name: this.inboxName, participants: this.selectedUsers, avatar: avatarUrl, messages: [], group: true});
