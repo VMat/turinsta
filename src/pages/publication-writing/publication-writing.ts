@@ -43,9 +43,8 @@ export class PublicationWritingPage {
     if(Boolean(this.navParams.get("publication"))){
       this.publication = {...this.navParams.get("publication")};
       this.user = {...this.navParams.get("user")};
-      this.experiences = [...this.navParams.get("experiences")];
-      this.comments = [...this.navParams.get("comments")];
-      sessionStorage.setItem("this.user",JSON.stringify(this.user));
+      this.experiences = this.navParams.get("experiences");
+      this.comments = this.navParams.get("comments");
     }
     this.loggedUser = this.commons.getUserId();
   }
