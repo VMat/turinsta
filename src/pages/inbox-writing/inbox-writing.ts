@@ -26,6 +26,7 @@ export class InboxWritingPage {
   inboxName: string = null;
   inboxAvatar: string = null;
   readonly PARTICIPANTS_LIMIT = 20;
+  inbox: any = null;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private viewCtrl: ViewController,
               private alertCtrl: AlertController, private storage: StorageProvider, private commons: CommonsProvider,
@@ -38,11 +39,11 @@ export class InboxWritingPage {
 
   ionViewWillLoad(){
     this.multipleSelection = this.navParams.get("multipleSelection");
-    let chat = this.navParams.get("chat");
-    if(chat){
-      this.selectedUsers = chat.participants.filter((user)=>{return user._id!=this.commons.getUserId()}).map((user)=>{return user._id});
-      this.inboxName = chat.name;
-      this.inboxAvatar = chat.avatar;
+    this.inbox = this.navParams.get("chat");
+    if(this.inbox){
+      this.selectedUsers = this.inbox.participants.filter((user)=>{return user._id!=this.commons.getUserId()}).map((user)=>{return user._id});
+      this.inboxName = this.inbox.name;
+      this.inboxAvatar = this.inbox.avatar;
     }
     if(this.multipleSelection){
       this.inboxAvatar = this.commons.getDefaultInboxAvatar();
@@ -129,41 +130,72 @@ export class InboxWritingPage {
 
   confirmSave() {
     if(this.checkNeededField()){
-      let confirm = this.alertCtrl.create({
-        title: 'Confirmar operación',
-        message: '¿Está seguro que desea crear el grupo?',
-        buttons: [
-          {
-            text: 'Aceptar',
-            handler: () => {
-              this.saveInbox();
+      let confirm = null;
+      if(this.inbox){
+        confirm = this.alertCtrl.create({
+          title: 'Confirmar operación',
+          message: '¿Está seguro que desea modificar el grupo?',
+          buttons: [
+            {
+              text: 'Aceptar',
+              handler: () => {
+                this.saveInbox();
+              }
+            },
+            {
+              text: 'Cancelar',
+              handler: () => {
+              }
             }
-          },
-          {
-            text: 'Cancelar',
-            handler: () => {
+          ]
+        });
+      }
+      else{
+        confirm = this.alertCtrl.create({
+          title: 'Confirmar operación',
+          message: '¿Está seguro que desea crear el grupo?',
+          buttons: [
+            {
+              text: 'Aceptar',
+              handler: () => {
+                this.saveInbox();
+              }
+            },
+            {
+              text: 'Cancelar',
+              handler: () => {
+              }
             }
-          }
-        ]
-      });
+          ]
+        });
+      }
       confirm.present();
     }
   }
 
   saveInbox(){
     this.selectedUsers.push(this.commons.getUserId());
-
-    if(this.inboxAvatar){
-      this.uploadPic(this.inboxAvatar).then((uploadingResponse)=>{
-        let avatarUrl = JSON.parse(uploadingResponse["response"]);
-        this.viewCtrl.dismiss({name: this.inboxName, participants: this.selectedUsers, avatar: avatarUrl, messages: [], group: true});
-      })
-      .catch((error)=>{
-        this.commons.presentToast("Se ha producido un error al guardar el avatar");
+    if(this.inbox){
+      this.storage.patchInbox(this.inbox._id,{participants: this.selectedUsers, name: this.inboxName, avatar: this.inboxAvatar}).subscribe(()=>{
+        this.storage.getInbox(this.inbox._id).subscribe((patchedInbox)=>{
+          this.commons.presentToast("Se ha actualizado el grupo con éxito");
+          this.viewCtrl.dismiss(patchedInbox);
+        })
       });
     }
     else{
-      this.viewCtrl.dismiss({name: this.inboxName, participants: this.selectedUsers, avatar: this.inboxAvatar, messages: [], group: true});
+      if(this.inboxAvatar){
+        this.uploadPic(this.inboxAvatar).then((uploadingResponse)=>{
+          let avatarUrl = JSON.parse(uploadingResponse["response"]);
+          this.viewCtrl.dismiss({name: this.inboxName, participants: this.selectedUsers, avatar: avatarUrl, messages: [], group: true});
+        })
+          .catch((error)=>{
+            this.commons.presentToast("Se ha producido un error al guardar el avatar");
+          });
+      }
+      else{
+        this.viewCtrl.dismiss({name: this.inboxName, participants: this.selectedUsers, avatar: this.inboxAvatar, messages: [], group: true});
+      }
     }
   }
 

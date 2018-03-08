@@ -82,6 +82,10 @@ export class ChatPage {
       this.updateUnreadMessages().subscribe(()=>{
           this.updateUnreadMessagesCounter();
       });
+
+      this.updateChat().subscribe(()=>{
+          this.getInbox();
+      });
     }
   }
 
@@ -122,6 +126,12 @@ export class ChatPage {
     this.commons.getUnreadMessages();
   }
 
+  getInbox(){
+    this.storage.getInbox(this.chat._id).subscribe((updatedInbox)=>{
+      this.chat = updatedInbox;
+    });
+  }
+
   connect(){
     this.socket.connect();
   }
@@ -158,6 +168,11 @@ export class ChatPage {
         this.sendMessage();
       });
     }
+  }
+
+  updatedChat(inbox){
+    this.chat = inbox;
+    this.socket.emit('updated-chat');
   }
 
   getMessages() {
@@ -206,6 +221,14 @@ export class ChatPage {
         observer.next(data);
       });
     });
+  }
+
+  updateChat(){
+    return new Observable(observer => {
+      this.socket.on('update-chat', (data) => {
+        observer.next(data);
+      })
+    })
   }
 
   ionViewWillLeave() {

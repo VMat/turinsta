@@ -169,6 +169,11 @@ export class StorageProvider {
       .map((res:Response)=> res.json());
   }
 
+  patchInbox(id, fields){
+    return this.http.patch(StorageProvider.baseUrl + 'inboxes/' + id, fields, {headers: StorageProvider.headers})
+      .map((res: Response)=>res.json());
+  }
+
   getUser(id){
     return this.http.get(StorageProvider.baseUrl + 'users/' + id)
       .map((res: Response) => res.json());

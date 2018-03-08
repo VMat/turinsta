@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
-import {IonicPage, NavController, NavParams, ModalController} from 'ionic-angular';
+import {IonicPage, NavController, NavParams, ModalController, ViewController} from 'ionic-angular';
 import {InboxWritingPage} from "../inbox-writing/inbox-writing";
+import {StorageProvider} from "../../providers/storage/storage";
 
 /**
  * Generated class for the ChatActionsMenuPage page.
@@ -18,7 +19,7 @@ export class ChatActionsMenuPage {
 
   chat: any = null;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private modalCtrl: ModalController) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private modalCtrl: ModalController, private viewCtrl: ViewController){
   }
 
   ionViewDidLoad() {
@@ -27,9 +28,11 @@ export class ChatActionsMenuPage {
   }
 
   editChat(){
-    let inboxWritingModal = this.modalCtrl.create(InboxWritingPage, {chat: this.chat, multipleSelection: true});
+    let inboxWritingModal = this.modalCtrl.create(InboxWritingPage, {chat: {...this.chat}, multipleSelection: true});
     inboxWritingModal.present();
-    inboxWritingModal.onDidDismiss((newInbox)=>{});
+    inboxWritingModal.onDidDismiss((updatedInbox)=>{
+      this.viewCtrl.dismiss(updatedInbox);
+    });
   }
 
   leaveChat(){

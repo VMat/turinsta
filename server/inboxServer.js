@@ -50,6 +50,11 @@ inboxServer.init = (server)=>{
           io.in(socket.inbox).emit('message', message[0]);
         });
     });
+
+    socket.on('updated-chat', () => {
+      socket.broadcast.to(socket.inbox).emit('update-chat');
+    });
+
   });
 };
 
