@@ -22,6 +22,10 @@ InboxInterface.update = (inbox)=>{
   return Commons.update(Inboxes,inbox);
 };
 
+InboxInterface.patch = (id, fields)=>{
+  return Commons.patch(Inboxes,id,fields);
+};
+
 InboxInterface.deleteOne = (id)=>{
   return Commons.getOne(Inboxes,id)
     .then((inbox)=>{

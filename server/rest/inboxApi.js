@@ -21,6 +21,7 @@ router.get('/:id',(req, res)=>{
 });
 
 router.post('/',(req, res)=>{
+  console.log(JSON.stringify(req.body));
   inboxService.createInbox(req.body)
     .then(inbox=>{res.status(200).json(inbox)})
     .catch(error=>{res.status(500).send(error)})
@@ -28,6 +29,12 @@ router.post('/',(req, res)=>{
 
 router.put('/',(req, res)=>{
   inboxService.updateInbox(req.body)
+    .then(inbox=>{res.status(200).json(inbox)})
+    .catch(error=>{res.status(500).send(error)})
+});
+
+router.patch('/:id',(req, res)=>{
+  inboxService.patchInbox(req.params.id, req.body)
     .then(inbox=>{res.status(200).json(inbox)})
     .catch(error=>{res.status(500).send(error)})
 });

@@ -186,6 +186,10 @@ storageService.updateInbox = (inbox)=>{
   return db.updateInbox(inbox);
 };
 
+storageService.patchInbox = (id, fields)=>{
+  return db.patchInbox(id, fields);
+};
+
 storageService.deleteInbox = (id)=>{
   return db.deleteInbox(id);
 };

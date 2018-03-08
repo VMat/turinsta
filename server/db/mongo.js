@@ -937,6 +937,10 @@ db.updateInbox = (inbox)=>{
   return inboxInterface.update(inbox);
 };
 
+db.patchInbox = (inbox)=>{
+  return inboxInterface.patch(id,fields);
+};
+
 db.deleteInbox = (id)=>{
   return inboxInterface.deleteOne(id);
 };

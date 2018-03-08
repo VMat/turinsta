@@ -164,6 +164,7 @@ var InboxWritingPage = (function () {
         this.inboxName = null;
         this.inboxAvatar = null;
         this.PARTICIPANTS_LIMIT = 20;
+        this.inbox = null;
     }
     InboxWritingPage.prototype.ionViewDidLoad = function () {
         console.log('ionViewDidLoad InboxWritingPage');
@@ -171,11 +172,11 @@ var InboxWritingPage = (function () {
     InboxWritingPage.prototype.ionViewWillLoad = function () {
         var _this = this;
         this.multipleSelection = this.navParams.get("multipleSelection");
-        var chat = this.navParams.get("chat");
-        if (chat) {
-            this.selectedUsers = chat.participants.filter(function (user) { return user._id != _this.commons.getUserId(); }).map(function (user) { return user._id; });
-            this.inboxName = chat.name;
-            this.inboxAvatar = chat.avatar;
+        this.inbox = this.navParams.get("chat");
+        if (this.inbox) {
+            this.selectedUsers = this.inbox.participants.filter(function (user) { return user._id != _this.commons.getUserId(); }).map(function (user) { return user._id; });
+            this.inboxName = this.inbox.name;
+            this.inboxAvatar = this.inbox.avatar;
         }
         if (this.multipleSelection) {
             this.inboxAvatar = this.commons.getDefaultInboxAvatar();
@@ -254,40 +255,72 @@ var InboxWritingPage = (function () {
     InboxWritingPage.prototype.confirmSave = function () {
         var _this = this;
         if (this.checkNeededField()) {
-            var confirm_1 = this.alertCtrl.create({
-                title: 'Confirmar operación',
-                message: '¿Está seguro que desea crear el grupo?',
-                buttons: [
-                    {
-                        text: 'Aceptar',
-                        handler: function () {
-                            _this.saveInbox();
+            var confirm_1 = null;
+            if (this.inbox) {
+                confirm_1 = this.alertCtrl.create({
+                    title: 'Confirmar operación',
+                    message: '¿Está seguro que desea modificar el grupo?',
+                    buttons: [
+                        {
+                            text: 'Aceptar',
+                            handler: function () {
+                                _this.saveInbox();
+                            }
+                        },
+                        {
+                            text: 'Cancelar',
+                            handler: function () {
+                            }
                         }
-                    },
-                    {
-                        text: 'Cancelar',
-                        handler: function () {
+                    ]
+                });
+            }
+            else {
+                confirm_1 = this.alertCtrl.create({
+                    title: 'Confirmar operación',
+                    message: '¿Está seguro que desea crear el grupo?',
+                    buttons: [
+                        {
+                            text: 'Aceptar',
+                            handler: function () {
+                                _this.saveInbox();
+                            }
+                        },
+                        {
+                            text: 'Cancelar',
+                            handler: function () {
+                            }
                         }
-                    }
-                ]
-            });
+                    ]
+                });
+            }
             confirm_1.present();
         }
     };
     InboxWritingPage.prototype.saveInbox = function () {
         var _this = this;
         this.selectedUsers.push(this.commons.getUserId());
-        if (this.inboxAvatar) {
-            this.uploadPic(this.inboxAvatar).then(function (uploadingResponse) {
-                var avatarUrl = JSON.parse(uploadingResponse["response"]);
-                _this.viewCtrl.dismiss({ name: _this.inboxName, participants: _this.selectedUsers, avatar: avatarUrl, messages: [], group: true });
-            })
-                .catch(function (error) {
-                _this.commons.presentToast("Se ha producido un error al guardar el avatar");
+        if (this.inbox) {
+            this.storage.patchInbox(this.inbox._id, { participants: this.selectedUsers, name: this.inboxName, avatar: this.inboxAvatar }).subscribe(function () {
+                _this.storage.getInbox(_this.inbox._id).subscribe(function (patchedInbox) {
+                    _this.commons.presentToast("Se ha actualizado el grupo con éxito");
+                    _this.viewCtrl.dismiss(patchedInbox);
+                });
             });
         }
         else {
-            this.viewCtrl.dismiss({ name: this.inboxName, participants: this.selectedUsers, avatar: this.inboxAvatar, messages: [], group: true });
+            if (this.inboxAvatar) {
+                this.uploadPic(this.inboxAvatar).then(function (uploadingResponse) {
+                    var avatarUrl = JSON.parse(uploadingResponse["response"]);
+                    _this.viewCtrl.dismiss({ name: _this.inboxName, participants: _this.selectedUsers, avatar: avatarUrl, messages: [], group: true });
+                })
+                    .catch(function (error) {
+                    _this.commons.presentToast("Se ha producido un error al guardar el avatar");
+                });
+            }
+            else {
+                this.viewCtrl.dismiss({ name: this.inboxName, participants: this.selectedUsers, avatar: this.inboxAvatar, messages: [], group: true });
+            }
         }
     };
     InboxWritingPage.prototype.doInfinite = function (event) {
@@ -942,6 +975,10 @@ var StorageProvider = StorageProvider_1 = (function () {
         return this.http.post(StorageProvider_1.baseUrl + 'inboxes/', inbox, { headers: StorageProvider_1.headers })
             .map(function (res) { return res.json(); });
     };
+    StorageProvider.prototype.patchInbox = function (id, fields) {
+        return this.http.patch(StorageProvider_1.baseUrl + 'inboxes/' + id, fields, { headers: StorageProvider_1.headers })
+            .map(function (res) { return res.json(); });
+    };
     StorageProvider.prototype.getUser = function (id) {
         return this.http.get(StorageProvider_1.baseUrl + 'users/' + id)
             .map(function (res) { return res.json(); });
@@ -1109,6 +1146,79 @@ AccountPage = __decorate([
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ChatActionsMenuPage; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__inbox_writing_inbox_writing__ = __webpack_require__(101);
+var __assign = (this && this.__assign) || Object.assign || function(t) {
+    for (var s, i = 1, n = arguments.length; i < n; i++) {
+        s = arguments[i];
+        for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+            t[p] = s[p];
+    }
+    return t;
+};
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+/**
+ * Generated class for the ChatActionsMenuPage page.
+ *
+ * See https://ionicframework.com/docs/components/#navigation for more info on
+ * Ionic pages and navigation.
+ */
+var ChatActionsMenuPage = (function () {
+    function ChatActionsMenuPage(navCtrl, navParams, modalCtrl, viewCtrl) {
+        this.navCtrl = navCtrl;
+        this.navParams = navParams;
+        this.modalCtrl = modalCtrl;
+        this.viewCtrl = viewCtrl;
+        this.chat = null;
+    }
+    ChatActionsMenuPage.prototype.ionViewDidLoad = function () {
+        this.chat = this.navParams.get("chat");
+        console.log('ionViewDidLoad ChatActionsMenuPage');
+    };
+    ChatActionsMenuPage.prototype.editChat = function () {
+        var _this = this;
+        var inboxWritingModal = this.modalCtrl.create(__WEBPACK_IMPORTED_MODULE_2__inbox_writing_inbox_writing__["a" /* InboxWritingPage */], { chat: __assign({}, this.chat), multipleSelection: true });
+        inboxWritingModal.present();
+        inboxWritingModal.onDidDismiss(function (updatedInbox) {
+            _this.viewCtrl.dismiss(updatedInbox);
+        });
+    };
+    ChatActionsMenuPage.prototype.leaveChat = function () {
+        alert("leaving chat!");
+    };
+    ChatActionsMenuPage.prototype.deleteChat = function () {
+        alert("deleting chat!");
+    };
+    return ChatActionsMenuPage;
+}());
+ChatActionsMenuPage = __decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
+        selector: 'page-chat-actions-menu',template:/*ion-inline-start:"C:\Users\Matias\WebstormProjects\turinsta\src\pages\chat-actions-menu\chat-actions-menu.html"*/'<!--\n  Generated template for the ChatActionsMenuPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-content no-padding>\n  <ion-list>\n    <ion-item *ngIf="chat.group" (click)="editChat()">\n      <ion-icon item-start name="create" color="primary"></ion-icon>\n      <p>Editar grupo</p>\n    </ion-item>\n    <ion-item *ngIf="chat.group" (click)="leaveChat()">\n      <ion-icon item-start name="exit" color="danger"></ion-icon>\n      <p>Abandonar grupo</p>\n    </ion-item>\n    <ion-item *ngIf="!chat.group" (click)="deleteChat()">\n      <ion-icon item-start name="trash" color="danger"></ion-icon>\n      <p>Borrar chat</p>\n    </ion-item>\n  </ion-list>\n</ion-content>\n'/*ion-inline-end:"C:\Users\Matias\WebstormProjects\turinsta\src\pages\chat-actions-menu\chat-actions-menu.html"*/,
+    }),
+    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* NavParams */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* ModalController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["s" /* ViewController */]])
+], ChatActionsMenuPage);
+
+//# sourceMappingURL=chat-actions-menu.js.map
+
+/***/ }),
+
+/***/ 172:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ActivitiesPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(5);
@@ -1198,14 +1308,15 @@ ActivitiesPage = __decorate([
 
 /***/ }),
 
-/***/ 172:
+/***/ 173:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ChatActionsMenuPage; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return DescriptionWritingPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(5);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__inbox_writing_inbox_writing__ = __webpack_require__(101);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_storage_storage__ = __webpack_require__(13);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_commons_commons__ = __webpack_require__(12);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1218,49 +1329,124 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
+
 /**
- * Generated class for the ChatActionsMenuPage page.
+ * Generated class for the DescriptionWritingPage page.
  *
  * See https://ionicframework.com/docs/components/#navigation for more info on
  * Ionic pages and navigation.
  */
-var ChatActionsMenuPage = (function () {
-    function ChatActionsMenuPage(navCtrl, navParams, modalCtrl) {
+var DescriptionWritingPage = (function () {
+    function DescriptionWritingPage(navCtrl, navParams, viewCtrl, alertCtrl, storageService, commons) {
         this.navCtrl = navCtrl;
         this.navParams = navParams;
-        this.modalCtrl = modalCtrl;
-        this.chat = null;
+        this.viewCtrl = viewCtrl;
+        this.alertCtrl = alertCtrl;
+        this.storageService = storageService;
+        this.commons = commons;
+        this.description = { content: null };
+        this.publicationId = null;
     }
-    ChatActionsMenuPage.prototype.ionViewDidLoad = function () {
-        this.chat = this.navParams.get("chat");
-        console.log('ionViewDidLoad ChatActionsMenuPage');
+    DescriptionWritingPage.prototype.ionViewDidLoad = function () {
+        this.description.content = this.navParams.get("description");
+        this.publicationId = this.navParams.get("publicationId");
+        console.log('ionViewDidLoad DescriptionWritingPage');
     };
-    ChatActionsMenuPage.prototype.editChat = function () {
-        var inboxWritingModal = this.modalCtrl.create(__WEBPACK_IMPORTED_MODULE_2__inbox_writing_inbox_writing__["a" /* InboxWritingPage */], { chat: this.chat, multipleSelection: true });
-        inboxWritingModal.present();
-        inboxWritingModal.onDidDismiss(function (newInbox) { });
+    DescriptionWritingPage.prototype.dismissDescriptionWriting = function () {
+        this.viewCtrl.dismiss();
     };
-    ChatActionsMenuPage.prototype.leaveChat = function () {
-        alert("leaving chat!");
+    DescriptionWritingPage.prototype.confirmSave = function () {
+        var _this = this;
+        if (Boolean(this.publicationId)) {
+            var confirm_1 = this.alertCtrl.create({
+                title: 'Confirmar operación',
+                message: '¿Está seguro que desea modificar la descripción?',
+                buttons: [
+                    {
+                        text: 'Aceptar',
+                        handler: function () {
+                            _this.saveDescription();
+                        }
+                    },
+                    {
+                        text: 'Cancelar',
+                        handler: function () {
+                        }
+                    }
+                ]
+            });
+            confirm_1.present();
+        }
+        else {
+            this.viewCtrl.dismiss(this.description.content);
+        }
     };
-    ChatActionsMenuPage.prototype.deleteChat = function () {
-        alert("deleting chat!");
+    DescriptionWritingPage.prototype.saveDescription = function () {
+        var _this = this;
+        this.storageService.patchPublication(this.publicationId, { description: [this.description.content] }).subscribe(function (patchedPublication) {
+            _this.commons.presentToast("La descripción ha sido actualizada con éxito");
+            _this.viewCtrl.dismiss(_this.description.content);
+        });
     };
-    return ChatActionsMenuPage;
+    return DescriptionWritingPage;
 }());
-ChatActionsMenuPage = __decorate([
+DescriptionWritingPage = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
-        selector: 'page-chat-actions-menu',template:/*ion-inline-start:"C:\Users\Matias\WebstormProjects\turinsta\src\pages\chat-actions-menu\chat-actions-menu.html"*/'<!--\n  Generated template for the ChatActionsMenuPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-content no-padding>\n  <ion-list>\n    <ion-item *ngIf="chat.group" (click)="editChat()">\n      <ion-icon item-start name="create" color="primary"></ion-icon>\n      <p>Editar grupo</p>\n    </ion-item>\n    <ion-item *ngIf="chat.group" (click)="leaveChat()">\n      <ion-icon item-start name="exit" color="danger"></ion-icon>\n      <p>Abandonar grupo</p>\n    </ion-item>\n    <ion-item *ngIf="!chat.group" (click)="deleteChat()">\n      <ion-icon item-start name="trash" color="danger"></ion-icon>\n      <p>Borrar chat</p>\n    </ion-item>\n  </ion-list>\n</ion-content>\n'/*ion-inline-end:"C:\Users\Matias\WebstormProjects\turinsta\src\pages\chat-actions-menu\chat-actions-menu.html"*/,
+        selector: 'page-description-writing',template:/*ion-inline-start:"C:\Users\Matias\WebstormProjects\turinsta\src\pages\description-writing\description-writing.html"*/'<!--\n  Generated template for the DescriptionWritingPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-header>\n  <ion-navbar>\n    <ion-item no-lines style="text-align: center">\n      <button item-start ion-button clear (click)="dismissDescriptionWriting()">\n        <ion-icon name="close"></ion-icon>\n      </button>\n      <ion-title>Descripción</ion-title>\n      <button *ngIf="description.content" item-end ion-button clear (click)="confirmSave()">\n        <ion-icon name="checkmark" color="success"></ion-icon>\n      </button>\n    </ion-item>\n  </ion-navbar>\n</ion-header>\n<ion-content no-padding style="height: 100%; width: 100%">\n  <ion-item style="height: 85%">\n    <ion-label stacked>Descripción</ion-label>\n    <ion-textarea [(ngModel)]="description.content" style="width: 100%"></ion-textarea>\n  </ion-item>\n  <ion-item style="height: 15%">\n    <my-emoji-picker item-end [data]=description></my-emoji-picker>\n  </ion-item>\n</ion-content>\n'/*ion-inline-end:"C:\Users\Matias\WebstormProjects\turinsta\src\pages\description-writing\description-writing.html"*/,
     }),
-    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* NavController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* NavController */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* NavParams */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* NavParams */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* ModalController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* ModalController */]) === "function" && _c || Object])
-], ChatActionsMenuPage);
+    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* NavParams */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["s" /* ViewController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["b" /* AlertController */], __WEBPACK_IMPORTED_MODULE_2__providers_storage_storage__["a" /* StorageProvider */], __WEBPACK_IMPORTED_MODULE_3__providers_commons_commons__["a" /* CommonsProvider */]])
+], DescriptionWritingPage);
 
-var _a, _b, _c;
-//# sourceMappingURL=chat-actions-menu.js.map
+//# sourceMappingURL=description-writing.js.map
 
 /***/ }),
 
-/***/ 173:
+/***/ 174:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return PlacesPage; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(5);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+/**
+ * Generated class for the PlacesPage page.
+ *
+ * See https://ionicframework.com/docs/components/#navigation for more info on
+ * Ionic pages and navigation.
+ */
+var PlacesPage = (function () {
+    function PlacesPage(navCtrl, navParams) {
+        this.navCtrl = navCtrl;
+        this.navParams = navParams;
+    }
+    PlacesPage.prototype.ionViewDidLoad = function () {
+        console.log('ionViewDidLoad PlacesPage');
+    };
+    return PlacesPage;
+}());
+PlacesPage = __decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
+        selector: 'page-places',template:/*ion-inline-start:"C:\Users\Matias\WebstormProjects\turinsta\src\pages\places\places.html"*/'<!--\n  Generated template for the PlacesPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-content padding>\n  <h2>Places</h2>\n</ion-content>\n'/*ion-inline-end:"C:\Users\Matias\WebstormProjects\turinsta\src\pages\places\places.html"*/,
+    }),
+    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* NavParams */]])
+], PlacesPage);
+
+//# sourceMappingURL=places.js.map
+
+/***/ }),
+
+/***/ 175:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1311,7 +1497,7 @@ MyEmojiPickerPage = __decorate([
 
 /***/ }),
 
-/***/ 174:
+/***/ 176:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1406,13 +1592,15 @@ PlaceSelectingPage = __decorate([
 
 /***/ }),
 
-/***/ 175:
+/***/ 177:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return PlacesPage; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return PublicationOrderByPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__ngrx_store__ = __webpack_require__(24);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_reducers_publication_reducer__ = __webpack_require__(53);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1424,34 +1612,47 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 
 
+
+
 /**
- * Generated class for the PlacesPage page.
+ * Generated class for the PublicationOrderByPage page.
  *
  * See https://ionicframework.com/docs/components/#navigation for more info on
  * Ionic pages and navigation.
  */
-var PlacesPage = (function () {
-    function PlacesPage(navCtrl, navParams) {
+var PublicationOrderByPage = (function () {
+    function PublicationOrderByPage(navCtrl, navParams, viewCtrl, store) {
         this.navCtrl = navCtrl;
         this.navParams = navParams;
+        this.viewCtrl = viewCtrl;
+        this.store = store;
+        this.sortValue = null;
     }
-    PlacesPage.prototype.ionViewDidLoad = function () {
-        console.log('ionViewDidLoad PlacesPage');
+    PublicationOrderByPage.prototype.ionViewDidLoad = function () {
+        var _this = this;
+        console.log('ionViewDidLoad PublicationOrderByPage');
+        this.store.select("publications").subscribe(function (state) {
+            _this.sortValue = state.sort.field;
+        });
     };
-    return PlacesPage;
+    PublicationOrderByPage.prototype.close = function (order) {
+        this.store.dispatch(Object(__WEBPACK_IMPORTED_MODULE_3__providers_reducers_publication_reducer__["j" /* setSort */])(order));
+        this.viewCtrl.dismiss();
+    };
+    return PublicationOrderByPage;
 }());
-PlacesPage = __decorate([
+PublicationOrderByPage = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
-        selector: 'page-places',template:/*ion-inline-start:"C:\Users\Matias\WebstormProjects\turinsta\src\pages\places\places.html"*/'<!--\n  Generated template for the PlacesPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-content padding>\n  <h2>Places</h2>\n</ion-content>\n'/*ion-inline-end:"C:\Users\Matias\WebstormProjects\turinsta\src\pages\places\places.html"*/,
+        selector: 'page-publication-order-by',template:/*ion-inline-start:"C:\Users\Matias\WebstormProjects\turinsta\src\pages\publication-order-by\publication-order-by.html"*/'<!--\n  Generated template for the PublicationOrderByPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-content no-padding>\n  <ion-list radio-group [(ngModel)]="sortValue">\n    <ion-list-header>Ordenar por</ion-list-header>\n    <ion-item>\n      <ion-label>Más recientes</ion-label>\n      <ion-radio value="publication.timestamps.created" (click)="close({field: \'publication.timestamps.created\', way: -1})"></ion-radio>\n    </ion-item>\n    <ion-item>\n      <ion-label>Más populares</ion-label>\n      <ion-radio value="publication.followers" (click)="close({field: \'publication.followers\', way: -1})"></ion-radio>\n    </ion-item>\n    <ion-item>\n      <ion-label>Mejor calificadas</ion-label>\n      <ion-radio value="publication.score" (click)="close({field: \'publication.score\', way: -1})"></ion-radio>\n    </ion-item>\n    <ion-item>\n      <ion-label>Usuarios más populares</ion-label>\n      <ion-radio value="user.followers" (click)="close({field: \'user.followers\', way: -1})"></ion-radio>\n    </ion-item>\n    <ion-item>\n      <ion-label>Usuarios mejor calificados</ion-label>\n      <ion-radio value="user.score" (click)="close({field: \'user.score\', way: -1})"></ion-radio>\n    </ion-item>\n  </ion-list>\n</ion-content>\n'/*ion-inline-end:"C:\Users\Matias\WebstormProjects\turinsta\src\pages\publication-order-by\publication-order-by.html"*/,
     }),
-    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* NavParams */]])
-], PlacesPage);
+    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* NavParams */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["s" /* ViewController */], __WEBPACK_IMPORTED_MODULE_2__ngrx_store__["h" /* Store */]])
+], PublicationOrderByPage);
 
-//# sourceMappingURL=places.js.map
+//# sourceMappingURL=publication-order-by.js.map
 
 /***/ }),
 
-/***/ 176:
+/***/ 178:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1607,100 +1808,7 @@ PublicationActionsMenuPage = __decorate([
 
 /***/ }),
 
-/***/ 177:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return DescriptionWritingPage; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(5);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_storage_storage__ = __webpack_require__(13);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_commons_commons__ = __webpack_require__(12);
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-
-
-
-
-/**
- * Generated class for the DescriptionWritingPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
-var DescriptionWritingPage = (function () {
-    function DescriptionWritingPage(navCtrl, navParams, viewCtrl, alertCtrl, storageService, commons) {
-        this.navCtrl = navCtrl;
-        this.navParams = navParams;
-        this.viewCtrl = viewCtrl;
-        this.alertCtrl = alertCtrl;
-        this.storageService = storageService;
-        this.commons = commons;
-        this.description = { content: null };
-        this.publicationId = null;
-    }
-    DescriptionWritingPage.prototype.ionViewDidLoad = function () {
-        this.description.content = this.navParams.get("description");
-        this.publicationId = this.navParams.get("publicationId");
-        console.log('ionViewDidLoad DescriptionWritingPage');
-    };
-    DescriptionWritingPage.prototype.dismissDescriptionWriting = function () {
-        this.viewCtrl.dismiss();
-    };
-    DescriptionWritingPage.prototype.confirmSave = function () {
-        var _this = this;
-        if (Boolean(this.publicationId)) {
-            var confirm_1 = this.alertCtrl.create({
-                title: 'Confirmar operación',
-                message: '¿Está seguro que desea modificar la descripción?',
-                buttons: [
-                    {
-                        text: 'Aceptar',
-                        handler: function () {
-                            _this.saveDescription();
-                        }
-                    },
-                    {
-                        text: 'Cancelar',
-                        handler: function () {
-                        }
-                    }
-                ]
-            });
-            confirm_1.present();
-        }
-        else {
-            this.viewCtrl.dismiss(this.description.content);
-        }
-    };
-    DescriptionWritingPage.prototype.saveDescription = function () {
-        var _this = this;
-        this.storageService.patchPublication(this.publicationId, { description: [this.description.content] }).subscribe(function (patchedPublication) {
-            _this.commons.presentToast("La descripción ha sido actualizada con éxito");
-            _this.viewCtrl.dismiss(_this.description.content);
-        });
-    };
-    return DescriptionWritingPage;
-}());
-DescriptionWritingPage = __decorate([
-    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
-        selector: 'page-description-writing',template:/*ion-inline-start:"C:\Users\Matias\WebstormProjects\turinsta\src\pages\description-writing\description-writing.html"*/'<!--\n  Generated template for the DescriptionWritingPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-header>\n  <ion-navbar>\n    <ion-item no-lines style="text-align: center">\n      <button item-start ion-button clear (click)="dismissDescriptionWriting()">\n        <ion-icon name="close"></ion-icon>\n      </button>\n      <ion-title>Descripción</ion-title>\n      <button *ngIf="description.content" item-end ion-button clear (click)="confirmSave()">\n        <ion-icon name="checkmark" color="success"></ion-icon>\n      </button>\n    </ion-item>\n  </ion-navbar>\n</ion-header>\n<ion-content no-padding style="height: 100%; width: 100%">\n  <ion-item style="height: 85%">\n    <ion-label stacked>Descripción</ion-label>\n    <ion-textarea [(ngModel)]="description.content" style="width: 100%"></ion-textarea>\n  </ion-item>\n  <ion-item style="height: 15%">\n    <my-emoji-picker item-end [data]=description></my-emoji-picker>\n  </ion-item>\n</ion-content>\n'/*ion-inline-end:"C:\Users\Matias\WebstormProjects\turinsta\src\pages\description-writing\description-writing.html"*/,
-    }),
-    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* NavParams */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["s" /* ViewController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["b" /* AlertController */], __WEBPACK_IMPORTED_MODULE_2__providers_storage_storage__["a" /* StorageProvider */], __WEBPACK_IMPORTED_MODULE_3__providers_commons_commons__["a" /* CommonsProvider */]])
-], DescriptionWritingPage);
-
-//# sourceMappingURL=description-writing.js.map
-
-/***/ }),
-
-/***/ 178:
+/***/ 179:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1708,7 +1816,7 @@ DescriptionWritingPage = __decorate([
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__ngrx_store__ = __webpack_require__(24);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_reducers_publication_reducer__ = __webpack_require__(55);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_reducers_publication_reducer__ = __webpack_require__(53);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__providers_commons_commons__ = __webpack_require__(12);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -1783,66 +1891,6 @@ PublicationUserFilterPage = __decorate([
 
 /***/ }),
 
-/***/ 179:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return PublicationOrderByPage; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(5);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__ngrx_store__ = __webpack_require__(24);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_reducers_publication_reducer__ = __webpack_require__(55);
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-
-
-
-
-/**
- * Generated class for the PublicationOrderByPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
-var PublicationOrderByPage = (function () {
-    function PublicationOrderByPage(navCtrl, navParams, viewCtrl, store) {
-        this.navCtrl = navCtrl;
-        this.navParams = navParams;
-        this.viewCtrl = viewCtrl;
-        this.store = store;
-        this.sortValue = null;
-    }
-    PublicationOrderByPage.prototype.ionViewDidLoad = function () {
-        var _this = this;
-        console.log('ionViewDidLoad PublicationOrderByPage');
-        this.store.select("publications").subscribe(function (state) {
-            _this.sortValue = state.sort.field;
-        });
-    };
-    PublicationOrderByPage.prototype.close = function (order) {
-        this.store.dispatch(Object(__WEBPACK_IMPORTED_MODULE_3__providers_reducers_publication_reducer__["j" /* setSort */])(order));
-        this.viewCtrl.dismiss();
-    };
-    return PublicationOrderByPage;
-}());
-PublicationOrderByPage = __decorate([
-    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
-        selector: 'page-publication-order-by',template:/*ion-inline-start:"C:\Users\Matias\WebstormProjects\turinsta\src\pages\publication-order-by\publication-order-by.html"*/'<!--\n  Generated template for the PublicationOrderByPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-content no-padding>\n  <ion-list radio-group [(ngModel)]="sortValue">\n    <ion-list-header>Ordenar por</ion-list-header>\n    <ion-item>\n      <ion-label>Más recientes</ion-label>\n      <ion-radio value="publication.timestamps.created" (click)="close({field: \'publication.timestamps.created\', way: -1})"></ion-radio>\n    </ion-item>\n    <ion-item>\n      <ion-label>Más populares</ion-label>\n      <ion-radio value="publication.followers" (click)="close({field: \'publication.followers\', way: -1})"></ion-radio>\n    </ion-item>\n    <ion-item>\n      <ion-label>Mejor calificadas</ion-label>\n      <ion-radio value="publication.score" (click)="close({field: \'publication.score\', way: -1})"></ion-radio>\n    </ion-item>\n    <ion-item>\n      <ion-label>Usuarios más populares</ion-label>\n      <ion-radio value="user.followers" (click)="close({field: \'user.followers\', way: -1})"></ion-radio>\n    </ion-item>\n    <ion-item>\n      <ion-label>Usuarios mejor calificados</ion-label>\n      <ion-radio value="user.score" (click)="close({field: \'user.score\', way: -1})"></ion-radio>\n    </ion-item>\n  </ion-list>\n</ion-content>\n'/*ion-inline-end:"C:\Users\Matias\WebstormProjects\turinsta\src\pages\publication-order-by\publication-order-by.html"*/,
-    }),
-    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* NavParams */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["s" /* ViewController */], __WEBPACK_IMPORTED_MODULE_2__ngrx_store__["h" /* Store */]])
-], PublicationOrderByPage);
-
-//# sourceMappingURL=publication-order-by.js.map
-
-/***/ }),
-
 /***/ 187:
 /***/ (function(module, exports) {
 
@@ -1869,27 +1917,27 @@ var map = {
 		14
 	],
 	"../pages/activities/activities.module": [
-		719,
+		721,
 		13
 	],
 	"../pages/chat-actions-menu/chat-actions-menu.module": [
-		720,
+		719,
 		12
 	],
 	"../pages/chat/chat.module": [
-		722,
+		720,
 		11
 	],
 	"../pages/comment-writing/comment-writing.module": [
-		721,
+		722,
 		10
 	],
 	"../pages/description-writing/description-writing.module": [
-		729,
+		723,
 		9
 	],
 	"../pages/experience-writing/experience-writing.module": [
-		723,
+		725,
 		8
 	],
 	"../pages/inbox-writing/inbox-writing.module": [
@@ -1897,31 +1945,31 @@ var map = {
 		7
 	],
 	"../pages/my-emoji-picker/my-emoji-picker.module": [
-		725,
+		727,
 		6
 	],
 	"../pages/place-selecting/place-selecting.module": [
-		726,
+		728,
 		5
 	],
 	"../pages/places/places.module": [
-		727,
+		726,
 		4
 	],
 	"../pages/publication-actions-menu/publication-actions-menu.module": [
-		728,
+		730,
 		3
 	],
 	"../pages/publication-order-by/publication-order-by.module": [
-		732,
+		729,
 		2
 	],
 	"../pages/publication-user-filter/publication-user-filter.module": [
-		730,
+		731,
 		1
 	],
 	"../pages/publication-writing/publication-writing.module": [
-		731,
+		732,
 		0
 	]
 };
@@ -2019,8 +2067,8 @@ function userReducer(state, _a) {
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return TabsPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__home_home__ = __webpack_require__(323);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__places_places__ = __webpack_require__(175);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__activities_activities__ = __webpack_require__(171);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__places_places__ = __webpack_require__(174);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__activities_activities__ = __webpack_require__(172);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__account_account__ = __webpack_require__(170);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__ngrx_store__ = __webpack_require__(24);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__ionic_native_badge__ = __webpack_require__(92);
@@ -2099,7 +2147,7 @@ TabsPage = __decorate([
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_storage_storage__ = __webpack_require__(13);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ngrx_store__ = __webpack_require__(24);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__providers_reducers_publication_reducer__ = __webpack_require__(55);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__providers_reducers_publication_reducer__ = __webpack_require__(53);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__publication_writing_publication_writing__ = __webpack_require__(73);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -2192,8 +2240,8 @@ Object(__WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__["a" /* pl
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_ionic_angular__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__app_component__ = __webpack_require__(654);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__pages_home_home__ = __webpack_require__(323);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__pages_places_places__ = __webpack_require__(175);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__pages_activities_activities__ = __webpack_require__(171);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__pages_places_places__ = __webpack_require__(174);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__pages_activities_activities__ = __webpack_require__(172);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__pages_account_account__ = __webpack_require__(170);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__pages_tabs_tabs__ = __webpack_require__(322);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__components_publication_publication__ = __webpack_require__(656);
@@ -2205,7 +2253,7 @@ Object(__WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__["a" /* pl
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__components_comment_comment__ = __webpack_require__(658);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__components_comment_list_comment_list__ = __webpack_require__(659);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__ngrx_store__ = __webpack_require__(24);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__providers_reducers_publication_reducer__ = __webpack_require__(55);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__providers_reducers_publication_reducer__ = __webpack_require__(53);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_19__ngrx_effects__ = __webpack_require__(325);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_20__providers_storage_publication_effects__ = __webpack_require__(660);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_21__ngrx_store_devtools__ = __webpack_require__(661);
@@ -2216,8 +2264,8 @@ Object(__WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__["a" /* pl
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_26__components_experience_list_experience_list__ = __webpack_require__(666);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_27__providers_commons_commons__ = __webpack_require__(12);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_28__pipes_contains_filter_contains_filter__ = __webpack_require__(667);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_29__pages_publication_order_by_publication_order_by__ = __webpack_require__(179);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_30__pages_publication_user_filter_publication_user_filter__ = __webpack_require__(178);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_29__pages_publication_order_by_publication_order_by__ = __webpack_require__(177);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_30__pages_publication_user_filter_publication_user_filter__ = __webpack_require__(179);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_31__components_filters_bar_filters_bar__ = __webpack_require__(668);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_32__components_place_filter_place_filter__ = __webpack_require__(669);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_33__components_user_filter_user_filter__ = __webpack_require__(670);
@@ -2231,11 +2279,11 @@ Object(__WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__["a" /* pl
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_41__components_my_emoji_picker_my_emoji_picker__ = __webpack_require__(709);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_42__components_score_input_score_input__ = __webpack_require__(710);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_43__components_publication_actions_publication_actions__ = __webpack_require__(711);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_44__pages_publication_actions_menu_publication_actions_menu__ = __webpack_require__(176);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_45__pages_my_emoji_picker_my_emoji_picker__ = __webpack_require__(173);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_44__pages_publication_actions_menu_publication_actions_menu__ = __webpack_require__(178);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_45__pages_my_emoji_picker_my_emoji_picker__ = __webpack_require__(175);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_46__pages_publication_writing_publication_writing__ = __webpack_require__(73);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_47__pages_place_selecting_place_selecting__ = __webpack_require__(174);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_48__pages_description_writing_description_writing__ = __webpack_require__(177);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_47__pages_place_selecting_place_selecting__ = __webpack_require__(176);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_48__pages_description_writing_description_writing__ = __webpack_require__(173);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_49__ionic_native_image_picker__ = __webpack_require__(134);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_50__ionic_native_file_transfer__ = __webpack_require__(136);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_51__ionic_native_file__ = __webpack_require__(712);
@@ -2249,7 +2297,7 @@ Object(__WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__["a" /* pl
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_59__providers_reducers_user_reducer__ = __webpack_require__(234);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_60__ionic_native_badge__ = __webpack_require__(92);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_61__components_empty_content_empty_content__ = __webpack_require__(716);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_62__pages_chat_actions_menu_chat_actions_menu__ = __webpack_require__(172);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_62__pages_chat_actions_menu_chat_actions_menu__ = __webpack_require__(171);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_63__components_chat_actions_chat_actions__ = __webpack_require__(717);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -2376,20 +2424,20 @@ AppModule = __decorate([
             __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["g" /* IonicModule */].forRoot(__WEBPACK_IMPORTED_MODULE_3__app_component__["a" /* MyApp */], {}, {
                 links: [
                     { loadChildren: '../pages/account/account.module#AccountPageModule', name: 'AccountPage', segment: 'account', priority: 'low', defaultHistory: [] },
-                    { loadChildren: '../pages/activities/activities.module#ActivitiesPageModule', name: 'ActivitiesPage', segment: 'activities', priority: 'low', defaultHistory: [] },
                     { loadChildren: '../pages/chat-actions-menu/chat-actions-menu.module#ChatActionsMenuPageModule', name: 'ChatActionsMenuPage', segment: 'chat-actions-menu', priority: 'low', defaultHistory: [] },
-                    { loadChildren: '../pages/comment-writing/comment-writing.module#CommentWritingPageModule', name: 'CommentWritingPage', segment: 'comment-writing', priority: 'low', defaultHistory: [] },
                     { loadChildren: '../pages/chat/chat.module#ChatPageModule', name: 'ChatPage', segment: 'chat', priority: 'low', defaultHistory: [] },
-                    { loadChildren: '../pages/experience-writing/experience-writing.module#ExperienceWritingPageModule', name: 'ExperienceWritingPage', segment: 'experience-writing', priority: 'low', defaultHistory: [] },
+                    { loadChildren: '../pages/activities/activities.module#ActivitiesPageModule', name: 'ActivitiesPage', segment: 'activities', priority: 'low', defaultHistory: [] },
+                    { loadChildren: '../pages/comment-writing/comment-writing.module#CommentWritingPageModule', name: 'CommentWritingPage', segment: 'comment-writing', priority: 'low', defaultHistory: [] },
+                    { loadChildren: '../pages/description-writing/description-writing.module#DescriptionWritingPageModule', name: 'DescriptionWritingPage', segment: 'description-writing', priority: 'low', defaultHistory: [] },
                     { loadChildren: '../pages/inbox-writing/inbox-writing.module#InboxWritingPageModule', name: 'InboxWritingPage', segment: 'inbox-writing', priority: 'low', defaultHistory: [] },
+                    { loadChildren: '../pages/experience-writing/experience-writing.module#ExperienceWritingPageModule', name: 'ExperienceWritingPage', segment: 'experience-writing', priority: 'low', defaultHistory: [] },
+                    { loadChildren: '../pages/places/places.module#PlacesPageModule', name: 'PlacesPage', segment: 'places', priority: 'low', defaultHistory: [] },
                     { loadChildren: '../pages/my-emoji-picker/my-emoji-picker.module#MyEmojiPickerPageModule', name: 'MyEmojiPickerPage', segment: 'my-emoji-picker', priority: 'low', defaultHistory: [] },
                     { loadChildren: '../pages/place-selecting/place-selecting.module#PlaceSelectingPageModule', name: 'PlaceSelectingPage', segment: 'place-selecting', priority: 'low', defaultHistory: [] },
-                    { loadChildren: '../pages/places/places.module#PlacesPageModule', name: 'PlacesPage', segment: 'places', priority: 'low', defaultHistory: [] },
+                    { loadChildren: '../pages/publication-order-by/publication-order-by.module#PublicationOrderByPageModule', name: 'PublicationOrderByPage', segment: 'publication-order-by', priority: 'low', defaultHistory: [] },
                     { loadChildren: '../pages/publication-actions-menu/publication-actions-menu.module#PublicationActionsMenuPageModule', name: 'PublicationActionsMenuPage', segment: 'publication-actions-menu', priority: 'low', defaultHistory: [] },
-                    { loadChildren: '../pages/description-writing/description-writing.module#DescriptionWritingPageModule', name: 'DescriptionWritingPage', segment: 'description-writing', priority: 'low', defaultHistory: [] },
                     { loadChildren: '../pages/publication-user-filter/publication-user-filter.module#PublicationUserFilterPageModule', name: 'PublicationUserFilterPage', segment: 'publication-user-filter', priority: 'low', defaultHistory: [] },
-                    { loadChildren: '../pages/publication-writing/publication-writing.module#PublicationWritingPageModule', name: 'PublicationWritingPage', segment: 'publication-writing', priority: 'low', defaultHistory: [] },
-                    { loadChildren: '../pages/publication-order-by/publication-order-by.module#PublicationOrderByPageModule', name: 'PublicationOrderByPage', segment: 'publication-order-by', priority: 'low', defaultHistory: [] }
+                    { loadChildren: '../pages/publication-writing/publication-writing.module#PublicationWritingPageModule', name: 'PublicationWritingPage', segment: 'publication-writing', priority: 'low', defaultHistory: [] }
                 ]
             }),
             __WEBPACK_IMPORTED_MODULE_13__angular_http__["c" /* HttpModule */],
@@ -2450,7 +2498,7 @@ AppModule = __decorate([
 
 /***/ }),
 
-/***/ 55:
+/***/ 53:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -3139,7 +3187,7 @@ CommentListComponent = __decorate([
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__ngrx_effects__ = __webpack_require__(325);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs__ = __webpack_require__(239);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_rxjs__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__reducers_publication_reducer__ = __webpack_require__(55);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__reducers_publication_reducer__ = __webpack_require__(53);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__ngrx_store__ = __webpack_require__(24);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__storage__ = __webpack_require__(13);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__commons_commons__ = __webpack_require__(12);
@@ -3307,7 +3355,7 @@ PublicationListComponent = __decorate([
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__providers_imgcache_imgcache__ = __webpack_require__(100);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_ionic_angular__ = __webpack_require__(5);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__pages_place_selecting_place_selecting__ = __webpack_require__(174);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__pages_place_selecting_place_selecting__ = __webpack_require__(176);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -3741,7 +3789,7 @@ FiltersBarComponent = __decorate([
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return PlaceFilterComponent; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(5);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_reducers_publication_reducer__ = __webpack_require__(55);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_reducers_publication_reducer__ = __webpack_require__(53);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ngrx_store__ = __webpack_require__(24);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__providers_storage_storage__ = __webpack_require__(13);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -3852,7 +3900,7 @@ PlaceFilterComponent = __decorate([
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return UserFilterComponent; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__pages_publication_user_filter_publication_user_filter__ = __webpack_require__(178);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__pages_publication_user_filter_publication_user_filter__ = __webpack_require__(179);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_ionic_angular__ = __webpack_require__(5);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -3903,7 +3951,7 @@ UserFilterComponent = __decorate([
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return OrderingCriterionComponent; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(5);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__pages_publication_order_by_publication_order_by__ = __webpack_require__(179);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__pages_publication_order_by_publication_order_by__ = __webpack_require__(177);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -4015,7 +4063,7 @@ PublicationImageComponent = __decorate([
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return MyEmojiPickerComponent; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(5);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__pages_my_emoji_picker_my_emoji_picker__ = __webpack_require__(173);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__pages_my_emoji_picker_my_emoji_picker__ = __webpack_require__(175);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -4161,7 +4209,7 @@ ScoreInputComponent = __decorate([
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return PublicationActionsComponent; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(5);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__pages_publication_actions_menu_publication_actions_menu__ = __webpack_require__(176);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__pages_publication_actions_menu_publication_actions_menu__ = __webpack_require__(178);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_commons_commons__ = __webpack_require__(12);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -4626,7 +4674,7 @@ EmptyContentComponent = __decorate([
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ChatActionsComponent; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(5);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__pages_chat_actions_menu_chat_actions_menu__ = __webpack_require__(172);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__pages_chat_actions_menu_chat_actions_menu__ = __webpack_require__(171);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -4649,15 +4697,20 @@ var ChatActionsComponent = (function () {
     function ChatActionsComponent(popoverCtrl) {
         this.popoverCtrl = popoverCtrl;
         this.chat = null;
+        this.chatUpdated = new __WEBPACK_IMPORTED_MODULE_0__angular_core__["EventEmitter"]();
         console.log('Hello ChatActionsComponent Component');
     }
     ChatActionsComponent.prototype.popoverActionsMenu = function (myEvent) {
+        var _this = this;
         // let loggedUser = this.commons.getUserId();
         // this.followedPublication = this.publication.followers.indexOf(loggedUser)!=-1;
         // this.followedUser =  this.user.followers.indexOf(loggedUser)!=-1;
         var popover = this.popoverCtrl.create(__WEBPACK_IMPORTED_MODULE_2__pages_chat_actions_menu_chat_actions_menu__["a" /* ChatActionsMenuPage */], { chat: this.chat });
-        popover.present({
-            ev: myEvent
+        popover.present();
+        popover.onDidDismiss(function (updatedInbox) {
+            if (updatedInbox) {
+                _this.chatUpdated.emit(updatedInbox);
+            }
         });
     };
     return ChatActionsComponent;
@@ -4666,6 +4719,10 @@ __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Input"])(),
     __metadata("design:type", Object)
 ], ChatActionsComponent.prototype, "chat", void 0);
+__decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Output"])(),
+    __metadata("design:type", Object)
+], ChatActionsComponent.prototype, "chatUpdated", void 0);
 ChatActionsComponent = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
         selector: 'chat-actions',template:/*ion-inline-start:"C:\Users\Matias\WebstormProjects\turinsta\src\components\chat-actions\chat-actions.html"*/'<!-- Generated template for the ChatActionsComponent component -->\n<button ion-button icon-only (click)="popoverActionsMenu($event)" clear>\n  <ion-icon name="ios-arrow-dropdown" color="light"></ion-icon>\n</button>\n'/*ion-inline-end:"C:\Users\Matias\WebstormProjects\turinsta\src\components\chat-actions\chat-actions.html"*/
@@ -4775,6 +4832,9 @@ var ChatPage = (function () {
             this.updateUnreadMessages().subscribe(function () {
                 _this.updateUnreadMessagesCounter();
             });
+            this.updateChat().subscribe(function () {
+                _this.getInbox();
+            });
         }
     };
     ChatPage.prototype.initCommunication = function () {
@@ -4812,6 +4872,12 @@ var ChatPage = (function () {
     ChatPage.prototype.updateUnreadMessagesCounter = function () {
         this.commons.getUnreadMessages();
     };
+    ChatPage.prototype.getInbox = function () {
+        var _this = this;
+        this.storage.getInbox(this.chat._id).subscribe(function (updatedInbox) {
+            _this.chat = updatedInbox;
+        });
+    };
     ChatPage.prototype.connect = function () {
         this.socket.connect();
     };
@@ -4844,6 +4910,10 @@ var ChatPage = (function () {
                 _this.sendMessage();
             });
         }
+    };
+    ChatPage.prototype.updatedChat = function (inbox) {
+        this.chat = inbox;
+        this.socket.emit('updated-chat');
     };
     ChatPage.prototype.getMessages = function () {
         var _this = this;
@@ -4893,6 +4963,14 @@ var ChatPage = (function () {
             });
         });
     };
+    ChatPage.prototype.updateChat = function () {
+        var _this = this;
+        return new __WEBPACK_IMPORTED_MODULE_3_rxjs__["Observable"](function (observer) {
+            _this.socket.on('update-chat', function (data) {
+                observer.next(data);
+            });
+        });
+    };
     ChatPage.prototype.ionViewWillLeave = function () {
         this.socket.disconnect();
     };
@@ -4904,7 +4982,7 @@ __decorate([
 ], ChatPage.prototype, "content", void 0);
 ChatPage = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
-        selector: 'page-chat',template:/*ion-inline-start:"C:\Users\Matias\WebstormProjects\turinsta\src\pages\chat\chat.html"*/'<!--\n  Generated template for the ChatPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-header>\n  <ion-navbar>\n    <ion-item no-lines>\n      <ion-avatar item-start>\n        <img src="{{avatar}}">\n      </ion-avatar>\n      <ion-title>{{chatDescription}}</ion-title>\n      <span class="chat-info">&nbsp;{{chatInfo}}</span>\n      <chat-actions [chat]=chat item-end></chat-actions>\n    </ion-item>\n  </ion-navbar>\n</ion-header>\n\n<ion-content padding>\n  <ion-grid>\n    <ion-row *ngFor="let message of chat.messages">\n\n      <ion-col col-9 *ngIf="message.author !== currentUser" class="message" [ngClass]="{\'my_message\': message.author === currentUser, \'other_message\': message.author !== currentUser}">\n        <span class="user_name">{{ getUsername(message.author) }}:</span><br>\n        <span>{{ message.content }}</span>\n        <div class="time">{{message.timestamps.created | date:\'dd.MM hh:mm\'}}</div>\n      </ion-col>\n\n      <ion-col offset-3 col-9 *ngIf="message.author === currentUser" class="message" [ngClass]="{\'my_message\': message.author === currentUser, \'other_message\': message.author !== currentUser}">\n        <span class="user_name">{{ getUsername(message.author) }}:</span><br>\n        <span>{{ message.content }}</span>\n        <div class="time">{{message.timestamps.created | date:\'dd.MM hh:mm\'}}</div><br>\n        <ion-icon *ngIf="message.generalState == \'SEND\'" class="message-status" name="checkmark" color="light"></ion-icon>\n        <ion-icon *ngIf="message.generalState == \'RECEIVED\'" class="message-status" name="done-all" color="light"></ion-icon>\n        <ion-icon *ngIf="message.generalState == \'READ\'" class="message-status" name="done-all" color="secondary"></ion-icon>\n      </ion-col>\n\n    </ion-row>\n  </ion-grid>\n</ion-content>\n\n<ion-footer>\n  <ion-toolbar>\n    <ion-row class="message_row">\n      <ion-col col-9>\n        <ion-item no-lines>\n          <ion-input type="text" placeholder="Mensaje" [(ngModel)]="message" (keypress)="writing()" (keyup)="stopWriting()"></ion-input>\n        </ion-item>\n      </ion-col>\n      <ion-col col-3>\n        <button ion-button clear color="primary" (click)="sendMessage()" [disabled]="message === \'\'">\n          Enviar\n        </button>\n      </ion-col>\n    </ion-row>\n  </ion-toolbar>\n</ion-footer>\n'/*ion-inline-end:"C:\Users\Matias\WebstormProjects\turinsta\src\pages\chat\chat.html"*/,
+        selector: 'page-chat',template:/*ion-inline-start:"C:\Users\Matias\WebstormProjects\turinsta\src\pages\chat\chat.html"*/'<!--\n  Generated template for the ChatPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-header>\n  <ion-navbar>\n    <ion-item no-lines>\n      <ion-avatar item-start>\n        <img src="{{avatar}}">\n      </ion-avatar>\n      <ion-title>{{chatDescription}}</ion-title>\n      <span class="chat-info">&nbsp;{{chatInfo}}</span>\n      <chat-actions [chat]=chat (chatUpdated)="updatedChat($event)" item-end></chat-actions>\n    </ion-item>\n  </ion-navbar>\n</ion-header>\n\n<ion-content padding>\n  <ion-grid>\n    <ion-row *ngFor="let message of chat.messages">\n\n      <ion-col col-9 *ngIf="message.author !== currentUser" class="message" [ngClass]="{\'my_message\': message.author === currentUser, \'other_message\': message.author !== currentUser}">\n        <span class="user_name">{{ getUsername(message.author) }}:</span><br>\n        <span>{{ message.content }}</span>\n        <div class="time">{{message.timestamps.created | date:\'dd.MM hh:mm\'}}</div>\n      </ion-col>\n\n      <ion-col offset-3 col-9 *ngIf="message.author === currentUser" class="message" [ngClass]="{\'my_message\': message.author === currentUser, \'other_message\': message.author !== currentUser}">\n        <span class="user_name">{{ getUsername(message.author) }}:</span><br>\n        <span>{{ message.content }}</span>\n        <div class="time">{{message.timestamps.created | date:\'dd.MM hh:mm\'}}</div><br>\n        <ion-icon *ngIf="message.generalState == \'SEND\'" class="message-status" name="checkmark" color="light"></ion-icon>\n        <ion-icon *ngIf="message.generalState == \'RECEIVED\'" class="message-status" name="done-all" color="light"></ion-icon>\n        <ion-icon *ngIf="message.generalState == \'READ\'" class="message-status" name="done-all" color="secondary"></ion-icon>\n      </ion-col>\n\n    </ion-row>\n  </ion-grid>\n</ion-content>\n\n<ion-footer>\n  <ion-toolbar>\n    <ion-row class="message_row">\n      <ion-col col-9>\n        <ion-item no-lines>\n          <ion-input type="text" placeholder="Mensaje" [(ngModel)]="message" (keypress)="writing()" (keyup)="stopWriting()"></ion-input>\n        </ion-item>\n      </ion-col>\n      <ion-col col-3>\n        <button ion-button clear color="primary" (click)="sendMessage()" [disabled]="message === \'\'">\n          Enviar\n        </button>\n      </ion-col>\n    </ion-row>\n  </ion-toolbar>\n</ion-footer>\n'/*ion-inline-end:"C:\Users\Matias\WebstormProjects\turinsta\src\pages\chat\chat.html"*/,
     }),
     __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* NavParams */], __WEBPACK_IMPORTED_MODULE_2__providers_commons_commons__["a" /* CommonsProvider */],
         __WEBPACK_IMPORTED_MODULE_4__providers_storage_storage__["a" /* StorageProvider */], __WEBPACK_IMPORTED_MODULE_5__ionic_native_badge__["a" /* Badge */]])
@@ -4923,7 +5001,7 @@ ChatPage = __decorate([
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_storage_storage__ = __webpack_require__(13);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_commons_commons__ = __webpack_require__(12);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__description_writing_description_writing__ = __webpack_require__(177);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__description_writing_description_writing__ = __webpack_require__(173);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__ionic_native_image_picker__ = __webpack_require__(134);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__ionic_native_file_transfer__ = __webpack_require__(136);
 var __assign = (this && this.__assign) || Object.assign || function(t) {
