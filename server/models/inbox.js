@@ -13,7 +13,8 @@ const inboxSchema = new Schema({
     generalState: String,
 		timestamps: {created: String, modified: String}
   }],
-  timestamps: {created: String, modified: String}
+  timestamps: {created: String, modified: String},
+  group: Boolean
 });
 
 const Inboxes = mongoose.model('Inboxes', inboxSchema, 'Inboxes');

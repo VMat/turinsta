@@ -104,7 +104,6 @@ export class InboxListComponent {
           }
         }
         else{
-          sessionStorage.setItem("GroupInbox", JSON.stringify(newInbox));
           this.storage.createInbox(newInbox).subscribe((newInbox)=>{
             this.storage.getInbox(newInbox._id).subscribe((inbox)=>{
               let socket = new Socket({url: StorageProvider.baseUrl.replace('/api/','')});
@@ -121,5 +120,4 @@ export class InboxListComponent {
       }
     });
   }
-
 }

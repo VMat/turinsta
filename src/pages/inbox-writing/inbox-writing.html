@@ -46,7 +46,7 @@
         <img src="{{followed.avatar}}"/>
       </ion-avatar>
       <ion-label>{{followed.username}}</ion-label>
-      <ion-checkbox item-end color="primary" (ionChange)="updateSelectedUsers(followed._id)"></ion-checkbox>
+      <ion-checkbox item-end color="primary" [checked]="userSelected(followed._id)" (ionChange)="updateSelectedUsers(followed._id)"></ion-checkbox>
     </ion-item>
   </ion-list>
   <ion-infinite-scroll (ionInfinite)="doInfinite($event)">

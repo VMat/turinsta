@@ -1,0 +1,22 @@
+<!--
+  Generated template for the ChatActionsMenuPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-content no-padding>
+  <ion-list>
+    <ion-item *ngIf="chat.group" (click)="editChat()">
+      <ion-icon item-start name="create" color="primary"></ion-icon>
+      <p>Editar grupo</p>
+    </ion-item>
+    <ion-item *ngIf="chat.group" (click)="leaveChat()">
+      <ion-icon item-start name="exit" color="danger"></ion-icon>
+      <p>Abandonar grupo</p>
+    </ion-item>
+    <ion-item *ngIf="!chat.group" (click)="deleteChat()">
+      <ion-icon item-start name="trash" color="danger"></ion-icon>
+      <p>Borrar chat</p>
+    </ion-item>
+  </ion-list>
+</ion-content>

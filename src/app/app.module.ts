@@ -63,6 +63,8 @@ import {Push} from '@ionic-native/push';
 import {userReducer} from "../providers/reducers/user.reducer";
 import {Badge} from "@ionic-native/badge";
 import {EmptyContentComponent} from "../components/empty-content/empty-content";
+import {ChatActionsMenuPage} from "../pages/chat-actions-menu/chat-actions-menu";
+import {ChatActionsComponent} from "../components/chat-actions/chat-actions";
 
 @NgModule({
   declarations: [
@@ -83,6 +85,7 @@ import {EmptyContentComponent} from "../components/empty-content/empty-content";
     DescriptionWritingPage,
     ChatPage,
     InboxWritingPage,
+    ChatActionsMenuPage,
     PublicationHeaderComponent,
     PublicationBodyComponent,
     PublicationFooterComponent,
@@ -104,7 +107,8 @@ import {EmptyContentComponent} from "../components/empty-content/empty-content";
     InboxListComponent,
     InboxComponent,
     ContainsFilterPipe,
-    EmptyContentComponent
+    EmptyContentComponent,
+    ChatActionsComponent
   ],
   imports: [
     BrowserModule,
@@ -141,7 +145,8 @@ import {EmptyContentComponent} from "../components/empty-content/empty-content";
     PlaceSelectingPage,
     DescriptionWritingPage,
     ChatPage,
-    InboxWritingPage
+    InboxWritingPage,
+    ChatActionsMenuPage
   ],
   providers: [
     StatusBar,

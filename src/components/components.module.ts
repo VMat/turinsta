@@ -20,6 +20,7 @@ import { ScoreHandlerComponent } from './score-handler/score-handler';
 import { InboxListComponent } from './inbox-list/inbox-list';
 import { InboxComponent } from './inbox/inbox';
 import { EmptyContentComponent } from './empty-content/empty-content';
+import { ChatActionsComponent } from './chat-actions/chat-actions';
 @NgModule({
 	declarations: [PublicationComponent,
     ExperienceComponent,
@@ -42,7 +43,8 @@ import { EmptyContentComponent } from './empty-content/empty-content';
     ScoreHandlerComponent,
     InboxListComponent,
     InboxComponent,
-    EmptyContentComponent],
+    EmptyContentComponent,
+    ChatActionsComponent],
 	imports: [],
 	exports: [PublicationComponent,
     ExperienceComponent,
@@ -65,6 +67,7 @@ import { EmptyContentComponent } from './empty-content/empty-content';
     ScoreHandlerComponent,
     InboxListComponent,
     InboxComponent,
-    EmptyContentComponent]
+    EmptyContentComponent,
+    ChatActionsComponent]
 })
 export class ComponentsModule {}

@@ -38,6 +38,12 @@ export class InboxWritingPage {
 
   ionViewWillLoad(){
     this.multipleSelection = this.navParams.get("multipleSelection");
+    let chat = this.navParams.get("chat");
+    if(chat){
+      this.selectedUsers = chat.participants.filter((user)=>{return user._id!=this.commons.getUserId()}).map((user)=>{return user._id});
+      this.inboxName = chat.name;
+      this.inboxAvatar = chat.avatar;
+    }
     if(this.multipleSelection){
       this.inboxAvatar = this.commons.getDefaultInboxAvatar();
     }
@@ -45,6 +51,10 @@ export class InboxWritingPage {
       sessionStorage.setItem("followedes", JSON.stringify(followedes));
       this.followedes = followedes;
     });
+  }
+
+  userSelected(userId){
+    return this.selectedUsers.indexOf(userId)!=-1;
   }
 
   updateSelectedUsers(userId){
@@ -98,7 +108,7 @@ export class InboxWritingPage {
   }
 
   openInbox(user){
-    this.viewCtrl.dismiss({name: this.inboxName, participants: [user], avatar: this.inboxAvatar, messages: []});
+    this.viewCtrl.dismiss({name: this.inboxName, participants: [user], avatar: this.inboxAvatar, messages: [], group: false});
   }
 
   dismiss(){
@@ -146,15 +156,14 @@ export class InboxWritingPage {
     if(this.inboxAvatar){
       this.uploadPic(this.inboxAvatar).then((uploadingResponse)=>{
         let avatarUrl = JSON.parse(uploadingResponse["response"]);
-        this.viewCtrl.dismiss({name: this.inboxName, participants: this.selectedUsers, avatar: avatarUrl, messages: []});
+        this.viewCtrl.dismiss({name: this.inboxName, participants: this.selectedUsers, avatar: avatarUrl, messages: [], group: true});
       })
       .catch((error)=>{
-        alert(JSON.stringify(error));
         this.commons.presentToast("Se ha producido un error al guardar el avatar");
       });
     }
     else{
-      this.viewCtrl.dismiss({name: this.inboxName, participants: this.selectedUsers, avatar: this.inboxAvatar, messages: []});
+      this.viewCtrl.dismiss({name: this.inboxName, participants: this.selectedUsers, avatar: this.inboxAvatar, messages: [], group: true});
     }
   }
 
