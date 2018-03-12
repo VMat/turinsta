@@ -66,10 +66,18 @@ export class ChatActionsMenuPage {
   leaveChat(){
     let participants = this.chat.participants.map((user)=>{return user._id});
     participants.splice(participants.indexOf(this.commons.getUserId()),1);
-    this.storage.patchInbox(this.chat._id, {participants: participants}).subscribe(()=>{
-      this.commons.presentToast("Has salido del grupo con éxito");
-      this.viewCtrl.dismiss('CHAT_DELETED');
-    });
+    if(participants.length==0){
+      this.storage.deleteInbox(this.chat._id).subscribe(()=>{
+        this.commons.presentToast("Has salido del grupo con éxito");
+        this.viewCtrl.dismiss('CHAT_DELETED');
+      });
+    }
+    else{
+      this.storage.patchInbox(this.chat._id, {participants: participants}).subscribe(()=>{
+        this.commons.presentToast("Has salido del grupo con éxito");
+        this.viewCtrl.dismiss('CHAT_DELETED');
+      });
+    }
   }
 
   confirmDeleteChat(){

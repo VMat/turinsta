@@ -39898,6 +39898,10 @@ page-activities ion-note {
   color: lightgray;
 }
 
+page-chat-actions-menu ion-item {
+  cursor: pointer;
+}
+
 page-comment-writing {
   width: 100%;
 }

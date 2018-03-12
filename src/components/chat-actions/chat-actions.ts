@@ -22,9 +22,11 @@ export class ChatActionsComponent {
     console.log('Hello ChatActionsComponent Component');
   }
 
-  popoverActionsMenu(){
+  popoverActionsMenu(event){
     let popover = this.popoverCtrl.create(ChatActionsMenuPage, {chat: this.chat});
-    popover.present();
+    popover.present({
+      ev: event
+    });
     popover.onDidDismiss((updatedInbox)=>{
       if(updatedInbox=='CHAT_DELETED'){
         this.chatDeleted.emit('');
