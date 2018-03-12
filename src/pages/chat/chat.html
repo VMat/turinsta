@@ -12,7 +12,7 @@
       </ion-avatar>
       <ion-title>{{chatDescription}}</ion-title>
       <span class="chat-info">&nbsp;{{chatInfo}}</span>
-      <chat-actions [chat]="chat" (chatUpdated)="updatedChat($event)" item-end></chat-actions>
+      <chat-actions [chat]="chat" (chatUpdated)="updatedChat($event)" (chatDeleted)="dismissChat()" item-end></chat-actions>
     </ion-item>
   </ion-navbar>
 </ion-header>

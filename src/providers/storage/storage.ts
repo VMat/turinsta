@@ -174,6 +174,11 @@ export class StorageProvider {
       .map((res: Response)=>res.json());
   }
 
+  deleteInbox(id){
+    return this.http.delete(StorageProvider.baseUrl + 'inboxes/' + id, {headers: StorageProvider.headers})
+      .map((res: Response)=>res.json());
+  }
+
   getUser(id){
     return this.http.get(StorageProvider.baseUrl + 'users/' + id)
       .map((res: Response) => res.json());

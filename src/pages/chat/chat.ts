@@ -1,5 +1,5 @@
 import {Component, ViewChild} from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import {IonicPage, NavController, NavParams, ViewController} from 'ionic-angular';
 import {CommonsProvider} from "../../providers/commons/commons";
 import {Observable} from "rxjs";
 import {StorageProvider} from "../../providers/storage/storage";
@@ -30,7 +30,7 @@ export class ChatPage {
   chatInfo: string = null;
   @ViewChild(Content) content: Content;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private commons: CommonsProvider,
+  constructor(public navCtrl: NavController, public navParams: NavParams, private viewCtrl: ViewController, private commons: CommonsProvider,
               private storage: StorageProvider, private badge: Badge) {}
 
   ionViewDidLoad() {
@@ -128,8 +128,14 @@ export class ChatPage {
 
   getInbox(){
     this.storage.getInbox(this.chat._id).subscribe((updatedInbox)=>{
-      this.chat = updatedInbox;
+      this.updateData(updatedInbox);
     });
+  }
+
+  updateData(inbox){
+    this.chat = inbox;
+    this.chatDescription = this.commons.getChatDescription(inbox);
+    this.avatar = this.commons.getAvatar(inbox);
   }
 
   connect(){
@@ -171,7 +177,7 @@ export class ChatPage {
   }
 
   updatedChat(inbox){
-    this.chat = inbox;
+    this.updateData(inbox);
     this.socket.emit('updated-chat');
   }
 
@@ -229,6 +235,10 @@ export class ChatPage {
         observer.next(data);
       })
     })
+  }
+
+  dismissChat(){
+    this.viewCtrl.dismiss();
   }
 
   ionViewWillLeave() {

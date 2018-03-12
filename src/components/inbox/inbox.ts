@@ -21,18 +21,18 @@ export class InboxComponent {
   @Input() unreadMessagesCount :number = null;
   @Input() autoOpen :boolean = false;
   @Output() alreadyAutoOpen = new EventEmitter<any>();
+  @Output() updateInboxes = new EventEmitter<any>();
   chatDescription :string = null;
   avatar :string = null;
   currentUser :string = null;
 
-  constructor(private modalCtrl: ModalController, private commons: CommonsProvider, private badge: Badge) {
+  constructor(private modalCtrl: ModalController, private commons: CommonsProvider, private badge: Badge, private storage: StorageProvider) {
     console.log('Hello InboxComponent Component');
     this.currentUser = this.commons.getUserId();
   }
 
   ngOnInit(){
-    this.chatDescription = this.commons.getChatDescription(this.data);
-    this.avatar = this.commons.getAvatar(this.data);
+    this.updateData();
   }
 
   ngOnChanges(){
@@ -42,12 +42,20 @@ export class InboxComponent {
     }
   }
 
+  updateData(){
+    this.chatDescription = this.commons.getChatDescription(this.data);
+    this.avatar = this.commons.getAvatar(this.data);
+  }
+
   openChat(){
     let socket = new Socket({ url: StorageProvider.baseUrl.replace('/api/',''), options: {user: this.currentUser, inbox: this.data._id} });
     let chatPage = this.modalCtrl.create(ChatPage, {chat: this.data, chatDescription: this.chatDescription, avatar: this.avatar, socket: socket});
     chatPage.present()
     .then(()=>{
       this.badge.decrease(this.unreadMessagesCount);
+    });
+    chatPage.onDidDismiss(()=>{
+      this.updateInboxes.emit(true);
     })
   }
 }

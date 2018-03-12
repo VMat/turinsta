@@ -54,6 +54,10 @@ export class InboxListComponent {
     console.log('ionViewDidLoad ActivitiesPage');
   }
 
+  getInboxes(event){
+    this.inboxesUpdated.emit(event)
+  }
+
   getUnreadMessagesFromInbox(inbox){
     let inboxTarget = this.unreadMessages.filter((unreadInbox)=>{return unreadInbox.inbox==inbox._id});
     if(inboxTarget.length>0){
