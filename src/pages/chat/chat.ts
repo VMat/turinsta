@@ -3,8 +3,6 @@ import {IonicPage, NavController, NavParams, ViewController} from 'ionic-angular
 import {CommonsProvider} from "../../providers/commons/commons";
 import {Observable} from "rxjs";
 import {StorageProvider} from "../../providers/storage/storage";
-import {Store} from "@ngrx/store";
-import {setUnreadMessages} from "../../providers/reducers/user.reducer";
 import { Content } from "ionic-angular";
 import {Badge} from "@ionic-native/badge";
 /**
@@ -23,7 +21,7 @@ export class ChatPage {
 
   socket: any = null;
   chat: any = null;
-  message: string = null;
+  message: any = {content: null};
   chatDescription: string = null;
   avatar: string = null;
   currentUser: string = null;
@@ -161,8 +159,8 @@ export class ChatPage {
 
   sendMessage() {
     if(this.chat._id){
-      this.socket.emit('add-message', { text: this.message });
-      this.message = '';
+      this.socket.emit('add-message', { text: this.message.content });
+      this.message.content = '';
     }
     else{
       let participantsIds = this.chat.participants.map((participant)=>{return participant._id});
