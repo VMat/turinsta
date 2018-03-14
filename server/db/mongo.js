@@ -439,11 +439,11 @@ db.updateComment = (comment)=>{
         .then((publication)=>{
           if(comment.parent!=null){
             let newOutActivity = {
-              user: comment.user,
+              user: comment.user._id,
               direction: "OUT",
               caption: "commentResponseModified",
-              params: {":user": publication.user},
-              relatedUsers: [publication.user],
+              params: {":user": publication.user._id},
+              relatedUsers: [publication.user._id],
               publication: publication._id,
               timestamps: {created: new Date().toISOString(), modified: null},
               seen: true
@@ -452,13 +452,13 @@ db.updateComment = (comment)=>{
               user: publication.user._id,
               direction: "IN",
               caption: "commentResponseUpdatedNotification",
-              params: {":user": comment.user},
-              relatedUsers: [comment.user],
+              params: {":user": comment.user._id},
+              relatedUsers: [comment.user._id],
               publication: publication._id,
               timestamps: {created: new Date().toISOString(), modified: null},
               seen: false
             };
-            if(publication.user._id.equals(comment.user)){
+            if(publication.user._id.equals(comment.user._id)){
               return activityInterface.insert(newOutActivity)
                 .then(()=>{
                   return Promise.resolve(updatedComment)
@@ -473,7 +473,7 @@ db.updateComment = (comment)=>{
                         .then((caption)=>{
                           return languageInterface.getCaption(targetUser.language,["summaryTextNotification"])
                             .then((summaryCaption)=>{
-                              return userInterface.getOne(comment.user)
+                              return userInterface.getOne(comment.user._id)
                                 .then((sender)=>{
                                   let title = caption.replace(':user', sender.username);
                                   let notification = {title: title, body: '', summaryText: summaryCaption};
@@ -506,11 +506,11 @@ db.updateComment = (comment)=>{
           }
           else{
             let newOutActivity = {
-              user: comment.user,
+              user: comment.user._id,
               direction: "OUT",
               caption: "publicationCommentModified",
-              params: {":user": publication.user},
-              relatedUsers: [publication.user],
+              params: {":user": publication.user._id},
+              relatedUsers: [publication.user._id],
               publication: publication._id,
               timestamps: {created: new Date().toISOString(), modified: null},
               seen: true
@@ -519,13 +519,13 @@ db.updateComment = (comment)=>{
               user: publication.user._id,
               direction: "IN",
               caption: "publicationCommentUpdatedNotification",
-              params: {":user": comment.user},
-              relatedUsers: [comment.user],
+              params: {":user": comment.user._id},
+              relatedUsers: [comment.user._id],
               publication: publication._id,
               timestamps: {created: new Date().toISOString(), modified: null},
               seen: false
             };
-            if(publication.user._id.equals(comment.user)){
+            if(publication.user._id.equals(comment.user._id)){
               return activityInterface.insert(newOutActivity)
                 .then(()=>{
                   return Promise.resolve(updatedComment);
@@ -540,7 +540,7 @@ db.updateComment = (comment)=>{
                         .then((caption)=>{
                           return languageInterface.getCaption(targetUser.language,["summaryTextNotification"])
                             .then((summaryCaption)=>{
-                              return userInterface.getOne(comment.user)
+                              return userInterface.getOne(comment.user._id)
                                 .then((sender)=>{
                                   let title = caption.replace(':user', sender.username);
                                   let notification = {title: title, body: '', summaryText: summaryCaption};
@@ -569,11 +569,11 @@ db.deleteComment = (id)=>{
             .then((publication)=>{
               if(deletedComment.parent!=null){
                 let newOutActivity = {
-                  user: deletedComment.user,
+                  user: deletedComment.user._id,
                   direction: "OUT",
                   caption: "commentResponseDeleted",
-                  params: {":user": publication.user},
-                  relatedUsers: [publication.user],
+                  params: {":user": publication.user._id},
+                  relatedUsers: [publication.user._id],
                   publication: publication._id,
                   timestamps: {created: new Date().toISOString(), modified: null},
                   seen: true
@@ -582,13 +582,13 @@ db.deleteComment = (id)=>{
                   user: publication.user._id,
                   direction: "IN",
                   caption: "commentResponseDeletedNotification",
-                  params: {":user": deletedComment.user},
-                  relatedUsers: [deletedComment.user],
+                  params: {":user": deletedComment.user._id},
+                  relatedUsers: [deletedComment.user._id],
                   publication: publication._id,
                   timestamps: {created: new Date().toISOString(), modified: null},
                   seen: false
                 };
-                if(publication.user._id.equals(deletedComment.user)){
+                if(publication.user._id.equals(deletedComment.user._id)){
                   return activityInterface.insert(newOutActivity);
                 }
                 else{
@@ -597,11 +597,11 @@ db.deleteComment = (id)=>{
               }
               else{
                 let newOutActivity = {
-                  user: deletedComment.user,
+                  user: deletedComment.user._id,
                   direction: "OUT",
                   caption: "publicationCommentDeleted",
-                  params: {":user": publication.user},
-                  relatedUsers: [publication.user],
+                  params: {":user": publication.user._id},
+                  relatedUsers: [publication.user._id],
                   publication: publication._id,
                   timestamps: {created: new Date().toISOString(), modified: null},
                   seen: true
@@ -610,13 +610,13 @@ db.deleteComment = (id)=>{
                   user: publication.user._id,
                   direction: "IN",
                   caption: "publicationCommentDeletedNotification",
-                  params: {":user": deletedComment.user},
-                  relatedUsers: [deletedComment.user],
+                  params: {":user": deletedComment.user._id},
+                  relatedUsers: [deletedComment.user._id],
                   publication: publication._id,
                   timestamps: {created: new Date().toISOString(), modified: null},
                   seen: false
                 };
-                if(publication.user._id.equals(deletedComment.user)){
+                if(publication.user._id.equals(deletedComment.user._id)){
                   return activityInterface.insert(newOutActivity);
                 }
                 else{
