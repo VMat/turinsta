@@ -108,7 +108,16 @@ PublicationInterface.getN = (searchParams,n,order)=>{
     ...filters,
     {$sort: order},
     {$limit: Number(n)}
-  ]).exec();
+  ]).exec().then((publications)=>{
+    publications.forEach((publication)=>{
+      if(publication.experiences.length == 1){
+        if(!publication.experiences[0]._id){
+          publication.experiences = [];
+        }
+      }
+    });
+    return Promise.resolve(publications);
+  });
 };
 
 PublicationInterface.getOne = (id)=>{
