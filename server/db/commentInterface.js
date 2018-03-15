@@ -54,12 +54,16 @@ CommentInterface.insert = (comment)=>{
 };
 
 CommentInterface.update = (comment)=>{
+  console.log("PARENT: " + comment.parent);
   if(Boolean(comment.parent)){
     return Commons.getOne(Comments,comment.parent)
       .then(parent=>{
-        parent.replies.filter((reply)=>{
+        let targetReply = parent.replies.filter((reply)=>{
           return reply._id.equals(comment._id);
-        })[0].content = comment.content;
+        })[0];
+        console.log("TARGET REPLY: " + JSON.stringify(targetReply));
+        console.log("NEW CONTENT: " + comment.content);
+        targetReply.content = comment.content;
         return Commons.update(Comments,parent)
           .then(()=>{
             return Commons.update(Comments, comment);
@@ -100,9 +104,9 @@ CommentInterface.deleteOne = (id)=>{
       }
     })
 };
-    
+
 CommentInterface.deleteFromPublication = (id)=>{
   return Commons.removeWithFilter(Comments,{"publication": id});
 };
-    
+
 module.exports = CommentInterface;

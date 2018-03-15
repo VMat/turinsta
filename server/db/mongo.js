@@ -360,12 +360,15 @@ db.createComment = (comment)=>{
                                         .then((publicationUserCaption)=>{
                                           return languageInterface.getCaption(publicationUser.language,["summaryTextNotification"])
                                             .then((PublicationUserSummaryCaption)=>{
-                                              let PUTitle = publicationUserCaption.replace(':user', comment.user.username);
-                                              let PUNotification = {title: PUTitle, body: '', summaryText: PublicationUserSummaryCaption};
-                                              let PUData = {type: 'comment', category: publication._id, key: response._id};
-                                              return NotificationService.send({notification: PUNotification, data: PUData},[publicationUser.notificationKey])
-                                                .then(()=>{
-                                                  return Promise.resolve(response);
+                                              userInterface.getOne(comment.user)
+                                                .then((sender)=>{
+                                                  let PUTitle = publicationUserCaption.replace(':user', sender.username);
+                                                  let PUNotification = {title: PUTitle, body: '', summaryText: PublicationUserSummaryCaption};
+                                                  let PUData = {type: 'comment', category: publication._id, key: response._id};
+                                                  return NotificationService.send({notification: PUNotification, data: PUData},[publicationUser.notificationKey])
+                                                    .then(()=>{
+                                                      return Promise.resolve(response);
+                                                    });
                                                 });
                                             });
                                         });
@@ -413,14 +416,17 @@ db.createComment = (comment)=>{
                         .then((caption)=>{
                           return languageInterface.getCaption(targetUser.language,["summaryTextNotification"])
                             .then((summaryCaption)=>{
-                              let title = caption.replace(':user', comment.user.username);
-                              let notification = {title: title, body: '', summaryText: summaryCaption};
-                              let data = {type: 'comment', category: response.publication, key: publication._id};
-                              console.log("Enviando notificación");
-                              return NotificationService.send({notification: notification, data: data},[targetUser.notificationKey])
-                                .then(()=>{
-                                  console.log("Notificación enviada: " + JSON.stringify(response));
-                                  return Promise.resolve(response)
+                              return userInterface.getOne(comment.user)
+                                .then((sender)=>{
+                                  let title = caption.replace(':user', sender.username);
+                                  let notification = {title: title, body: '', summaryText: summaryCaption};
+                                  let data = {type: 'comment', category: response.publication, key: publication._id};
+                                  console.log("Enviando notificación");
+                                  return NotificationService.send({notification: notification, data: data},[targetUser.notificationKey])
+                                    .then(()=>{
+                                      console.log("Notificación enviada: " + JSON.stringify(response));
+                                      return Promise.resolve(response)
+                                    });
                                 });
                             });
                         });
