@@ -54,7 +54,7 @@ CommentInterface.insert = (comment)=>{
 };
 
 CommentInterface.update = (comment)=>{
-  console.log("PARENT: " + comment.parent);
+  console.log("UPDATED RESPONSE: " + comment);
   if(Boolean(comment.parent)){
     return Commons.getOne(Comments,comment.parent)
       .then(parent=>{
