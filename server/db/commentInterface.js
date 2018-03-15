@@ -54,25 +54,24 @@ CommentInterface.insert = (comment)=>{
 };
 
 CommentInterface.update = (comment)=>{
-  console.log("UPDATED RESPONSE: " + JSON.stringify(comment));
-  if(Boolean(comment.parent)){
-    return Commons.getOne(Comments,comment.parent)
-      .then(parent=>{
-        let targetReply = parent.replies.filter((reply)=>{
-          return reply._id.equals(comment._id);
-        })[0];
-        console.log("TARGET REPLY: " + JSON.stringify(targetReply));
-        console.log("NEW CONTENT: " + comment.content);
-        targetReply.content = comment.content;
-        return Commons.update(Comments,parent)
-          .then(()=>{
-            return Commons.update(Comments, comment);
-          })
-      });
-  }
-  else{
-    return Commons.update(Comments, comment);
-  }
+  return Commons.getOne(Comments,comment._id)
+    .then((commentToUpdate)=>{
+      if(Boolean(commentToUpdate.parent)){
+        return Commons.getOne(Comments,commentToUpdate.parent)
+          .then(parent=>{
+            parent.replies.filter((reply)=>{
+              return reply._id.equals(comment._id);
+            })[0].content = comment.content;
+            return Commons.update(Comments,parent)
+              .then(()=>{
+                return Commons.update(Comments, comment);
+              })
+          });
+      }
+      else{
+        return Commons.update(Comments, comment);
+      }
+    });
 };
 
 CommentInterface.deleteOne = (id)=>{
