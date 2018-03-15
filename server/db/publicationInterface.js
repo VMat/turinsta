@@ -134,6 +134,7 @@ PublicationInterface.insert = (publication)=>{
     created: new Date().toISOString(),
     modified: null
   };
+  publication.score = 0;
   return Commons.insert(new Publications(publication));
 };
 
@@ -223,18 +224,18 @@ PublicationInterface.deletePublicationAssessment = (assessment)=>{
     });
 };
 
-PublicationInterface.addPublicationFollower = (publication, user)=>{
-  return Commons.getOne(Publications, publication)
+PublicationInterface.addPublicationFollower = (publicationId, userId)=>{
+  return Commons.getOne(Publications, publicationId)
     .then((publication)=>{
-      publication.followers.push(user);
+      publication.followers.push(userId);
       return Commons.update(Publications,publication);
     });
 };
 
-PublicationInterface.removePublicationFollower = (publication, user)=>{
-  return Commons.getOne(Publications, publication)
+PublicationInterface.removePublicationFollower = (publicationId, userId)=>{
+  return Commons.getOne(Publications, publicationId)
     .then((publication)=>{
-      publication.followers.splice(publication.followers.indexOf(user),1);
+      publication.followers.splice(publication.followers.indexOf(userId),1);
       return Commons.update(Publications,publication);
     });
 };
