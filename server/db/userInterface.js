@@ -1,7 +1,6 @@
 const Users = require('../models/user');
 const Publications = require('../models/publication');
 const Commons = require('./commons');
-const PublicationInterface = require('./publicationInterface');
 const NotificationService = require('../services/notificationService');
 
 let UserInterface = {};
@@ -38,6 +37,7 @@ UserInterface.patch = (id,user)=>{
 };
 
 UserInterface.addFavoritePublication = (favorite)=>{
+  const PublicationInterface = require('./publicationInterface');
   return Commons.getOne(Users, favorite.user)
     .then((user)=>{
       user.favorites.push(favorite.publication);
@@ -49,6 +49,7 @@ UserInterface.addFavoritePublication = (favorite)=>{
 };
 
 UserInterface.removeFavoritePublication = (favorite)=>{
+  const PublicationInterface = require('./publicationInterface');
   return Commons.getOne(Users, favorite.user)
     .then((user)=>{
       user.favorites.splice(user.favorites.indexOf(favorite.publication),1);
