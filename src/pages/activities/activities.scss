@@ -5,4 +5,7 @@ page-activities {
   ion-note{
     font-size: xx-small !important;
   }
+  .newActivity{
+    background-color: color($colors,info,base);
+  }
 }

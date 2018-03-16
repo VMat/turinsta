@@ -39856,6 +39856,10 @@ page-activities ion-note {
   font-size: xx-small !important;
 }
 
+page-activities .newActivity {
+  background-color: lightblue;
+}
+
 .user_name {
   color: #afafaf;
 }

@@ -20,13 +20,13 @@
   <div [ngSwitch]="directionFilter.value">
     <div *ngSwitchCase="'IN'" style="text-align: center">
       <ion-list *ngSwitchCase="'IN'">
-        <ion-item *ngFor="let activity of activities | containsFilter:{'key':'direction', 'value':'IN'}">
+        <ion-item *ngFor="let activity of activities | containsFilter:{'key':'direction', 'value':'IN'}; let i=index" [ngClass]="{'newActivity': i<unseenActivitiesCount}">
           <ion-avatar item-start>
             <img src="{{activity.relatedUsers[0].avatar}}">
           </ion-avatar>
           <p class="publication-important-text" text-wrap>{{getActivityCaption(activity.caption, activity.relatedUsers[0].username,activity.params)}}</p>
           <ion-note>{{getAntiquity(activity.timestamps.created)}}</ion-note>
-          <ion-thumbnail item-end>
+          <ion-thumbnail item-end (click)="openPublication(activity.publication)">
             <img *ngIf="activity.publication" src="{{activity.publication.images[0].url}}">
           </ion-thumbnail>
         </ion-item>

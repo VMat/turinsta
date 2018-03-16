@@ -14,10 +14,10 @@ let PublicationInterface = {};
 PublicationInterface.getAll = ()=>{
   return Commons.getAll(Publications)
     .populate('user')
-    .populate('experiences')
-    .populate('experiences.category')
-    .populate('experiences.type')
-    .populate('comments');
+    .populate('experienceIds')
+    .populate('experiencesIds.category')
+    .populate('experiencesIds.type')
+    .populate('commentIds');
 };
 
 PublicationInterface.getN = (searchParams,n,order)=>{

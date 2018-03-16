@@ -1,8 +1,10 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import {IonicPage, NavController, NavParams, ModalController} from 'ionic-angular';
 import {CommonsProvider} from "../../providers/commons/commons";
 import {StorageProvider} from "../../providers/storage/storage";
 import {Badge} from "@ionic-native/badge";
+import {setUnseenActivities} from "../../providers/reducers/user.reducer";
+import {PublicationWritingPage} from "../publication-writing/publication-writing";
 
 /**
  * Generated class for the ActivitiesPage page.
@@ -22,15 +24,17 @@ export class ActivitiesPage {
   directionFilter = {key: 'direction', value: 'IN', operation: 'EQUAL'};
   IN_LIMIT = 50;
   OUT_LIMIT = 50;
+  unseenActivitiesCount = null;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private commons: CommonsProvider,
-              private storageService: StorageProvider){
+              private storageService: StorageProvider, private modalCtrl: ModalController){
   }
 
   initializeValues(){
     this.directionFilter = {key: 'direction', value: 'IN', operation: 'EQUAL'};
     this.IN_LIMIT = 50;
     this.OUT_LIMIT = 50;
+    this.unseenActivitiesCount = this.navParams.get('unseenActivitiesCount') ? this.navParams.get('unseenActivitiesCount') :0;
     this.getInActivities();
   }
 
@@ -53,6 +57,11 @@ export class ActivitiesPage {
     return !this.activities.some((activity)=>{
       return activity.direction == direction
     });
+  }
+
+  openPublication(publication){
+    let publicationWritingModal = this.modalCtrl.create(PublicationWritingPage, {user: publication.user, publication: publication, experiences: publication.experienceIds, comments: publication.commentIds});
+    publicationWritingModal.present();
   }
 
   ionViewWillEnter(){

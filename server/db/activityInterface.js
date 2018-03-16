@@ -11,6 +11,10 @@ ActivityInterface.getN = (userId,rowFilters,limit)=>{
   return Commons.getN(Activities,{...filters, user: userId},limit,{"timestamps.created": -1})
     .populate('user')
     .populate('publication')
+    .populate('publication.experienceIds')
+    .populate('publication.experienceIds.category')
+    .populate('publication.experienceIds.type')
+    .populate('publication.commentIds')
     .populate('relatedUsers');
 };
 

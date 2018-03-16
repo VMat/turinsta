@@ -49,7 +49,7 @@ export class InboxComponent {
 
   openChat(){
     let socket = new Socket({ url: StorageProvider.baseUrl.replace('/api/',''), options: {user: this.currentUser, inbox: this.data._id} });
-    let chatPage = this.modalCtrl.create(ChatPage, {chat: this.data, chatDescription: this.chatDescription, avatar: this.avatar, socket: socket});
+    let chatPage = this.modalCtrl.create(ChatPage, {chat: this.data, chatDescription: this.chatDescription, avatar: this.avatar, socket: socket, unreadMessagesCount: this.unreadMessagesCount});
     chatPage.present()
     .then(()=>{
       this.badge.decrease(this.unreadMessagesCount);

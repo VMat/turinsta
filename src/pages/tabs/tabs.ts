@@ -23,18 +23,18 @@ export class TabsPage {
   activeTab: string = null;
 
   showFilters: boolean = false;
-  unseenActivitiesCount: number = null;
+  activityParams = {unseenActivitiesCount: null};
 
   constructor(private store: Store<any>, private badge: Badge, private storage: StorageProvider, private commons: CommonsProvider){
     this.store.select("user","unseenActivities").subscribe((unseenActivities)=>{
       console.log("unseenActivitiesBadge: " + unseenActivities);
-      this.unseenActivitiesCount = unseenActivities.length ? unseenActivities.length : null;
+      this.activityParams.unseenActivitiesCount = unseenActivities.length ? unseenActivities.length : null;
     })
   }
 
   clearUnseenActivities(){
     this.storage.removeUnseenActivities(this.commons.getUserId()).subscribe(()=>{
-      this.badge.decrease(this.unseenActivitiesCount)
+      this.badge.decrease(this.activityParams.unseenActivitiesCount)
       .then(()=>{
         this.commons.getUnseenActivities()
       })

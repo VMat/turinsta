@@ -26,6 +26,7 @@ export class ChatPage {
   avatar: string = null;
   currentUser: string = null;
   chatInfo: string = null;
+  unreadMessagesCount: number = null;
   @ViewChild(Content) content: Content;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private viewCtrl: ViewController, private commons: CommonsProvider,
@@ -48,6 +49,7 @@ export class ChatPage {
       this.chat = this.navParams.get("chat");
       this.chatDescription = this.navParams.get("chatDescription");
       this.avatar = this.navParams.get("avatar");
+      this.unreadMessagesCount = this.navParams.get("unreadMessagesCount");
       this.currentUser = this.commons.getUserId();
 
       if(this.chat._id){
@@ -147,6 +149,9 @@ export class ChatPage {
   setMessageRead(){
     this.badge.decrease(1);
     this.socket.emit('message-read',{user: this.currentUser});
+    setTimeout(()=>{
+      this.unreadMessagesCount = 0;
+    },500)
   }
 
   writing(){

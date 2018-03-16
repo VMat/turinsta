@@ -19,7 +19,11 @@
 
 <ion-content padding>
   <ion-grid>
-    <ion-row *ngFor="let message of chat.messages">
+    <ion-row *ngFor="let message of chat.messages; let i = index">
+
+      <ion-col *ngIf="chat.messages.length-i==unreadMessagesCount && unreadMessagesCount != 0" col-12>
+        <span>{{unreadMessagesCount}} unread messages</span>
+      </ion-col>
 
       <ion-col col-9 *ngIf="message.author !== currentUser" class="message" [ngClass]="{'my_message': message.author === currentUser, 'other_message': message.author !== currentUser}">
         <span class="user_name">{{ getUsername(message.author) }}:</span><br>
