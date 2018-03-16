@@ -22,8 +22,8 @@
 
 </ion-header>
 
-<ion-content padding>
-  <ion-list-header *ngIf="multipleSelection">
+<ion-content padding align="center">
+  <ion-list-header *ngIf="(followedes ? followedes.length : true) && multipleSelection">
     <ion-item no-lines>
       <ion-avatar item-start>
         <img src="{{inboxAvatar}}"/>
@@ -32,6 +32,7 @@
       <button item-end (click)="openImagePicker()" ion-button icon-only clear><ion-icon name="image"></ion-icon></button>
     </ion-item>
   </ion-list-header>
+  <empty-content *ngIf="followedes ? !followedes.length : false" align="center" [message]="'No sigues a ningún usuario para iniciar una conversación'"></empty-content>
   <ion-list *ngIf="!multipleSelection">
     <ion-item *ngFor="let followed of followedes" (click)="openInbox(followed)">
       <ion-avatar item-start>

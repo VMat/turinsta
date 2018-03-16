@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, Input} from '@angular/core';
 
 /**
  * Generated class for the EmptyContentComponent component.
@@ -11,6 +11,8 @@ import { Component } from '@angular/core';
   templateUrl: 'empty-content.html'
 })
 export class EmptyContentComponent {
+
+  @Input() message: string = null;
 
   constructor() {
     console.log('Hello EmptyContentComponent Component');
