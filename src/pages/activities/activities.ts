@@ -25,6 +25,12 @@ export class ActivitiesPage {
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private commons: CommonsProvider,
               private storageService: StorageProvider){
+  }
+
+  initializeValues(){
+    this.directionFilter = {key: 'direction', value: 'IN', operation: 'EQUAL'};
+    this.IN_LIMIT = 50;
+    this.OUT_LIMIT = 50;
     this.getInActivities();
   }
 
@@ -47,6 +53,10 @@ export class ActivitiesPage {
     return !this.activities.some((activity)=>{
       return activity.direction == direction
     });
+  }
+
+  ionViewWillEnter(){
+    this.initializeValues();
   }
 
   ionViewDidLoad() {

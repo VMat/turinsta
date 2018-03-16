@@ -1192,8 +1192,13 @@ var ActivitiesPage = (function () {
         this.directionFilter = { key: 'direction', value: 'IN', operation: 'EQUAL' };
         this.IN_LIMIT = 50;
         this.OUT_LIMIT = 50;
-        this.getInActivities();
     }
+    ActivitiesPage.prototype.initializeValues = function () {
+        this.directionFilter = { key: 'direction', value: 'IN', operation: 'EQUAL' };
+        this.IN_LIMIT = 50;
+        this.OUT_LIMIT = 50;
+        this.getInActivities();
+    };
     ActivitiesPage.prototype.getOutActivities = function () {
         var _this = this;
         this.directionFilter.value = 'OUT';
@@ -1216,6 +1221,9 @@ var ActivitiesPage = (function () {
             return activity.direction == direction;
         });
     };
+    ActivitiesPage.prototype.ionViewWillEnter = function () {
+        this.initializeValues();
+    };
     ActivitiesPage.prototype.ionViewDidLoad = function () {
         console.log('ionViewDidLoad ActivitiesPage');
     };
@@ -1231,10 +1239,10 @@ ActivitiesPage = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
         selector: 'page-activities',template:/*ion-inline-start:"C:\Users\Matias\WebstormProjects\turinsta\src\pages\activities\activities.html"*/'<!--\n  Generated template for the ActivitiesPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-header>\n  <ion-toolbar>\n    <ion-segment [(ngModel)]="directionFilter.value" color="secondary">\n      <ion-segment-button value="IN" (click)="getInActivities()">\n        <ion-icon name="cloud-download"></ion-icon>\n      </ion-segment-button>\n      <ion-segment-button value="OUT" (click)="getOutActivities()">\n        <ion-icon name="cloud-upload"></ion-icon>\n      </ion-segment-button>\n    </ion-segment>\n  </ion-toolbar>\n</ion-header>\n<ion-content padding>\n  <div [ngSwitch]="directionFilter.value">\n    <div *ngSwitchCase="\'IN\'" style="text-align: center">\n      <ion-list *ngSwitchCase="\'IN\'">\n        <ion-item *ngFor="let activity of activities | containsFilter:{\'key\':\'direction\', \'value\':\'IN\'}">\n          <ion-avatar item-start>\n            <img src="{{activity.relatedUsers[0].avatar}}">\n          </ion-avatar>\n          <p class="publication-important-text" text-wrap>{{getActivityCaption(activity.caption, activity.relatedUsers[0].username,activity.params)}}</p>\n          <ion-note>{{getAntiquity(activity.timestamps.created)}}</ion-note>\n          <ion-thumbnail item-end>\n            <img *ngIf="activity.publication" src="{{activity.publication.images[0].url}}">\n          </ion-thumbnail>\n        </ion-item>\n      </ion-list>\n      <ion-icon *ngIf="emptyActivities(\'IN\')" name="sad" style="font-size: xx-large" color="light"></ion-icon>\n    </div>\n    <div *ngSwitchCase="\'OUT\'" style="text-align: center">\n      <ion-list>\n        <ion-item *ngFor="let activity of activities | containsFilter:{\'key\':\'direction\', \'value\':\'OUT\'}">\n          <p class="publication-important-text" text-wrap>{{getActivityCaption(activity.caption,activity.relatedUsers? activity.relatedUsers[0].username : \'\',activity.params)}}</p>\n          <ion-note>{{getAntiquity(activity.timestamps.created)}}</ion-note>\n          <ion-thumbnail item-end>\n            <img *ngIf="activity.publication" src="{{activity.publication.images[0].url}}">\n          </ion-thumbnail>\n        </ion-item>\n      </ion-list>\n      <ion-icon *ngIf="emptyActivities(\'OUT\')" name="sad" style="font-size: xx-large" color="light"></ion-icon>\n    </div>\n  </div>\n</ion-content>\n'/*ion-inline-end:"C:\Users\Matias\WebstormProjects\turinsta\src\pages\activities\activities.html"*/,
     }),
-    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* NavParams */], __WEBPACK_IMPORTED_MODULE_2__providers_commons_commons__["a" /* CommonsProvider */],
-        __WEBPACK_IMPORTED_MODULE_3__providers_storage_storage__["a" /* StorageProvider */]])
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* NavController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* NavController */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* NavParams */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* NavParams */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_2__providers_commons_commons__["a" /* CommonsProvider */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__providers_commons_commons__["a" /* CommonsProvider */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_3__providers_storage_storage__["a" /* StorageProvider */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__providers_storage_storage__["a" /* StorageProvider */]) === "function" && _d || Object])
 ], ActivitiesPage);
 
+var _a, _b, _c, _d;
 //# sourceMappingURL=activities.js.map
 
 /***/ }),
