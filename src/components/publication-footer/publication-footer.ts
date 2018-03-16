@@ -1,7 +1,6 @@
 import {Component, Input, Output, EventEmitter} from '@angular/core';
 import {Events, ModalController} from "ionic-angular";
 import {CommonsProvider} from "../../providers/commons/commons";
-import {StorageProvider} from "../../providers/storage/storage";
 import {PublicationWritingPage} from "../../pages/publication-writing/publication-writing";
 
 /**

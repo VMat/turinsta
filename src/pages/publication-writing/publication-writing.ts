@@ -41,8 +41,8 @@ export class PublicationWritingPage {
 
   ionViewWillLoad(){
     if(Boolean(this.navParams.get("publication"))){
-      this.publication = {...this.navParams.get("publication")};
-      this.user = {...this.navParams.get("user")};
+      this.publication = this.navParams.get("publication");
+      this.user = this.navParams.get("user");
       this.experiences = this.navParams.get("experiences");
       this.comments = this.navParams.get("comments");
     }
@@ -51,6 +51,15 @@ export class PublicationWritingPage {
 
   scoreGivenFromUser(){
     return this.commons.getScoreGivenFromUser(this.publication.assessments);
+  }
+
+  updateScore(event){
+    this.storageService.getUser(this.user._id).subscribe((user)=>{
+      this.user = user;
+    });
+    this.storageService.getPublication(this.publication._id).subscribe((publication)=>{
+      this.publication = publication;
+    })
   }
 
   ionViewDidLoad() {
@@ -284,7 +293,9 @@ export class PublicationWritingPage {
     let descriptionWritingModal = this.ModalCtrl.create(DescriptionWritingPage,{publicationId: this.publication._id, description: this.publication.description});
     descriptionWritingModal.present();
     descriptionWritingModal.onDidDismiss((description)=>{
-      this.publication.description = description;
+      if(description){
+        this.publication.description = description;
+      }
     });
   }
 
@@ -312,7 +323,7 @@ export class PublicationWritingPage {
   deleteDescription(){
     this.storageService.patchPublication(this.publication._id,{description: null}).subscribe((patchedPublication)=>{
       this.commons.presentToast("La descripción ha sido eliminada con éxito");
-      this.publication.description = null;
+      // this.publication.description = null;
     });
   }
 

@@ -1,4 +1,4 @@
-import {Component, Input} from '@angular/core';
+import {Component, Input, Output, EventEmitter} from '@angular/core';
 import {Events} from "ionic-angular";
 import {StorageProvider} from "../../providers/storage/storage";
 import {CommonsProvider} from "../../providers/commons/commons";
@@ -18,47 +18,41 @@ export class ScoreHandlerComponent {
   @Input() publicationScore: number = null;
   @Input() publicationId: string = null;
   @Input() scoreInputShowed: boolean = false;
+  @Output() scoreChanged = new EventEmitter<any>();
   currentUserScore: any = null;
   initialValue: number = null;
 
   constructor(public events: Events, private storageService: StorageProvider, private commons: CommonsProvider){
   }
 
-  ngOnInit(){
+  ngOnChanges(){
     this.initialValue = this.publicationScore;
     this.currentUserScore = {publication: this.publicationId, user: this.commons.getUserId(), value: this.initialValue}
   }
 
   scoringFinished(){
-
     if(this.scoreInputShowed){
       if(this.currentUserScore.value != this.initialValue){
         if(this.initialValue == null){
           this.storageService.addPublicationAssessment(this.currentUserScore).subscribe((assessmentAdded)=>{
-            this.scoreInputShowed = false;
             this.initialValue = this.currentUserScore.value;
+            this.scoreChanged.emit('score changed!');
           });
         }
         else{
           if(this.currentUserScore.value >0){
             this.storageService.modifyPublicationAssessment(this.currentUserScore).subscribe((assessmentModified)=>{
-              this.scoreInputShowed = false;
+              this.scoreChanged.emit('score changed!');
             });
           }
           else{
             this.storageService.deletePublicationAssessment(this.currentUserScore.user,this.currentUserScore.publication).subscribe((assessmentDeleted)=>{
-              this.scoreInputShowed = false;
               this.initialValue = null;
+              this.scoreChanged.emit('score changed!');
             });
           }
         }
       }
-      else{
-        this.scoreInputShowed = false;
-      }
-    }
-    else{
-      this.scoreInputShowed = true;
     }
   }
 
