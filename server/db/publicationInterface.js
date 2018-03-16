@@ -15,8 +15,8 @@ PublicationInterface.getAll = ()=>{
   return Commons.getAll(Publications)
     .populate('user')
     .populate('experienceIds')
-    .populate('experiencesIds.category')
-    .populate('experiencesIds.type')
+    .populate('experienceIds.category')
+    .populate('experienceIds.type')
     .populate('commentIds');
 };
 
@@ -123,10 +123,10 @@ PublicationInterface.getN = (searchParams,n,order)=>{
 PublicationInterface.getOne = (id)=>{
   return Commons.getOne(Publications, id)
     .populate('user')
-    .populate('experiences')
-    .populate('experiences.category')
-    .populate('experiences.type')
-    .populate('comments');
+    .populate('experienceIds')
+    .populate('experienceIds.category')
+    .populate('experienceIds.type')
+    .populate('commentIds');
 };
 
 PublicationInterface.insert = (publication)=>{
