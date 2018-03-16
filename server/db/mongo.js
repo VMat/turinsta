@@ -314,7 +314,7 @@ db.createComment = (comment)=>{
       return publicationInterface.getOne(response.publication)
         .then((publication)=>{
           if(response.parent!=null){
-            commentInterface.getOne(response.parent)
+            return commentInterface.getOne(response.parent)
               .then((parentComment)=>{
                 let newOutActivity = {
                   user: comment.user,
@@ -449,7 +449,7 @@ db.updateComment = (comment)=>{
       return publicationInterface.getOne(updatedComment.publication)
         .then((publication)=>{
           if(updatedComment.parent!=null){
-            commentInterface.getOne(updatedComment.parent)
+            return commentInterface.getOne(updatedComment.parent)
               .then((parentComment)=>{
                 let newOutActivity = {
                   user: comment.user._id,
@@ -584,7 +584,7 @@ db.deleteComment = (id)=>{
           return publicationInterface.getOne(deletedComment.publication)
             .then((publication)=>{
               if(deletedComment.parent!=null){
-                commentInterface.getOne(deletedComment.parent)
+                return commentInterface.getOne(deletedComment.parent)
                   .then((parentComment)=>{
                     let newOutActivity = {
                       user: deletedComment.user._id,
