@@ -33,7 +33,12 @@ ActivityInterface.getN = (userId,rowFilters,limit)=>{
         path: 'type'
       }
     })
-    .populate('publication.commentIds')
+    .populate({
+      path: 'publication',
+      populate: {
+        path: 'commentIds'
+      }
+    })
     .populate('relatedUsers');
 };
 

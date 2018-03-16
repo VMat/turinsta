@@ -134,8 +134,18 @@ PublicationInterface.getOne = (id)=>{
   return Commons.getOne(Publications, id)
     .populate('user')
     .populate('experienceIds')
-    .populate('experienceIds.category')
-    .populate('experienceIds.type')
+    .populate({
+      path: 'experienceIds',
+      populate: {
+        path: 'category'
+      }
+    })
+    .populate({
+      path: 'experienceIds',
+      populate: {
+        path: 'type'
+      }
+    })
     .populate('commentIds');
 };
 
