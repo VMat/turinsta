@@ -363,7 +363,7 @@ db.createComment = (comment)=>{
                                             .then((publicationUserCaption)=>{
                                               return languageInterface.getCaption(publicationUser.language,["summaryTextNotification"])
                                                 .then((PublicationUserSummaryCaption)=>{
-                                                  userInterface.getOne(comment.user)
+                                                  return userInterface.getOne(comment.user)
                                                     .then((sender)=>{
                                                       let PUTitle = publicationUserCaption.replace(':user', sender.username);
                                                       let PUNotification = {title: PUTitle, body: '', summaryText: PublicationUserSummaryCaption};
