@@ -60,7 +60,7 @@ ActivityInterface.getOne = (id)=>{
       }
     }).exec((err,data)=>{
       console.log("ACTIVITIES: " + JSON.stringify(data));
-      return Experiences.populate(data,{path: 'publication.experienceIds.category'})
+      return Experiences.populate(data.publication.experienceIds,{path: 'category'})
     });
     // .populate({
     //   path: 'publication.experienceIds',
