@@ -22,18 +22,6 @@ ActivityInterface.getN = (userId,rowFilters,limit)=>{
       }
     })
     .populate({
-      path: 'experienceIds',
-      populate: {
-        path: 'category'
-      }
-    })
-    .populate({
-      path: 'experienceIds',
-      populate: {
-        path: 'type'
-      }
-    })
-    .populate({
       path: 'publication',
       populate: {
         path: 'commentIds'
@@ -43,7 +31,7 @@ ActivityInterface.getN = (userId,rowFilters,limit)=>{
 };
 
 ActivityInterface.getOne = (id)=>{
-  Commons.getOne(Activities, id)
+  return Commons.getOne(Activities, id)
     .populate('user')
     .populate('relatedUsers')
     .populate('publication')
@@ -58,26 +46,7 @@ ActivityInterface.getOne = (id)=>{
       populate: {
         path: 'experienceIds'
       }
-    }).exec((err,data)=>{
-      console.log("EXPERIENCE: " + JSON.stringify(data.publication.experienceIds[0]));
-      return Experiences.populate(data.publication.experienceIds[0],{path: 'category'},(experience)=>{
-        return Promise.resolve(experience);
-      })
-    });
-    // .populate({
-    //   path: 'publication.experienceIds',
-    //   populate: {
-    //     path: 'category',
-    //     model: 'ExperienceCategories'
-    //   }
-    // })
-    // .populate({
-    //   path: 'publication.experienceIds',
-    //   populate: {
-    //     path: 'type',
-    //     model: 'ExperienceTypes'
-    //   }
-    // });
+    })
 };
 
 ActivityInterface.insert = (activity)=>{

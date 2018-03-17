@@ -60,8 +60,11 @@ export class ActivitiesPage {
   }
 
   openPublication(publication){
-    let publicationWritingModal = this.modalCtrl.create(PublicationWritingPage, {user: publication.user, publication: publication, experiences: publication.experienceIds, comments: publication.commentIds});
-    publicationWritingModal.present();
+    this.storageService.getPublications(1,[{key: "_id", operation: "EQUAL", value: publication._id}],{field: "publication.timestamps.created", way: -1}).subscribe((publication)=>{
+      sessionStorage.setItem("OPEN PUBLICATION", JSON.stringify(publication));
+      let publicationWritingModal = this.modalCtrl.create(PublicationWritingPage, {user: publication.user, publication: publication, experiences: publication.experienceIds, comments: publication.commentIds});
+      publicationWritingModal.present();
+    });
   }
 
   ionViewWillEnter(){

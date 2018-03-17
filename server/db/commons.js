@@ -90,7 +90,12 @@ Commons.processAggregateParams = (params) => {
     switch(params[i].operation){
 
         case 'EQUAL':{
-          filters.push({$match: {[i]: params[i].value}});
+          if(i=='_id'){
+            filters.push({$match: {[i]: ObjectId(params[i].value)}});
+          }
+          else{
+            filters.push({$match: {[i]: params[i].value}});
+          }
           break;
         }
         case 'LIKE':{
