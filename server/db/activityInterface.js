@@ -58,21 +58,23 @@ ActivityInterface.getOne = (id)=>{
       populate: {
         path: 'experienceIds'
       }
-    })
-    .populate({
-      path: 'publication.experienceIds',
-      populate: {
-        path: 'category',
-        model: 'ExperienceCategories'
-      }
-    })
-    .populate({
-      path: 'publication.experienceIds',
-      populate: {
-        path: 'type',
-        model: 'ExperienceTypes'
-      }
+    }).exec((err,data)=>{
+      return Experiences.populate(data.publication.experienceIds,{path: 'category'})
     });
+    // .populate({
+    //   path: 'publication.experienceIds',
+    //   populate: {
+    //     path: 'category',
+    //     model: 'ExperienceCategories'
+    //   }
+    // })
+    // .populate({
+    //   path: 'publication.experienceIds',
+    //   populate: {
+    //     path: 'type',
+    //     model: 'ExperienceTypes'
+    //   }
+    // });
 };
 
 ActivityInterface.insert = (activity)=>{
