@@ -125,6 +125,7 @@ Commons.processAggregateParams = (params) => {
     }
   }
 
+  console.log("FILTERS: " + JSON.stringify(filters));
   return filters;
 };
 
