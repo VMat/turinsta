@@ -43,7 +43,7 @@ ActivityInterface.getN = (userId,rowFilters,limit)=>{
 };
 
 ActivityInterface.getOne = (id)=>{
-  return Commons.getOne(Activities, id)
+  Commons.getOne(Activities, id)
     .populate('user')
     .populate('relatedUsers')
     .populate('publication')
