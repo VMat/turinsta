@@ -85,6 +85,8 @@ Commons.processParams = (params) => {
 Commons.processAggregateParams = (params) => {
   let filters = [];
 
+  console.log("RAW PARAMS: " + JSON.stringify(params));
+
   for(let i in params){
 
     switch(params[i].operation){
