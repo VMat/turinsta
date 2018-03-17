@@ -59,7 +59,8 @@ ActivityInterface.getOne = (id)=>{
         path: 'experienceIds'
       }
     }).exec((err,data)=>{
-      return Experiences.populate(data.publication.experienceIds,{path: 'category'})
+      console.log("ACTIVITIES: " + JSON.stringify(data));
+      return Experiences.populate(data,{path: 'publication.experienceIds.category'})
     });
     // .populate({
     //   path: 'publication.experienceIds',
