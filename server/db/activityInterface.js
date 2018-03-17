@@ -45,7 +45,14 @@ ActivityInterface.getN = (userId,rowFilters,limit)=>{
 ActivityInterface.getOne = (id)=>{
   return Commons.getOne(Activities, id)
     .populate('user')
+    .populate('relatedUsers')
     .populate('publication')
+    .populate({
+      path: 'publication',
+      populate: {
+        path: 'commentIds'
+      }
+    })
     .populate({
       path: 'publication',
       populate: {
@@ -55,22 +62,17 @@ ActivityInterface.getOne = (id)=>{
     .populate({
       path: 'publication.experienceIds',
       populate: {
-        path: 'experienceIds.category'
+        path: 'category',
+        model: 'ExperienceCategories'
       }
     })
     .populate({
       path: 'publication.experienceIds',
       populate: {
-        path: 'publication.experienceIds.type'
+        path: 'type',
+        model: 'ExperienceTypes'
       }
-    })
-    .populate({
-      path: 'publication',
-      populate: {
-        path: 'commentIds'
-      }
-    })
-    .populate('relatedUsers');
+    });
 };
 
 ActivityInterface.insert = (activity)=>{
