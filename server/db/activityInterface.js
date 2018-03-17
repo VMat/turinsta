@@ -53,15 +53,15 @@ ActivityInterface.getOne = (id)=>{
       }
     })
     .populate({
-      path: 'publication',
+      path: 'publication.experienceIds',
       populate: {
         path: 'experienceIds.category'
       }
     })
     .populate({
-      path: 'publication',
+      path: 'publication.experienceIds',
       populate: {
-        path: 'experienceIds.type'
+        path: 'publication.experienceIds.type'
       }
     })
     .populate({
