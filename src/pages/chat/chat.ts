@@ -151,7 +151,7 @@ export class ChatPage {
     this.socket.emit('message-read',{user: this.currentUser});
     setTimeout(()=>{
       this.unreadMessagesCount = 0;
-    },500)
+    },5000)
   }
 
   writing(){

@@ -61,8 +61,7 @@ export class ActivitiesPage {
 
   openPublication(publication){
     this.storageService.getPublications(1,[{key: "_id", operation: "EQUAL", value: publication._id}],{field: "publication.timestamps.created", way: -1}).subscribe((publication)=>{
-      sessionStorage.setItem("OPEN PUBLICATION", JSON.stringify(publication));
-      let publicationWritingModal = this.modalCtrl.create(PublicationWritingPage, {user: publication.user, publication: publication, experiences: publication.experienceIds, comments: publication.commentIds});
+      let publicationWritingModal = this.modalCtrl.create(PublicationWritingPage, {user: publication[0].user, publication: publication[0].publication, experiences: publication[0].experiences, comments: publication[0].comments});
       publicationWritingModal.present();
     });
   }

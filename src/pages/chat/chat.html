@@ -22,7 +22,8 @@
     <ion-row *ngFor="let message of chat.messages; let i = index">
 
       <ion-col *ngIf="chat.messages.length-i==unreadMessagesCount && unreadMessagesCount != 0" col-12>
-        <span>{{unreadMessagesCount}} unread messages</span>
+        <span *ngIf="unreadMessagesCount>1"><b>{{unreadMessagesCount}} mensajes sin leer</b></span>
+        <span *ngIf="unreadMessagesCount==1"><b>{{unreadMessagesCount}} mensaje sin leer</b></span>
       </ion-col>
 
       <ion-col col-9 *ngIf="message.author !== currentUser" class="message" [ngClass]="{'my_message': message.author === currentUser, 'other_message': message.author !== currentUser}">

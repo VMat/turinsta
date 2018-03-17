@@ -11,6 +11,7 @@ import {ChatPage} from "../pages/chat/chat";
 import {StorageProvider} from "../providers/storage/storage";
 import { Socket } from 'ng-socket-io';
 import {PublicationWritingPage} from "../pages/publication-writing/publication-writing";
+import {Store} from "@ngrx/store";
 
 
 @Component({
@@ -22,7 +23,7 @@ export class MyApp {
 
   constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen, imgcacheService: ImgcacheService, public push: Push,
               private notifications: NotificationProvider, private commons: CommonsProvider, private storageService: StorageProvider,
-              private modalCtrl: ModalController) {
+              private modalCtrl: ModalController, private store: Store<any>) {
     platform.ready().then(() => {
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
@@ -48,6 +49,7 @@ export class MyApp {
 
       pushObject.on('notification').subscribe((notification: any) => {
         console.log('Received a notification', notification);
+
         pushObject.getApplicationIconBadgeNumber().then((count)=>{
           pushObject.setApplicationIconBadgeNumber(++count);
         });
@@ -56,13 +58,28 @@ export class MyApp {
           pushObject.getApplicationIconBadgeNumber().then((count)=>{
             pushObject.setApplicationIconBadgeNumber(--count);
           });
+          pushObject.clearAllNotifications();
           switch(action.view){
             case 'message':{
+              // this.storageService.getInbox(action.category).subscribe((inbox)=>{
+              //   this.nav.setRoot(ChatPage,{chat: inbox, chatDescription: this.commons.getChatDescription(inbox),
+              //     avatar: this.commons.getAvatar(inbox),
+              //     socket: new Socket({ url: StorageProvider.baseUrl.replace('/api/','')})
+              //   });
+              // });
               this.storageService.getInbox(action.category).subscribe((inbox)=>{
-                this.nav.setRoot(ChatPage,{chat: inbox, chatDescription: this.commons.getChatDescription(inbox),
-                  avatar: this.commons.getAvatar(inbox),
-                  socket: new Socket({ url: StorageProvider.baseUrl.replace('/api/','')})
+                let unreadMessagesCount = null;
+                this.store.select("user","unreadMessages").first().subscribe((unreadMessages)=>{
+                  let targetInbox = unreadMessages.filter((unreadInbox)=>{
+                    return unreadInbox.inbox ==  inbox._id;
+                  });
+                  if(targetInbox.length>0){
+                    unreadMessagesCount = targetInbox[0].messages.length;
+                  }
                 });
+                let socket = new Socket({url: StorageProvider.baseUrl.replace('/api/','')});
+                let chatPage = this.modalCtrl.create(ChatPage, {chat: inbox, chatDescription: this.commons.getChatDescription(inbox), avatar: this.commons.getAvatar(inbox), socket: socket, unreadMessagesCount: unreadMessagesCount});
+                chatPage.present();
               });
               break;
             }
@@ -77,8 +94,8 @@ export class MyApp {
               //   this.nav.setRoot(PublicationWritingPage,{user: publication.user, publication: publication,
               //   experiences: publication.experiences, comments: publication.comments});
               // });
-              this.storageService.getPublication(action.category).subscribe((publication)=>{
-                let publicationWritingModal = this.modalCtrl.create(PublicationWritingPage, {user: publication.user, publication: publication, experiences: publication.experienceIds, comments: publication.commentIds});
+              this.storageService.getPublications(1,[{key: "_id", operation: "EQUAL", value: action.category}],{field: "publication.timestamps.created", way: -1}).subscribe((publication)=>{
+                let publicationWritingModal = this.modalCtrl.create(PublicationWritingPage, {user: publication[0].user, publication: publication[0].publication, experiences: publication[0].experiences, comments: publication[0].comments});
                 publicationWritingModal.present();
               });
               break;
