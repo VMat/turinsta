@@ -93,7 +93,7 @@ Commons.processAggregateParams = (params) => {
 
         case 'EQUAL':{
           if(i=='_id'){
-            filters.push({$match: {[i]: ObjectId(params[i].value)}});
+            filters.push({$match: {[i]: mongoose.Types.ObjectId(params[i].value)}});
           }
           else{
             filters.push({$match: {[i]: params[i].value}});
