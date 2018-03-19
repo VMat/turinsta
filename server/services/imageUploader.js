@@ -3,7 +3,7 @@ const storage = require('@google-cloud/storage');
 const fs = require('fs');
 const path = require('path');
 const publicationService = require('./publicationService');
-const userService = require('./userService');
+
 
 
 const gcs = storage({
@@ -72,6 +72,8 @@ ImgUpload.uploadToGcs = (req, res, next) => {
 };
 
 ImgUpload.genericUploadToGcs = (req, res, next) => {
+
+  const userService = require('./userService');
 
   if(!req.files) return next();
 
