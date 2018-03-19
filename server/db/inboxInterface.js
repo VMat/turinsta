@@ -1,7 +1,6 @@
 const Inboxes = require('../models/inbox');
 const UserInterface = require('./userInterface');
 const Commons = require('./commons');
-const ImageUploader = require('../services/imageUploader');
 
 let InboxInterface = {};
 
@@ -28,6 +27,7 @@ InboxInterface.patch = (id, fields)=>{
 };
 
 InboxInterface.deleteOne = (id)=>{
+  const ImageUploader = require('../services/imageUploader');
   return Commons.getOne(Inboxes,id)
     .then((inbox)=>{
       return UserInterface.getOne(inbox.creator)
