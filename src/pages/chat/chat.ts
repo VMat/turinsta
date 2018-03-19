@@ -101,7 +101,7 @@ export class ChatPage {
     if(targetUser.length>0){
       return targetUser[0].username;
     }
-    return null;
+    return "Usuario que dejó el grupo";
   }
 
   updateMessageStatus(status){

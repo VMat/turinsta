@@ -14,6 +14,7 @@ const inboxSchema = new Schema({
 		timestamps: {created: String, modified: String}
   }],
   timestamps: {created: String, modified: String},
+  creator: {type: Schema.Types.ObjectId, ref: 'Users'},
   group: Boolean
 });
 

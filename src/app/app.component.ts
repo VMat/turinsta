@@ -61,13 +61,7 @@ export class MyApp {
           pushObject.clearAllNotifications();
           switch(action.view){
             case 'message':{
-              // this.storageService.getInbox(action.category).subscribe((inbox)=>{
-              //   this.nav.setRoot(ChatPage,{chat: inbox, chatDescription: this.commons.getChatDescription(inbox),
-              //     avatar: this.commons.getAvatar(inbox),
-              //     socket: new Socket({ url: StorageProvider.baseUrl.replace('/api/','')})
-              //   });
-              // });
-              this.storageService.getInbox(action.category).subscribe((inbox)=>{
+              this.storageService.getInbox(action.category).first().subscribe((inbox)=>{
                 let unreadMessagesCount = null;
                 this.store.select("user","unreadMessages").first().subscribe((unreadMessages)=>{
                   let targetInbox = unreadMessages.filter((unreadInbox)=>{
@@ -76,10 +70,11 @@ export class MyApp {
                   if(targetInbox.length>0){
                     unreadMessagesCount = targetInbox[0].messages.length;
                   }
+                  let socket = new Socket({url: StorageProvider.baseUrl.replace('/api/','')});
+                  let chatPage = this.modalCtrl.create(ChatPage, {chat: inbox, chatDescription: this.commons.getChatDescription(inbox), avatar: this.commons.getAvatar(inbox), socket: socket, unreadMessagesCount: unreadMessagesCount});
+                  chatPage.present();
                 });
-                let socket = new Socket({url: StorageProvider.baseUrl.replace('/api/','')});
-                let chatPage = this.modalCtrl.create(ChatPage, {chat: inbox, chatDescription: this.commons.getChatDescription(inbox), avatar: this.commons.getAvatar(inbox), socket: socket, unreadMessagesCount: unreadMessagesCount});
-                chatPage.present();
+
               });
               break;
             }
@@ -90,10 +85,6 @@ export class MyApp {
               break;
             }
             case 'publication':{
-              // this.storageService.getPublication(action.category).subscribe((publication)=>{
-              //   this.nav.setRoot(PublicationWritingPage,{user: publication.user, publication: publication,
-              //   experiences: publication.experiences, comments: publication.comments});
-              // });
               this.storageService.getPublications(1,[{key: "_id", operation: "EQUAL", value: action.category}],{field: "publication.timestamps.created", way: -1}).subscribe((publication)=>{
                 let publicationWritingModal = this.modalCtrl.create(PublicationWritingPage, {user: publication[0].user, publication: publication[0].publication, experiences: publication[0].experiences, comments: publication[0].comments});
                 publicationWritingModal.present();
@@ -101,9 +92,9 @@ export class MyApp {
               break;
             }
             case 'comment':{
-              this.storageService.getPublication(action.category).subscribe((publication)=>{
-                this.nav.setRoot(PublicationWritingPage,{user: this.commons.getUserId(), publication: publication,
-                  experiences: publication.experiences, comments: publication.comments});
+              this.storageService.getPublications(1,[{key: "_id", operation: "EQUAL", value: action.category}],{field: "publication.timestamps.created", way: -1}).subscribe((publication)=>{
+                let publicationWritingModal = this.modalCtrl.create(PublicationWritingPage, {user: publication[0].user, publication: publication[0].publication, experiences: publication[0].experiences, comments: publication[0].comments});
+                publicationWritingModal.present();
               });
               break;
             }

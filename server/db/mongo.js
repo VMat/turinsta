@@ -8,6 +8,7 @@ const languageInterface = require('./languageInterface');
 const inboxInterface = require('./inboxInterface');
 const placeInterface = require('./placeInterface');
 const NotificationService = require('../services/notificationService');
+const ImageUploader = require('../services/imageUploader');
 
 let db = {};
 
@@ -958,7 +959,21 @@ db.updateInbox = (inbox)=>{
 };
 
 db.patchInbox = (id,fields)=>{
-  return inboxInterface.patch(id,fields);
+  return inboxInterface.patch(id,fields)
+    .then((updatedInbox)=>{
+      if(updatedInbox.avatar != fields.avatar){
+        return userInterface.getOne(updatedInbox.creator)
+          .then((creator)=>{
+            return ImageUploader.removeFromGcs(creator.bucketId,updatedInbox.avatar)
+              .then(()=>{
+                return Promise.resolve(updatedInbox);
+              });
+          });
+      }
+      else{
+        return Promise.resolve(updatedInbox);
+      }
+    });
 };
 
 db.deleteInbox = (id)=>{

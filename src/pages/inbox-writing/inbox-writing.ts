@@ -4,6 +4,7 @@ import {StorageProvider} from "../../providers/storage/storage";
 import {CommonsProvider} from "../../providers/commons/commons";
 import {ImagePicker} from "@ionic-native/image-picker";
 import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-native/file-transfer';
+import {Observable} from "rxjs";
 
 /**
  * Generated class for the InboxWritingPage page.
@@ -25,6 +26,7 @@ export class InboxWritingPage {
   selectedUsers: any = [];
   inboxName: string = null;
   inboxAvatar: string = null;
+  initInboxAvatar: string = null;
   readonly PARTICIPANTS_LIMIT = 20;
   inbox: any = null;
 
@@ -44,13 +46,25 @@ export class InboxWritingPage {
       this.selectedUsers = this.inbox.participants.filter((user)=>{return user._id!=this.commons.getUserId()}).map((user)=>{return user._id});
       this.inboxName = this.inbox.name;
       this.inboxAvatar = this.inbox.avatar;
+      this.initInboxAvatar = this.inbox.avatar;
     }
-    if(this.multipleSelection){
-      this.inboxAvatar = this.commons.getDefaultInboxAvatar();
+    else{
+      if(this.multipleSelection){
+        this.inboxAvatar = this.commons.getDefaultInboxAvatar();
+      }
     }
     this.storage.getFollowedes(this.commons.getUserId(),this.followedesLimit).subscribe((followedes)=>{
-      sessionStorage.setItem("followedes", JSON.stringify(followedes));
-      this.followedes = followedes;
+      let followedesWithoutParticipants = followedes.filter((followed)=>{
+        return !this.selectedUsers.some((participantId)=>{
+          return participantId == followed._id;
+        })
+      });
+      let getUsersObservable = Observable.forkJoin(this.selectedUsers.map((userId)=>{
+        return this.storage.getUser(userId);
+      }));
+      getUsersObservable.subscribe((participants)=>{
+        this.followedes = participants.concat(followedesWithoutParticipants);
+      });
     });
   }
 
@@ -176,25 +190,42 @@ export class InboxWritingPage {
   saveInbox(){
     this.selectedUsers.push(this.commons.getUserId());
     if(this.inbox){
-      this.storage.patchInbox(this.inbox._id,{participants: this.selectedUsers, name: this.inboxName, avatar: this.inboxAvatar}).subscribe(()=>{
-        this.storage.getInbox(this.inbox._id).subscribe((patchedInbox)=>{
-          this.commons.presentToast("Se ha actualizado el grupo con éxito");
-          this.viewCtrl.dismiss(patchedInbox);
-        })
-      });
+      if(this.inboxAvatar!=this.initInboxAvatar) {
+        this.uploadPic(this.inboxAvatar).then((uploadingResponse) => {
+          let avatarUrl = JSON.parse(uploadingResponse["response"]);
+          this.storage.patchInbox(this.inbox._id, {
+            participants: this.selectedUsers,
+            name: this.inboxName,
+            avatar: avatarUrl
+          }).subscribe(() => {
+            this.storage.getInbox(this.inbox._id).subscribe((patchedInbox) => {
+              this.commons.presentToast("Se ha actualizado el grupo con éxito");
+              this.viewCtrl.dismiss(patchedInbox);
+            })
+          });
+        });
+      }
+      else{
+        this.storage.patchInbox(this.inbox._id,{participants: this.selectedUsers, name: this.inboxName, avatar: this.inboxAvatar}).subscribe(()=>{
+          this.storage.getInbox(this.inbox._id).subscribe((patchedInbox)=>{
+            this.commons.presentToast("Se ha actualizado el grupo con éxito");
+            this.viewCtrl.dismiss(patchedInbox);
+          })
+        });
+      }
     }
     else{
       if(this.inboxAvatar!=this.commons.getDefaultInboxAvatar()){
         this.uploadPic(this.inboxAvatar).then((uploadingResponse)=>{
           let avatarUrl = JSON.parse(uploadingResponse["response"]);
-          this.viewCtrl.dismiss({name: this.inboxName, participants: this.selectedUsers, avatar: avatarUrl, messages: [], group: true});
+          this.viewCtrl.dismiss({name: this.inboxName, participants: this.selectedUsers, avatar: avatarUrl, messages: [], group: true, creator: this.commons.getUserId()});
         })
           .catch((error)=>{
             this.commons.presentToast("Se ha producido un error al guardar el avatar");
           });
       }
       else{
-        this.viewCtrl.dismiss({name: this.inboxName, participants: this.selectedUsers, avatar: this.inboxAvatar, messages: [], group: true});
+        this.viewCtrl.dismiss({name: this.inboxName, participants: this.selectedUsers, avatar: this.inboxAvatar, messages: [], group: true, creator: this.commons.getUserId()});
       }
     }
   }
