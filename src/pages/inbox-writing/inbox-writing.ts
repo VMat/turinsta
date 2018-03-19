@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import {IonicPage, NavController, NavParams, ViewController, AlertController} from 'ionic-angular';
+import {IonicPage, NavController, NavParams, ViewController, AlertController, LoadingController} from 'ionic-angular';
 import {StorageProvider} from "../../providers/storage/storage";
 import {CommonsProvider} from "../../providers/commons/commons";
 import {ImagePicker} from "@ionic-native/image-picker";
@@ -32,7 +32,7 @@ export class InboxWritingPage {
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private viewCtrl: ViewController,
               private alertCtrl: AlertController, private storage: StorageProvider, private commons: CommonsProvider,
-              private imagePicker: ImagePicker, private transfer: FileTransfer) {
+              private imagePicker: ImagePicker, private transfer: FileTransfer, private loadingCtrl: LoadingController) {
   }
 
   ionViewDidLoad() {
@@ -62,7 +62,7 @@ export class InboxWritingPage {
       let getUsersObservable = Observable.forkJoin(this.selectedUsers.map((userId)=>{
         return this.storage.getUser(userId);
       }));
-      getUsersObservable.subscribe(null,(participants)=>{
+      getUsersObservable.subscribe((participants)=>{
           this.followedes = participants.concat(followedesWithoutParticipants);
       },
       ()=>{
@@ -113,7 +113,7 @@ export class InboxWritingPage {
   }
 
   uploadPic(image) {
-    let uri = StorageProvider.baseUrl + 'inboxes/avatar/user/' + this.commons.getUserId();
+    let uri = StorageProvider.baseUrl + 'inboxes/avatar/user/' + (this.inbox ? this.inbox.creator : this.commons.getUserId());
     let options: FileUploadOptions = {
       fileKey: 'turinstafile',
       fileName: this.inboxName,
@@ -191,6 +191,11 @@ export class InboxWritingPage {
   }
 
   saveInbox(){
+    let loader = this.loadingCtrl.create({
+      content: "Actualizando grupo...",
+      cssClass: "fullscreen-loading"
+    });
+    loader.present();
     this.selectedUsers.push(this.commons.getUserId());
     if(this.inbox){
       if(this.inboxAvatar!=this.initInboxAvatar) {
@@ -202,6 +207,7 @@ export class InboxWritingPage {
             avatar: avatarUrl
           }).subscribe(() => {
             this.storage.getInbox(this.inbox._id).subscribe((patchedInbox) => {
+              loader.dismiss();
               this.commons.presentToast("Se ha actualizado el grupo con éxito");
               this.viewCtrl.dismiss(patchedInbox);
             })
@@ -211,6 +217,7 @@ export class InboxWritingPage {
       else{
         this.storage.patchInbox(this.inbox._id,{participants: this.selectedUsers, name: this.inboxName, avatar: this.inboxAvatar}).subscribe(()=>{
           this.storage.getInbox(this.inbox._id).subscribe((patchedInbox)=>{
+            loader.dismiss();
             this.commons.presentToast("Se ha actualizado el grupo con éxito");
             this.viewCtrl.dismiss(patchedInbox);
           })

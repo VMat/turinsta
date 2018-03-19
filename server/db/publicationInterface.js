@@ -155,6 +155,7 @@ PublicationInterface.insert = (publication)=>{
     modified: null
   };
   publication.score = 0;
+  console.log("PUBLICATION TO INSERT: " + JSON.stringify(publication));
   return Commons.insert(new Publications(publication));
 };
 

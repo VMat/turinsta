@@ -159,4 +159,15 @@ UserInterface.removeUnreadMessages = (userId,inboxId)=>{
     });
 };
 
+UserInterface.updateScore = (user)=>{
+  return Commons.getOne(Users,user,{publications: 1})
+    .populate('publications')
+      .then((targetUser)=>{
+        let userScoreSum = targetUser.publications.reduce((acum,item)=>{
+          return acum + item.score;
+        },0);
+        return Commons.patch(Users,user,{score: userScoreSum/targetUser.publications.length})
+      });
+};
+
 module.exports = UserInterface;

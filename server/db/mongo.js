@@ -128,42 +128,100 @@ db.deletePublication = (id)=>{
 db.addPublicationAssessment = (assessment)=>{
   return publicationInterface.addPublicationAssessment(assessment)
     .then((updatedPublication)=>{
-      let newOutActivity = {
-        user: assessment.user,
-        direction: "OUT",
-        caption: "publicationAssessmentGiven",
-        params: {":user": updatedPublication.user, ":number": assessment.value},
-        relatedUsers: [updatedPublication.user],
-        publication: updatedPublication._id,
-        timestamps: {created: new Date().toISOString(), modified: null},
-        seen: true
-      };
-      let newInActivity = {
-        user: updatedPublication.user,
-        direction: "IN",
-        caption: "publicationAssessmentAddedNotification",
-        params: {":user": assessment.user, ":number": assessment.value},
-        relatedUsers: [assessment.user],
-        publication: updatedPublication._id,
-        timestamps: {created: new Date().toISOString(), modified: null},
-        seen: false
-      };
-      return Promise.all([activityInterface.insert(newOutActivity),activityInterface.insert(newInActivity)])
+      return userInterface.updateScore(updatedPublication.user)
         .then(()=>{
-          return userInterface.getOne(updatedPublication.user)
-            .then((targetUser)=>{
-              return languageInterface.getCaption(targetUser.language,["publicationAssessmentAddedNotification"])
-                .then((caption)=>{
-                  return languageInterface.getCaption(targetUser.language,["summaryTextNotification"])
-                    .then((summaryCaption)=>{
-                      return userInterface.getOne(assessment.user)
-                        .then((sender)=>{
-                          let title = caption.replace(':user', sender.username).replace(':number', assessment.value);
-                          let notification = {title: title, body: '', summaryText: summaryCaption};
-                          let data = {type: 'publication', category: updatedPublication._id, key: ''};
-                          return NotificationService.send({notification: notification, data: data},[targetUser.notificationKey])
-                            .then(()=>{
-                              return Promise.resolve(targetUser);
+          let newOutActivity = {
+            user: assessment.user,
+            direction: "OUT",
+            caption: "publicationAssessmentGiven",
+            params: {":user": updatedPublication.user, ":number": assessment.value},
+            relatedUsers: [updatedPublication.user],
+            publication: updatedPublication._id,
+            timestamps: {created: new Date().toISOString(), modified: null},
+            seen: true
+          };
+          let newInActivity = {
+            user: updatedPublication.user,
+            direction: "IN",
+            caption: "publicationAssessmentAddedNotification",
+            params: {":user": assessment.user, ":number": assessment.value},
+            relatedUsers: [assessment.user],
+            publication: updatedPublication._id,
+            timestamps: {created: new Date().toISOString(), modified: null},
+            seen: false
+          };
+          return Promise.all([activityInterface.insert(newOutActivity),activityInterface.insert(newInActivity)])
+            .then(()=>{
+              return userInterface.getOne(updatedPublication.user)
+                .then((targetUser)=>{
+                  return languageInterface.getCaption(targetUser.language,["publicationAssessmentAddedNotification"])
+                    .then((caption)=>{
+                      return languageInterface.getCaption(targetUser.language,["summaryTextNotification"])
+                        .then((summaryCaption)=>{
+                          return userInterface.getOne(assessment.user)
+                            .then((sender)=>{
+                              let title = caption.replace(':user', sender.username).replace(':number', assessment.value);
+                              let notification = {title: title, body: '', summaryText: summaryCaption};
+                              let data = {type: 'publication', category: updatedPublication._id, key: ''};
+                              return NotificationService.send({notification: notification, data: data},[targetUser.notificationKey])
+                                .then(()=>{
+                                  return Promise.resolve(targetUser);
+                                });
+                            });
+                        });
+                    });
+                });
+            });
+        });
+    })
+};
+
+db.modifyPublicationAssessment = (assessment)=>{
+  return publicationInterface.modifyPublicationAssessment(assessment)
+    .then((updatedPublication)=>{
+      return userInterface.updateScore(updatedPublication.user)
+        .then(()=>{
+          let newOutActivity = {
+            user: assessment.user,
+            direction: "OUT",
+            caption: "publicationAssessmentModified",
+            params: {":user": updatedPublication.user, ":number": assessment.value},
+            relatedUsers: [updatedPublication.user],
+            publication: updatedPublication._id,
+            timestamps: {created: new Date().toISOString(), modified: null},
+            seen: true
+          };
+          let newInActivity = {
+            user: updatedPublication.user,
+            direction: "IN",
+            caption: "publicationAssessmentUpdatedNotification",
+            params: {":user": assessment.user, ":number": assessment.value},
+            relatedUsers: [assessment.user],
+            publication: updatedPublication._id,
+            timestamps: {created: new Date().toISOString(), modified: null},
+            seen: false
+          };
+          return Promise.all([activityInterface.insert(newOutActivity),activityInterface.insert(newInActivity)])
+            .then(()=>{
+              console.log("promise all");
+              return userInterface.getOne(updatedPublication.user)
+                .then((targetUser)=>{
+                  console.log("targetUser: " + JSON.stringify(targetUser));
+                  return languageInterface.getCaption(targetUser.language,["publicationAssessmentUpdatedNotification"])
+                    .then((caption)=>{
+                      return languageInterface.getCaption(targetUser.language,["summaryTextNotification"])
+                        .then((summaryCaption)=>{
+                          return userInterface.getOne(assessment.user)
+                            .then((sender)=>{
+                              let title = caption.replace(':user', sender.username).replace(':number', assessment.value);
+                              let notification = {title: title, body: '', summaryText: summaryCaption};
+                              let data = {type: 'publication', category: updatedPublication._id, key: ''};
+                              console.log("publication modified: " + JSON.stringify(notification));
+                              console.log("publication data: " + JSON.stringify(data));
+                              return NotificationService.send({notification: notification, data: data},[targetUser.notificationKey])
+                                .then(()=>{
+                                  return Promise.resolve(targetUser);
+                                });
                             });
                         });
                     });
@@ -173,104 +231,56 @@ db.addPublicationAssessment = (assessment)=>{
     });
 };
 
-db.modifyPublicationAssessment = (assessment)=>{
-  return publicationInterface.modifyPublicationAssessment(assessment)
+db.deletePublicationAssessment = (assessment)=>{
+
+  return publicationInterface.deletePublicationAssessment(assessment)
     .then((updatedPublication)=>{
-      let newOutActivity = {
-        user: assessment.user,
-        direction: "OUT",
-        caption: "publicationAssessmentModified",
-        params: {":user": updatedPublication.user, ":number": assessment.value},
-        relatedUsers: [updatedPublication.user],
-        publication: updatedPublication._id,
-        timestamps: {created: new Date().toISOString(), modified: null},
-        seen: true
-      };
-      let newInActivity = {
-        user: updatedPublication.user,
-        direction: "IN",
-        caption: "publicationAssessmentUpdatedNotification",
-        params: {":user": assessment.user, ":number": assessment.value},
-        relatedUsers: [assessment.user],
-        publication: updatedPublication._id,
-        timestamps: {created: new Date().toISOString(), modified: null},
-        seen: false
-      };
-      return Promise.all([activityInterface.insert(newOutActivity),activityInterface.insert(newInActivity)])
+      return userInterface.updateScore(updatedPublication.user)
         .then(()=>{
-          console.log("promise all");
-          return userInterface.getOne(updatedPublication.user)
-            .then((targetUser)=>{
-              console.log("targetUser: " + JSON.stringify(targetUser));
-              return languageInterface.getCaption(targetUser.language,["publicationAssessmentUpdatedNotification"])
-                .then((caption)=>{
-                  return languageInterface.getCaption(targetUser.language,["summaryTextNotification"])
-                    .then((summaryCaption)=>{
-                      return userInterface.getOne(assessment.user)
-                        .then((sender)=>{
-                          let title = caption.replace(':user', sender.username).replace(':number', assessment.value);
-                          let notification = {title: title, body: '', summaryText: summaryCaption};
-                          let data = {type: 'publication', category: updatedPublication._id, key: ''};
-                          console.log("publication modified: " + JSON.stringify(notification));
-                          console.log("publication data: " + JSON.stringify(data));
-                          return NotificationService.send({notification: notification, data: data},[targetUser.notificationKey])
-                            .then(()=>{
-                              return Promise.resolve(targetUser);
+          let newOutActivity = {
+            user: assessment.user,
+            direction: "OUT",
+            caption: "publicationAssessmentDeleted",
+            params: {":user": updatedPublication.user},
+            relatedUsers: [updatedPublication.user],
+            publication: updatedPublication._id,
+            timestamps: {created: new Date().toISOString(), modified: null},
+            seen: true
+          };
+          let newInActivity = {
+            user: updatedPublication.user,
+            direction: "IN",
+            caption: "publicationAssessmentDeletedNotification",
+            params: {":user":assessment.user},
+            relatedUsers: [assessment.user],
+            publication: updatedPublication._id,
+            timestamps: {created: new Date().toISOString(), modified: null},
+            seen: false
+          };
+          return Promise.all([activityInterface.insert(newOutActivity),activityInterface.insert(newInActivity)])
+            .then(()=>{
+              return userInterface.getOne(updatedPublication.user)
+                .then((targetUser)=>{
+                  return languageInterface.getCaption(targetUser.language,["publicationAssessmentDeletedNotification"])
+                    .then((caption)=>{
+                      return languageInterface.getCaption(targetUser.language,["summaryTextNotification"])
+                        .then((summaryCaption)=>{
+                          return userInterface.getOne(assessment.user)
+                            .then((sender)=>{
+                              let title = caption.replace(':user', sender.username);
+                              let notification = {title: title, body: '', summaryText: summaryCaption};
+                              let data = {type: 'publication', category: updatedPublication._id, key: ''};
+                              return NotificationService.send({notification: notification, data: data},[targetUser.notificationKey])
+                                .then(()=>{
+                                  return Promise.resolve(targetUser)
+                                })
                             });
                         });
                     });
                 });
             });
         });
-  });
-};
-
-db.deletePublicationAssessment = (assessment)=>{
-  return publicationInterface.deletePublicationAssessment(assessment)
-    .then((updatedPublication)=>{
-      let newOutActivity = {
-        user: assessment.user,
-        direction: "OUT",
-        caption: "publicationAssessmentDeleted",
-        params: {":user": updatedPublication.user},
-        relatedUsers: [updatedPublication.user],
-        publication: updatedPublication._id,
-        timestamps: {created: new Date().toISOString(), modified: null},
-        seen: true
-      };
-      let newInActivity = {
-        user: updatedPublication.user,
-        direction: "IN",
-        caption: "publicationAssessmentDeletedNotification",
-        params: {":user":assessment.user},
-        relatedUsers: [assessment.user],
-        publication: updatedPublication._id,
-        timestamps: {created: new Date().toISOString(), modified: null},
-        seen: false
-      };
-      return Promise.all([activityInterface.insert(newOutActivity),activityInterface.insert(newInActivity)])
-        .then(()=>{
-          return userInterface.getOne(updatedPublication.user)
-            .then((targetUser)=>{
-              return languageInterface.getCaption(targetUser.language,["publicationAssessmentDeletedNotification"])
-                .then((caption)=>{
-                  return languageInterface.getCaption(targetUser.language,["summaryTextNotification"])
-                    .then((summaryCaption)=>{
-                      return userInterface.getOne(assessment.user)
-                        .then((sender)=>{
-                          let title = caption.replace(':user', sender.username);
-                          let notification = {title: title, body: '', summaryText: summaryCaption};
-                          let data = {type: 'publication', category: updatedPublication._id, key: ''};
-                          return NotificationService.send({notification: notification, data: data},[targetUser.notificationKey])
-                            .then(()=>{
-                              return Promise.resolve(targetUser)
-                            })
-                        });
-                    });
-                });
-            });
-        });
-  });
+    });
 };
 
 db.addPublicationImage = (publicationId, imageUrls)=>{
