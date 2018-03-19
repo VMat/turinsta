@@ -962,13 +962,16 @@ db.patchInbox = (id,fields)=>{
   return inboxInterface.patch(id,fields)
     .then((updatedInbox)=>{
       console.log("updatedInbox: " + JSON.stringify(updatedInbox));
-      if(updatedInbox.avatar != fields.avatar){
+      if(updatedInbox.avatar != fields.avatar && fields.avatar){
         return userInterface.getOne(updatedInbox.creator)
           .then((creator)=>{
             return ImageUploader.removeFromGcs(creator.bucketId,updatedInbox.avatar)
               .then(()=>{
                 return Promise.resolve(updatedInbox);
-              });
+              })
+              .catch(()=>{
+                return Promise.resolve(updatedInbox);
+              })
           });
       }
       else{
