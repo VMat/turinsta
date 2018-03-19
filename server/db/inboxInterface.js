@@ -1,6 +1,7 @@
 const Inboxes = require('../models/inbox');
 const UserInterface = require('./userInterface');
 const Commons = require('./commons');
+const ImageUploader = require('../services/imageUploader');
 
 let InboxInterface = {};
 
@@ -29,7 +30,13 @@ InboxInterface.patch = (id, fields)=>{
 InboxInterface.deleteOne = (id)=>{
   return Commons.getOne(Inboxes,id)
     .then((inbox)=>{
-      return Commons.removeOne(Inboxes, inbox);
+      return UserInterface.getOne(inbox.creator)
+        .then((creator)=>{
+          return ImageUploader.removeFromGcs(creator.bucketId,inbox.avatar)
+            .then(()=>{
+              return Commons.removeOne(Inboxes, inbox);
+            })
+        });
     });
 };
 
