@@ -2,9 +2,6 @@
 const storage = require('@google-cloud/storage');
 const fs = require('fs');
 const path = require('path');
-const publicationService = require('./publicationService');
-
-
 
 const gcs = storage({
   projectId: 'turinsta-189517',
@@ -26,6 +23,7 @@ function getPublicUrl(filename) {
 let ImgUpload = {};
 
 ImgUpload.uploadToGcs = (req, res, next) => {
+  const publicationService = require('./publicationService');
 
   if(!req.files) return next();
   publicationService.getPublication(req.params.publication)

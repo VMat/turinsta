@@ -6,8 +6,6 @@ const Experiences = require('../models/experience');
 const Comments = require('../models/comment');
 const Places = require('../models/place');
 const Commons = require('./commons');
-const ExperienceInterface = require('./experienceInterface');
-const CommentInterface = require('./commentInterface');
 
 let PublicationInterface = {};
 
@@ -153,6 +151,9 @@ PublicationInterface.update = (publication)=>{
 
 PublicationInterface.deleteOne = (id)=>{
   const imageUploader = require('../services/imageUploader');
+  const ExperienceInterface = require('./experienceInterface');
+  const CommentInterface = require('./commentInterface');
+
   return Commons.getOne(Publications,id)
     .then((publication)=>{
       return ExperienceInterface.deleteFromPublication(id)
