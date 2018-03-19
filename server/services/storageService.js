@@ -15,6 +15,7 @@ storageService.getPublication = (id)=>{
 };
 
 storageService.createPublication = (publication)=>{
+  console.log("PUBLICATION TO INSERT STORAGE: " + JSON.stringify(publication));
   return db.createPublication(publication);
 };
 
