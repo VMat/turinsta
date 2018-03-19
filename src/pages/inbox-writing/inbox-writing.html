@@ -11,8 +11,8 @@
       <button item-start ion-button clear (click)="dismiss()">
         <ion-icon name="close"></ion-icon>
       </button>
-      <ion-title *ngIf="!inbox._id">Nuevo chat</ion-title>
-      <ion-title *ngIf="inbox._id">Editar chat</ion-title>
+      <ion-title *ngIf="!inbox">Nuevo chat</ion-title>
+      <ion-title *ngIf="inbox">Editar chat</ion-title>
       <div *ngIf="multipleSelection" item-end>
         <button ion-button clear (click)="confirmSave()">
           <ion-icon name="checkmark" color="success"></ion-icon>

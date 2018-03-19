@@ -961,6 +961,7 @@ db.updateInbox = (inbox)=>{
 db.patchInbox = (id,fields)=>{
   return inboxInterface.patch(id,fields)
     .then((updatedInbox)=>{
+      console.log("updatedInbox: " + JSON.stringify(updatedInbox));
       if(updatedInbox.avatar != fields.avatar){
         return userInterface.getOne(updatedInbox.creator)
           .then((creator)=>{

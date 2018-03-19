@@ -62,9 +62,12 @@ export class InboxWritingPage {
       let getUsersObservable = Observable.forkJoin(this.selectedUsers.map((userId)=>{
         return this.storage.getUser(userId);
       }));
-      getUsersObservable.subscribe((participants)=>{
-        this.followedes = participants.concat(followedesWithoutParticipants);
-      });
+      getUsersObservable.subscribe(null,(participants)=>{
+          this.followedes = participants.concat(followedesWithoutParticipants);
+      },
+      ()=>{
+        this.followedes = followedesWithoutParticipants;
+      })
     });
   }
 
