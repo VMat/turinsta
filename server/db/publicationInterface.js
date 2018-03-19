@@ -150,12 +150,13 @@ PublicationInterface.getOne = (id)=>{
 };
 
 PublicationInterface.insert = (publication)=>{
+  console.log("PUBLICATION TO INSERT BEFORE: " + JSON.stringify(publication));
   publication.timestamps = {
     created: new Date().toISOString(),
     modified: null
   };
   publication.score = 0;
-  console.log("PUBLICATION TO INSERT: " + JSON.stringify(publication));
+  console.log("PUBLICATION TO INSERT AFTER: " + JSON.stringify(publication));
   return Commons.insert(new Publications(publication));
 };
 
