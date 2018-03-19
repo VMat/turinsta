@@ -15,18 +15,6 @@ PublicationInterface.getAll = ()=>{
   return Commons.getAll(Publications)
     .populate('user')
     .populate('experienceIds')
-    .populate({
-      path: 'experienceIds',
-      populate: {
-        path: 'category'
-      }
-    })
-    .populate({
-      path: 'experienceIds',
-      populate: {
-        path: 'type'
-      }
-    })
     .populate('commentIds');
 };
 
@@ -134,18 +122,6 @@ PublicationInterface.getOne = (id)=>{
   return Commons.getOne(Publications, id)
     .populate('user')
     .populate('experienceIds')
-    .populate({
-      path: 'experienceIds',
-      populate: {
-        path: 'category'
-      }
-    })
-    .populate({
-      path: 'experienceIds',
-      populate: {
-        path: 'type'
-      }
-    })
     .populate('commentIds');
 };
 
