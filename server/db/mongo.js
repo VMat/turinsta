@@ -31,6 +31,7 @@ db.getPublication = (id)=>{
 };
 
 db.createPublication = (publication)=>{
+  console.log("PUBLICATION TO INSERT: " + JSON.stringify(publication));
   return publicationInterface.insert(publication)
     .then((newPublication)=>{
       return userInterface.getOne(newPublication.user)
