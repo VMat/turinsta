@@ -22,20 +22,7 @@
   "description": "An Ionic project",
   "cordova": {
     "plugins": {
-      "cordova-plugin-device": {},
-      "cordova-plugin-ionic-webview": {},
-      "cordova-plugin-splashscreen": {},
-      "cordova-plugin-whitelist": {},
-      "ionic-plugin-keyboard": {},
-      "cordova-plugin-network-information": {},
-      "cordova-plugin-file": {},
-      "cordova-plugin-file-transfer": {},
-      "cordova-plugin-image-picker": {},
-      "phonegap-plugin-push": {
-        "SENDER_ID": "519496244550",
-        "FCM_VERSION": "11.6.2"
-      },
-      "cordova-plugin-badge": {}
+
     },
     "platforms": [
       "android",
