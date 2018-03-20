@@ -81,12 +81,6 @@ PublicationInterface.getN = (searchParams,n,order)=>{
       }
     },
     {
-      $unwind: {
-        path: "$comments",
-        preserveNullAndEmptyArrays: true
-      }
-    },
-    {
       $lookup: {
         from: "Users",
         localField: "comments.user",
