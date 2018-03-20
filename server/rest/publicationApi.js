@@ -29,7 +29,6 @@ router.get('/:id', (req, res)=>{
 });
 
 router.post('/',(req, res)=>{
-  console.log("PUBLICATION TO INSERT API: " + JSON.stringify(req.body));
   publicationService.createPublication(req.body)
     .then(publication=>{res.status(200).json(publication)})
     .catch(error=>{res.status(500).send(error)})

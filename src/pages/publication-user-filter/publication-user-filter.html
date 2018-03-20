@@ -17,7 +17,7 @@
       <ion-radio value="{{loggedUser}}" (click)="close({key: 'user.followers', value: loggedUser, operation: 'CONTAINS'})"></ion-radio>
     </ion-item>
     <ion-item>
-      <ion-input item-start [(ngModel)]="customUser" placeholder="Buscar"></ion-input>
+      <ion-input item-start [(ngModel)]="customUser" placeholder="Buscar por nombre..."></ion-input>
       <button item-end ion-button (click)="close({key: 'user.username', value: customUser, operation: 'LIKE'})" icon-only clear><ion-icon name="ios-arrow-dropright" color="primary"></ion-icon></button>
     </ion-item>
   </ion-list>

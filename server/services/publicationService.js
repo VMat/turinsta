@@ -19,7 +19,6 @@ publicationService.getPublication = (id)=>{
 };
 
 publicationService.createPublication = (publication)=>{
-  console.log("PUBLICATION TO INSERT SERVICE: " + JSON.stringify(publication));
   return new Promise((resolve, reject)=>{
     storageService.createPublication(publication).
       then(newPublication=>resolve(newPublication)).

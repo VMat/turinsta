@@ -274,9 +274,9 @@ var InboxWritingPage = (function () {
     InboxWritingPage.prototype.confirmSave = function () {
         var _this = this;
         if (this.checkNeededField()) {
-            var confirm = null;
+            var confirm_1 = null;
             if (this.inbox) {
-                confirm = this.alertCtrl.create({
+                confirm_1 = this.alertCtrl.create({
                     title: 'Confirmar operación',
                     message: '¿Está seguro que desea modificar el grupo?',
                     buttons: [
@@ -295,7 +295,7 @@ var InboxWritingPage = (function () {
                 });
             }
             else {
-                confirm = this.alertCtrl.create({
+                confirm_1 = this.alertCtrl.create({
                     title: 'Confirmar operación',
                     message: '¿Está seguro que desea crear el grupo?',
                     buttons: [
@@ -313,7 +313,7 @@ var InboxWritingPage = (function () {
                     ]
                 });
             }
-            confirm.present();
+            confirm_1.present();
         }
     };
     InboxWritingPage.prototype.saveInbox = function () {
@@ -380,10 +380,11 @@ InboxWritingPage = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
         selector: 'page-inbox-writing',template:/*ion-inline-start:"C:\Users\Matias\WebstormProjects\turinsta\src\pages\inbox-writing\inbox-writing.html"*/'<!--\n  Generated template for the InboxWritingPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-header>\n\n  <ion-navbar>\n    <ion-item no-lines style="text-align: center">\n      <button item-start ion-button clear (click)="dismiss()">\n        <ion-icon name="close"></ion-icon>\n      </button>\n      <ion-title *ngIf="!inbox">Nuevo chat</ion-title>\n      <ion-title *ngIf="inbox">Editar chat</ion-title>\n      <div *ngIf="multipleSelection" item-end>\n        <button ion-button clear (click)="confirmSave()">\n          <ion-icon name="checkmark" color="success"></ion-icon>\n        </button>\n      </div>\n    </ion-item>\n  </ion-navbar>\n\n</ion-header>\n\n<ion-content padding align="center">\n  <ion-list-header *ngIf="(followedes ? followedes.length : true) && multipleSelection">\n    <ion-item no-lines>\n      <ion-avatar item-start>\n        <img src="{{inboxAvatar}}"/>\n      </ion-avatar>\n      <ion-input [(ngModel)]="inboxName" placeholder="Ingrese el nombre del grupo..."></ion-input>\n      <button item-end (click)="openImagePicker()" ion-button icon-only clear><ion-icon name="image"></ion-icon></button>\n    </ion-item>\n  </ion-list-header>\n  <empty-content *ngIf="followedes ? !followedes.length : false" align="center" [message]="\'No sigues a ningún usuario para iniciar una conversación\'"></empty-content>\n  <ion-list *ngIf="!multipleSelection">\n    <ion-item *ngFor="let followed of followedes" (click)="openInbox(followed)">\n      <ion-avatar item-start>\n        <img src="{{followed.avatar}}"/>\n      </ion-avatar>\n      <ion-label>{{followed.username}}</ion-label>\n    </ion-item>\n  </ion-list>\n  <ion-list *ngIf="multipleSelection">\n    <ion-item *ngFor="let followed of followedes">\n      <ion-avatar item-start>\n        <img src="{{followed.avatar}}"/>\n      </ion-avatar>\n      <ion-label>{{followed.username}}</ion-label>\n      <ion-checkbox item-end color="primary" [checked]="userSelected(followed._id)" (ionChange)="updateSelectedUsers(followed._id)"></ion-checkbox>\n    </ion-item>\n  </ion-list>\n  <ion-infinite-scroll (ionInfinite)="doInfinite($event)">\n    <ion-infinite-scroll-content\n      loadingSpinner="bubbles"\n      loadingText="Obteniendo más información...">\n    </ion-infinite-scroll-content>\n  </ion-infinite-scroll>\n</ion-content>\n'/*ion-inline-end:"C:\Users\Matias\WebstormProjects\turinsta\src\pages\inbox-writing\inbox-writing.html"*/,
     }),
-    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* NavController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* NavController */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* NavParams */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* NavParams */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["s" /* ViewController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["s" /* ViewController */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["b" /* AlertController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["b" /* AlertController */]) === "function" && _d || Object, typeof (_e = typeof __WEBPACK_IMPORTED_MODULE_2__providers_storage_storage__["a" /* StorageProvider */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__providers_storage_storage__["a" /* StorageProvider */]) === "function" && _e || Object, typeof (_f = typeof __WEBPACK_IMPORTED_MODULE_3__providers_commons_commons__["a" /* CommonsProvider */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__providers_commons_commons__["a" /* CommonsProvider */]) === "function" && _f || Object, typeof (_g = typeof __WEBPACK_IMPORTED_MODULE_4__ionic_native_image_picker__["a" /* ImagePicker */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_4__ionic_native_image_picker__["a" /* ImagePicker */]) === "function" && _g || Object, typeof (_h = typeof __WEBPACK_IMPORTED_MODULE_5__ionic_native_file_transfer__["a" /* FileTransfer */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_5__ionic_native_file_transfer__["a" /* FileTransfer */]) === "function" && _h || Object, typeof (_j = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* LoadingController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* LoadingController */]) === "function" && _j || Object])
+    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* NavParams */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["s" /* ViewController */],
+        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["b" /* AlertController */], __WEBPACK_IMPORTED_MODULE_2__providers_storage_storage__["a" /* StorageProvider */], __WEBPACK_IMPORTED_MODULE_3__providers_commons_commons__["a" /* CommonsProvider */],
+        __WEBPACK_IMPORTED_MODULE_4__ionic_native_image_picker__["a" /* ImagePicker */], __WEBPACK_IMPORTED_MODULE_5__ionic_native_file_transfer__["a" /* FileTransfer */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* LoadingController */]])
 ], InboxWritingPage);
 
-var _a, _b, _c, _d, _e, _f, _g, _h, _j;
 //# sourceMappingURL=inbox-writing.js.map
 
 /***/ }),
@@ -858,10 +859,10 @@ var CommonsProvider = (function () {
 }());
 CommonsProvider = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Injectable"])(),
-    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* Http */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* Http */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_3_ionic_angular__["r" /* ToastController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3_ionic_angular__["r" /* ToastController */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_3_ionic_angular__["b" /* AlertController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3_ionic_angular__["b" /* AlertController */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_4__ionic_storage__["b" /* Storage */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_4__ionic_storage__["b" /* Storage */]) === "function" && _d || Object, typeof (_e = typeof __WEBPACK_IMPORTED_MODULE_5__storage_storage__["a" /* StorageProvider */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_5__storage_storage__["a" /* StorageProvider */]) === "function" && _e || Object, typeof (_f = typeof __WEBPACK_IMPORTED_MODULE_6__ngrx_store__["h" /* Store */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_6__ngrx_store__["h" /* Store */]) === "function" && _f || Object])
+    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* Http */], __WEBPACK_IMPORTED_MODULE_3_ionic_angular__["r" /* ToastController */], __WEBPACK_IMPORTED_MODULE_3_ionic_angular__["b" /* AlertController */],
+        __WEBPACK_IMPORTED_MODULE_4__ionic_storage__["b" /* Storage */], __WEBPACK_IMPORTED_MODULE_5__storage_storage__["a" /* StorageProvider */], __WEBPACK_IMPORTED_MODULE_6__ngrx_store__["h" /* Store */]])
 ], CommonsProvider);
 
-var _a, _b, _c, _d, _e, _f;
 //# sourceMappingURL=commons.js.map
 
 /***/ }),
@@ -1884,66 +1885,6 @@ PublicationActionsMenuPage = __decorate([
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return PublicationOrderByPage; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(5);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__ngrx_store__ = __webpack_require__(24);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_reducers_publication_reducer__ = __webpack_require__(55);
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-
-
-
-
-/**
- * Generated class for the PublicationOrderByPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
-var PublicationOrderByPage = (function () {
-    function PublicationOrderByPage(navCtrl, navParams, viewCtrl, store) {
-        this.navCtrl = navCtrl;
-        this.navParams = navParams;
-        this.viewCtrl = viewCtrl;
-        this.store = store;
-        this.sortValue = null;
-    }
-    PublicationOrderByPage.prototype.ionViewDidLoad = function () {
-        var _this = this;
-        console.log('ionViewDidLoad PublicationOrderByPage');
-        this.store.select("publications").subscribe(function (state) {
-            _this.sortValue = state.sort.field;
-        });
-    };
-    PublicationOrderByPage.prototype.close = function (order) {
-        this.store.dispatch(Object(__WEBPACK_IMPORTED_MODULE_3__providers_reducers_publication_reducer__["j" /* setSort */])(order));
-        this.viewCtrl.dismiss();
-    };
-    return PublicationOrderByPage;
-}());
-PublicationOrderByPage = __decorate([
-    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
-        selector: 'page-publication-order-by',template:/*ion-inline-start:"C:\Users\Matias\WebstormProjects\turinsta\src\pages\publication-order-by\publication-order-by.html"*/'<!--\n  Generated template for the PublicationOrderByPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-content no-padding>\n  <ion-list radio-group [(ngModel)]="sortValue">\n    <ion-list-header>Ordenar por</ion-list-header>\n    <ion-item>\n      <ion-label>Más recientes</ion-label>\n      <ion-radio value="publication.timestamps.created" (click)="close({field: \'publication.timestamps.created\', way: -1})"></ion-radio>\n    </ion-item>\n    <ion-item>\n      <ion-label>Más populares</ion-label>\n      <ion-radio value="publication.followers" (click)="close({field: \'publication.followers\', way: -1})"></ion-radio>\n    </ion-item>\n    <ion-item>\n      <ion-label>Mejor calificadas</ion-label>\n      <ion-radio value="publication.score" (click)="close({field: \'publication.score\', way: -1})"></ion-radio>\n    </ion-item>\n    <ion-item>\n      <ion-label>Usuarios más populares</ion-label>\n      <ion-radio value="user.followers" (click)="close({field: \'user.followers\', way: -1})"></ion-radio>\n    </ion-item>\n    <ion-item>\n      <ion-label>Usuarios mejor calificados</ion-label>\n      <ion-radio value="user.score" (click)="close({field: \'user.score\', way: -1})"></ion-radio>\n    </ion-item>\n  </ion-list>\n</ion-content>\n'/*ion-inline-end:"C:\Users\Matias\WebstormProjects\turinsta\src\pages\publication-order-by\publication-order-by.html"*/,
-    }),
-    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* NavParams */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["s" /* ViewController */], __WEBPACK_IMPORTED_MODULE_2__ngrx_store__["h" /* Store */]])
-], PublicationOrderByPage);
-
-//# sourceMappingURL=publication-order-by.js.map
-
-/***/ }),
-
-/***/ 180:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return PublicationUserFilterPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(5);
@@ -2014,12 +1955,72 @@ var PublicationUserFilterPage = (function () {
 }());
 PublicationUserFilterPage = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
-        selector: 'page-publication-user-filter',template:/*ion-inline-start:"C:\Users\Matias\WebstormProjects\turinsta\src\pages\publication-user-filter\publication-user-filter.html"*/'<!--\n  Generated template for the PublicationUserFilterPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n\n<ion-content no-padding>\n  <ion-list radio-group [(ngModel)]="userFilter">\n    <ion-list-header>Visualizar</ion-list-header>\n    <ion-item>\n      <ion-label>Todos</ion-label>\n      <ion-radio value="{{null}}" (click)="close()"></ion-radio>\n    </ion-item>\n    <ion-item>\n      <ion-label>Seguidos</ion-label>\n      <ion-radio value="{{loggedUser}}" (click)="close({key: \'user.followers\', value: loggedUser, operation: \'CONTAINS\'})"></ion-radio>\n    </ion-item>\n    <ion-item>\n      <ion-input item-start [(ngModel)]="customUser" placeholder="Buscar"></ion-input>\n      <button item-end ion-button (click)="close({key: \'user.username\', value: customUser, operation: \'LIKE\'})" icon-only clear><ion-icon name="ios-arrow-dropright" color="primary"></ion-icon></button>\n    </ion-item>\n  </ion-list>\n</ion-content>\n'/*ion-inline-end:"C:\Users\Matias\WebstormProjects\turinsta\src\pages\publication-user-filter\publication-user-filter.html"*/,
+        selector: 'page-publication-user-filter',template:/*ion-inline-start:"C:\Users\Matias\WebstormProjects\turinsta\src\pages\publication-user-filter\publication-user-filter.html"*/'<!--\n  Generated template for the PublicationUserFilterPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n\n<ion-content no-padding>\n  <ion-list radio-group [(ngModel)]="userFilter">\n    <ion-list-header>Visualizar</ion-list-header>\n    <ion-item>\n      <ion-label>Todos</ion-label>\n      <ion-radio value="{{null}}" (click)="close()"></ion-radio>\n    </ion-item>\n    <ion-item>\n      <ion-label>Seguidos</ion-label>\n      <ion-radio value="{{loggedUser}}" (click)="close({key: \'user.followers\', value: loggedUser, operation: \'CONTAINS\'})"></ion-radio>\n    </ion-item>\n    <ion-item>\n      <ion-input item-start [(ngModel)]="customUser" placeholder="Buscar por nombre..."></ion-input>\n      <button item-end ion-button (click)="close({key: \'user.username\', value: customUser, operation: \'LIKE\'})" icon-only clear><ion-icon name="ios-arrow-dropright" color="primary"></ion-icon></button>\n    </ion-item>\n  </ion-list>\n</ion-content>\n'/*ion-inline-end:"C:\Users\Matias\WebstormProjects\turinsta\src\pages\publication-user-filter\publication-user-filter.html"*/,
     }),
     __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* NavParams */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["s" /* ViewController */], __WEBPACK_IMPORTED_MODULE_2__ngrx_store__["h" /* Store */], __WEBPACK_IMPORTED_MODULE_4__providers_commons_commons__["a" /* CommonsProvider */]])
 ], PublicationUserFilterPage);
 
 //# sourceMappingURL=publication-user-filter.js.map
+
+/***/ }),
+
+/***/ 180:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return PublicationOrderByPage; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__ngrx_store__ = __webpack_require__(24);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_reducers_publication_reducer__ = __webpack_require__(55);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+
+/**
+ * Generated class for the PublicationOrderByPage page.
+ *
+ * See https://ionicframework.com/docs/components/#navigation for more info on
+ * Ionic pages and navigation.
+ */
+var PublicationOrderByPage = (function () {
+    function PublicationOrderByPage(navCtrl, navParams, viewCtrl, store) {
+        this.navCtrl = navCtrl;
+        this.navParams = navParams;
+        this.viewCtrl = viewCtrl;
+        this.store = store;
+        this.sortValue = null;
+    }
+    PublicationOrderByPage.prototype.ionViewDidLoad = function () {
+        var _this = this;
+        console.log('ionViewDidLoad PublicationOrderByPage');
+        this.store.select("publications").subscribe(function (state) {
+            _this.sortValue = state.sort.field;
+        });
+    };
+    PublicationOrderByPage.prototype.close = function (order) {
+        this.store.dispatch(Object(__WEBPACK_IMPORTED_MODULE_3__providers_reducers_publication_reducer__["j" /* setSort */])(order));
+        this.viewCtrl.dismiss();
+    };
+    return PublicationOrderByPage;
+}());
+PublicationOrderByPage = __decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
+        selector: 'page-publication-order-by',template:/*ion-inline-start:"C:\Users\Matias\WebstormProjects\turinsta\src\pages\publication-order-by\publication-order-by.html"*/'<!--\n  Generated template for the PublicationOrderByPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-content no-padding>\n  <ion-list radio-group [(ngModel)]="sortValue">\n    <ion-list-header>Ordenar por</ion-list-header>\n    <ion-item>\n      <ion-label>Más recientes</ion-label>\n      <ion-radio value="publication.timestamps.created" (click)="close({field: \'publication.timestamps.created\', way: -1})"></ion-radio>\n    </ion-item>\n    <ion-item>\n      <ion-label>Más populares</ion-label>\n      <ion-radio value="publication.followers" (click)="close({field: \'publication.followers\', way: -1})"></ion-radio>\n    </ion-item>\n    <ion-item>\n      <ion-label>Mejor calificadas</ion-label>\n      <ion-radio value="publication.score" (click)="close({field: \'publication.score\', way: -1})"></ion-radio>\n    </ion-item>\n    <ion-item>\n      <ion-label>Usuarios más populares</ion-label>\n      <ion-radio value="user.followers" (click)="close({field: \'user.followers\', way: -1})"></ion-radio>\n    </ion-item>\n    <ion-item>\n      <ion-label>Usuarios mejor calificados</ion-label>\n      <ion-radio value="user.score" (click)="close({field: \'user.score\', way: -1})"></ion-radio>\n    </ion-item>\n  </ion-list>\n</ion-content>\n'/*ion-inline-end:"C:\Users\Matias\WebstormProjects\turinsta\src\pages\publication-order-by\publication-order-by.html"*/,
+    }),
+    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* NavParams */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["s" /* ViewController */], __WEBPACK_IMPORTED_MODULE_2__ngrx_store__["h" /* Store */]])
+], PublicationOrderByPage);
+
+//# sourceMappingURL=publication-order-by.js.map
 
 /***/ }),
 
@@ -2053,11 +2054,11 @@ var map = {
 		13
 	],
 	"../pages/chat-actions-menu/chat-actions-menu.module": [
-		720,
+		721,
 		12
 	],
 	"../pages/chat/chat.module": [
-		721,
+		720,
 		11
 	],
 	"../pages/comment-writing/comment-writing.module": [
@@ -2093,15 +2094,15 @@ var map = {
 		3
 	],
 	"../pages/publication-order-by/publication-order-by.module": [
-		730,
+		732,
 		2
 	],
 	"../pages/publication-user-filter/publication-user-filter.module": [
-		731,
+		730,
 		1
 	],
 	"../pages/publication-writing/publication-writing.module": [
-		732,
+		731,
 		0
 	]
 };
@@ -2396,8 +2397,8 @@ Object(__WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__["a" /* pl
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_26__components_experience_list_experience_list__ = __webpack_require__(666);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_27__providers_commons_commons__ = __webpack_require__(12);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_28__pipes_contains_filter_contains_filter__ = __webpack_require__(667);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_29__pages_publication_order_by_publication_order_by__ = __webpack_require__(179);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_30__pages_publication_user_filter_publication_user_filter__ = __webpack_require__(180);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_29__pages_publication_order_by_publication_order_by__ = __webpack_require__(180);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_30__pages_publication_user_filter_publication_user_filter__ = __webpack_require__(179);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_31__components_filters_bar_filters_bar__ = __webpack_require__(668);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_32__components_place_filter_place_filter__ = __webpack_require__(669);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_33__components_user_filter_user_filter__ = __webpack_require__(670);
@@ -2557,8 +2558,8 @@ AppModule = __decorate([
                 links: [
                     { loadChildren: '../pages/account/account.module#AccountPageModule', name: 'AccountPage', segment: 'account', priority: 'low', defaultHistory: [] },
                     { loadChildren: '../pages/activities/activities.module#ActivitiesPageModule', name: 'ActivitiesPage', segment: 'activities', priority: 'low', defaultHistory: [] },
-                    { loadChildren: '../pages/chat-actions-menu/chat-actions-menu.module#ChatActionsMenuPageModule', name: 'ChatActionsMenuPage', segment: 'chat-actions-menu', priority: 'low', defaultHistory: [] },
                     { loadChildren: '../pages/chat/chat.module#ChatPageModule', name: 'ChatPage', segment: 'chat', priority: 'low', defaultHistory: [] },
+                    { loadChildren: '../pages/chat-actions-menu/chat-actions-menu.module#ChatActionsMenuPageModule', name: 'ChatActionsMenuPage', segment: 'chat-actions-menu', priority: 'low', defaultHistory: [] },
                     { loadChildren: '../pages/comment-writing/comment-writing.module#CommentWritingPageModule', name: 'CommentWritingPage', segment: 'comment-writing', priority: 'low', defaultHistory: [] },
                     { loadChildren: '../pages/description-writing/description-writing.module#DescriptionWritingPageModule', name: 'DescriptionWritingPage', segment: 'description-writing', priority: 'low', defaultHistory: [] },
                     { loadChildren: '../pages/experience-writing/experience-writing.module#ExperienceWritingPageModule', name: 'ExperienceWritingPage', segment: 'experience-writing', priority: 'low', defaultHistory: [] },
@@ -2567,9 +2568,9 @@ AppModule = __decorate([
                     { loadChildren: '../pages/place-selecting/place-selecting.module#PlaceSelectingPageModule', name: 'PlaceSelectingPage', segment: 'place-selecting', priority: 'low', defaultHistory: [] },
                     { loadChildren: '../pages/places/places.module#PlacesPageModule', name: 'PlacesPage', segment: 'places', priority: 'low', defaultHistory: [] },
                     { loadChildren: '../pages/publication-actions-menu/publication-actions-menu.module#PublicationActionsMenuPageModule', name: 'PublicationActionsMenuPage', segment: 'publication-actions-menu', priority: 'low', defaultHistory: [] },
-                    { loadChildren: '../pages/publication-order-by/publication-order-by.module#PublicationOrderByPageModule', name: 'PublicationOrderByPage', segment: 'publication-order-by', priority: 'low', defaultHistory: [] },
                     { loadChildren: '../pages/publication-user-filter/publication-user-filter.module#PublicationUserFilterPageModule', name: 'PublicationUserFilterPage', segment: 'publication-user-filter', priority: 'low', defaultHistory: [] },
-                    { loadChildren: '../pages/publication-writing/publication-writing.module#PublicationWritingPageModule', name: 'PublicationWritingPage', segment: 'publication-writing', priority: 'low', defaultHistory: [] }
+                    { loadChildren: '../pages/publication-writing/publication-writing.module#PublicationWritingPageModule', name: 'PublicationWritingPage', segment: 'publication-writing', priority: 'low', defaultHistory: [] },
+                    { loadChildren: '../pages/publication-order-by/publication-order-by.module#PublicationOrderByPageModule', name: 'PublicationOrderByPage', segment: 'publication-order-by', priority: 'low', defaultHistory: [] }
                 ]
             }),
             __WEBPACK_IMPORTED_MODULE_13__angular_http__["c" /* HttpModule */],
@@ -2939,7 +2940,7 @@ var PublicationWritingPage = (function () {
     PublicationWritingPage.prototype.confirmSave = function () {
         var _this = this;
         if (this.checkNeededField()) {
-            var confirm = this.alertCtrl.create({
+            var confirm_1 = this.alertCtrl.create({
                 title: 'Confirmar operación',
                 message: '¿Está seguro que desea guardar la publicación?',
                 buttons: [
@@ -2956,7 +2957,7 @@ var PublicationWritingPage = (function () {
                     }
                 ]
             });
-            confirm.present();
+            confirm_1.present();
         }
     };
     PublicationWritingPage.prototype.confirmDelete = function () {
@@ -3165,16 +3166,18 @@ var PublicationWritingPage = (function () {
 }());
 __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["ViewChild"])(__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["q" /* Slides */]),
-    __metadata("design:type", typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["q" /* Slides */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["q" /* Slides */]) === "function" && _a || Object)
+    __metadata("design:type", __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["q" /* Slides */])
 ], PublicationWritingPage.prototype, "slides", void 0);
 PublicationWritingPage = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
         selector: 'page-publication-writing',template:/*ion-inline-start:"C:\Users\Matias\WebstormProjects\turinsta\src\pages\publication-writing\publication-writing.html"*/'<!--\n  Generated template for the PublicationWritingPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-header>\n  <ion-navbar>\n    <ion-item no-lines style="text-align: center">\n      <button item-start ion-button clear (click)="dismissPublication()">\n        <ion-icon name="close"></ion-icon>\n      </button>\n      <ion-title *ngIf="!publication._id">Nueva publicación</ion-title>\n      <ion-title *ngIf="publication._id">Ver publicación</ion-title>\n      <div *ngIf="checkEditPermission() && publication._id" item-end>\n        <button ion-button clear (click)="confirmDelete()">\n          <ion-icon name="trash" color="danger"></ion-icon>\n        </button>\n      </div>\n      <div *ngIf="!publication._id" item-end>\n        <button ion-button clear (click)="confirmSave()">\n          <ion-icon name="checkmark" color="success"></ion-icon>\n        </button>\n      </div>\n    </ion-item>\n  </ion-navbar>\n</ion-header>\n<ion-content padding>\n  <publication-header [user]=user [publication]=publication [edit]="checkEditPermission()" (changePlace)="setPlace($event)"></publication-header>\n  <ion-item *ngIf="!publication._id  && !publication.images" (click)="addImage()" no-lines>\n    <button item-start ion-button icon-only clear item-start><ion-icon name="images"></ion-icon></button>\n    <p class="publication-important-text">Agregar imágenes</p>\n  </ion-item>\n  <ion-slides *ngIf="publication._id || publication.images">\n    <ion-slide style="align-items: start" *ngFor="let image of publication.images">\n      <div class="image-action-buttons" *ngIf="checkEditPermission()">\n        <button ion-button icon-only clear (click)="addImage()">\n          <ion-icon name="add" color="success"></ion-icon>\n        </button>\n        <button ion-button icon-only clear (click)="confirmDeleteImage()">\n          <ion-icon name="remove" color="danger"></ion-icon>\n        </button>\n      </div>\n      <publication-image [id]=image._id [url]=image.url></publication-image>\n    </ion-slide>\n  </ion-slides>\n  <ion-item no-lines no-padding class="text-with-ellipsis" style="width: 100%">\n    <p *ngIf="publication.description" item-start class="publication-description"><b>{{user.username}}</b>&nbsp;{{publication.description}}</p>\n    <div *ngIf="checkEditPermission() && publication.description" item-right>\n      <button ion-button icon-only clear (click)="presentDescriptionWriting()">\n        <ion-icon name="create"></ion-icon>\n      </button>\n      <button ion-button icon-only clear (click)="confirmDeleteDescription()">\n        <ion-icon name="trash" color="danger"></ion-icon>\n      </button>\n    </div>\n    <div *ngIf="checkEditPermission() && !publication.description" (click)="presentDescriptionWriting()" ion-item>\n      <button ion-button icon-only clear  item-start>\n        <ion-icon name="add" color="success"></ion-icon>\n      </button>\n      <p class="publication-important-text">Agregar descripción</p>\n    </div>\n    <p *ngIf="publication.timestamps" item-end class="text-with-ellipsis">{{prettyDate(publication.timestamps.created)}}</p>\n  </ion-item>\n  <ion-item>\n    <ion-item no-lines>\n      <p>Experiencias (<span>{{experiences.length}}</span>)</p>\n      <button item-end ion-button icon-only clear (click)="toogleExperienceList()">\n        <ion-icon name="{{experienceListOpened ? \'ios-arrow-dropdown\' : \'ios-arrow-dropright\'}}"></ion-icon>\n      </button>\n    </ion-item>\n    <experience-list *ngIf="experienceListOpened" [experiences]=experiences [publicationOwner]=user._id [publicationId]=publication._id></experience-list>\n  </ion-item>\n  <ion-item *ngIf="publication._id">\n    <ion-item no-lines>\n      <p>Comentarios (<span>{{comments.length}}</span>)</p>\n      <button item-end ion-button icon-only clear (click)="toogleCommentList()">\n        <ion-icon name="{{commentListOpened ? \'ios-arrow-dropdown\' : \'ios-arrow-dropright\'}}"></ion-icon>\n      </button>\n    </ion-item>\n    <comment-list *ngIf="publication._id && commentListOpened" [comments]=comments [publicationId]=publication._id [publicationOwner]=user._id></comment-list>\n  </ion-item>\n  <ion-item *ngIf="publication._id && !checkEditPermission()">\n    <score-handler [publicationScore]="scoreGivenFromUser()" [publicationId]="publication._id" [scoreInputShowed]=true (scoreChanged)="updateScore($event)"></score-handler>\n  </ion-item>\n</ion-content>\n'/*ion-inline-end:"C:\Users\Matias\WebstormProjects\turinsta\src\pages\publication-writing\publication-writing.html"*/,
     }),
-    __metadata("design:paramtypes", [typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* NavController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* NavController */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* NavParams */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* NavParams */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["s" /* ViewController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["s" /* ViewController */]) === "function" && _d || Object, typeof (_e = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["b" /* AlertController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["b" /* AlertController */]) === "function" && _e || Object, typeof (_f = typeof __WEBPACK_IMPORTED_MODULE_2__providers_storage_storage__["a" /* StorageProvider */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__providers_storage_storage__["a" /* StorageProvider */]) === "function" && _f || Object, typeof (_g = typeof __WEBPACK_IMPORTED_MODULE_3__providers_commons_commons__["a" /* CommonsProvider */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__providers_commons_commons__["a" /* CommonsProvider */]) === "function" && _g || Object, typeof (_h = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* ModalController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* ModalController */]) === "function" && _h || Object, typeof (_j = typeof __WEBPACK_IMPORTED_MODULE_5__ionic_native_image_picker__["a" /* ImagePicker */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_5__ionic_native_image_picker__["a" /* ImagePicker */]) === "function" && _j || Object, typeof (_k = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* LoadingController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* LoadingController */]) === "function" && _k || Object, typeof (_l = typeof __WEBPACK_IMPORTED_MODULE_6__ionic_native_file_transfer__["a" /* FileTransfer */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_6__ionic_native_file_transfer__["a" /* FileTransfer */]) === "function" && _l || Object])
+    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* NavParams */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["s" /* ViewController */],
+        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["b" /* AlertController */], __WEBPACK_IMPORTED_MODULE_2__providers_storage_storage__["a" /* StorageProvider */], __WEBPACK_IMPORTED_MODULE_3__providers_commons_commons__["a" /* CommonsProvider */],
+        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* ModalController */], __WEBPACK_IMPORTED_MODULE_5__ionic_native_image_picker__["a" /* ImagePicker */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* LoadingController */],
+        __WEBPACK_IMPORTED_MODULE_6__ionic_native_file_transfer__["a" /* FileTransfer */]])
 ], PublicationWritingPage);
 
-var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l;
 //# sourceMappingURL=publication-writing.js.map
 
 /***/ }),
@@ -4397,7 +4400,7 @@ PlaceFilterComponent = __decorate([
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return UserFilterComponent; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__pages_publication_user_filter_publication_user_filter__ = __webpack_require__(180);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__pages_publication_user_filter_publication_user_filter__ = __webpack_require__(179);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_ionic_angular__ = __webpack_require__(5);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -4448,7 +4451,7 @@ UserFilterComponent = __decorate([
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return OrderingCriterionComponent; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(5);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__pages_publication_order_by_publication_order_by__ = __webpack_require__(179);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__pages_publication_order_by_publication_order_by__ = __webpack_require__(180);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
