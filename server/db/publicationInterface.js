@@ -111,7 +111,7 @@ PublicationInterface.getN = (searchParams,n,order)=>{
     {
       $unwind: {
         path: "$comments.replies.user",
-        preserveNullAndEmptyArrays: false
+        preserveNullAndEmptyArrays: true
       }
     },
     {
