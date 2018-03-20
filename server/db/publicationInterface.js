@@ -95,12 +95,6 @@ PublicationInterface.getN = (searchParams,n,order)=>{
       }
     },
     {
-      $unwind: {
-        path: "$comments.replies",
-        preserveNullAndEmptyArrays: true
-      }
-    },
-    {
       $lookup: {
         from: "Users",
         localField: "comments.replies.user",
@@ -140,9 +134,6 @@ PublicationInterface.getN = (searchParams,n,order)=>{
         },
         comments: {
           $addToSet: "$comments"
-        },
-        "comments.replies": {
-          $addToSet: "$comments.replies"
         }
       }
     },
