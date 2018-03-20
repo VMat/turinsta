@@ -81,17 +81,17 @@ PublicationInterface.getN = (searchParams,n,order)=>{
       }
     },
     {
+      $unwind: {
+        path: "$comments",
+        preserveNullAndEmptyArrays: true
+      }
+    },
+    {
       $lookup: {
         from: "Comments",
         localField: "comments.replies",
         foreignField: "_id",
         as: "comments.replies"
-      }
-    },
-    {
-      $unwind: {
-        path: "$comments.replies",
-        preserveNullAndEmptyArrays: true
       }
     },
     {
