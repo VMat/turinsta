@@ -140,12 +140,13 @@ PublicationInterface.getN = (searchParams,n,order)=>{
         },
         comments: {
           $push: "$comments"
+        },
+        replies: {
+          $push: "$replies"
         }
-
       },
 
     },
-    { $group : { comments : "$comments", replies: { $push: "$replies" } } },
     ...filters,
     {$sort: order},
     {$limit: Number(n)}
