@@ -138,7 +138,7 @@ PublicationInterface.getN = (searchParams,n,order)=>{
         experiences: {
           $addToSet: "$experiences"
         },
-        comments: { $push:  { comment: "$comments", replies: "$comment.replies" } }
+        comments: { $push:  { comment: "$comments", replies: "$comments.replies" } }
       }
     },
     ...filters,
