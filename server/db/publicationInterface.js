@@ -39,6 +39,12 @@ PublicationInterface.getN = (searchParams,n,order)=>{
       }
     },
     {
+      $unwind: {
+        path: "$experiences",
+        preserveNullAndEmptyArrays: true
+      }
+    },
+    {
       $lookup: {
         from: "ExperienceCategories",
         localField: "experiences.category",
