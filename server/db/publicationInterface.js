@@ -95,6 +95,12 @@ PublicationInterface.getN = (searchParams,n,order)=>{
       }
     },
     {
+      $unwind: {
+        path: "$comments.user",
+        preserveNullAndEmptyArrays: false
+      }
+    },
+    {
       $group: {
         _id: "$_id",
         publication: { $first : "$$ROOT"},
