@@ -7,50 +7,44 @@ const UserInterface = require('./userInterface');
 let CommentInterface = {};
 
 CommentInterface.getOne = (id)=>{
-  return Commons.getOne(Comments, id);
+  return Commons.getOne(Comments, id)
+    .populate('user');
 };
 
 CommentInterface.insert = (comment)=>{
-  return UserInterface.getOne(comment.user)
-    .then(user=>{
-      let oComment = {};
-      oComment.user = {
-        _id: user._id,
-        username: user.username,
-        avatar: user.avatar
-      };
-      oComment.publication = comment.publication;
-      oComment.parent = comment.parent;
-      oComment.content = comment.content;
-      return Commons.insert(new Comments(oComment))
-        .then(insertedComment=>{
-          if(comment.parent!=null){
-            return Commons.getOne(Comments,comment.parent)
-            .then(comment=>{
-              comment.replies.push({
-                _id: insertedComment._id,
-                user: insertedComment.user,
-                date: insertedComment.date,
-                content: insertedComment.content
-              });
-              return Commons.update(Comments,comment)
-                .then(()=>{
-                  return Promise.resolve(insertedComment);
-                });
-            })
-          }
-          else{
-            return Commons.getOne(Publications,insertedComment.publication)
-            .then(publication=>{
-              publication.commentIds.push(insertedComment._id);
-              return Commons.update(Publications,publication)
-                .then(()=>{
-                  return Promise.resolve(insertedComment);
-                });
-            })
-          }
-      });
-    });
+  let oComment = {};
+  oComment.user = comment.user;
+  oComment.publication = comment.publication;
+  oComment.parent = comment.parent;
+  oComment.content = comment.content;
+  return Commons.insert(new Comments(oComment))
+    .then(insertedComment=>{
+      if(comment.parent!=null){
+        return Commons.getOne(Comments,comment.parent)
+        .then(comment=>{
+          comment.replies.push({
+            _id: insertedComment._id,
+            user: insertedComment.user,
+            date: insertedComment.date,
+            content: insertedComment.content
+          });
+          return Commons.update(Comments,comment)
+            .then(()=>{
+              return Promise.resolve(insertedComment);
+            });
+        })
+      }
+      else{
+        return Commons.getOne(Publications,insertedComment.publication)
+        .then(publication=>{
+          publication.commentIds.push(insertedComment._id);
+          return Commons.update(Publications,publication)
+            .then(()=>{
+              return Promise.resolve(insertedComment);
+            });
+        })
+      }
+  });
 };
 
 CommentInterface.update = (comment)=>{

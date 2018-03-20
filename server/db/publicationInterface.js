@@ -87,6 +87,14 @@ PublicationInterface.getN = (searchParams,n,order)=>{
       }
     },
     {
+      $lookup: {
+        from: "Users",
+        localField: "comments.user",
+        foreignField: "_id",
+        as: "comments.user"
+      }
+    },
+    {
       $group: {
         _id: "$_id",
         publication: { $first : "$$ROOT"},

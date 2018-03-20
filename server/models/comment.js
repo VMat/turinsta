@@ -4,21 +4,13 @@ const schema = mongoose.Schema;
 // Mongoose commentSchema definition
 const commentSchema = new schema({
   publication: {type: schema.Types.ObjectId, ref: 'Publications'},
-	user: {
-	  _id: {type: schema.Types.ObjectId, ref: 'Users'},
-    username: String,
-	  avatar: String
-  },
+	user: {type: schema.Types.ObjectId, ref: 'Users'},
 	date: String,
 	content: String,
   parent: {type: schema.Types.ObjectId, ref: 'Comments'},
 	replies: [{
     _id: {type: schema.Types.ObjectId, ref: 'Comments'},
-    user: {
-      _id: {type: schema.Types.ObjectId, ref: 'Users'},
-      username: String,
-	    avatar: String
-    },
+    user: {type: schema.Types.ObjectId, ref: 'Users'},
 	  date: String,
 	  content: String
   }]
