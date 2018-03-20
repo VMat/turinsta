@@ -46,8 +46,7 @@ PublicationInterface.getN = (searchParams,n,order)=>{
     },
     {
       $unwind: {
-        path: "$experiences",
-        preserveNullAndEmptyArrays: false
+        path: "$experiences"
       }
     },
     {
