@@ -140,6 +140,9 @@ PublicationInterface.getN = (searchParams,n,order)=>{
         },
         comments: {
           $addToSet: "$comments"
+        },
+        "comments.replies": {
+          $addToSet: "$comments.replies"
         }
       }
     },
