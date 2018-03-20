@@ -97,6 +97,20 @@ PublicationInterface.getN = (searchParams,n,order)=>{
     {
       $lookup: {
         from: "Users",
+        localField: "comments.replies.user",
+        foreignField: "_id",
+        as: "comments.replies.user"
+      }
+    },
+    {
+      $unwind: {
+        path: "$comments.replies.user",
+        preserveNullAndEmptyArrays: false
+      }
+    },
+    {
+      $lookup: {
+        from: "Users",
         localField: "comments.user",
         foreignField: "_id",
         as: "comments.user"
