@@ -55,7 +55,7 @@ PublicationInterface.getN = (searchParams,n,order)=>{
     {
       $unwind: {
         path: "$experiences.category",
-        preserveNullAndEmptyArrays: true
+        preserveNullAndEmptyArrays: false
       }
     },
     {
@@ -83,7 +83,7 @@ PublicationInterface.getN = (searchParams,n,order)=>{
     {
       $unwind: {
         path: "$comments",
-        preserveNullAndEmptyArrays: true
+        preserveNullAndEmptyArrays: false
       }
     },
     {
