@@ -137,18 +137,22 @@ PublicationInterface.getN = (searchParams,n,order)=>{
     },
     ...filters,
     {$sort: order},
-    {$limit: Number(n)}
-  ]).exec();
-  // .exec().then((publications)=>{
-  //   publications.forEach((publication)=>{
-  //     if(publication.experiences.length == 1){
-  //       if(!publication.experiences[0]._id){
-  //         publication.experiences = [];
-  //       }
-  //     }
-  //   });
-  //   return Promise.resolve(publications);
-  // });
+    {$limit: Number(n)}])
+    .exec().then((publications)=>{
+      publications.forEach((publication)=>{
+        if(publication.experiences.length == 1){
+          if(!publication.experiences[0]._id){
+            publication.experiences = [];
+          }
+        }
+        if(publication.comments.length == 1){
+          if(!publcation.comments[0]._id){
+            publication.comments = [];
+          }
+        }
+      });
+      return Promise.resolve(publications);
+    })
 };
 
 PublicationInterface.getOne = (id)=>{
