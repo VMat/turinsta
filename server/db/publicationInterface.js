@@ -146,7 +146,7 @@ PublicationInterface.getN = (searchParams,n,order)=>{
           }
         }
         if(publication.comments.length == 1){
-          if(!publcation.comments[0]._id){
+          if(!publication.comments[0]._id){
             publication.comments = [];
           }
         }
