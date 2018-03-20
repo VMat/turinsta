@@ -121,7 +121,7 @@ Commons.processAggregateParams = (params) => {
           break;
         }
         case 'CONTAINS':{
-          filters.push({$match: {[i]: {$elemMatch: {$eq: params[i].value}}}});
+          filters.push({$match: {[i]: {$elemMatch: {$eq: mongoose.Types.ObjectId(params[i].value)}}}});
           break;
         }
     }

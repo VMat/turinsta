@@ -203,7 +203,6 @@ export class PublicationWritingPage {
         });
       },(error)=>{
         loader.dismiss();
-        alert(error);
         this.commons.presentToast("No se ha podido subir la publicación")
       });
     }

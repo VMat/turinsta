@@ -5,14 +5,20 @@
   </ion-avatar>
   <div class="text-with-ellipsis" item-left style="max-width: 40%">
     <p *ngIf="publication.places" class="publication-important-text">{{publication.places[0].name}}</p>
-    <p>{{publication.score | number:'1.0-2' }}<ion-icon name="star" color="star"></ion-icon> / {{publication.assessments?publication.assessments.length:''}}<ion-icon name="eye" color="primary"></ion-icon></p>
+    <p>{{publication.score | number:'1.0-2' }}<ion-icon name="star" color="star"></ion-icon>
+      <!--/ {{publication.assessments?publication.assessments.length:''}}<ion-icon name="eye" color="primary"></ion-icon>-->
+      / {{publication.followers?publication.followers.length:''}}<ion-icon name="heart" color="secondary"></ion-icon>
+    </p>
   </div>
   <button item-left *ngIf="edit" ion-button icon-only clear (click)="presentPlaceUpdating()">
     <ion-icon name="create"></ion-icon>
   </button>
   <div class="text-with-ellipsis" item-end>
     <p class="publication-important-text">{{user.username}}</p>
-    <p align="right">{{user.score | number:'1.0-1' }}<ion-icon name="star" color="star"></ion-icon> / {{user.publications?user.publications.length:''}}<ion-icon name="image" color="secondary"></ion-icon></p>
+    <p align="right">{{user.score | number:'1.0-1' }}<ion-icon name="star" color="star"></ion-icon>
+      <!--/ {{user.publications?user.publications.length:''}}<ion-icon name="image" color="secondary"></ion-icon>-->
+      / {{user.followers?user.followers.length:''}}<ion-icon name="people" color="secondary"></ion-icon>
+    </p>
   </div>
 </ion-item>
 <ion-item *ngIf="!publication._id" (click)="presentPlaceUpdating()" no-lines>
