@@ -103,12 +103,6 @@ PublicationInterface.getN = (searchParams,n,order)=>{
       }
     },
     {
-      $unwind: {
-        path: "$comments.replies",
-        preserveNullAndEmptyArrays: true
-      }
-    },
-    {
       $group: {
         _id: "$_id",
         publication: { $first : "$$ROOT"},
