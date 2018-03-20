@@ -1,7 +1,5 @@
 import {Component, Input, Output, EventEmitter} from '@angular/core';
 import {StorageProvider} from "../../providers/storage/storage";
-import {Store} from "@ngrx/store";
-import {AppState} from "../../providers/models/publication.model";
 import {CommonsProvider} from "../../providers/commons/commons";
 import {AlertController, ModalController} from "ionic-angular";
 import {CommentWritingPage} from "../../pages/comment-writing/comment-writing";
@@ -22,8 +20,20 @@ export class CommentComponent{
   @Input() publicationId: any = null;
   @Input() publicationOwner: any = null;
   showReplies: boolean = false;
+  user: any = {};
 
   constructor(public storageService: StorageProvider, public commonsService: CommonsProvider, public alertCtrl: AlertController, private modalCtrl: ModalController) {
+  }
+
+  ngOnInit(){
+    if(this.comment.parent){
+      this.storageService.getUser(this.comment.user).first().subscribe((user)=>{
+        this.user = user;
+      });
+    }
+    else{
+      this.user = this.comment.user;
+    }
   }
 
   toogleReplies(){
@@ -68,7 +78,7 @@ export class CommentComponent{
 
   checkDeletePermission(){
     let loggedUser = this.commonsService.getUserId();
-    return (this.publicationOwner == loggedUser) || (this.comment.user._id == loggedUser);
+    return (this.publicationOwner == loggedUser) || (this.comment.user == loggedUser);
   }
 
 }

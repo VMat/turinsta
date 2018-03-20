@@ -1,5 +1,4 @@
 import {Component, Input} from '@angular/core';
-import {CommonsProvider} from "../../providers/commons/commons";
 
 /**
  * Generated class for the PublicationComponent component.

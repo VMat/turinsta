@@ -2,8 +2,8 @@
 <ion-list>
   <ion-card>
     <ion-card-header ion-item>
-      <ion-icon item-start style="font-size: xx-large" name="{{data.category[0].icon}}"  color="secondary"></ion-icon>
-      <ion-icon item-left style="font-size: xx-large" name="{{data.type[0].icon}}" color="{{data.type[0].color}}"></ion-icon>
+      <ion-icon item-start style="font-size: xx-large" name="{{data.category.icon}}"  color="secondary"></ion-icon>
+      <ion-icon item-left style="font-size: xx-large" name="{{data.type.icon}}" color="{{data.type.color}}"></ion-icon>
       <div *ngIf="checkEditionPermission()" item-end>
         <button ion-button (click)="presentExperienceWritingModal()" clear><ion-icon name="create"></ion-icon></button>
         <button ion-button (click)="confirmDelete()" clear><ion-icon name="trash" color="danger"></ion-icon></button>
