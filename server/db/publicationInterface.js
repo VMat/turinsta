@@ -91,12 +91,12 @@ PublicationInterface.getN = (searchParams,n,order)=>{
         from: "Comments",
         localField: "comments.replies",
         foreignField: "_id",
-        as: "replies"
+        as: "comment.replies"
       }
     },
     {
       $unwind: {
-        path: "$replies",
+        path: "$comment.replies",
         preserveNullAndEmptyArrays: true
       }
     },
@@ -105,12 +105,12 @@ PublicationInterface.getN = (searchParams,n,order)=>{
         from: "Users",
         localField: "comments.replies.user",
         foreignField: "_id",
-        as: "replies.user"
+        as: "comment.replies.user"
       }
     },
     {
       $unwind: {
-        path: "$replies.user",
+        path: "$comment.replies.user",
         preserveNullAndEmptyArrays: false
       }
     },
@@ -138,12 +138,7 @@ PublicationInterface.getN = (searchParams,n,order)=>{
         experiences: {
           $addToSet: "$experiences"
         },
-        comments: {
-          $push: "$comments"
-        },
-        replies: {
-          $push: "$replies"
-        }
+        comments: { $push:  { comment: "$comments", replies: "$comment.replies" } }
       },
 
     },
