@@ -59,11 +59,23 @@ PublicationInterface.getN = (searchParams,n,order)=>{
       }
     },
     {
+      $unwind: {
+        path: "$experiences.category",
+        preserveNullAndEmptyArrays: false
+      }
+    },
+    {
       $lookup: {
         from: "ExperienceTypes",
         localField: "experiences.type",
         foreignField: "_id",
         as: "experiences.type"
+      }
+    },
+    {
+      $unwind: {
+        path: "$experiences.type",
+        preserveNullAndEmptyArrays: false
       }
     },
     {
@@ -109,12 +121,6 @@ PublicationInterface.getN = (searchParams,n,order)=>{
       }
     },
     {
-      $unwind: {
-        path: "$comments.replies.user",
-        preserveNullAndEmptyArrays: true
-      }
-    },
-    {
       $group: {
         _id: "$_id",
         publication: { $first : "$$ROOT"},
@@ -132,16 +138,17 @@ PublicationInterface.getN = (searchParams,n,order)=>{
     ...filters,
     {$sort: order},
     {$limit: Number(n)}
-  ]).exec().then((publications)=>{
-    publications.forEach((publication)=>{
-      if(publication.experiences.length == 1){
-        if(!publication.experiences[0]._id){
-          publication.experiences = [];
-        }
-      }
-    });
-    return Promise.resolve(publications);
-  });
+  ]).exec();
+  // .exec().then((publications)=>{
+  //   publications.forEach((publication)=>{
+  //     if(publication.experiences.length == 1){
+  //       if(!publication.experiences[0]._id){
+  //         publication.experiences = [];
+  //       }
+  //     }
+  //   });
+  //   return Promise.resolve(publications);
+  // });
 };
 
 PublicationInterface.getOne = (id)=>{
