@@ -31,6 +31,12 @@ PublicationInterface.getN = (searchParams,n,order)=>{
       $unwind: "$userData",
     },
     {
+      $unwind: {
+        path: "$experienceIds",
+        preserveNullAndEmptyArrays: true
+      }
+    },
+    {
       $lookup: {
         from: "Experiences",
         localField: "experienceIds",
@@ -70,6 +76,12 @@ PublicationInterface.getN = (searchParams,n,order)=>{
       $unwind: {
         path: "$experiences.type",
         preserveNullAndEmptyArrays: false
+      }
+    },
+    {
+      $unwind: {
+        path: "$commentIds",
+        preserveNullAndEmptyArrays: true
       }
     },
     {
