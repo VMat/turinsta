@@ -83,7 +83,7 @@ PublicationInterface.getN = (searchParams,n,order)=>{
     {
       $unwind: {
         path: "$comments",
-        preserveNullAndEmptyArrays: false
+        preserveNullAndEmptyArrays: true
       }
     },
     {
