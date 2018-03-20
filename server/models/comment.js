@@ -8,12 +8,7 @@ const commentSchema = new schema({
 	date: String,
 	content: String,
   parent: {type: schema.Types.ObjectId, ref: 'Comments'},
-	replies: [{
-    _id: {type: schema.Types.ObjectId, ref: 'Comments'},
-    user: {type: schema.Types.ObjectId, ref: 'Users'},
-	  date: String,
-	  content: String
-  }]
+	replies: [{type: schema.Types.ObjectId, ref: 'Comments'}]
 });
 
 const Comments = mongoose.model('Comments', commentSchema, 'Comments');
