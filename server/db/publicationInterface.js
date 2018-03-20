@@ -96,7 +96,7 @@ PublicationInterface.getN = (searchParams,n,order)=>{
     },
     {
       $unwind: {
-        path: "replies",
+        path: "$replies",
         preserveNullAndEmptyArrays: true
       }
     },
