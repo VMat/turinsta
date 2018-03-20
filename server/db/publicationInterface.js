@@ -91,27 +91,7 @@ PublicationInterface.getN = (searchParams,n,order)=>{
         from: "Comments",
         localField: "comments.replies",
         foreignField: "_id",
-        as: "replies"
-      }
-    },
-    {
-      $unwind: {
-        path: "$replies",
-        preserveNullAndEmptyArrays: true
-      }
-    },
-    {
-      $lookup: {
-        from: "Users",
-        localField: "comments.replies.user",
-        foreignField: "_id",
-        as: "replies.user"
-      }
-    },
-    {
-      $unwind: {
-        path: "$replies.user",
-        preserveNullAndEmptyArrays: false
+        as: "comments.replies"
       }
     },
     {
@@ -138,7 +118,9 @@ PublicationInterface.getN = (searchParams,n,order)=>{
         experiences: {
           $addToSet: "$experiences"
         },
-        comments: { $push:  { comment: "$comments", replies: "$replies" } }
+        comments: {
+          $addToSet: "$comments"
+        }
       }
     },
     ...filters,
