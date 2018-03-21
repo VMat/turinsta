@@ -93,6 +93,13 @@ InboxInterface.changeMessageStatus = (id,messageId,userId,status)=>{
           }
           break;
         }
+        case 'READ':{
+          targetMessage[0].status.forEach((statusItem)=>{
+            statusItem.name = 'READ';
+            statusItem.date = status.date;
+          });
+          break;
+        }
       }
 
       return Commons.update(Inboxes,inbox);

@@ -59,12 +59,14 @@ export class InboxWritingPage {
           return participantId == followed._id;
         })
       });
+
       let getUsersObservable = Observable.forkJoin(this.selectedUsers.map((userId)=>{
         return this.storage.getUser(userId);
       }));
+
       getUsersObservable.subscribe((participants)=>{
           this.followedes = participants.concat(followedesWithoutParticipants);
-      },
+      },null,
       ()=>{
         this.followedes = followedesWithoutParticipants;
       })
@@ -126,7 +128,7 @@ export class InboxWritingPage {
   }
 
   openInbox(user){
-    this.viewCtrl.dismiss({name: this.inboxName, participants: [user], avatar: this.inboxAvatar, messages: [], group: false});
+    this.viewCtrl.dismiss({name: this.inboxName, participants: [user], avatar: this.inboxAvatar, messages: [], group: false, creator: this.commons.getUserId()});
   }
 
   dismiss(){
