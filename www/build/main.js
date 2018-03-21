@@ -551,6 +551,8 @@ var ExperienceWritingPage = (function () {
                 _this.types = types;
                 if (Boolean(_this.navParams.get("experience"))) {
                     _this.experience = __assign({}, _this.navParams.get("experience"));
+                    _this.experience.category = _this.experience.category ? _this.experience.category[0] : null;
+                    _this.experience.type = _this.experience.type ? _this.experience.type[0] : null;
                 }
             });
         });
@@ -599,18 +601,18 @@ var ExperienceWritingPage = (function () {
             if (Boolean(this.experience._id)) {
                 this.storageService.updateExperience(unpopulatedExperience).subscribe(function (editedExperience) {
                     _this.commons.presentToast("La experiencia ha sido actualizada con éxito");
-                    _this.viewCtrl.dismiss(_this.experience);
+                    _this.viewCtrl.dismiss(__assign({}, _this.experience, { category: [_this.experience.category], type: [_this.experience.type] }));
                 });
             }
             else {
                 if (this.experience.publication) {
                     this.storageService.createExperience(unpopulatedExperience).subscribe(function (newExperience) {
                         _this.commons.presentToast("La experiencia ha sido grabada con éxito");
-                        _this.viewCtrl.dismiss(_this.experience);
+                        _this.viewCtrl.dismiss(__assign({}, _this.experience, { category: [_this.experience.category], type: [_this.experience.type] }));
                     });
                 }
                 else {
-                    this.viewCtrl.dismiss(this.experience);
+                    this.viewCtrl.dismiss(__assign({}, this.experience, { category: [this.experience.category], type: [this.experience.type] }));
                 }
             }
         }
@@ -627,10 +629,9 @@ ExperienceWritingPage = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
         selector: 'page-experience-writing',template:/*ion-inline-start:"C:\Users\Matias\WebstormProjects\turinsta\src\pages\experience-writing\experience-writing.html"*/'<!--\n  Generated template for the ExperienceWritingPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-header>\n  <ion-navbar>\n    <ion-item no-lines style="text-align: center">\n      <button item-start ion-button clear (click)="dismissExperience()">\n        <ion-icon name="close"></ion-icon>\n      </button>\n      <ion-title *ngIf="!experience._id">Nueva experiencia</ion-title>\n      <ion-title *ngIf="experience._id">Editar experiencia</ion-title>\n      <button item-end ion-button clear (click)="saveExperience()">\n        <ion-icon name="checkmark" color="success"></ion-icon>\n      </button>\n    </ion-item>\n  </ion-navbar>\n</ion-header>\n<ion-content no-padding no-margin style="height: 100%">\n  <ion-list style="height: 100%" padding>\n    <ion-item>\n      <ion-scroll scrollX="true" style="white-space: nowrap;height: 70px">\n        <button  *ngFor="let category of categories" ion-button clear icon-only (click)="setCategory(category)">\n          <ion-icon name="{{category.icon}}" color="{{experience.category?(experience.category._id==category._id? \'primary\': \'gray\'): \'gray\'}}"></ion-icon>\n        </button>\n      </ion-scroll>\n    </ion-item>\n    <ion-item>\n      <ion-scroll scrollX="true" style="white-space: nowrap;height: 70px">\n        <button *ngFor="let type of types" ion-button clear icon-only (click)="setType(type)">\n          <ion-icon  name="{{type.icon}}" color="{{experience.type?(experience.type._id==type._id? type.color: \'gray\'): \'gray\'}}"></ion-icon>\n        </button>\n      </ion-scroll>\n    </ion-item>\n    <ion-item style="height: 45%">\n      <ion-label stacked>Contenido</ion-label>\n        <ion-textarea class="form-control" [(ngModel)]="experience.content" style="height: 500px"></ion-textarea>\n    </ion-item>\n    <ion-item style="height: 15%">\n      <my-emoji-picker item-end [data]=experience></my-emoji-picker>\n    </ion-item>\n  </ion-list>\n</ion-content>\n'/*ion-inline-end:"C:\Users\Matias\WebstormProjects\turinsta\src\pages\experience-writing\experience-writing.html"*/,
     }),
-    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* NavController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* NavController */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* NavParams */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* NavParams */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["s" /* ViewController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["s" /* ViewController */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_2__providers_storage_storage__["a" /* StorageProvider */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__providers_storage_storage__["a" /* StorageProvider */]) === "function" && _d || Object, typeof (_e = typeof __WEBPACK_IMPORTED_MODULE_3__providers_commons_commons__["a" /* CommonsProvider */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__providers_commons_commons__["a" /* CommonsProvider */]) === "function" && _e || Object, typeof (_f = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["b" /* AlertController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["b" /* AlertController */]) === "function" && _f || Object])
+    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* NavParams */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["s" /* ViewController */], __WEBPACK_IMPORTED_MODULE_2__providers_storage_storage__["a" /* StorageProvider */], __WEBPACK_IMPORTED_MODULE_3__providers_commons_commons__["a" /* CommonsProvider */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["b" /* AlertController */]])
 ], ExperienceWritingPage);
 
-var _a, _b, _c, _d, _e, _f;
 //# sourceMappingURL=experience-writing.js.map
 
 /***/ }),
@@ -3536,17 +3537,6 @@ var CommentComponent = (function () {
         this.showReplies = false;
         this.user = {};
     }
-    CommentComponent.prototype.ngOnInit = function () {
-        var _this = this;
-        if (this.comment.parent) {
-            this.storageService.getUser(this.comment.user).first().subscribe(function (user) {
-                _this.user = user;
-            });
-        }
-        else {
-            this.user = this.comment.user;
-        }
-    };
     CommentComponent.prototype.toogleReplies = function () {
         this.showReplies = !this.showReplies;
     };
@@ -3604,7 +3594,7 @@ __decorate([
 ], CommentComponent.prototype, "publicationOwner", void 0);
 CommentComponent = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
-        selector: 'comment',template:/*ion-inline-start:"C:\Users\Matias\WebstormProjects\turinsta\src\components\comment\comment.html"*/'<!-- Generated template for the CommentComponent component -->\n<ion-item class="comment-content">\n  <ion-avatar class="comment-avatar" item-start>\n    <img src="{{user.avatar}}">\n  </ion-avatar>\n  <p><b>{{user.username}}</b>&nbsp;{{comment.content}}</p>\n  <div class="comment-button-list" item-end>\n    <button *ngIf="comment.replies!=undefined" (click)="toogleReplies()" class="publication-button" color="secondary" ion-button clear>\n      <ion-icon style="font-size: 20px" class="publication-icon" name="{{showReplies? \'ios-arrow-dropdown\' : \'ios-arrow-dropright\'}}"></ion-icon>\n    </button>\n    <button *ngIf="checkEditionPermission()" class="publication-button" color="primary" ion-button clear (click)="presentCommentWritingModal()">\n      <ion-icon style="font-size: 20px" class="publication-icon" name="create"></ion-icon>\n    </button>\n    <button *ngIf="checkDeletePermission()" class="publication-button" color="danger" ion-button (click)="confirmDelete()" clear>\n      <ion-icon style="font-size: 20px" class="publication-icon" name="ios-trash-outline"></ion-icon>\n    </button>\n  </div>\n</ion-item>\n<comment-list *ngIf="showReplies" [comments]=comment.replies [publicationId]=publicationId [publicationOwner]=publicationOwner [commentId]=comment._id></comment-list>\n'/*ion-inline-end:"C:\Users\Matias\WebstormProjects\turinsta\src\components\comment\comment.html"*/
+        selector: 'comment',template:/*ion-inline-start:"C:\Users\Matias\WebstormProjects\turinsta\src\components\comment\comment.html"*/'<!-- Generated template for the CommentComponent component -->\n<ion-item class="comment-content">\n  <ion-avatar class="comment-avatar" item-start>\n    <img src="{{comment.user.avatar}}">\n  </ion-avatar>\n  <p><b>{{comment.user.username}}</b>&nbsp;{{comment.content}}</p>\n  <div class="comment-button-list" item-end>\n    <button *ngIf="!comment.parent" (click)="toogleReplies()" class="publication-button" color="secondary" ion-button clear>\n      <ion-icon style="font-size: 20px" class="publication-icon" name="{{showReplies? \'ios-arrow-dropdown\' : \'ios-arrow-dropright\'}}"></ion-icon>\n    </button>\n    <button *ngIf="checkEditionPermission()" class="publication-button" color="primary" ion-button clear (click)="presentCommentWritingModal()">\n      <ion-icon style="font-size: 20px" class="publication-icon" name="create"></ion-icon>\n    </button>\n    <button *ngIf="checkDeletePermission()" class="publication-button" color="danger" ion-button (click)="confirmDelete()" clear>\n      <ion-icon style="font-size: 20px" class="publication-icon" name="ios-trash-outline"></ion-icon>\n    </button>\n  </div>\n</ion-item>\n<comment-list *ngIf="showReplies" [comments]=comment.replies [publicationId]=publicationId [publicationOwner]=publicationOwner [commentId]=comment._id></comment-list>\n'/*ion-inline-end:"C:\Users\Matias\WebstormProjects\turinsta\src\components\comment\comment.html"*/
     }),
     __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__providers_storage_storage__["a" /* StorageProvider */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__providers_storage_storage__["a" /* StorageProvider */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_2__providers_commons_commons__["a" /* CommonsProvider */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__providers_commons_commons__["a" /* CommonsProvider */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_3_ionic_angular__["b" /* AlertController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3_ionic_angular__["b" /* AlertController */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_3_ionic_angular__["j" /* ModalController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3_ionic_angular__["j" /* ModalController */]) === "function" && _d || Object])
 ], CommentComponent);
@@ -3658,7 +3648,13 @@ var CommentListComponent = (function () {
         this.commentId = null;
     }
     CommentListComponent.prototype.presentCommentWritingModal = function () {
-        var experienceWritingModal = this.modalCtrl.create(__WEBPACK_IMPORTED_MODULE_4__pages_comment_writing_comment_writing__["a" /* CommentWritingPage */], { comment: { user: this.commonsService.getUserId(), publication: this.publicationId, parent: this.commentId } });
+        var experienceWritingModal = this.modalCtrl.create(__WEBPACK_IMPORTED_MODULE_4__pages_comment_writing_comment_writing__["a" /* CommentWritingPage */], {
+            comment: {
+                user: this.commonsService.getUserId(),
+                publication: this.publicationId,
+                parent: this.commentId
+            }
+        });
         experienceWritingModal.present();
     };
     return CommentListComponent;
@@ -3683,9 +3679,10 @@ CommentListComponent = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
         selector: 'comment-list',template:/*ion-inline-start:"C:\Users\Matias\WebstormProjects\turinsta\src\components\comment-list\comment-list.html"*/'<!-- Generated template for the CommentListComponent component -->\n<ion-list class="comment-list">\n  <comment *ngFor="let comment of comments" [comment]=comment [publicationId]=publicationId [publicationOwner]=publicationOwner></comment>\n  <ion-item no-padding>\n    <ion-note item-start style="font-size: x-small" (click)="presentCommentWritingModal()">Escribe un comentario...</ion-note>\n  </ion-item>\n</ion-list>\n'/*ion-inline-end:"C:\Users\Matias\WebstormProjects\turinsta\src\components\comment-list\comment-list.html"*/
     }),
-    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__providers_storage_storage__["a" /* StorageProvider */], __WEBPACK_IMPORTED_MODULE_3__providers_commons_commons__["a" /* CommonsProvider */], __WEBPACK_IMPORTED_MODULE_2__ngrx_store__["h" /* Store */], __WEBPACK_IMPORTED_MODULE_5_ionic_angular__["j" /* ModalController */]])
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__providers_storage_storage__["a" /* StorageProvider */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__providers_storage_storage__["a" /* StorageProvider */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_3__providers_commons_commons__["a" /* CommonsProvider */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__providers_commons_commons__["a" /* CommonsProvider */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_2__ngrx_store__["h" /* Store */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__ngrx_store__["h" /* Store */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_5_ionic_angular__["j" /* ModalController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_5_ionic_angular__["j" /* ModalController */]) === "function" && _d || Object])
 ], CommentListComponent);
 
+var _a, _b, _c, _d;
 //# sourceMappingURL=comment-list.js.map
 
 /***/ }),

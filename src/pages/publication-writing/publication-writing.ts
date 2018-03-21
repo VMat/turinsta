@@ -184,7 +184,7 @@ export class PublicationWritingPage {
         this.uploadPics(images).then(()=>{
           Promise.all(
             this.experiences.map((experience)=>{
-              return this.storageService.createExperience({...experience, category: experience.category[0]._id, type: experience.type[0]._id, publication: this.publication._id}).toPromise();
+              return this.storageService.createExperience({...experience, category: experience.category._id, type: experience.type._id, publication: this.publication._id}).toPromise();
             })
           )
           .then(()=>{
@@ -194,12 +194,12 @@ export class PublicationWritingPage {
           })
           .catch((err) => {
             loader.dismiss();
-            this.commons.presentToast("No se han podido subir las experiencias")
+            this.commons.presentToast("No se han podido subir las imágenes")
           });
         })
         .catch((err) => {
           loader.dismiss();
-          this.commons.presentToast("No se han podido subir las imágenes")
+          this.commons.presentToast("No se han podido subir las experiencias")
         });
       },(error)=>{
         loader.dismiss();

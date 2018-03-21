@@ -1,4 +1,4 @@
-import {Component, Input, Output, EventEmitter} from '@angular/core';
+import {Component, Input, Output, EventEmitter, ChangeDetectionStrategy} from '@angular/core';
 import {StorageProvider} from "../../providers/storage/storage";
 import {CommonsProvider} from "../../providers/commons/commons";
 import {AlertController, ModalController} from "ionic-angular";
@@ -23,17 +23,6 @@ export class CommentComponent{
   user: any = {};
 
   constructor(public storageService: StorageProvider, public commonsService: CommonsProvider, public alertCtrl: AlertController, private modalCtrl: ModalController) {
-  }
-
-  ngOnInit(){
-    if(this.comment.parent){
-      this.storageService.getUser(this.comment.user).first().subscribe((user)=>{
-        this.user = user;
-      });
-    }
-    else{
-      this.user = this.comment.user;
-    }
   }
 
   toogleReplies(){

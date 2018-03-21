@@ -150,8 +150,19 @@ PublicationInterface.getN = (searchParams,n,order)=>{
             publication.comments = [];
           }
         }
+
+        let options = {
+          path: 'replies.user',
+          model: 'Users'
+        };
+
+        return Comments.populate(publication.comments, options,(err, projects)=>{
+          return Promise.resolve(projects);
+        });
+
       });
-      return Promise.resolve(publications);
+
+
     })
 };
 
