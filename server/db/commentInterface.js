@@ -54,7 +54,7 @@ CommentInterface.update = (comment)=>{
         return Commons.getOne(Comments,commentToUpdate.parent)
           .then(parent=>{
             parent.replies.filter((reply)=>{
-              return reply._id.equals(comment._id);
+              return reply.equals(comment._id);
             })[0].content = comment.content;
             return Commons.update(Comments,parent)
               .then(()=>{
@@ -75,7 +75,7 @@ CommentInterface.deleteOne = (id)=>{
         return Commons.getOne(Comments,comment.parent)
           .then(parent=>{
             parent.replies.filter((reply,i)=>{
-              if(reply._id.equals(comment._id)){
+              if(reply.equals(comment._id)){
                 parent.replies.splice(i,1);
               }
             });
