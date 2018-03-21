@@ -94,15 +94,16 @@ InboxInterface.changeMessageStatus = (id,messageId,userId,status)=>{
           break;
         }
         case 'READ':{
-          targetMessage[0].status.forEach((statusItem)=>{
-            statusItem.name = 'READ';
-            statusItem.date = status.date;
-          });
+          targetStatus[0].name = 'READ';
+          targetStatus[0].date = status.date;
           break;
         }
       }
 
-      return Commons.update(Inboxes,inbox);
+      return Commons.update(Inboxes,inbox).
+        then(()=>{
+          return Promise.resolve(targetStatus[0]);
+      });
     });
 };
 
