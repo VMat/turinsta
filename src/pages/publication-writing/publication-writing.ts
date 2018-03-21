@@ -87,11 +87,11 @@ export class PublicationWritingPage {
 
   checkNeededField(){
     if(!this.publication.images || this.publication.images.length==0){
-      this.commons.presentToast("Debe proporcionar al menos una imagen.");
+      this.commons.presentToast("La publicación debe tener al menos una imagen");
       return false;
     }
     if(!this.publication.places || this.publication.places.length==0){
-      this.commons.presentToast("Debe proporcionar un destino.");
+      this.commons.presentToast("Debe proporcionar un destino");
       return false;
     }
     return true;
@@ -142,24 +142,36 @@ export class PublicationWritingPage {
   }
 
   confirmDeleteImage() {
-    let confirm = this.alertCtrl.create({
-      title: 'Confirmar operación',
-      message: '¿Está seguro que desea eliminar la imagen?',
-      buttons: [
-        {
-          text: 'Aceptar',
-          handler: () => {
-            this.removeImage();
+    if(this.checkMinImageCount()){
+      let confirm = this.alertCtrl.create({
+        title: 'Confirmar operación',
+        message: '¿Está seguro que desea eliminar la imagen?',
+        buttons: [
+          {
+            text: 'Aceptar',
+            handler: () => {
+              this.removeImage();
+            }
+          },
+          {
+            text: 'Cancelar',
+            handler: () => {
+            }
           }
-        },
-        {
-          text: 'Cancelar',
-          handler: () => {
-          }
-        }
-      ]
-    });
-    confirm.present();
+        ]
+      });
+      confirm.present();
+    }
+  }
+
+  checkMinImageCount(){
+    if(this.publication.images.length > 1){
+      return true;
+    }
+    else{
+      this.commons.presentToast("La publicación debe tener al menos una imagen");
+      return false;
+    }
   }
 
   savePublication(){
@@ -180,31 +192,31 @@ export class PublicationWritingPage {
       let images = this.publication.images.map((image)=>{return image.url});
       this.publication.images = [];
       this.storageService.createPublication(this.publication).subscribe((newPublication)=>{
-        this.publication = newPublication.json();
-        this.uploadPics(images).then(()=>{
-          Promise.all(
-            this.experiences.map((experience)=>{
-              return this.storageService.createExperience({...experience, category: experience.category._id, type: experience.type._id, publication: this.publication._id}).toPromise();
-            })
-          )
-          .then(()=>{
-            loader.dismiss();
-            this.commons.presentToast("La publicación ha sido grabada con éxito");
-            this.viewCtrl.dismiss();
+          this.publication = newPublication.json();
+          this.uploadPics(images).then(()=>{
+            Promise.all(
+              this.experiences.map((experience)=>{
+                return this.storageService.createExperience({...experience, category: experience.category._id, type: experience.type._id, publication: this.publication._id}).toPromise();
+              })
+            )
+              .then(()=>{
+                loader.dismiss();
+                this.commons.presentToast("La publicación ha sido grabada con éxito");
+                this.viewCtrl.dismiss();
+              })
+              .catch((err) => {
+                loader.dismiss();
+                this.commons.presentToast("No se han podido subir las imágenes")
+              });
           })
-          .catch((err) => {
-            loader.dismiss();
-            this.commons.presentToast("No se han podido subir las imágenes")
-          });
-        })
-        .catch((err) => {
+            .catch((err) => {
+              loader.dismiss();
+              this.commons.presentToast("No se han podido subir las experiencias")
+            });
+        },(error)=>{
           loader.dismiss();
-          this.commons.presentToast("No se han podido subir las experiencias")
+          this.commons.presentToast("No se ha podido subir la publicación")
         });
-      },(error)=>{
-        loader.dismiss();
-        this.commons.presentToast("No se ha podido subir la publicación")
-      });
     }
   }
 
@@ -323,7 +335,7 @@ export class PublicationWritingPage {
   deleteDescription(){
     this.storageService.patchPublication(this.publication._id,{description: null}).subscribe((patchedPublication)=>{
       this.commons.presentToast("La descripción ha sido eliminada con éxito");
-      // this.publication.description = null;
+      this.publication.description = null;
     });
   }
 

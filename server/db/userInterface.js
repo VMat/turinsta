@@ -166,7 +166,7 @@ UserInterface.updateScore = (user)=>{
         let userScoreSum = targetUser.publications.reduce((acum,item)=>{
           return acum + item.score;
         },0);
-        return Commons.patch(Users,user,{score: userScoreSum/targetUser.publications.length})
+        return Commons.patch(Users,user,{score: userScoreSum/targetUser.publications.filter((publication)=>{return publication.score}).length})
       });
 };
 
