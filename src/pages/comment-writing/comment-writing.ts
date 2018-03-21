@@ -55,7 +55,6 @@ export class CommentWritingPage {
   }
 
   saveComment(){
-    sessionStorage.setItem("this.comment",JSON.stringify(this.comment));
     if(Boolean(this.comment._id)){
       this.storageService.updateComment(this.comment).subscribe((editedComment)=>{
         this.commons.presentToast("El comentario ha sido actualizado con éxito");

@@ -67,7 +67,7 @@ export class CommentComponent{
 
   checkDeletePermission(){
     let loggedUser = this.commonsService.getUserId();
-    return (this.publicationOwner == loggedUser) || (this.comment.user == loggedUser);
+    return (this.publicationOwner == loggedUser) || (this.comment.user._id == loggedUser);
   }
 
 }
