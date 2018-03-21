@@ -65,11 +65,14 @@ export class InboxWritingPage {
       }));
 
       getUsersObservable.subscribe((participants)=>{
-          this.followedes = participants.concat(followedesWithoutParticipants);
-      },null,
+        this.followedes = participants.concat(followedesWithoutParticipants);
+      },
       ()=>{
         this.followedes = followedesWithoutParticipants;
-      })
+      },
+      ()=>{
+        this.followedes = !this.followedes ? followedesWithoutParticipants :this.followedes;
+      });
     });
   }
 

@@ -55,6 +55,7 @@ export class InboxComponent {
       this.badge.decrease(this.unreadMessagesCount);
     });
     chatPage.onDidDismiss(()=>{
+      socket.disconnect();
       this.updateInboxes.emit(true);
     })
   }

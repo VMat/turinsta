@@ -35,8 +35,8 @@ export class NotificationProvider {
     else{
       this.commons.getUnseenActivities();
     }
-
-    if(notification.additionalData.coldstart){
+    alert(JSON.stringify(notification.additionalData));
+    if((!notification.additionalData.coldstart && !notification.additionalData.foreground)){
       return {view: notification.additionalData.type, category: notification.additionalData.category, key: notification.additionalData.key}
     }
     return null;
