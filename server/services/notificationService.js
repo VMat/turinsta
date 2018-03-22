@@ -33,7 +33,7 @@ NotificationService.send = (data, device_tokens) => {
   message.addData('priority', 2);
   message.addData('style', 'inbox');
   message.addData('summaryText', data.notification.summaryText);
-  // message.addData('content-available', 1);
+  message.addData('content-available', 1);
   // message.addData('no-cache', 1);
 
   return new Promise((resolve, reject) => {
