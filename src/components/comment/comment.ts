@@ -56,7 +56,7 @@ export class CommentComponent{
   }
 
   deleteComment(){
-    this.storageService.deleteComment(this.comment).subscribe((deletedComment)=>{
+    this.storageService.deleteComment(this.commonsService.getUserId(),this.comment).subscribe((deletedComment)=>{
       this.commonsService.presentToast("Comentario borrado con éxito");
     });
   }

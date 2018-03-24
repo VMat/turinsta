@@ -44,8 +44,8 @@ export class StorageProvider {
       .map((res:Response) => res.json());
   }
 
-  deleteComment(comment){
-    return this.http.delete(StorageProvider.baseUrl + 'comments/' + comment._id)
+  deleteComment(user,comment){
+    return this.http.delete(StorageProvider.baseUrl + 'comments/' + comment._id + '/user/' + user)
       .map((res:Response) => res.json());
   }
 

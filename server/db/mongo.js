@@ -325,7 +325,7 @@ db.createComment = (comment)=>{
       return userInterface.getOne(insertedComment.user)
         .then((commenter)=>{
           return publicationInterface.getOne(insertedComment.publication)
-            .then((publication)=> {
+            .then((publication)=>{
               if(insertedComment.parent != null) {
                 return commentInterface.getOne(insertedComment.parent)
                   .then((parentComment)=>{
@@ -518,7 +518,7 @@ db.createComment = (comment)=>{
                   let newPublisherInActivity = {
                     user: publication.user._id,
                     direction: "IN",
-                    caption: "commentUpdatedReceived",
+                    caption: "commentReceived",
                     params: {":user": insertedComment.user},
                     relatedUsers: [insertedComment.user],
                     publication: insertedComment.publication,
@@ -527,7 +527,7 @@ db.createComment = (comment)=>{
                   };
                   return Promise.all([activityInterface.insert(newOutActivity),activityInterface.insert(newPublisherInActivity)])
                     .then(()=>{
-                      return languageInterface.getCaption(publication.user.language,["commentUpdatedReceived"])
+                      return languageInterface.getCaption(publication.user.language,["commentReceived"])
                         .then((caption)=>{
                           return languageInterface.getCaption(publication.user.language,["summaryTextNotification"])
                             .then((summaryCaption)=>{
