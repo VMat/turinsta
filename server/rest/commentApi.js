@@ -19,8 +19,8 @@ router.put('/',(req, res)=>{
     .catch(error=>{res.status(500).send(error)})
 });
 
-router.delete('/:id',(req, res)=>{
-  commentService.deleteComment(req.params.id)
+router.delete('/user/:user/comment/:id',(req, res)=>{
+  commentService.deleteComment(req.params.user,req.params.id)
     .then(comment=>{res.status(200).json(comment)})
     .catch(error=>{res.status(500).send(error)})
 });

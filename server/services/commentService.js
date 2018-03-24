@@ -26,9 +26,9 @@ commentService.updateComment = (comment)=>{
   })
 };
 
-commentService.deleteComment = (id)=>{
+commentService.deleteComment = (user,id)=>{
   return new Promise((resolve, reject)=>{
-  storageService.deleteComment(id).
+  storageService.deleteComment(user,id).
     then(deletedComment=>resolve(deletedComment)).
     catch(error=>reject(error))
   })

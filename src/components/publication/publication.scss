@@ -112,6 +112,16 @@ ion-card-content{
   max-height: 20px !important; //any size
 }
 
+.in-activity-avatar img{
+  min-width: 60px !important;  //any size
+  min-height: 60px !important; //any size
+}
+
+.out-activity-avatar img{
+  min-width: 80px !important;  //any size
+  min-height: 80px !important; //any size
+}
+
 .comment-edition{
   margin: 0 !important;
   padding: 0 !important;

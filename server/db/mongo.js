@@ -321,135 +321,229 @@ db.getComment = (id)=>{
 
 db.createComment = (comment)=>{
   return commentInterface.insert(comment)
-    .then((response)=>{
-      return publicationInterface.getOne(response.publication)
-        .then((publication)=>{
-          if(response.parent!=null){
-            return commentInterface.getOne(response.parent)
-              .then((parentComment)=>{
-                let newOutActivity = {
-                  user: comment.user,
-                  direction: "OUT",
-                  caption: "commentResponseGiven",
-                  params: {":user": parentComment.user._id},
-                  relatedUsers: [parentComment.user._id],
-                  publication: response.publication,
-                  timestamps: {created: new Date().toISOString(), modified: null},
-                  seen: true
-                };
-                let newInActivity = {
-                  user: parentComment.user._id,
-                  direction: "IN",
-                  caption: "commentResponseAddedNotification",
-                  params: {":user": comment.user},
-                  relatedUsers: [comment.user],
-                  publication: response.publication,
-                  timestamps: {created: new Date().toISOString(), modified: null},
-                  seen: false
-                };
-                if(parentComment.user._id.equals(comment.user)){
-                  newOutActivity.caption = "commentResponseGivenInOwnComment";
+    .then((insertedComment)=>{
+      return userInterface.getOne(insertedComment.user)
+        .then((commenter)=>{
+          return publicationInterface.getOne(insertedComment.publication)
+            .then((publication)=> {
+              if(insertedComment.parent != null) {
+                return commentInterface.getOne(insertedComment.parent)
+                  .then((parentComment)=>{
+                    if(parentComment.user._id.equals(insertedComment.user)){
+                      if(publication.user._id.equals(insertedComment.user)){
+                        let newOutActivity = {
+                          user: insertedComment.user,
+                          direction: "OUT",
+                          caption: "responseGivenInOwnCommentInOwnPublication",
+                          params: {},
+                          relatedUsers: [],
+                          publication: insertedComment.publication,
+                          timestamps: {created: new Date().toISOString(), modified: null},
+                          seen: true
+                        };
+                        return activityInterface.insert(newOutActivity)
+                          .then(()=>{
+                            return Promise.resolve(insertedComment);
+                          });
+                      }
+                      else{
+                        let newOutActivity = {
+                          user: insertedComment.user,
+                          direction: "OUT",
+                          caption: "responseGivenInOwnCommentInForeignPublication",
+                          params: {":user": publication.user._id},
+                          relatedUsers: [publication.user._id],
+                          publication: insertedComment.publication,
+                          timestamps: {created: new Date().toISOString(), modified: null},
+                          seen: true
+                        };
+                        let newInActivity = {
+                          user: publication.user._id,
+                          direction: "IN",
+                          caption: "responseReceivedInMyPublication",
+                          params: {":user": insertedComment.user},
+                          relatedUsers: [insertedComment.user],
+                          publication: insertedComment.publication,
+                          timestamps: {created: new Date().toISOString(), modified: null},
+                          seen: false
+                        };
+                        return Promise.all([activityInterface.insert(newOutActivity),activityInterface.insert(newInActivity)])
+                          .then(()=>{
+                            return languageInterface.getCaption(publication.user.language,["responseReceivedInMyPublication"])
+                              .then((caption)=>{
+                                return languageInterface.getCaption(publication.user.language,["summaryTextNotification"])
+                                  .then((summaryCaption)=>{
+                                    let title = caption.replace(':user', commenter.username);
+                                    let notification = {title: title, body: '', summaryText: summaryCaption};
+                                    let data = {type: 'comment', category: publication._id, key: insertedComment._id};
+                                    return NotificationService.send({notification: notification, data: data},[publication.user.notificationKey])
+                                      .then(()=>{
+                                        return Promise.resolve(insertedComment)
+                                      });
+                                  });
+                              });
+                          });
+                      }
+                    }
+                    else {
+                      if(publication.user._id.equals(insertedComment.user)){
+                        let newOutActivity = {
+                          user: insertedComment.user,
+                          direction: "OUT",
+                          caption: "responseGivenInForeignCommentInOwnPublication",
+                          params: {":user": parentComment.user._id},
+                          relatedUsers: [parentComment.user._id],
+                          publication: insertedComment.publication,
+                          timestamps: {created: new Date().toISOString(), modified: null},
+                          seen: true
+                        };
+                        let newInActivity = {
+                          user: parentComment.user._id,
+                          direction: "IN",
+                          caption: "responseReceived",
+                          params: {":user": insertedComment.user},
+                          relatedUsers: [insertedComment.user],
+                          publication: insertedComment.publication,
+                          timestamps: {created: new Date().toISOString(), modified: null},
+                          seen: false
+                        };
+                        return Promise.all([activityInterface.insert(newOutActivity),activityInterface.insert(newInActivity)])
+                          .then(()=>{
+                            return languageInterface.getCaption(parentComment.user.language,["responseReceived"])
+                              .then((caption)=>{
+                                return languageInterface.getCaption(parentComment.user.language,["summaryTextNotification"])
+                                  .then((summaryCaption)=>{
+                                    let title = caption.replace(':user', commenter.username);
+                                    let notification = {title: title, body: '', summaryText: summaryCaption};
+                                    let data = {type: 'comment', category: publication._id, key: insertedComment._id};
+                                    return NotificationService.send({notification: notification, data: data},[parentComment.user.notificationKey])
+                                      .then(()=>{
+                                        return Promise.resolve(insertedComment)
+                                      });
+                                  });
+                              });
+                          });
+                      }
+                      else{
+                        let newOutActivity = {
+                          user: insertedComment.user,
+                          direction: "OUT",
+                          caption: "responseGivenInForeignCommentInForeignPublication",
+                          params: {":user": parentComment.user._id},
+                          relatedUsers: [parentComment.user._id],
+                          publication: insertedComment.publication,
+                          timestamps: {created: new Date().toISOString(), modified: null},
+                          seen: true
+                        };
+                        let newCommenterInActivity = {
+                          user: parentComment.user._id,
+                          direction: "IN",
+                          caption: "responseReceived",
+                          params: {":user": insertedComment.user},
+                          relatedUsers: [insertedComment.user],
+                          publication: insertedComment.publication,
+                          timestamps: {created: new Date().toISOString(), modified: null},
+                          seen: false
+                        };
+                        let newPublisherInActivity = {
+                          user: publication.user._id,
+                          direction: "IN",
+                          caption: "responseReceivedInMyPublication",
+                          params: {":user": insertedComment.user},
+                          relatedUsers: [insertedComment.user],
+                          publication: insertedComment.publication,
+                          timestamps: {created: new Date().toISOString(), modified: null},
+                          seen: false
+                        };
+                        return Promise.all([activityInterface.insert(newOutActivity),activityInterface.insert(newCommenterInActivity),activityInterface.insert(newPublisherInActivity)])
+                          .then(()=>{
+                            return languageInterface.getCaption(parentComment.user.language,["responseReceived"])
+                              .then((caption)=>{
+                                return languageInterface.getCaption(parentComment.user.language,["summaryTextNotification"])
+                                  .then((summaryCaption)=>{
+                                    let title = caption.replace(':user', commenter.username);
+                                    let notification = {title: title, body: '', summaryText: summaryCaption};
+                                    let data = {type: 'comment', category: publication._id, key: insertedComment._id};
+                                    return NotificationService.send({notification: notification, data: data},[parentComment.user.notificationKey])
+                                      .then(()=>{
+                                        return languageInterface.getCaption(publication.user.language,["responseReceivedInMyPublication"])
+                                          .then((caption)=>{
+                                            return languageInterface.getCaption(publication.user.language,["summaryTextNotification"])
+                                              .then((summaryCaption)=>{
+                                                let title = caption.replace(':user', commenter.username);
+                                                let notification = {title: title, body: '', summaryText: summaryCaption};
+                                                let data = {type: 'comment', category: publication._id, key: insertedComment._id};
+                                                return NotificationService.send({notification: notification, data: data},[publication.user.notificationKey])
+                                                  .then(()=>{
+                                                    return Promise.resolve(insertedComment)
+                                                  });
+                                              });
+                                          });
+                                      });
+                                  });
+                              });
+                          });
+                      }
+                    }
+                  })
+              }
+              else{
+                if(publication.user._id.equals(insertedComment.user)){
+                  let newOutActivity = {
+                    user: insertedComment.user,
+                    direction: "OUT",
+                    caption: "commentGivenInOwnPublication",
+                    params: {},
+                    relatedUsers: [],
+                    publication: insertedComment.publication,
+                    timestamps: {created: new Date().toISOString(), modified: null},
+                    seen: true
+                  };
                   return activityInterface.insert(newOutActivity)
                     .then(()=>{
-                      return Promise.resolve(response);
+                      return Promise.resolve(insertedComment);
                     });
                 }
                 else{
-                  return Promise.all([activityInterface.insert(newOutActivity),activityInterface.insert(newInActivity)])
+                  let newOutActivity = {
+                    user: insertedComment.user,
+                    direction: "OUT",
+                    caption: "commentGivenInForeignPublication",
+                    params: {":user": publication.user._id},
+                    relatedUsers: [publication.user._id],
+                    publication: insertedComment.publication,
+                    timestamps: {created: new Date().toISOString(), modified: null},
+                    seen: true
+                  };
+                  let newPublisherInActivity = {
+                    user: publication.user._id,
+                    direction: "IN",
+                    caption: "commentUpdatedReceived",
+                    params: {":user": insertedComment.user},
+                    relatedUsers: [insertedComment.user],
+                    publication: insertedComment.publication,
+                    timestamps: {created: new Date().toISOString(), modified: null},
+                    seen: false
+                  };
+                  return Promise.all([activityInterface.insert(newOutActivity),activityInterface.insert(newPublisherInActivity)])
                     .then(()=>{
-                      return userInterface.getOne(comment.user)
-                        .then((sender)=>{
-                          return userInterface.getOne(parentComment.user._id)
-                            .then((targetUser)=>{
-                              return languageInterface.getCaption(targetUser.language,["commentResponseAddedNotification"])
-                                .then((caption)=>{
-                                  return languageInterface.getCaption(targetUser.language,["summaryTextNotification"])
-                                    .then((summaryCaption)=>{
-                                      let title = caption.replace(':user', sender.username);
-                                      let notification = {title: title, body: '', summaryText: summaryCaption};
-                                      let data = {type: 'comment', category: response.publication, key: response._id};
-                                      return NotificationService.send({notification: notification, data: data},[targetUser.notificationKey])
-                                        .then(()=>{
-                                          return userInterface.getOne(publication.user._id)
-                                            .then((publicationUser)=>{
-                                              return languageInterface.getCaption(publicationUser.language,["publicationCommentAddedNotification"])
-                                                .then((publicationUserCaption)=>{
-                                                  return languageInterface.getCaption(publicationUser.language,["summaryTextNotification"])
-                                                    .then((PublicationUserSummaryCaption)=>{
-                                                      let PUTitle = publicationUserCaption.replace(':user', sender.username);
-                                                      let PUNotification = {title: PUTitle, body: '', summaryText: PublicationUserSummaryCaption};
-                                                      let PUData = {type: 'comment', category: publication._id, key: response._id};
-                                                      return NotificationService.send({notification: PUNotification, data: PUData},[publicationUser.notificationKey])
-                                                        .then(()=>{
-                                                          return Promise.resolve(response);
-                                                        });
-                                                    });
-                                                });
-                                            });
-                                        });
-                                    });
-                                });
-                            });
-                          })
-                    });
-                }
-              });
-          }
-          else{
-            let newOutActivity = {
-              user: comment.user,
-              direction: "OUT",
-              caption: "publicationCommentGiven",
-              params: {":user": publication.user._id},
-              relatedUsers: [publication.user._id],
-              publication: publication._id,
-              timestamps: {created: new Date().toISOString(), modified: null},
-              seen: true
-            };
-            let newInActivity = {
-              user: publication.user._id,
-              direction: "IN",
-              caption: "publicationCommentAddedNotification",
-              params: {":user": comment.user},
-              relatedUsers: [comment.user],
-              publication: publication._id,
-              timestamps: {created: new Date().toISOString(), modified: null},
-              seen: false
-            };
-            if(publication.user._id.equals(comment.user)){
-              newOutActivity.caption = "publicationCommentGivenInOwnPublication"
-              return activityInterface.insert(newOutActivity)
-                .then(()=>{
-                  return Promise.resolve(response);
-                })
-            }
-            else{
-              return Promise.all([activityInterface.insert(newOutActivity),activityInterface.insert(newInActivity)])
-                .then(()=>{
-                  return userInterface.getOne(publication.user._id)
-                    .then((targetUser)=>{
-                      return languageInterface.getCaption(targetUser.language,["publicationCommentAddedNotification"])
+                      return languageInterface.getCaption(publication.user.language,["commentUpdatedReceived"])
                         .then((caption)=>{
-                          return languageInterface.getCaption(targetUser.language,["summaryTextNotification"])
+                          return languageInterface.getCaption(publication.user.language,["summaryTextNotification"])
                             .then((summaryCaption)=>{
-                              return userInterface.getOne(comment.user)
-                                .then((sender)=>{
-                                  let title = caption.replace(':user', sender.username);
-                                  let notification = {title: title, body: '', summaryText: summaryCaption};
-                                  let data = {type: 'comment', category: response.publication, key: publication._id};
-                                  console.log("Enviando notificación");
-                                  return NotificationService.send({notification: notification, data: data},[targetUser.notificationKey])
-                                    .then(()=>{
-                                      console.log("Notificación enviada: " + JSON.stringify(response));
-                                      return Promise.resolve(response)
-                                    });
+                              let title = caption.replace(':user', commenter.username);
+                              let notification = {title: title, body: '', summaryText: summaryCaption};
+                              let data = {type: 'comment', category: publication._id, key: insertedComment._id};
+                              return NotificationService.send({notification: notification, data: data},[publication.user.notificationKey])
+                                .then(()=>{
+                                  return Promise.resolve(insertedComment)
                                 });
                             });
                         });
                     });
-                });
-            }
-          }
+                }
+              }
+            })
         });
     });
 };
@@ -457,197 +551,296 @@ db.createComment = (comment)=>{
 db.updateComment = (comment)=>{
   return commentInterface.update(comment)
     .then((updatedComment)=>{
-      return publicationInterface.getOne(updatedComment.publication)
-        .then((publication)=>{
-          if(updatedComment.parent!=null){
-            return commentInterface.getOne(updatedComment.parent)
-              .then((parentComment)=>{
-                let newOutActivity = {
-                  user: comment.user._id,
-                  direction: "OUT",
-                  caption: "commentResponseModified",
-                  params: {":user": parentComment.user._id},
-                  relatedUsers: [parentComment.user._id],
-                  publication: publication._id,
-                  timestamps: {created: new Date().toISOString(), modified: null},
-                  seen: true
-                };
-                let newInActivity = {
-                  user: parentComment.user._id,
-                  direction: "IN",
-                  caption: "commentResponseUpdatedNotification",
-                  params: {":user": comment.user._id},
-                  relatedUsers: [comment.user._id],
-                  publication: publication._id,
-                  timestamps: {created: new Date().toISOString(), modified: null},
-                  seen: false
-                };
-                if(parentComment.user._id.equals(comment.user._id)){
-                  newOutActivity.caption = "commentResponseModifiedInOwnComment";
+      return userInterface.getOne(updatedComment.user)
+        .then((commenter)=>{
+          return publicationInterface.getOne(updatedComment.publication)
+            .then((publication)=> {
+              if(updatedComment.parent != null) {
+                return commentInterface.getOne(updatedComment.parent)
+                  .then((parentComment)=>{
+                    if(parentComment.user._id.equals(updatedComment.user)){
+                      if(publication.user._id.equals(updatedComment.user)){
+                        let newOutActivity = {
+                          user: updatedComment.user,
+                          direction: "OUT",
+                          caption: "responseUpdatedInOwnCommentInOwnPublication",
+                          params: {},
+                          relatedUsers: [],
+                          publication: updatedComment.publication,
+                          timestamps: {created: new Date().toISOString(), modified: null},
+                          seen: true
+                        };
+                        return activityInterface.insert(newOutActivity)
+                          .then(()=>{
+                            return Promise.resolve(updatedComment);
+                          });
+                      }
+                      else{
+                        let newOutActivity = {
+                          user: updatedComment.user,
+                          direction: "OUT",
+                          caption: "responseUpdatedInOwnCommentInForeignPublication",
+                          params: {":user": publication.user._id},
+                          relatedUsers: [publication.user._id],
+                          publication: updatedComment.publication,
+                          timestamps: {created: new Date().toISOString(), modified: null},
+                          seen: true
+                        };
+                        let newInActivity = {
+                          user: publication.user._id,
+                          direction: "IN",
+                          caption: "responseUpdatedReceivedInMyPublication",
+                          params: {":user": updatedComment.user},
+                          relatedUsers: [updatedComment.user],
+                          publication: updatedComment.publication,
+                          timestamps: {created: new Date().toISOString(), modified: null},
+                          seen: false
+                        };
+                        return Promise.all([activityInterface.insert(newOutActivity),activityInterface.insert(newInActivity)])
+                          .then(()=>{
+                            return languageInterface.getCaption(publication.user.language,["responseUpdatedReceivedInMyPublication"])
+                              .then((caption)=>{
+                                return languageInterface.getCaption(publication.user.language,["summaryTextNotification"])
+                                  .then((summaryCaption)=>{
+                                    let title = caption.replace(':user', commenter.username);
+                                    let notification = {title: title, body: '', summaryText: summaryCaption};
+                                    let data = {type: 'comment', category: publication._id, key: updatedComment._id};
+                                    return NotificationService.send({notification: notification, data: data},[publication.user.notificationKey])
+                                      .then(()=>{
+                                        return Promise.resolve(updatedComment)
+                                      });
+                                  });
+                              });
+                          });
+                      }
+                    }
+                    else {
+                      if(publication.user._id.equals(updatedComment.user)){
+                        let newOutActivity = {
+                          user: updatedComment.user,
+                          direction: "OUT",
+                          caption: "responseUpdatedInForeignCommentInOwnPublication",
+                          params: {":user": parentComment.user._id},
+                          relatedUsers: [parentComment.user._id],
+                          publication: updatedComment.publication,
+                          timestamps: {created: new Date().toISOString(), modified: null},
+                          seen: true
+                        };
+                        let newInActivity = {
+                          user: parentComment.user._id,
+                          direction: "IN",
+                          caption: "responseUpdatedReceived",
+                          params: {":user": updatedComment.user},
+                          relatedUsers: [updatedComment.user],
+                          publication: updatedComment.publication,
+                          timestamps: {created: new Date().toISOString(), modified: null},
+                          seen: false
+                        };
+                        return Promise.all([activityInterface.insert(newOutActivity),activityInterface.insert(newInActivity)])
+                          .then(()=>{
+                            return languageInterface.getCaption(parentComment.user.language,["responseUpdatedReceived"])
+                              .then((caption)=>{
+                                return languageInterface.getCaption(parentComment.user.language,["summaryTextNotification"])
+                                  .then((summaryCaption)=>{
+                                    let title = caption.replace(':user', commenter.username);
+                                    let notification = {title: title, body: '', summaryText: summaryCaption};
+                                    let data = {type: 'comment', category: publication._id, key: updatedComment._id};
+                                    return NotificationService.send({notification: notification, data: data},[parentComment.user.notificationKey])
+                                      .then(()=>{
+                                        return Promise.resolve(updatedComment)
+                                      });
+                                  });
+                              });
+                          });
+                      }
+                      else{
+                        let newOutActivity = {
+                          user: updatedComment.user,
+                          direction: "OUT",
+                          caption: "responseUpdatedInForeignCommentInForeignPublication",
+                          params: {":user": parentComment.user._id},
+                          relatedUsers: [parentComment.user._id],
+                          publication: updatedComment.publication,
+                          timestamps: {created: new Date().toISOString(), modified: null},
+                          seen: true
+                        };
+                        let newCommenterInActivity = {
+                          user: parentComment.user._id,
+                          direction: "IN",
+                          caption: "responseUpdatedReceived",
+                          params: {":user": updatedComment.user},
+                          relatedUsers: [updatedComment.user],
+                          publication: updatedComment.publication,
+                          timestamps: {created: new Date().toISOString(), modified: null},
+                          seen: false
+                        };
+                        let newPublisherInActivity = {
+                          user: publication.user._id,
+                          direction: "IN",
+                          caption: "responseUpdatedReceivedInMyPublication",
+                          params: {":user": updatedComment.user},
+                          relatedUsers: [updatedComment.user],
+                          publication: updatedComment.publication,
+                          timestamps: {created: new Date().toISOString(), modified: null},
+                          seen: false
+                        };
+                        return Promise.all([activityInterface.insert(newOutActivity),activityInterface.insert(newCommenterInActivity),activityInterface.insert(newPublisherInActivity)])
+                          .then(()=>{
+                            return languageInterface.getCaption(parentComment.user.language,["responseUpdatedReceived"])
+                              .then((caption)=>{
+                                return languageInterface.getCaption(parentComment.user.language,["summaryTextNotification"])
+                                  .then((summaryCaption)=>{
+                                    let title = caption.replace(':user', commenter.username);
+                                    let notification = {title: title, body: '', summaryText: summaryCaption};
+                                    let data = {type: 'comment', category: publication._id, key: updatedComment._id};
+                                    return NotificationService.send({notification: notification, data: data},[parentComment.user.notificationKey])
+                                      .then(()=>{
+                                        return languageInterface.getCaption(publication.user.language,["responseUpdatedReceivedInMyPublication"])
+                                          .then((caption)=>{
+                                            return languageInterface.getCaption(publication.user.language,["summaryTextNotification"])
+                                              .then((summaryCaption)=>{
+                                                let title = caption.replace(':user', commenter.username);
+                                                let notification = {title: title, body: '', summaryText: summaryCaption};
+                                                let data = {type: 'comment', category: publication._id, key: updatedComment._id};
+                                                return NotificationService.send({notification: notification, data: data},[publication.user.notificationKey])
+                                                  .then(()=>{
+                                                    return Promise.resolve(updatedComment)
+                                                  });
+                                              });
+                                          });
+                                      });
+                                  });
+                              });
+                          });
+                      }
+                    }
+                  })
+              }
+              else{
+                if(publication.user._id.equals(updatedComment.user)){
+                  let newOutActivity = {
+                    user: updatedComment.user,
+                    direction: "OUT",
+                    caption: "commentUpdatedInOwnPublication",
+                    params: {},
+                    relatedUsers: [],
+                    publication: updatedComment.publication,
+                    timestamps: {created: new Date().toISOString(), modified: null},
+                    seen: true
+                  };
                   return activityInterface.insert(newOutActivity)
                     .then(()=>{
-                      return Promise.resolve(updatedComment)
+                      return Promise.resolve(updatedComment);
                     });
                 }
                 else{
-                  return Promise.all([activityInterface.insert(newOutActivity),activityInterface.insert(newInActivity)])
+                  let newOutActivity = {
+                    user: updatedComment.user,
+                    direction: "OUT",
+                    caption: "commentUpdatedInForeignPublication",
+                    params: {":user": publication.user._id},
+                    relatedUsers: [publication.user._id],
+                    publication: updatedComment.publication,
+                    timestamps: {created: new Date().toISOString(), modified: null},
+                    seen: true
+                  };
+                  let newPublisherInActivity = {
+                    user: publication.user._id,
+                    direction: "IN",
+                    caption: "commentUpdatedReceived",
+                    params: {":user": updatedComment.user},
+                    relatedUsers: [updatedComment.user],
+                    publication: updatedComment.publication,
+                    timestamps: {created: new Date().toISOString(), modified: null},
+                    seen: false
+                  };
+                  return Promise.all([activityInterface.insert(newOutActivity),activityInterface.insert(newPublisherInActivity)])
                     .then(()=>{
-                      return languageInterface.getCaption(parentComment.user.language,["commentResponseAddedNotification"])
+                      return languageInterface.getCaption(publication.user.language,["commentUpdatedReceived"])
                         .then((caption)=>{
-                          return languageInterface.getCaption(parentComment.user.language,["summaryTextNotification"])
+                          return languageInterface.getCaption(publication.user.language,["summaryTextNotification"])
                             .then((summaryCaption)=>{
-                              return userInterface.getOne(comment.user._id)
-                                .then((sender)=>{
-                                  let title = caption.replace(':user', sender.username);
-                                  let notification = {title: title, body: '', summaryText: summaryCaption};
-                                  let data = {type: 'comment', category: publication._id, key: updatedComment._id};
-                                  return NotificationService.send({notification: notification, data: data},[parentComment.user.notificationKey])
-                                    .then(()=>{
-                                      return languageInterface.getCaption(publication.user.language,["publicationCommentAddedNotification"])
-                                        .then((publicationUserCaption)=>{
-                                          return languageInterface.getCaption(publication.user.language,["summaryTextNotification"])
-                                            .then((PublicationUserSummaryCaption)=>{
-                                              let PUTitle = publicationUserCaption.replace(':user', comment.user.username);
-                                              let PUNotification = {title: PUTitle, body: '', summaryText: PublicationUserSummaryCaption};
-                                              let PUData = {type: 'comment', category: publication._id, key: updatedComment._id};
-                                              return NotificationService.send({notification: PUNotification, data: PUData},[publication.user.notificationKey])
-                                                .then(()=>{
-                                                  return Promise.resolve(updatedComment);
-                                                });
-                                            });
-                                        });
-                                    });
-                                });
-                            });
-                        });
-                    });
-                }
-            });
-          }
-          else{
-            let newOutActivity = {
-              user: comment.user._id,
-              direction: "OUT",
-              caption: "publicationCommentModified",
-              params: {":user": publication.user._id},
-              relatedUsers: [publication.user._id],
-              publication: publication._id,
-              timestamps: {created: new Date().toISOString(), modified: null},
-              seen: true
-            };
-            let newInActivity = {
-              user: publication.user._id,
-              direction: "IN",
-              caption: "publicationCommentUpdatedNotification",
-              params: {":user": comment.user._id},
-              relatedUsers: [comment.user._id],
-              publication: publication._id,
-              timestamps: {created: new Date().toISOString(), modified: null},
-              seen: false
-            };
-            if(publication.user._id.equals(comment.user._id)){
-              return activityInterface.insert(newOutActivity)
-                .then(()=>{
-                  return Promise.resolve(updatedComment);
-                });
-            }
-            else{
-              newOutActivity.caption = "publicationCommentModifiedInOwnPublication";
-              return Promise.all([activityInterface.insert(newOutActivity),activityInterface.insert(newInActivity)])
-                .then(()=>{
-                  return languageInterface.getCaption(publication.user.language,["publicationCommentUpdatedNotification"])
-                    .then((caption)=>{
-                      return languageInterface.getCaption(publication.user.language,["summaryTextNotification"])
-                        .then((summaryCaption)=>{
-                          return userInterface.getOne(comment.user._id)
-                            .then((sender)=>{
-                              let title = caption.replace(':user', sender.username);
+                              let title = caption.replace(':user', commenter.username);
                               let notification = {title: title, body: '', summaryText: summaryCaption};
                               let data = {type: 'comment', category: publication._id, key: updatedComment._id};
                               return NotificationService.send({notification: notification, data: data},[publication.user.notificationKey])
                                 .then(()=>{
-                                  return Promise.resolve(updatedComment);
+                                  return Promise.resolve(updatedComment)
                                 });
                             });
                         });
                     });
-                });
-            }
-          }
+                }
+              }
+            })
         });
     });
 };
 
-db.deleteComment = (id)=>{
+db.deleteComment = (user,id)=>{
   return commentInterface.getOne(id)
     .then((deletedComment)=>{
       return commentInterface.deleteOne(id)
         .then(()=>{
-          return publicationInterface.getOne(deletedComment.publication)
-            .then((publication)=>{
-              if(deletedComment.parent!=null){
-                return commentInterface.getOne(deletedComment.parent)
-                  .then((parentComment)=>{
-                    let newOutActivity = {
-                      user: deletedComment.user._id,
-                      direction: "OUT",
-                      caption: "commentResponseDeleted",
-                      params: {":user": parentComment.user._id},
-                      relatedUsers: [parentComment.user._id],
-                      publication: publication._id,
-                      timestamps: {created: new Date().toISOString(), modified: null},
-                      seen: true
-                    };
-                    let newInActivity = {
-                      user: parentComment.user._id,
-                      direction: "IN",
-                      caption: "commentResponseDeletedNotification",
-                      params: {":user": deletedComment.user._id},
-                      relatedUsers: [deletedComment.user._id],
-                      publication: publication._id,
-                      timestamps: {created: new Date().toISOString(), modified: null},
-                      seen: false
-                    };
-                    if(parentComment.user._id.equals(deletedComment.user._id)){
-                      newOutActivity.caption = "commentResponseDeletedInOwnComment";
-                      return activityInterface.insert(newOutActivity);
-                    }
-                    else{
-                      return Promise.all([activityInterface.insert(newOutActivity),activityInterface.insert(newInActivity)]);
-                    }
-                  });
-              }
-              else{
-                let newOutActivity = {
-                  user: deletedComment.user._id,
-                  direction: "OUT",
-                  caption: "publicationCommentDeleted",
-                  params: {":user": publication.user._id},
-                  relatedUsers: [publication.user._id],
-                  publication: publication._id,
-                  timestamps: {created: new Date().toISOString(), modified: null},
-                  seen: true
-                };
-                let newInActivity = {
-                  user: publication.user._id,
-                  direction: "IN",
-                  caption: "publicationCommentDeletedNotification",
-                  params: {":user": deletedComment.user._id},
-                  relatedUsers: [deletedComment.user._id],
-                  publication: publication._id,
-                  timestamps: {created: new Date().toISOString(), modified: null},
-                  seen: false
-                };
-                if(publication.user._id.equals(deletedComment.user._id)){
-                  return activityInterface.insert(newOutActivity);
-                }
-                else{
-                  return Promise.all([activityInterface.insert(newOutActivity),activityInterface.insert(newInActivity)]);
-                }
-              }
-            });
+          let newOutActivity;
+          if(user.equals(deletedComment.user._id)){
+            if(deletedComment.parent != null){
+              newOutActivity = {
+                user: deletedComment.user._id,
+                direction: "OUT",
+                caption: "ownResponseDeleted",
+                params: {},
+                relatedUsers: [],
+                publication: deletedComment.publication,
+                timestamps: {created: new Date().toISOString(), modified: null},
+                seen: true
+              };
+            }
+            else{
+              newOutActivity = {
+                user: deletedComment.user._id,
+                direction: "OUT",
+                caption: "ownCommentDeleted",
+                params: {},
+                relatedUsers: [],
+                publication: deletedComment.publication,
+                timestamps: {created: new Date().toISOString(), modified: null},
+                seen: true
+              };
+            }
+          }
+          else{
+            if(deletedComment.parent != null){
+              newOutActivity = {
+                user: deletedComment.user._id,
+                direction: "OUT",
+                caption: "foreignResponseDeleted",
+                params: {":user": deletedComment.user._id},
+                relatedUsers: [deletedComment.user._id],
+                publication: deletedComment.publication,
+                timestamps: {created: new Date().toISOString(), modified: null},
+                seen: true
+              };
+            }
+            else{
+              newOutActivity = {
+                user: user,
+                direction: "OUT",
+                caption: "foreignCommentDeleted",
+                params: {":user": deletedComment.user._id},
+                relatedUsers: [deletedComment.user._id],
+                publication: deletedComment.publication,
+                timestamps: {created: new Date().toISOString(), modified: null},
+                seen: true
+              };
+            }
+          }
+          return activityInterface.insert(newOutActivity)
+            .then(()=>{
+              return Promise.resolve(deletedComment);
+            })
         });
-    });
+    })
 };
 
 db.getExperience = (id)=>{

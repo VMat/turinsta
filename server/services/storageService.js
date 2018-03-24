@@ -86,8 +86,8 @@ storageService.updateComment = (comment)=>{
   return db.updateComment(comment);
 };
 
-storageService.deleteComment = (id)=>{
-  return db.deleteComment(id);
+storageService.deleteComment = (user,id)=>{
+  return db.deleteComment(user,id);
 };
 
 storageService.getExperience = (id)=>{
