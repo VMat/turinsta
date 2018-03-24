@@ -783,7 +783,7 @@ db.deleteComment = (user,id)=>{
       return commentInterface.deleteOne(id)
         .then(()=>{
           let newOutActivity = null;
-          if(user.equals(deletedComment.user._id)){
+          if(deletedComment.user._id.equals(user)){
             if(deletedComment.parent != null){
               newOutActivity = {
                 user: deletedComment.user._id,
