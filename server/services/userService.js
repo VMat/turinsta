@@ -26,6 +26,14 @@ userService.getFollowedes = (id,count)=>{
   })
 };
 
+userService.getFavorites = (id,count)=>{
+  return new Promise((resolve, reject)=>{
+    storageService.getFavorites(id,count).
+      then(users=>resolve(users)).
+      catch(error=>reject(error))
+  })
+};
+
 userService.createUser = (user)=>{
   return new Promise((resolve, reject)=>{
     storageService.createUser(user).

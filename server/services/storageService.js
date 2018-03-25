@@ -126,6 +126,10 @@ storageService.getFollowedes = (id,count)=>{
   return db.getFollowedes(id,count);
 };
 
+storageService.getFavorites = (id,count)=>{
+  return db.getFavorites(id,count);
+};
+
 storageService.createUser = (user)=>{
   return db.createUser(user);
 };

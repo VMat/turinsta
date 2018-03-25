@@ -24,6 +24,11 @@ UserInterface.getFollowedes = (id, n)=>{
     select({username: 1, avatar: 1});
 };
 
+UserInterface.getFavorites = (id, n)=>{
+  return Commons.getN(Publications,{followers: id},n,{user: 1}).
+    select({places: 1, images: 1});
+};
+
 UserInterface.insert = (user)=>{
   return Commons.insert(new Users(user));
 };

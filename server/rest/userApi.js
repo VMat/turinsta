@@ -26,6 +26,12 @@ router.get('/:id/followedes/count/:limit',(req, res)=>{
     .catch(error=>{res.status(500).send(error)})
 });
 
+router.get('/:id/favorites/count/:limit',(req, res)=>{
+  userService.getFavorites(req.params.id,req.params.limit)
+    .then(user=>{res.status(200).json(user)})
+    .catch(error=>{res.status(500).send(error)})
+});
+
 router.post('/',(req, res)=>{
   userService.createUser(req.body)
     .then(user=>{res.status(200).json(user)})

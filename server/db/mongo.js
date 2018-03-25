@@ -945,6 +945,10 @@ db.getFollowedes = (id,count)=>{
   return userInterface.getFollowedes(id,count);
 };
 
+db.getFavorites = (id,count)=>{
+  return userInterface.getFavorites(id,count);
+};
+
 db.createUser = (user)=>{
   return userInterface.insert(user);
 };
