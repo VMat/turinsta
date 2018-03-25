@@ -455,7 +455,11 @@ db.createComment = (comment)=>{
                           timestamps: {created: new Date().toISOString(), modified: null},
                           seen: false
                         };
-                        return Promise.all([activityInterface.insert(newOutActivity),activityInterface.insert(newCommenterInActivity),activityInterface.insert(newPublisherInActivity)])
+                        let activitiesToInsert = [activityInterface.insert(newOutActivity),activityInterface.insert(newCommenterInActivity)];
+                        if(!parentComment.user._id.equals(publication.user._id)){
+                          activitiesToInsert.push(activityInterface.insert(newPublisherInActivity));
+                        }
+                        return Promise.all(activitiesToInsert)
                           .then(()=>{
                             return languageInterface.getCaption(parentComment.user.language,["responseReceived"])
                               .then((caption)=>{
@@ -466,19 +470,24 @@ db.createComment = (comment)=>{
                                     let data = {type: 'comment', category: publication._id, key: insertedComment._id};
                                     return NotificationService.send({notification: notification, data: data},[parentComment.user.notificationKey])
                                       .then(()=>{
-                                        return languageInterface.getCaption(publication.user.language,["responseReceivedInMyPublication"])
-                                          .then((caption)=>{
-                                            return languageInterface.getCaption(publication.user.language,["summaryTextNotification"])
-                                              .then((summaryCaption)=>{
-                                                let title = caption.replace(':user', commenter.username);
-                                                let notification = {title: title, body: '', summaryText: summaryCaption};
-                                                let data = {type: 'comment', category: publication._id, key: insertedComment._id};
-                                                return NotificationService.send({notification: notification, data: data},[publication.user.notificationKey])
-                                                  .then(()=>{
-                                                    return Promise.resolve(insertedComment)
-                                                  });
-                                              });
-                                          });
+                                        if(!parentComment.user._id.equals(publication.user._id)){
+                                          return languageInterface.getCaption(publication.user.language,["responseReceivedInMyPublication"])
+                                            .then((caption)=>{
+                                              return languageInterface.getCaption(publication.user.language,["summaryTextNotification"])
+                                                .then((summaryCaption)=>{
+                                                  let title = caption.replace(':user', commenter.username);
+                                                  let notification = {title: title, body: '', summaryText: summaryCaption};
+                                                  let data = {type: 'comment', category: publication._id, key: insertedComment._id};
+                                                  return NotificationService.send({notification: notification, data: data},[publication.user.notificationKey])
+                                                    .then(()=>{
+                                                      return Promise.resolve(insertedComment)
+                                                    });
+                                                });
+                                            });
+                                        }
+                                        else{
+                                          return Promise.resolve(insertedComment)
+                                        }
                                       });
                                   });
                               });
@@ -684,7 +693,11 @@ db.updateComment = (comment)=>{
                           timestamps: {created: new Date().toISOString(), modified: null},
                           seen: false
                         };
-                        return Promise.all([activityInterface.insert(newOutActivity),activityInterface.insert(newCommenterInActivity),activityInterface.insert(newPublisherInActivity)])
+                        let activitiesToInsert = [activityInterface.insert(newOutActivity),activityInterface.insert(newCommenterInActivity)];
+                        if(!parentComment.user._id.equals(publication.user._id)){
+                          activitiesToInsert.push(activityInterface.insert(newPublisherInActivity));
+                        }
+                        return Promise.all(activitiesToInsert)
                           .then(()=>{
                             return languageInterface.getCaption(parentComment.user.language,["responseUpdatedReceived"])
                               .then((caption)=>{
@@ -695,19 +708,24 @@ db.updateComment = (comment)=>{
                                     let data = {type: 'comment', category: publication._id, key: updatedComment._id};
                                     return NotificationService.send({notification: notification, data: data},[parentComment.user.notificationKey])
                                       .then(()=>{
-                                        return languageInterface.getCaption(publication.user.language,["responseUpdatedReceivedInMyPublication"])
-                                          .then((caption)=>{
-                                            return languageInterface.getCaption(publication.user.language,["summaryTextNotification"])
-                                              .then((summaryCaption)=>{
-                                                let title = caption.replace(':user', commenter.username);
-                                                let notification = {title: title, body: '', summaryText: summaryCaption};
-                                                let data = {type: 'comment', category: publication._id, key: updatedComment._id};
-                                                return NotificationService.send({notification: notification, data: data},[publication.user.notificationKey])
-                                                  .then(()=>{
-                                                    return Promise.resolve(updatedComment)
-                                                  });
-                                              });
-                                          });
+                                        if(!parentComment.user._id.equals(publication.user._id)){
+                                          return languageInterface.getCaption(publication.user.language,["responseUpdatedReceivedInMyPublication"])
+                                            .then((caption)=>{
+                                              return languageInterface.getCaption(publication.user.language,["summaryTextNotification"])
+                                                .then((summaryCaption)=>{
+                                                  let title = caption.replace(':user', commenter.username);
+                                                  let notification = {title: title, body: '', summaryText: summaryCaption};
+                                                  let data = {type: 'comment', category: publication._id, key: updatedComment._id};
+                                                  return NotificationService.send({notification: notification, data: data},[publication.user.notificationKey])
+                                                    .then(()=>{
+                                                      return Promise.resolve(updatedComment)
+                                                    });
+                                                });
+                                            });
+                                        }
+                                        else{
+                                          return Promise.resolve(updatedComment)
+                                        }
                                       });
                                   });
                               });

@@ -75,7 +75,13 @@ export class ActivitiesPage {
   }
 
   getActivityCaption(caption,user,params){
-    return this.commons.translate(caption,{...params,':user':user});
+    if(params){
+      return this.commons.translate(caption,{...params,':user':user});
+    }
+    else{
+      return this.commons.translate(caption,{});
+    }
+
   }
 
   getAntiquity(date){
