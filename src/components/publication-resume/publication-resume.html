@@ -1,0 +1,12 @@
+<!-- Generated template for the PublicationResumeComponent component -->
+<ion-item>
+  <ion-thumbnail item-start>
+    <img src="{{publication.images[0].url}}"/>
+  </ion-thumbnail>
+  <p class="publication-important-text">{{publication.places[0].name}}</p>
+  <p>{{publication.assessments.length}} <ion-icon name="eye" color="secondary"></ion-icon></p>
+  <p>{{publication.score | number:'1.0-1' }} <ion-icon name="star" color="star"></ion-icon></p>
+  <p>{{publication.followers.length}} <ion-icon name="heart" color="danger"></ion-icon></p>
+  <p>{{publication.experienceIds.length}} <ion-icon name="ios-paper" color="primary" isActive="false"></ion-icon></p>
+  <p>{{publication.commentIds.length}} <ion-icon name="ios-text" color="primary" isActive="false"></ion-icon></p>
+</ion-item>

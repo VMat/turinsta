@@ -65,6 +65,7 @@ import {Badge} from "@ionic-native/badge";
 import {EmptyContentComponent} from "../components/empty-content/empty-content";
 import {ChatActionsMenuPage} from "../pages/chat-actions-menu/chat-actions-menu";
 import {ChatActionsComponent} from "../components/chat-actions/chat-actions";
+import {PublicationResumeComponent} from "../components/publication-resume/publication-resume";
 
 @NgModule({
   declarations: [
@@ -108,7 +109,8 @@ import {ChatActionsComponent} from "../components/chat-actions/chat-actions";
     InboxComponent,
     ContainsFilterPipe,
     EmptyContentComponent,
-    ChatActionsComponent
+    ChatActionsComponent,
+    PublicationResumeComponent
   ],
   imports: [
     BrowserModule,
