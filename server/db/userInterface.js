@@ -25,8 +25,7 @@ UserInterface.getFollowedes = (id, n)=>{
 };
 
 UserInterface.getFavorites = (id, n)=>{
-  return Commons.getN(Publications,{followers: id},n,{user: 1}).
-    select({places: 1, images: 1});
+  return Commons.getN(Publications,{followers: id},n,{"timestamps.created": -1});
 };
 
 UserInterface.insert = (user)=>{
