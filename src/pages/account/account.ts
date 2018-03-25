@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import {IonicPage, NavController, NavParams, ModalController} from 'ionic-angular';
 import {StorageProvider} from "../../providers/storage/storage";
 import {CommonsProvider} from "../../providers/commons/commons";
+import {PublicationWritingPage} from "../publication-writing/publication-writing";
 
 /**
  * Generated class for the AccountPage page.
@@ -24,7 +25,7 @@ export class AccountPage {
   FAVORITE_LIMIT = 50;
   user :any = null;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private storage: StorageProvider, private commons: CommonsProvider){
+  constructor(public navCtrl: NavController, public navParams: NavParams, private storage: StorageProvider, private commons: CommonsProvider, private modalCtrl: ModalController){
   }
 
   ionViewDidLoad() {
@@ -51,6 +52,13 @@ export class AccountPage {
   getFavorites(){
     this.storage.getFavorites(this.commons.getUserId(),this.FAVORITE_LIMIT).subscribe((favorites)=>{
       this.favorites = favorites;
+    });
+  }
+
+  openPublication(publicationId){
+    this.storage.getPublications(1,[{key: "_id", operation: "EQUAL", value: publicationId}],{field: "publication.timestamps.created", way: -1}).subscribe((publication)=>{
+      let publicationWritingModal = this.modalCtrl.create(PublicationWritingPage, {user: publication[0].user, publication: publication[0].publication, experiences: publication[0].experiences, comments: publication[0].comments});
+      publicationWritingModal.present();
     });
   }
 }

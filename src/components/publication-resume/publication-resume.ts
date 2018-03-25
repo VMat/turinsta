@@ -1,4 +1,4 @@
-import {Component, Input} from '@angular/core';
+import {Component, Input, EventEmitter, Output} from '@angular/core';
 
 /**
  * Generated class for the PublicationResumeComponent component.
@@ -13,9 +13,13 @@ import {Component, Input} from '@angular/core';
 export class PublicationResumeComponent {
 
   @Input() publication = null;
+  @Output() openPublication = new EventEmitter<any>();
 
   constructor() {
     console.log('Hello PublicationResumeComponent Component');
   }
 
+  publicationSelected(publicationId){
+    this.openPublication.emit(publicationId);
+  }
 }

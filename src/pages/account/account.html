@@ -25,10 +25,10 @@
   </ion-segment>
   <div [ngSwitch]="show.section">
     <ion-list *ngSwitchCase="'PUBLICATIONS'">
-      <publication-resume *ngFor="let publication of publications" [publication]="publication"></publication-resume>
+      <publication-resume *ngFor="let publication of publications" [publication]="publication" (openPublication)="openPublication($event)"></publication-resume>
     </ion-list>
     <ion-list *ngSwitchCase="'FAVORITES'">
-      <publication-resume *ngFor="let favorite of favorites" [publication]="favorite"></publication-resume>
+      <publication-resume *ngFor="let favorite of favorites" [publication]="favorite" (openPublication)="openPublication($event)"></publication-resume>
     </ion-list>
   </div>
 </ion-content>
