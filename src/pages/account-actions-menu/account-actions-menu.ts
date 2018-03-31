@@ -145,18 +145,24 @@ export class AccountActionsMenuPage {
         loader.present();
         this.uploadPics(file_uris)
           .then((uploadingResponse) => {
-            let avatarUrl = JSON.parse(uploadingResponse["response"]);
+            let avatarUrl = JSON.parse(uploadingResponse[0]["response"]);
             this.storage.patchUser(this.user._id, {avatar: avatarUrl}).subscribe(()=>{
               loader.dismiss();
               this.commons.presentToast("El avatar se ha actualizado con éxito");
+              this.user.avatar = avatarUrl;
+              this.viewCtrl.dismiss();
             });
           })
           .catch((err) => {
             loader.dismiss();
-            this.commons.presentToast("Se ha producido un error al actualizar el avatar")
+            this.commons.presentToast("Se ha producido un error al actualizar el avatar");
+            this.viewCtrl.dismiss();
           });
       },
-      err => this.commons.presentToast("Se ha producido un error al cargar la imagen")
+      (err) => {
+        this.commons.presentToast("Se ha producido un error al cargar la imagen")
+        this.viewCtrl.dismiss();
+      }
     );
   }
 

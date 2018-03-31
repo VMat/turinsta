@@ -1,14 +1,14 @@
 webpackJsonp([15],{
 
-/***/ 721:
+/***/ 723:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "AccountActionsMenuPageModule", function() { return AccountActionsMenuPageModule; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "AccountPageModule", function() { return AccountPageModule; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(5);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__account_actions_menu__ = __webpack_require__(172);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__account__ = __webpack_require__(75);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -18,23 +18,23 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 
 
 
-var AccountActionsMenuPageModule = (function () {
-    function AccountActionsMenuPageModule() {
+var AccountPageModule = (function () {
+    function AccountPageModule() {
     }
-    return AccountActionsMenuPageModule;
+    return AccountPageModule;
 }());
-AccountActionsMenuPageModule = __decorate([
+AccountPageModule = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["NgModule"])({
         declarations: [
-            __WEBPACK_IMPORTED_MODULE_2__account_actions_menu__["a" /* AccountActionsMenuPage */],
+            __WEBPACK_IMPORTED_MODULE_2__account__["a" /* AccountPage */],
         ],
         imports: [
-            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* IonicPageModule */].forChild(__WEBPACK_IMPORTED_MODULE_2__account_actions_menu__["a" /* AccountActionsMenuPage */]),
+            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* IonicPageModule */].forChild(__WEBPACK_IMPORTED_MODULE_2__account__["a" /* AccountPage */]),
         ],
     })
-], AccountActionsMenuPageModule);
+], AccountPageModule);
 
-//# sourceMappingURL=account-actions-menu.module.js.map
+//# sourceMappingURL=account.module.js.map
 
 /***/ })
 
