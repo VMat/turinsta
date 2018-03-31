@@ -66,6 +66,8 @@ import {EmptyContentComponent} from "../components/empty-content/empty-content";
 import {ChatActionsMenuPage} from "../pages/chat-actions-menu/chat-actions-menu";
 import {ChatActionsComponent} from "../components/chat-actions/chat-actions";
 import {PublicationResumeComponent} from "../components/publication-resume/publication-resume";
+import {AccountActionsComponent} from "../components/account-actions/account-actions";
+import {AccountActionsMenuPage} from "../pages/account-actions-menu/account-actions-menu";
 
 @NgModule({
   declarations: [
@@ -87,6 +89,7 @@ import {PublicationResumeComponent} from "../components/publication-resume/publi
     ChatPage,
     InboxWritingPage,
     ChatActionsMenuPage,
+    AccountActionsMenuPage,
     PublicationHeaderComponent,
     PublicationBodyComponent,
     PublicationFooterComponent,
@@ -110,7 +113,8 @@ import {PublicationResumeComponent} from "../components/publication-resume/publi
     ContainsFilterPipe,
     EmptyContentComponent,
     ChatActionsComponent,
-    PublicationResumeComponent
+    PublicationResumeComponent,
+    AccountActionsComponent
   ],
   imports: [
     BrowserModule,
@@ -148,7 +152,8 @@ import {PublicationResumeComponent} from "../components/publication-resume/publi
     DescriptionWritingPage,
     ChatPage,
     InboxWritingPage,
-    ChatActionsMenuPage
+    ChatActionsMenuPage,
+    AccountActionsMenuPage
   ],
   providers: [
     StatusBar,

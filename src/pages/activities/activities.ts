@@ -5,6 +5,7 @@ import {StorageProvider} from "../../providers/storage/storage";
 import {Badge} from "@ionic-native/badge";
 import {setUnseenActivities} from "../../providers/reducers/user.reducer";
 import {PublicationWritingPage} from "../publication-writing/publication-writing";
+import {AccountPage} from "../account/account";
 
 /**
  * Generated class for the ActivitiesPage page.
@@ -63,6 +64,11 @@ export class ActivitiesPage {
       let publicationWritingModal = this.modalCtrl.create(PublicationWritingPage, {user: publication[0].user, publication: publication[0].publication, experiences: publication[0].experiences, comments: publication[0].comments});
       publicationWritingModal.present();
     });
+  }
+
+  openUser(user){
+    let publicationWritingModal = this.modalCtrl.create(AccountPage, {user: user});
+    publicationWritingModal.present();
   }
 
   ionViewWillEnter(){

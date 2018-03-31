@@ -1,4 +1,4 @@
-import {Component, ChangeDetectionStrategy} from '@angular/core';
+import {Component} from '@angular/core';
 import { HomePage } from '../home/home';
 import { PlacesPage } from '../places/places';
 import { ActivitiesPage } from '../activities/activities';
@@ -7,7 +7,6 @@ import {Store} from "@ngrx/store";
 import {Badge} from "@ionic-native/badge";
 import {StorageProvider} from "../../providers/storage/storage";
 import {CommonsProvider} from "../../providers/commons/commons";
-import {setUnseenActivities} from "../../providers/reducers/user.reducer";
 
 
 @Component({

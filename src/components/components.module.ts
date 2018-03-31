@@ -22,6 +22,7 @@ import { InboxComponent } from './inbox/inbox';
 import { EmptyContentComponent } from './empty-content/empty-content';
 import { ChatActionsComponent } from './chat-actions/chat-actions';
 import { PublicationResumeComponent } from './publication-resume/publication-resume';
+import { AccountActionsComponent } from './account-actions/account-actions';
 @NgModule({
 	declarations: [PublicationComponent,
     ExperienceComponent,
@@ -46,7 +47,8 @@ import { PublicationResumeComponent } from './publication-resume/publication-res
     InboxComponent,
     EmptyContentComponent,
     ChatActionsComponent,
-    PublicationResumeComponent],
+    PublicationResumeComponent,
+    AccountActionsComponent],
 	imports: [],
 	exports: [PublicationComponent,
     ExperienceComponent,
@@ -71,6 +73,7 @@ import { PublicationResumeComponent } from './publication-resume/publication-res
     InboxComponent,
     EmptyContentComponent,
     ChatActionsComponent,
-    PublicationResumeComponent]
+    PublicationResumeComponent,
+    AccountActionsComponent]
 })
 export class ComponentsModule {}

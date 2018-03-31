@@ -39858,6 +39858,10 @@ score-input ion-icon {
   font-size: xx-large !important;
 }
 
+page-account account-actions ion-icon {
+  font-size: medium !important;
+}
+
 page-activities p {
   font-size: x-small;
 }

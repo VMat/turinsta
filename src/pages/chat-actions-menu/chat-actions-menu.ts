@@ -31,7 +31,6 @@ export class ChatActionsMenuPage {
 
   ionViewWillLoad() {
     this.chat = this.navParams.get("chat");
-    console.log('ionViewDidLoad ChatActionsMenuPage');
   }
 
   editChat(){

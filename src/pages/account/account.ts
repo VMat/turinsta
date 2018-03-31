@@ -32,6 +32,10 @@ export class AccountPage {
     console.log('ionViewDidLoad AccountPage');
   }
 
+  ionViewWillLoad() {
+    console.log('ionViewDidLoad AccountPage');
+  }
+
   ionViewWillEnter(){
     this.initializeValues();
   }
@@ -43,14 +47,23 @@ export class AccountPage {
   }
 
   getUser(){
-    this.storage.getUser(this.commons.getUserId()).subscribe((user)=>{
+    let userId = null;
+
+    if(this.navParams.get("user")){
+      userId = this.navParams.get("user");
+    }
+    else{
+      userId = this.commons.getUserId();
+    }
+
+    this.storage.getUser(userId).subscribe((user)=>{
       this.user = user;
       this.publications = user.publications;
     });
   }
 
   getFavorites(){
-    this.storage.getFavorites(this.commons.getUserId(),this.FAVORITE_LIMIT).subscribe((favorites)=>{
+    this.storage.getFavorites(this.user._id,this.FAVORITE_LIMIT).subscribe((favorites)=>{
       this.favorites = favorites;
     });
   }
