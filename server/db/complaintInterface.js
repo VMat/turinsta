@@ -5,8 +5,8 @@ const Commons = require('./commons');
 
 let ComplaintInterface = {};
 
-ComplaintInterface.getAll = ()=>{
-  return Commons.getAll()
+ComplaintInterface.getAll = (filters)=>{
+  return Commons.getN(Complaints,filters)
     .populate('reporter')
     .populate('reported')
     .populate('publication');

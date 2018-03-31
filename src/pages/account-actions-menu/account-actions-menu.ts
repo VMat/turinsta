@@ -89,7 +89,7 @@ export class AccountActionsMenuPage {
   }
 
   reportUser(){
-    this.storage.createComplaint({reporter: this.loggedUser, reported: this.user._id}).subscribe(()=>{
+    this.storage.createComplaint({reporter: this.loggedUser, reported: this.user._id, publication: null}).subscribe(()=>{
       this.commons.presentToast("El usuario ha sido denunciado con éxito");
       this.viewCtrl.dismiss();
     });

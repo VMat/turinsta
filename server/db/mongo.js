@@ -1236,7 +1236,13 @@ db.getComplaint = (id)=>{
 db.createComplaint = (complaint)=>{
   complaint.timestamps = {created: new Date().toISOString(), modified: null};
   complaint.checked = false;
-  return complaintInterface.insert(complaint);
+  return complaintInterface.getAll({reporter: complaint.reporter, reported: complaint.reported, publication: complaint.publication})
+    .then((complaints)=>{
+      if(complaints.length>0){
+        return Promise.resolve(null);
+      }
+      return complaintInterface.insert(complaint);
+    })
 };
 
 module.exports = db;

@@ -1359,7 +1359,7 @@ var AccountActionsMenuPage = (function () {
     };
     AccountActionsMenuPage.prototype.reportUser = function () {
         var _this = this;
-        this.storage.createComplaint({ reporter: this.loggedUser, reported: this.user._id }).subscribe(function () {
+        this.storage.createComplaint({ reporter: this.loggedUser, reported: this.user._id, publication: null }).subscribe(function () {
             _this.commons.presentToast("El usuario ha sido denunciado con éxito");
             _this.viewCtrl.dismiss();
         });
