@@ -961,8 +961,8 @@ db.updateUser = (user)=>{
 db.patchUser = (id,user)=>{
   if(user.avatar){
     return userInterface.getOne(id,{bucketId: 1, avatar: 1})
-      .then((user)=>{
-        return ImageUploader.removeFromGcs(user.bucketId,user.avatar)
+      .then((userToUpdate)=>{
+        return ImageUploader.removeFromGcs(userToUpdate.bucketId,userToUpdate.avatar)
           .then(()=>{
             return userInterface.patch(id,user);
           });
