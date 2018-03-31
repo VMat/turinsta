@@ -7,6 +7,7 @@ const experienceInterface = require('./experienceInterface');
 const languageInterface = require('./languageInterface');
 const inboxInterface = require('./inboxInterface');
 const placeInterface = require('./placeInterface');
+const complaintInterface = require('./complaintInterface');
 const NotificationService = require('../services/notificationService');
 const ImageUploader = require('../services/imageUploader');
 
@@ -1222,6 +1223,20 @@ db.createPlace = (place)=>{
 
 db.updatePlace = (place)=>{
   return placeInterface.update(place);
+};
+
+db.getComplaints = ()=>{
+  return complaintInterface.getAll();
+};
+
+db.getComplaint = (id)=>{
+  return complaintInterface.getOne(id);
+};
+
+db.createComplaint = (complaint)=>{
+  complaint.timestamps = {created: new Date().toISOString(), modified: null};
+  complaint.checked = false;
+  return complaintInterface.insert(complaint);
 };
 
 module.exports = db;

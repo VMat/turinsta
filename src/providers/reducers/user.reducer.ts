@@ -1,6 +1,7 @@
 import {tassign} from "tassign";
 export const SET_AVATAR = "SET_AVATAR";
 export const SET_USERNAME = "SET_USERNAME";
+export const SET_LANGUAGE = "SET_LANGUAGE";
 export const SET_UNREAD_MESSAGES = "SET_UNREAD_MESSAGES";
 export const SET_UNSEEN_ACTIVITIES = "SET_UNSEEN_ACTIVITIES";
 
@@ -14,6 +15,12 @@ export function setAvatar(payload) {
 export function setUsername(payload) {
   return {
     type: SET_USERNAME, payload: payload
+  }
+}
+
+export function setLanguage(payload) {
+  return {
+    type: SET_LANGUAGE, payload: payload
   }
 }
 
@@ -32,6 +39,7 @@ export function setUnseenActivities(payload) {
 const initialState = {
   avatar: null,
   username: null,
+  language: null,
   unreadMessages: [],
   unseenActivities: []
 };
@@ -44,6 +52,9 @@ export function userReducer(state = initialState, { type, payload } ) {
     }
     case SET_USERNAME:{
       return tassign(state, {username: payload});
+    }
+    case SET_LANGUAGE:{
+      return tassign(state, {language: payload});
     }
     case SET_UNREAD_MESSAGES:{
       return tassign(state, {unreadMessages: payload});

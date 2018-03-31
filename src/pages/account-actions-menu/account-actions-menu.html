@@ -8,7 +8,12 @@
   <ion-list *ngIf="user._id==loggedUser">
     <ion-item>
       <ion-icon item-start name="quote" color="primary"></ion-icon>
-      <p>Idioma</p>
+      <ion-label>Idioma</ion-label>
+      <ion-select [(ngModel)]="user.language" [interface]="'popover'" (ionChange)="changeLanguage($event)">
+        <ion-option *ngFor="let language of languages" [value]="language._id">
+          {{language.name}}
+        </ion-option>
+      </ion-select>
     </ion-item>
   </ion-list>
   <ion-list *ngIf="user._id!=loggedUser">

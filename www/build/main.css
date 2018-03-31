@@ -39862,6 +39862,30 @@ page-account account-actions ion-icon {
   font-size: medium !important;
 }
 
+page-account-actions-menu .flag-icon-background {
+  background-size: contain;
+  background-position: 50%;
+  background-repeat: no-repeat;
+}
+
+page-account-actions-menu .flag-icon {
+  background-size: contain;
+  background-position: 50%;
+  background-repeat: no-repeat;
+  position: relative;
+  display: inline-block;
+  width: 1.33333333em;
+  line-height: 1em;
+}
+
+page-account-actions-menu .flag-icon:before {
+  content: "\00a0";
+}
+
+page-account-actions-menu .flag {
+  background-image: url(../../assets/imgs/logo.png);
+}
+
 page-activities p {
   font-size: x-small;
 }

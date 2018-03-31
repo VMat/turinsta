@@ -222,4 +222,16 @@ storageService.updatePlace = (place)=>{
   return db.updatePlace(place);
 };
 
+storageService.getComplaints = ()=>{
+  return db.getComplaints();
+};
+
+storageService.getComplaint = (id)=>{
+  return db.getComplaint(id);
+};
+
+storageService.createComplaint = (complaint)=>{
+  return db.createComplaint(complaint);
+};
+
 module.exports = storageService;

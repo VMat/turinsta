@@ -219,4 +219,9 @@ export class StorageProvider {
     return this.http.get(StorageProvider.baseUrl + 'places/search', {params: params, headers: StorageProvider.headers})
       .map((res: Response) => res.json());
   }
+
+  createComplaint(complaint){
+    return this.http.post(StorageProvider.baseUrl + 'complaints/',complaint,{headers: StorageProvider.headers})
+      .map((res: Response) => res.json());
+  }
 }

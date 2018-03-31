@@ -23,6 +23,7 @@ export class AccountActionsMenuPage {
   user: any = null;
   loggedUser: any = null;
   followedes: any = [];
+  languages: any = [];
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private viewCtrl: ViewController,
               public commons: CommonsProvider, private storage: StorageProvider, private modalCtrl: ModalController, private store: Store<any>) {
@@ -37,7 +38,10 @@ export class AccountActionsMenuPage {
     this.loggedUser = this.commons.getUserId();
     this.storage.getFollowedes(this.loggedUser,0).subscribe((followedes)=>{
       this.followedes = followedes.map((followed)=>{return followed._id});
-    })
+    });
+    this.storage.getLanguages().first().subscribe((languages)=>{
+      this.languages = languages;
+    });
   }
 
   handleFollowed(followed){
@@ -85,7 +89,17 @@ export class AccountActionsMenuPage {
   }
 
   reportUser(){
-    alert("Usuario denunciado!");
+    this.storage.createComplaint({reporter: this.loggedUser, reported: this.user._id}).subscribe(()=>{
+      this.commons.presentToast("El usuario ha sido denunciado con éxito");
+      this.viewCtrl.dismiss();
+    });
+  }
+
+  changeLanguage(event){
+    this.storage.patchUser(this.loggedUser,{language: event}).first().subscribe(()=>{
+      this.commons.presentToast("El idioma ha sido modificado correctamente");
+      this.commons.setLanguage(event);
+    });
   }
 
 }

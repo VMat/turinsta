@@ -1,8 +1,12 @@
 import { Component } from '@angular/core';
-import {IonicPage, NavController, NavParams, ViewController, ActionSheetController} from 'ionic-angular';
+import {
+  IonicPage, NavController, NavParams, ViewController, ActionSheetController,
+  ModalController
+} from 'ionic-angular';
 import {StorageProvider} from "../../providers/storage/storage";
 import {CommonsProvider} from "../../providers/commons/commons";
 import {NotificationProvider} from "../../providers/notification/notification";
+import {AccountPage} from "../account/account";
 
 /**
  * Generated class for the PublicationActionsMenuPage page.
@@ -18,7 +22,7 @@ import {NotificationProvider} from "../../providers/notification/notification";
 })
 export class PublicationActionsMenuPage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private viewCtrl: ViewController, private storageService: StorageProvider, private commons: CommonsProvider, private actionSheetCtrl: ActionSheetController, private notifications: NotificationProvider) {}
+  constructor(public navCtrl: NavController, public navParams: NavParams, private viewCtrl: ViewController, private storageService: StorageProvider, private commons: CommonsProvider, private actionSheetCtrl: ActionSheetController, private modalCtrl: ModalController) {}
   followedPublication: boolean = null;
   followedUser: boolean = null;
   publication: string = null;
@@ -122,13 +126,17 @@ export class PublicationActionsMenuPage {
   }
 
   viewUser(){
-    alert("Ver usuario");
-    this.viewCtrl.dismiss();
+    let publicationWritingModal = this.modalCtrl.create(AccountPage, {user: this.user});
+    publicationWritingModal.present().then(()=>{
+      this.viewCtrl.dismiss();
+    });
   }
 
   denunciate(){
-    alert("Publicación denunciada");
-    this.viewCtrl.dismiss();
+    this.storageService.createComplaint({reporter: this.commons.getUserId(), reported: this.user, publication: this.publication}).subscribe(()=>{
+      this.commons.presentToast("La publicación ha sido denunciada con éxito");
+      this.viewCtrl.dismiss();
+    });
   }
 
 }

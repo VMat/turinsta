@@ -7,6 +7,7 @@ const userApi = require('../rest/userApi');
 const languageApi = require('../rest/languageApi');
 const inboxApi = require('../rest/inboxApi');
 const placesApi = require('../rest/placeApi');
+const complaintApi = require('../rest/complaintApi');
 
 routeServer.get('/', function (req, res){
   res.json(200, {msg: 'OK' });
@@ -35,5 +36,8 @@ routeServer.use('/inboxes', inboxApi);
 
 // API REST PLACES
 routeServer.use('/places', placesApi);
+
+// API REST COMPLAINTS
+routeServer.use('/complaints', complaintApi);
 
 module.exports = routeServer;
