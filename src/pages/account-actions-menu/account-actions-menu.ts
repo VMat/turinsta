@@ -1,10 +1,13 @@
 import { Component } from '@angular/core';
-import {IonicPage, NavController, NavParams, ViewController, ModalController} from 'ionic-angular';
+import {IonicPage, NavController, NavParams, ViewController, ModalController, LoadingController} from 'ionic-angular';
 import {CommonsProvider} from "../../providers/commons/commons";
 import {StorageProvider} from "../../providers/storage/storage";
 import { Socket } from 'ng-socket-io';
 import {ChatPage} from "../chat/chat";
 import {Store} from "@ngrx/store";
+import {UsernameWritingPage} from "../username-writing/username-writing";
+import {ImagePicker} from "@ionic-native/image-picker";
+import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-native/file-transfer';
 
 /**
  * Generated class for the AccountActionsMenuPage page.
@@ -26,7 +29,8 @@ export class AccountActionsMenuPage {
   languages: any = [];
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private viewCtrl: ViewController,
-              public commons: CommonsProvider, private storage: StorageProvider, private modalCtrl: ModalController, private store: Store<any>) {
+              public commons: CommonsProvider, private storage: StorageProvider, private modalCtrl: ModalController, private store: Store<any>,
+              private imagePicker: ImagePicker, private loadingCtrl: LoadingController,private transfer: FileTransfer){
   }
 
   ionViewDidLoad() {
@@ -99,7 +103,78 @@ export class AccountActionsMenuPage {
     this.storage.patchUser(this.loggedUser,{language: event}).first().subscribe(()=>{
       this.commons.presentToast("El idioma ha sido modificado correctamente");
       this.commons.setLanguage(event);
+      this.viewCtrl.dismiss();
     });
+  }
+
+  openUsernameWriting(){
+    let usernameWritingModal = this.modalCtrl.create(UsernameWritingPage, {username: this.user.username});
+    usernameWritingModal.present();
+    usernameWritingModal.onDidDismiss((username)=>{
+      if(username){
+        this.user.username = username;
+        this.changeUsername();
+      }
+    });
+  }
+
+  changeUsername(){
+    this.storage.patchUser(this.user._id,{username: this.user.username}).subscribe(()=>{
+      this.commons.setUserData();
+      this.commons.presentToast("El nombre de usuario ha sido actualizado con éxito");
+      this.viewCtrl.dismiss();
+    })
+  }
+
+  selectAvatar(){
+    let options = {
+      maximumImagesCount: 1,
+      width: 500,
+      height: 500,
+      quality: 100
+    };
+
+    this.imagePicker.getPictures(options).then(
+      file_uris => {
+        if(file_uris.length==0){
+          return false;
+        }
+        let loader = this.loadingCtrl.create({
+          content: "Subiendo imágenes..."
+        });
+        loader.present();
+        this.uploadPics(file_uris)
+          .then((uploadingResponse) => {
+            let avatarUrl = JSON.parse(uploadingResponse["response"]);
+            this.storage.patchUser(this.user._id, {avatar: avatarUrl}).subscribe(()=>{
+              loader.dismiss();
+              this.commons.presentToast("El avatar se ha actualizado con éxito");
+            });
+          })
+          .catch((err) => {
+            loader.dismiss();
+            this.commons.presentToast("Se ha producido un error al actualizar el avatar")
+          });
+      },
+      err => this.commons.presentToast("Se ha producido un error al cargar la imagen")
+    );
+  }
+
+  uploadPics(images) {
+    return Promise.all(
+      images.map((i)=>{
+        let uri = StorageProvider.baseUrl + 'users/' + this.user._id + '/avatar';
+        let options: FileUploadOptions = {
+          fileKey: 'turinstafile',
+          fileName: 'profile',
+          chunkedMode: true,
+          mimeType: "image/jpeg",
+          headers: {}
+        };
+        const ft: FileTransferObject = this.transfer.create();
+        return ft.upload(i, uri, options);
+      })
+    );
   }
 
 }

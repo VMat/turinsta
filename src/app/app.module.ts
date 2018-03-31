@@ -68,6 +68,7 @@ import {ChatActionsComponent} from "../components/chat-actions/chat-actions";
 import {PublicationResumeComponent} from "../components/publication-resume/publication-resume";
 import {AccountActionsComponent} from "../components/account-actions/account-actions";
 import {AccountActionsMenuPage} from "../pages/account-actions-menu/account-actions-menu";
+import {UsernameWritingPage} from "../pages/username-writing/username-writing";
 
 @NgModule({
   declarations: [
@@ -90,6 +91,7 @@ import {AccountActionsMenuPage} from "../pages/account-actions-menu/account-acti
     InboxWritingPage,
     ChatActionsMenuPage,
     AccountActionsMenuPage,
+    UsernameWritingPage,
     PublicationHeaderComponent,
     PublicationBodyComponent,
     PublicationFooterComponent,
@@ -153,7 +155,8 @@ import {AccountActionsMenuPage} from "../pages/account-actions-menu/account-acti
     ChatPage,
     InboxWritingPage,
     ChatActionsMenuPage,
-    AccountActionsMenuPage
+    AccountActionsMenuPage,
+    UsernameWritingPage
   ],
   providers: [
     StatusBar,

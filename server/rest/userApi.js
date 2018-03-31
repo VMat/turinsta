@@ -1,5 +1,12 @@
 const router = require('express').Router();
 const userService = require('../services/userService');
+const Multer = require('multer');
+const imageUploader = require('../services/imageUploader');
+
+const uploadHandler = Multer({
+  storage: Multer.MemoryStorage,
+  fileSize: 5 * 1024 * 1024
+});
 
 router.get('/',(req, res)=>{
   userService.getUsers()
@@ -80,6 +87,21 @@ router.delete('/:user/inbox/:inbox',(req, res)=>{
     .catch(error=>{res.status(500).send(error)})
 });
 
+router.post('/:user/avatar',uploadHandler.any(),imageUploader.genericUploadToGcs,(request, response)=>{
+  const cloudStoragePublicUrls = request.files.map((file)=>{return file.cloudStoragePublicUrl});
+  if(cloudStoragePublicUrls){
+    if(cloudStoragePublicUrls.length>0){
+      console.log(cloudStoragePublicUrls[0]);
+      response.status(200).json(cloudStoragePublicUrls[0])
+    }
+    else{
+      response.status(500).send("error")
+    }
+  }
+  else{
+    response.status(500).send("error")
+  }
+});
 
 
 module.exports = router;

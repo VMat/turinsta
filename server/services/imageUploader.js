@@ -88,7 +88,14 @@ ImgUpload.genericUploadToGcs = (req, res, next) => {
       let pending = req.files.length;
 
       req.files.map((file,i)=>{
-        gcsname[i] = file.originalname + '-' + Date.now();
+
+        if(file.originalname != 'profile'){
+          gcsname[i] = file.originalname + '-' + Date.now();
+        }
+        else{
+          gcsname[i] = file.originalname;
+        }
+
         bucketFile[i] = bucket.file(gcsname[i]);
         stream[i] = bucketFile[i].createWriteStream({
           metadata: {
