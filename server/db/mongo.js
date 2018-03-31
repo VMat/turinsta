@@ -965,6 +965,9 @@ db.patchUser = (id,user)=>{
         return ImageUploader.removeFromGcs(userToUpdate.bucketId,userToUpdate.avatar)
           .then(()=>{
             return userInterface.patch(id,user);
+          })
+          .catch(()=>{
+            return userInterface.patch(id,user);
           });
       });
   }
