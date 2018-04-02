@@ -2,6 +2,6 @@
 <ion-list class="comment-list">
   <comment *ngFor="let comment of comments" [comment]=comment [publicationId]=publicationId [publicationOwner]=publicationOwner></comment>
   <ion-item no-padding>
-    <ion-note item-start style="font-size: x-small" (click)="presentCommentWritingModal()">Escribe un comentario...</ion-note>
+    <ion-note item-start style="font-size: x-small" (click)="presentCommentWritingModal()">{{getCaption("writeComment")}}</ion-note>
   </ion-item>
 </ion-list>

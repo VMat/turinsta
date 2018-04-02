@@ -9,7 +9,7 @@
     <ion-avatar class="out-activity-avatar" item-start>
       <img src="{{user.avatar}}"/>
     </ion-avatar>
-    <p>{{user.followers.length}} seguidores / {{user.followedes.length}} seguidos</p>
+    <p>{{user.followers.length}} {{getCaption('followers')}} / {{user.followedes.length}} {{getCaption('followedes')}}</p>
     <h2 class="publication-important-text">{{user.username}}</h2>
     <p item-right>{{user.score | number:'1.0-1' }} <ion-icon name="star" color="star"></ion-icon>
       / {{user.publications.length}} <ion-icon name="images" color="secondary"></ion-icon>

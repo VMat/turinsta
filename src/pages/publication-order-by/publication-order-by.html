@@ -6,25 +6,25 @@
 -->
 <ion-content no-padding>
   <ion-list radio-group [(ngModel)]="sortValue">
-    <ion-list-header>Ordenar por</ion-list-header>
+    <ion-list-header>{{getCaption("orderBy")}}</ion-list-header>
     <ion-item>
-      <ion-label>Más recientes</ion-label>
+      <ion-label>{{getCaption("orderByMostRecent")}}</ion-label>
       <ion-radio value="publication.timestamps.created" (click)="close({field: 'publication.timestamps.created', way: -1})"></ion-radio>
     </ion-item>
     <ion-item>
-      <ion-label>Más populares</ion-label>
+      <ion-label>{{getCaption("orderByMostPopulated")}}</ion-label>
       <ion-radio value="publication.followers" (click)="close({field: 'publication.followers', way: -1})"></ion-radio>
     </ion-item>
     <ion-item>
-      <ion-label>Mejor calificadas</ion-label>
+      <ion-label>{{getCaption("orderByMostQualified")}}</ion-label>
       <ion-radio value="publication.score" (click)="close({field: 'publication.score', way: -1})"></ion-radio>
     </ion-item>
     <ion-item>
-      <ion-label>Usuarios más populares</ion-label>
+      <ion-label>{{getCaption("orderByMostPopularUsers")}}</ion-label>
       <ion-radio value="user.followers" (click)="close({field: 'user.followers', way: -1})"></ion-radio>
     </ion-item>
     <ion-item>
-      <ion-label>Usuarios mejor calificados</ion-label>
+      <ion-label>{{getCaption("orderByMostQualifiedUsers")}}</ion-label>
       <ion-radio value="user.score" (click)="close({field: 'user.score', way: -1})"></ion-radio>
     </ion-item>
   </ion-list>

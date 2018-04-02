@@ -1,4 +1,5 @@
 import {Component, Input, ChangeDetectionStrategy} from '@angular/core';
+import {CommonsProvider} from "../../providers/commons/commons";
 
 /**
  * Generated class for the PublicationListComponent component.
@@ -15,7 +16,11 @@ export class PublicationListComponent {
 
   @Input() data: any = null;
 
-  constructor() {
+  constructor(private commons: CommonsProvider) {
     console.log('Hello PublicationListComponent Component');
+  }
+
+  getCaption(captionKey){
+    return this.commons.translate([captionKey])
   }
 }

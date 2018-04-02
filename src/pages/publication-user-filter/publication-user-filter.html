@@ -7,17 +7,17 @@
 
 <ion-content no-padding>
   <ion-list radio-group [(ngModel)]="userFilter">
-    <ion-list-header>Visualizar</ion-list-header>
+    <ion-list-header>{{getCaption("userFilterVisualize")}}</ion-list-header>
     <ion-item>
-      <ion-label>Todos</ion-label>
+      <ion-label>{{getCaption("userFilterAll")}}</ion-label>
       <ion-radio value="{{null}}" (click)="close()"></ion-radio>
     </ion-item>
     <ion-item>
-      <ion-label>Seguidos</ion-label>
+      <ion-label>{{getCaption("userFilterFollowed")}}</ion-label>
       <ion-radio value="{{loggedUser}}" (click)="close({key: 'user.followers', value: loggedUser, operation: 'CONTAINS'})"></ion-radio>
     </ion-item>
     <ion-item>
-      <ion-input item-start [(ngModel)]="customUser" placeholder="Buscar por nombre..."></ion-input>
+      <ion-input item-start [(ngModel)]="customUser" placeholder="{{getCaption('userFilterByName')}}"></ion-input>
       <button item-end ion-button (click)="close({key: 'user.username', value: customUser, operation: 'LIKE'})" icon-only clear><ion-icon name="ios-arrow-dropright" color="primary"></ion-icon></button>
     </ion-item>
   </ion-list>

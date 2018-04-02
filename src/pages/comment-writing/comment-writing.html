@@ -10,8 +10,8 @@
       <button item-start ion-button clear (click)="dismissComment()">
         <ion-icon name="close"></ion-icon>
       </button>
-      <ion-title *ngIf="!comment._id">Nuevo comentario</ion-title>
-      <ion-title *ngIf="comment._id">Editar comentario</ion-title>
+      <!--<ion-title *ngIf="!comment._id">Nuevo comentario</ion-title>-->
+      <!--<ion-title *ngIf="comment._id">Editar comentario</ion-title>-->
       <button item-end ion-button clear (click)="confirmSave()">
         <ion-icon name="checkmark" color="success"></ion-icon>
       </button>
@@ -20,7 +20,7 @@
 </ion-header>
 <ion-content no-padding style="height: 100%; width: 100%">
   <ion-item style="height: 85%">
-    <ion-label stacked>Comentario</ion-label>
+    <ion-label stacked>{{getCaption("publicationComment")}}</ion-label>
     <ion-textarea [(ngModel)]="comment.content" style="width: 100%"></ion-textarea>
   </ion-item>
   <ion-item style="height: 15%">

@@ -64,7 +64,7 @@ export class PlaceSelectingPage {
 
   updatePlace(){
     this.storageService.patchPublication(this.publicationId,{places: [this.placeSelected]}).subscribe((patchedPublication)=>{
-      this.commons.presentToast("La ubicación ha sido actualizada con éxito");
+      this.commons.presentToast(this.commons.translate(["placeUpdated"]));
       this.viewCtrl.dismiss(this.placeSelected);
     });
   }

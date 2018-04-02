@@ -61,9 +61,13 @@ export class DescriptionWritingPage {
 
   saveDescription(){
     this.storageService.patchPublication(this.publicationId, {description: [this.description.content]}).subscribe((patchedPublication)=>{
-      this.commons.presentToast("La descripción ha sido actualizada con éxito");
+      this.commons.presentToast(this.commons.translate(["descriptionEditSuccess"]));
       this.viewCtrl.dismiss(this.description.content);
     });
+  }
+
+  getCaption(captionKey){
+    return this.commons.translate([captionKey]);
   }
 
 }

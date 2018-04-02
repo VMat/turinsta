@@ -87,11 +87,11 @@ export class PublicationWritingPage {
 
   checkNeededField(){
     if(!this.publication.images || this.publication.images.length==0){
-      this.commons.presentToast("La publicación debe tener al menos una imagen");
+      this.commons.presentToast(this.commons.translate(["missingPublicationImages"]));
       return false;
     }
     if(!this.publication.places || this.publication.places.length==0){
-      this.commons.presentToast("Debe proporcionar un destino");
+      this.commons.presentToast(this.commons.translate(["missingPublicationPlaces"]));
       return false;
     }
     return true;
@@ -169,7 +169,7 @@ export class PublicationWritingPage {
       return true;
     }
     else{
-      this.commons.presentToast("La publicación debe tener al menos una imagen");
+      this.commons.presentToast(this.commons.translate(["missingPublicationImages"]));
       return false;
     }
   }
@@ -180,10 +180,9 @@ export class PublicationWritingPage {
       cssClass: "fullscreen-loading"
     });
     loader.present();
-    sessionStorage.setItem("this.publication",JSON.stringify(this.publication));
     if(Boolean(this.publication._id)){
       this.storageService.updatePublication(this.publication).subscribe((editedPublication)=>{
-        this.commons.presentToast("La publicación ha sido actualizada con éxito");
+        this.commons.presentToast(this.commons.translate(["publicationEdited"]));
         this.viewCtrl.dismiss();
       });
     }
@@ -201,28 +200,28 @@ export class PublicationWritingPage {
             )
               .then(()=>{
                 loader.dismiss();
-                this.commons.presentToast("La publicación ha sido grabada con éxito");
+                this.commons.presentToast(this.commons.translate(["publicationCreated"]));
                 this.viewCtrl.dismiss();
               })
               .catch((err) => {
                 loader.dismiss();
-                this.commons.presentToast("No se han podido subir las imágenes")
+                this.commons.presentToast(this.commons.translate(["imagesUploadFailed"]))
               });
           })
             .catch((err) => {
               loader.dismiss();
-              this.commons.presentToast("No se han podido subir las experiencias")
+              this.commons.presentToast(this.commons.translate(["experienceUploadFailed"]))
             });
         },(error)=>{
           loader.dismiss();
-          this.commons.presentToast("No se ha podido subir la publicación")
+          this.commons.presentToast(this.commons.translate(["publicationUploadFailed"]))
         });
     }
   }
 
   deletePublication(){
     this.storageService.deletePublication(this.publication._id).subscribe((deletedPublication)=>{
-      this.commons.presentToast("La publicación ha sido eliminada con éxito");
+      this.commons.presentToast(this.commons.translate(["publicationDeleted"]));
       this.viewCtrl.dismiss();
     });
   }
@@ -270,12 +269,12 @@ export class PublicationWritingPage {
           this.uploadPics(file_uris)
           .then((values) => {
             loader.dismiss();
-            this.commons.presentToast("Las imágenes se han grabado con éxito");
+            this.commons.presentToast(this.commons.translate(["imageUploadSuccess"]));
             this.publication.images = JSON.parse(values[0]["response"]).images;
           })
           .catch((err) => {
             loader.dismiss();
-            this.commons.presentToast("Se ha producido un error al grabar las imágenes")
+            this.commons.presentToast(this.commons.translate(["saveImagesFailed"]))
           });
         }
         else{
@@ -285,7 +284,7 @@ export class PublicationWritingPage {
           this.publication.images = this.publication.images.concat(file_uris.map((uri)=>{return {url: uri}}));
         }
       },
-      err => this.commons.presentToast("Se ha producido un error al cargar la imagen")
+      err => this.commons.presentToast(this.commons.translate(["imagesUploadFailed"]))
     );
   }
 
@@ -294,7 +293,7 @@ export class PublicationWritingPage {
     let imageId = this.publication.images[imageIndex]._id;
     if(this.publication._id){
       this.storageService.deletePublicationImage(this.publication._id,imageId).subscribe((updatedPublication)=>{
-        this.commons.presentToast("La imagen ha sido eliminada con éxito");
+        this.commons.presentToast(this.commons.translate(["imageDeleteSuccess"]));
       });
     }
     this.publication.images.splice(imageIndex,1);
@@ -334,12 +333,16 @@ export class PublicationWritingPage {
 
   deleteDescription(){
     this.storageService.patchPublication(this.publication._id,{description: null}).subscribe((patchedPublication)=>{
-      this.commons.presentToast("La descripción ha sido eliminada con éxito");
+      this.commons.presentToast(this.commons.translate(["descriptionDeleteSuccess"]));
       this.publication.description = null;
     });
   }
 
   prettyDate(rowDate){
     return this.commons.prettyDate(rowDate);
+  }
+
+  getCaption(captionKey){
+    return this.commons.translate([captionKey]);
   }
 }

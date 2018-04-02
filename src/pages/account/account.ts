@@ -75,4 +75,7 @@ export class AccountPage {
     });
   }
 
+  getCaption(captionKey){
+    return this.commons.translate([captionKey]);
+  }
 }

@@ -2,7 +2,7 @@
 <ion-list>
   <inbox *ngFor="let inbox of inboxes" [data]=inbox [unreadMessagesCount]="getUnreadMessagesFromInbox(inbox)" [autoOpen]="hasToAutoOpen(inbox._id)" (alreadyAutoOpen)="alreadyAutoOpen($event)" (updateInboxes)="getInboxes($event)"></inbox>
 </ion-list>
-<empty-content *ngIf="!inboxes.length" [message]="'No tienes conversaciones, inicia una!'"></empty-content>
+<empty-content *ngIf="!inboxes.length" [message]="getCaption('inboxListEmpty')"></empty-content>
 <ion-fab bottom right>
   <button ion-fab mini color="success"><ion-icon name="add"></ion-icon></button>
   <ion-fab-list side="left">

@@ -35,7 +35,7 @@ export class UsernameWritingPage {
       return true;
     }
     else{
-      this.commons.presentToast("Nombre de usuario inválido");
+      this.commons.presentToast(this.commons.translate(["invalidUsername"]));
     }
   }
 
@@ -60,5 +60,9 @@ export class UsernameWritingPage {
       });
       confirm.present();
     }
+  }
+
+  getCaption(captionKey){
+    return this.commons.translate([captionKey]);
   }
 }

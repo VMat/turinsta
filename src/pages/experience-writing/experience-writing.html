@@ -10,8 +10,8 @@
       <button item-start ion-button clear (click)="dismissExperience()">
         <ion-icon name="close"></ion-icon>
       </button>
-      <ion-title *ngIf="!experience._id">Nueva experiencia</ion-title>
-      <ion-title *ngIf="experience._id">Editar experiencia</ion-title>
+      <!--<ion-title *ngIf="!experience._id">Nueva experiencia</ion-title>-->
+      <!--<ion-title *ngIf="experience._id">Editar experiencia</ion-title>-->
       <button item-end ion-button clear (click)="saveExperience()">
         <ion-icon name="checkmark" color="success"></ion-icon>
       </button>
@@ -35,7 +35,7 @@
       </ion-scroll>
     </ion-item>
     <ion-item style="height: 45%">
-      <ion-label stacked>Contenido</ion-label>
+      <ion-label stacked>{{getCaption("content")}}</ion-label>
         <ion-textarea class="form-control" [(ngModel)]="experience.content" style="height: 500px"></ion-textarea>
     </ion-item>
     <ion-item style="height: 15%">

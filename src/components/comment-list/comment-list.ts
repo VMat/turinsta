@@ -38,4 +38,8 @@ export class CommentListComponent {
     experienceWritingModal.present();
   }
 
+  getCaption(captionKey){
+    return this.commonsService.translate([captionKey]);
+  }
+
 }

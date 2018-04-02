@@ -67,13 +67,13 @@ export class ChatActionsMenuPage {
     participants.splice(participants.indexOf(this.commons.getUserId()),1);
     if(participants.length==0){
       this.storage.deleteInbox(this.chat._id).subscribe(()=>{
-        this.commons.presentToast("Has salido del grupo con éxito");
+        this.commons.presentToast(this.commons.translate(["leftGroupSuccess"],{":group": this.chat.name}));
         this.viewCtrl.dismiss('CHAT_DELETED');
       });
     }
     else{
       this.storage.patchInbox(this.chat._id, {participants: participants}).subscribe(()=>{
-        this.commons.presentToast("Has salido del grupo con éxito");
+        this.commons.presentToast(this.commons.translate(["leftGroupSuccess"],{":group": this.chat.name}));
         this.viewCtrl.dismiss('CHAT_DELETED');
       });
     }
@@ -104,9 +104,16 @@ export class ChatActionsMenuPage {
     let participants = this.chat.participants.map((user)=>{return user._id});
     participants.splice(participants.indexOf(this.commons.getUserId()),1);
     this.storage.deleteInbox(this.chat._id).subscribe(()=>{
-      this.commons.presentToast("Has borrado el chat con éxito");
+      this.commons.presentToast(this.commons.translate(["deleteChatSuccess"],{":user": this.chat.participants.filter((user)=>{
+        return user._id != this.commons.getUserId()
+      })[0].username
+      }));
       this.viewCtrl.dismiss('CHAT_DELETED');
     });
+  }
+
+  getCaption(captionKey){
+    return this.commons.translate([captionKey]);
   }
 
 }

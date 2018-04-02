@@ -3,6 +3,7 @@ import {IonicPage, NavController, NavParams, ViewController} from 'ionic-angular
 import {AppState} from "../../providers/models/publication.model";
 import {Store} from "@ngrx/store";
 import {setSort} from "../../providers/reducers/publication.reducer";
+import {CommonsProvider} from "../../providers/commons/commons";
 
 /**
  * Generated class for the PublicationOrderByPage page.
@@ -20,7 +21,7 @@ export class PublicationOrderByPage {
 
   sortValue: string = null;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public viewCtrl: ViewController, public store: Store<AppState>) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public viewCtrl: ViewController, public store: Store<AppState>, private commons: CommonsProvider) {
   }
 
   ionViewDidLoad(){
@@ -33,6 +34,10 @@ export class PublicationOrderByPage {
   close(order){
     this.store.dispatch(setSort(order));
     this.viewCtrl.dismiss();
+  }
+
+  getCaption(captionKey){
+    return this.commons.translate([captionKey]);
   }
 
 }

@@ -119,115 +119,11 @@ ImgcacheService = __decorate([
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return CommentWritingPage; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(5);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_storage_storage__ = __webpack_require__(13);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_commons_commons__ = __webpack_require__(11);
-var __assign = (this && this.__assign) || Object.assign || function(t) {
-    for (var s, i = 1, n = arguments.length; i < n; i++) {
-        s = arguments[i];
-        for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
-            t[p] = s[p];
-    }
-    return t;
-};
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-
-
-
-
-/**
- * Generated class for the CommentWritingPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
-var CommentWritingPage = (function () {
-    function CommentWritingPage(navCtrl, navParams, viewCtrl, storageService, commons, alertCtrl) {
-        this.navCtrl = navCtrl;
-        this.navParams = navParams;
-        this.viewCtrl = viewCtrl;
-        this.storageService = storageService;
-        this.commons = commons;
-        this.alertCtrl = alertCtrl;
-        this.comment = {};
-    }
-    CommentWritingPage.prototype.ionViewDidLoad = function () {
-        console.log('ionViewDidLoad CommentWritingPage');
-        if (Boolean(this.navParams.get("comment"))) {
-            this.comment = __assign({}, this.navParams.get("comment"));
-        }
-    };
-    CommentWritingPage.prototype.dismissComment = function () {
-        this.viewCtrl.dismiss();
-    };
-    CommentWritingPage.prototype.confirmSave = function () {
-        var _this = this;
-        var confirm = this.alertCtrl.create({
-            title: 'Confirmar operación',
-            message: '¿Está seguro que desea guardar el comentario?',
-            buttons: [
-                {
-                    text: 'Aceptar',
-                    handler: function () {
-                        _this.saveComment();
-                    }
-                },
-                {
-                    text: 'Cancelar',
-                    handler: function () {
-                    }
-                }
-            ]
-        });
-        confirm.present();
-    };
-    CommentWritingPage.prototype.saveComment = function () {
-        var _this = this;
-        if (Boolean(this.comment._id)) {
-            this.storageService.updateComment(this.comment).subscribe(function (editedComment) {
-                _this.commons.presentToast("El comentario ha sido actualizado con éxito");
-                _this.viewCtrl.dismiss();
-            });
-        }
-        else {
-            this.storageService.createComment(this.comment).subscribe(function (newComment) {
-                _this.commons.presentToast("El comentario ha sido grabado con éxito");
-                _this.viewCtrl.dismiss();
-            });
-        }
-    };
-    return CommentWritingPage;
-}());
-CommentWritingPage = __decorate([
-    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
-        selector: 'page-comment-writing',template:/*ion-inline-start:"C:\Users\Matias\WebstormProjects\turinsta\src\pages\comment-writing\comment-writing.html"*/'<!--\n  Generated template for the CommentWritingPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-header>\n  <ion-navbar>\n    <ion-item no-lines style="text-align: center">\n      <button item-start ion-button clear (click)="dismissComment()">\n        <ion-icon name="close"></ion-icon>\n      </button>\n      <ion-title *ngIf="!comment._id">Nuevo comentario</ion-title>\n      <ion-title *ngIf="comment._id">Editar comentario</ion-title>\n      <button item-end ion-button clear (click)="confirmSave()">\n        <ion-icon name="checkmark" color="success"></ion-icon>\n      </button>\n    </ion-item>\n  </ion-navbar>\n</ion-header>\n<ion-content no-padding style="height: 100%; width: 100%">\n  <ion-item style="height: 85%">\n    <ion-label stacked>Comentario</ion-label>\n    <ion-textarea [(ngModel)]="comment.content" style="width: 100%"></ion-textarea>\n  </ion-item>\n  <ion-item style="height: 15%">\n    <my-emoji-picker item-end [data]=comment></my-emoji-picker>\n  </ion-item>\n</ion-content>\n\n'/*ion-inline-end:"C:\Users\Matias\WebstormProjects\turinsta\src\pages\comment-writing\comment-writing.html"*/,
-    }),
-    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* NavParams */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["s" /* ViewController */], __WEBPACK_IMPORTED_MODULE_2__providers_storage_storage__["a" /* StorageProvider */], __WEBPACK_IMPORTED_MODULE_3__providers_commons_commons__["a" /* CommonsProvider */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["b" /* AlertController */]])
-], CommentWritingPage);
-
-//# sourceMappingURL=comment-writing.js.map
-
-/***/ }),
-
-/***/ 105:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return InboxWritingPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_storage_storage__ = __webpack_require__(13);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_commons_commons__ = __webpack_require__(11);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_commons_commons__ = __webpack_require__(9);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__ionic_native_image_picker__ = __webpack_require__(97);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__ionic_native_file_transfer__ = __webpack_require__(98);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_rxjs__ = __webpack_require__(140);
@@ -324,7 +220,7 @@ var InboxWritingPage = (function () {
                 this.selectedUsers.push(userId);
             }
             else {
-                this.commons.presentToast("Has alcanzado el límite de 20 participantes");
+                this.commons.presentToast(this.commons.translate(["groupParticipantsExceed"]));
             }
         }
     };
@@ -345,7 +241,7 @@ var InboxWritingPage = (function () {
             _this.inboxAvatar = file_uris[0];
         })
             .catch(function () {
-            _this.commons.presentToast("Se ha producido un error al cargar las imágenes");
+            _this.commons.presentToast(_this.commons.translate(["imagesUploadFailed"]));
         });
     };
     InboxWritingPage.prototype.uploadPic = function (image) {
@@ -368,11 +264,11 @@ var InboxWritingPage = (function () {
     };
     InboxWritingPage.prototype.checkNeededField = function () {
         if (this.selectedUsers.length == 0) {
-            this.commons.presentToast("Debe seleccionar al menos un usuario");
+            this.commons.presentToast(this.commons.translate(["missingGroupParticipant"]));
             return false;
         }
         if (!this.inboxName) {
-            this.commons.presentToast("Debe proporcionar un nombre al grupo");
+            this.commons.presentToast(this.commons.translate(["missingGroupName"]));
             return false;
         }
         return true;
@@ -441,7 +337,7 @@ var InboxWritingPage = (function () {
                     }).subscribe(function () {
                         _this.storage.getInbox(_this.inbox._id).subscribe(function (patchedInbox) {
                             loader.dismiss();
-                            _this.commons.presentToast("Se ha actualizado el grupo con éxito");
+                            _this.commons.presentToast(_this.commons.translate(["groupUpdated"], { ":group": _this.inbox.name }));
                             _this.viewCtrl.dismiss(patchedInbox);
                         });
                     });
@@ -451,7 +347,7 @@ var InboxWritingPage = (function () {
                 this.storage.patchInbox(this.inbox._id, { participants: this.selectedUsers, name: this.inboxName, avatar: this.inboxAvatar }).subscribe(function () {
                     _this.storage.getInbox(_this.inbox._id).subscribe(function (patchedInbox) {
                         loader.dismiss();
-                        _this.commons.presentToast("Se ha actualizado el grupo con éxito");
+                        _this.commons.presentToast(_this.commons.translate(["groupUpdated"], { ":group": _this.inbox.name }));
                         _this.viewCtrl.dismiss(patchedInbox);
                     });
                 });
@@ -464,7 +360,7 @@ var InboxWritingPage = (function () {
                     _this.viewCtrl.dismiss({ name: _this.inboxName, participants: _this.selectedUsers, avatar: avatarUrl, messages: [], group: true, creator: _this.commons.getUserId() });
                 })
                     .catch(function (error) {
-                    _this.commons.presentToast("Se ha producido un error al guardar el avatar");
+                    _this.commons.presentToast(_this.commons.translate(["avatarUpdatedFailed"]));
                 });
             }
             else {
@@ -480,11 +376,14 @@ var InboxWritingPage = (function () {
             event.complete();
         });
     };
+    InboxWritingPage.prototype.getCaption = function (captionKey) {
+        return this.commons.translate([captionKey]);
+    };
     return InboxWritingPage;
 }());
 InboxWritingPage = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
-        selector: 'page-inbox-writing',template:/*ion-inline-start:"C:\Users\Matias\WebstormProjects\turinsta\src\pages\inbox-writing\inbox-writing.html"*/'<!--\n  Generated template for the InboxWritingPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-header>\n\n  <ion-navbar>\n    <ion-item no-lines style="text-align: center">\n      <button item-start ion-button clear (click)="dismiss()">\n        <ion-icon name="close"></ion-icon>\n      </button>\n      <ion-title *ngIf="!inbox">Nuevo chat</ion-title>\n      <ion-title *ngIf="inbox">Editar chat</ion-title>\n      <div *ngIf="multipleSelection" item-end>\n        <button ion-button clear (click)="confirmSave()">\n          <ion-icon name="checkmark" color="success"></ion-icon>\n        </button>\n      </div>\n    </ion-item>\n  </ion-navbar>\n\n</ion-header>\n\n<ion-content padding align="center">\n  <ion-list-header *ngIf="(followedes ? followedes.length : true) && multipleSelection">\n    <ion-item no-lines>\n      <ion-avatar item-start>\n        <img src="{{inboxAvatar}}"/>\n      </ion-avatar>\n      <ion-input [(ngModel)]="inboxName" placeholder="Ingrese el nombre del grupo..."></ion-input>\n      <button item-end (click)="openImagePicker()" ion-button icon-only clear><ion-icon name="image"></ion-icon></button>\n    </ion-item>\n  </ion-list-header>\n  <empty-content *ngIf="followedes ? !followedes.length : false" align="center" [message]="\'No sigues a ningún usuario para iniciar una conversación\'"></empty-content>\n  <ion-list *ngIf="!multipleSelection">\n    <ion-item *ngFor="let followed of followedes" (click)="openInbox(followed)">\n      <ion-avatar item-start>\n        <img src="{{followed.avatar}}"/>\n      </ion-avatar>\n      <ion-label>{{followed.username}}</ion-label>\n    </ion-item>\n  </ion-list>\n  <ion-list *ngIf="multipleSelection">\n    <ion-item *ngFor="let followed of followedes">\n      <ion-avatar item-start>\n        <img src="{{followed.avatar}}"/>\n      </ion-avatar>\n      <ion-label>{{followed.username}}</ion-label>\n      <ion-checkbox item-end color="primary" [checked]="userSelected(followed._id)" (ionChange)="updateSelectedUsers(followed._id)"></ion-checkbox>\n    </ion-item>\n  </ion-list>\n  <ion-infinite-scroll (ionInfinite)="doInfinite($event)">\n    <ion-infinite-scroll-content\n      loadingSpinner="bubbles"\n      loadingText="Obteniendo más información...">\n    </ion-infinite-scroll-content>\n  </ion-infinite-scroll>\n</ion-content>\n'/*ion-inline-end:"C:\Users\Matias\WebstormProjects\turinsta\src\pages\inbox-writing\inbox-writing.html"*/,
+        selector: 'page-inbox-writing',template:/*ion-inline-start:"C:\Users\Matias\WebstormProjects\turinsta\src\pages\inbox-writing\inbox-writing.html"*/'<!--\n  Generated template for the InboxWritingPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-header>\n\n  <ion-navbar>\n    <ion-item no-lines style="text-align: center">\n      <button item-start ion-button clear (click)="dismiss()">\n        <ion-icon name="close"></ion-icon>\n      </button>\n      <!--<ion-title *ngIf="!inbox">Nuevo chat</ion-title>-->\n      <!--<ion-title *ngIf="inbox">Editar chat</ion-title>-->\n      <div *ngIf="multipleSelection" item-end>\n        <button ion-button clear (click)="confirmSave()">\n          <ion-icon name="checkmark" color="success"></ion-icon>\n        </button>\n      </div>\n    </ion-item>\n  </ion-navbar>\n\n</ion-header>\n\n<ion-content padding align="center">\n  <ion-list-header *ngIf="(followedes ? followedes.length : true) && multipleSelection">\n    <ion-item no-lines>\n      <ion-avatar item-start>\n        <img src="{{inboxAvatar}}"/>\n      </ion-avatar>\n      <ion-input [(ngModel)]="inboxName" placeholder="Ingrese el nombre del grupo..."></ion-input>\n      <button item-end (click)="openImagePicker()" ion-button icon-only clear><ion-icon name="image"></ion-icon></button>\n    </ion-item>\n  </ion-list-header>\n  <empty-content *ngIf="followedes ? !followedes.length : false" align="center" [message]="getCaption(\'inboxWritingFollowedListEmpty\')"></empty-content>\n  <ion-list *ngIf="!multipleSelection">\n    <ion-item *ngFor="let followed of followedes" (click)="openInbox(followed)">\n      <ion-avatar item-start>\n        <img src="{{followed.avatar}}"/>\n      </ion-avatar>\n      <ion-label>{{followed.username}}</ion-label>\n    </ion-item>\n  </ion-list>\n  <ion-list *ngIf="multipleSelection">\n    <ion-item *ngFor="let followed of followedes">\n      <ion-avatar item-start>\n        <img src="{{followed.avatar}}"/>\n      </ion-avatar>\n      <ion-label>{{followed.username}}</ion-label>\n      <ion-checkbox item-end color="primary" [checked]="userSelected(followed._id)" (ionChange)="updateSelectedUsers(followed._id)"></ion-checkbox>\n    </ion-item>\n  </ion-list>\n  <ion-infinite-scroll (ionInfinite)="doInfinite($event)">\n    <ion-infinite-scroll-content\n      loadingSpinner="bubbles"\n      loadingText="Obteniendo más información...">\n    </ion-infinite-scroll-content>\n  </ion-infinite-scroll>\n</ion-content>\n'/*ion-inline-end:"C:\Users\Matias\WebstormProjects\turinsta\src\pages\inbox-writing\inbox-writing.html"*/,
     }),
     __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* NavParams */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["s" /* ViewController */],
         __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["b" /* AlertController */], __WEBPACK_IMPORTED_MODULE_2__providers_storage_storage__["a" /* StorageProvider */], __WEBPACK_IMPORTED_MODULE_3__providers_commons_commons__["a" /* CommonsProvider */],
@@ -492,6 +391,113 @@ InboxWritingPage = __decorate([
 ], InboxWritingPage);
 
 //# sourceMappingURL=inbox-writing.js.map
+
+/***/ }),
+
+/***/ 105:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return CommentWritingPage; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_storage_storage__ = __webpack_require__(13);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_commons_commons__ = __webpack_require__(9);
+var __assign = (this && this.__assign) || Object.assign || function(t) {
+    for (var s, i = 1, n = arguments.length; i < n; i++) {
+        s = arguments[i];
+        for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+            t[p] = s[p];
+    }
+    return t;
+};
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+
+/**
+ * Generated class for the CommentWritingPage page.
+ *
+ * See https://ionicframework.com/docs/components/#navigation for more info on
+ * Ionic pages and navigation.
+ */
+var CommentWritingPage = (function () {
+    function CommentWritingPage(navCtrl, navParams, viewCtrl, storageService, commons, alertCtrl) {
+        this.navCtrl = navCtrl;
+        this.navParams = navParams;
+        this.viewCtrl = viewCtrl;
+        this.storageService = storageService;
+        this.commons = commons;
+        this.alertCtrl = alertCtrl;
+        this.comment = {};
+    }
+    CommentWritingPage.prototype.ionViewDidLoad = function () {
+        console.log('ionViewDidLoad CommentWritingPage');
+        if (Boolean(this.navParams.get("comment"))) {
+            this.comment = __assign({}, this.navParams.get("comment"));
+        }
+    };
+    CommentWritingPage.prototype.dismissComment = function () {
+        this.viewCtrl.dismiss();
+    };
+    CommentWritingPage.prototype.confirmSave = function () {
+        var _this = this;
+        var confirm = this.alertCtrl.create({
+            title: 'Confirmar operación',
+            message: '¿Está seguro que desea guardar el comentario?',
+            buttons: [
+                {
+                    text: 'Aceptar',
+                    handler: function () {
+                        _this.saveComment();
+                    }
+                },
+                {
+                    text: 'Cancelar',
+                    handler: function () {
+                    }
+                }
+            ]
+        });
+        confirm.present();
+    };
+    CommentWritingPage.prototype.saveComment = function () {
+        var _this = this;
+        if (Boolean(this.comment._id)) {
+            this.storageService.updateComment(this.comment).subscribe(function (editedComment) {
+                _this.commons.presentToast(_this.commons.translate(["commentEditSuccess"]));
+                _this.viewCtrl.dismiss();
+            });
+        }
+        else {
+            this.storageService.createComment(this.comment).subscribe(function (newComment) {
+                _this.commons.presentToast(_this.commons.translate(["responseCreateSuccess"]));
+                _this.viewCtrl.dismiss();
+            });
+        }
+    };
+    CommentWritingPage.prototype.getCaption = function (captionKey) {
+        return this.commons.translate([captionKey]);
+    };
+    return CommentWritingPage;
+}());
+CommentWritingPage = __decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
+        selector: 'page-comment-writing',template:/*ion-inline-start:"C:\Users\Matias\WebstormProjects\turinsta\src\pages\comment-writing\comment-writing.html"*/'<!--\n  Generated template for the CommentWritingPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-header>\n  <ion-navbar>\n    <ion-item no-lines style="text-align: center">\n      <button item-start ion-button clear (click)="dismissComment()">\n        <ion-icon name="close"></ion-icon>\n      </button>\n      <!--<ion-title *ngIf="!comment._id">Nuevo comentario</ion-title>-->\n      <!--<ion-title *ngIf="comment._id">Editar comentario</ion-title>-->\n      <button item-end ion-button clear (click)="confirmSave()">\n        <ion-icon name="checkmark" color="success"></ion-icon>\n      </button>\n    </ion-item>\n  </ion-navbar>\n</ion-header>\n<ion-content no-padding style="height: 100%; width: 100%">\n  <ion-item style="height: 85%">\n    <ion-label stacked>{{getCaption("publicationComment")}}</ion-label>\n    <ion-textarea [(ngModel)]="comment.content" style="width: 100%"></ion-textarea>\n  </ion-item>\n  <ion-item style="height: 15%">\n    <my-emoji-picker item-end [data]=comment></my-emoji-picker>\n  </ion-item>\n</ion-content>\n\n'/*ion-inline-end:"C:\Users\Matias\WebstormProjects\turinsta\src\pages\comment-writing\comment-writing.html"*/,
+    }),
+    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* NavParams */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["s" /* ViewController */], __WEBPACK_IMPORTED_MODULE_2__providers_storage_storage__["a" /* StorageProvider */], __WEBPACK_IMPORTED_MODULE_3__providers_commons_commons__["a" /* CommonsProvider */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["b" /* AlertController */]])
+], CommentWritingPage);
+
+//# sourceMappingURL=comment-writing.js.map
 
 /***/ }),
 
@@ -503,7 +509,7 @@ InboxWritingPage = __decorate([
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_storage_storage__ = __webpack_require__(13);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_commons_commons__ = __webpack_require__(11);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_commons_commons__ = __webpack_require__(9);
 var __assign = (this && this.__assign) || Object.assign || function(t) {
     for (var s, i = 1, n = arguments.length; i < n; i++) {
         s = arguments[i];
@@ -582,11 +588,11 @@ var ExperienceWritingPage = (function () {
     };
     ExperienceWritingPage.prototype.checkNeededField = function () {
         if (!this.experience.category) {
-            this.commons.presentToast("Debe seleccionar una categoría");
+            this.commons.presentToast(this.commons.translate(["missingExperienceCategory"]));
             return false;
         }
         if (!this.experience.type) {
-            this.commons.presentToast("Debe seleccionar un tipo de experiencia");
+            this.commons.presentToast(this.commons.translate(["missingExperienceType"]));
             return false;
         }
         return true;
@@ -599,14 +605,14 @@ var ExperienceWritingPage = (function () {
             unpopulatedExperience.type = this.experience.type._id;
             if (Boolean(this.experience._id)) {
                 this.storageService.updateExperience(unpopulatedExperience).subscribe(function (editedExperience) {
-                    _this.commons.presentToast("La experiencia ha sido actualizada con éxito");
+                    _this.commons.presentToast(_this.commons.translate(["experienceEditSuccess"]));
                     _this.viewCtrl.dismiss(_this.experience);
                 });
             }
             else {
                 if (this.experience.publication) {
                     this.storageService.createExperience(unpopulatedExperience).subscribe(function (newExperience) {
-                        _this.commons.presentToast("La experiencia ha sido grabada con éxito");
+                        _this.commons.presentToast(_this.commons.translate(["experienceUploadSuccess"]));
                         _this.viewCtrl.dismiss(_this.experience);
                     });
                 }
@@ -622,248 +628,19 @@ var ExperienceWritingPage = (function () {
     ExperienceWritingPage.prototype.setType = function (type) {
         this.experience.type = type;
     };
+    ExperienceWritingPage.prototype.getCaption = function (captionKey) {
+        return this.commons.translate([captionKey]);
+    };
     return ExperienceWritingPage;
 }());
 ExperienceWritingPage = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
-        selector: 'page-experience-writing',template:/*ion-inline-start:"C:\Users\Matias\WebstormProjects\turinsta\src\pages\experience-writing\experience-writing.html"*/'<!--\n  Generated template for the ExperienceWritingPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-header>\n  <ion-navbar>\n    <ion-item no-lines style="text-align: center">\n      <button item-start ion-button clear (click)="dismissExperience()">\n        <ion-icon name="close"></ion-icon>\n      </button>\n      <ion-title *ngIf="!experience._id">Nueva experiencia</ion-title>\n      <ion-title *ngIf="experience._id">Editar experiencia</ion-title>\n      <button item-end ion-button clear (click)="saveExperience()">\n        <ion-icon name="checkmark" color="success"></ion-icon>\n      </button>\n    </ion-item>\n  </ion-navbar>\n</ion-header>\n<ion-content no-padding no-margin style="height: 100%">\n  <ion-list style="height: 100%" padding>\n    <ion-item>\n      <ion-scroll scrollX="true" style="white-space: nowrap;height: 70px">\n        <button  *ngFor="let category of categories" ion-button clear icon-only (click)="setCategory(category)">\n          <ion-icon name="{{category.icon}}" color="{{experience.category?(experience.category._id==category._id? \'primary\': \'gray\'): \'gray\'}}"></ion-icon>\n        </button>\n      </ion-scroll>\n    </ion-item>\n    <ion-item>\n      <ion-scroll scrollX="true" style="white-space: nowrap;height: 70px">\n        <button *ngFor="let type of types" ion-button clear icon-only (click)="setType(type)">\n          <ion-icon  name="{{type.icon}}" color="{{experience.type?(experience.type._id==type._id? type.color: \'gray\'): \'gray\'}}"></ion-icon>\n        </button>\n      </ion-scroll>\n    </ion-item>\n    <ion-item style="height: 45%">\n      <ion-label stacked>Contenido</ion-label>\n        <ion-textarea class="form-control" [(ngModel)]="experience.content" style="height: 500px"></ion-textarea>\n    </ion-item>\n    <ion-item style="height: 15%">\n      <my-emoji-picker item-end [data]=experience></my-emoji-picker>\n    </ion-item>\n  </ion-list>\n</ion-content>\n'/*ion-inline-end:"C:\Users\Matias\WebstormProjects\turinsta\src\pages\experience-writing\experience-writing.html"*/,
+        selector: 'page-experience-writing',template:/*ion-inline-start:"C:\Users\Matias\WebstormProjects\turinsta\src\pages\experience-writing\experience-writing.html"*/'<!--\n  Generated template for the ExperienceWritingPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-header>\n  <ion-navbar>\n    <ion-item no-lines style="text-align: center">\n      <button item-start ion-button clear (click)="dismissExperience()">\n        <ion-icon name="close"></ion-icon>\n      </button>\n      <!--<ion-title *ngIf="!experience._id">Nueva experiencia</ion-title>-->\n      <!--<ion-title *ngIf="experience._id">Editar experiencia</ion-title>-->\n      <button item-end ion-button clear (click)="saveExperience()">\n        <ion-icon name="checkmark" color="success"></ion-icon>\n      </button>\n    </ion-item>\n  </ion-navbar>\n</ion-header>\n<ion-content no-padding no-margin style="height: 100%">\n  <ion-list style="height: 100%" padding>\n    <ion-item>\n      <ion-scroll scrollX="true" style="white-space: nowrap;height: 70px">\n        <button  *ngFor="let category of categories" ion-button clear icon-only (click)="setCategory(category)">\n          <ion-icon name="{{category.icon}}" color="{{experience.category?(experience.category._id==category._id? \'primary\': \'gray\'): \'gray\'}}"></ion-icon>\n        </button>\n      </ion-scroll>\n    </ion-item>\n    <ion-item>\n      <ion-scroll scrollX="true" style="white-space: nowrap;height: 70px">\n        <button *ngFor="let type of types" ion-button clear icon-only (click)="setType(type)">\n          <ion-icon  name="{{type.icon}}" color="{{experience.type?(experience.type._id==type._id? type.color: \'gray\'): \'gray\'}}"></ion-icon>\n        </button>\n      </ion-scroll>\n    </ion-item>\n    <ion-item style="height: 45%">\n      <ion-label stacked>{{getCaption("content")}}</ion-label>\n        <ion-textarea class="form-control" [(ngModel)]="experience.content" style="height: 500px"></ion-textarea>\n    </ion-item>\n    <ion-item style="height: 15%">\n      <my-emoji-picker item-end [data]=experience></my-emoji-picker>\n    </ion-item>\n  </ion-list>\n</ion-content>\n'/*ion-inline-end:"C:\Users\Matias\WebstormProjects\turinsta\src\pages\experience-writing\experience-writing.html"*/,
     }),
     __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* NavParams */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["s" /* ViewController */], __WEBPACK_IMPORTED_MODULE_2__providers_storage_storage__["a" /* StorageProvider */], __WEBPACK_IMPORTED_MODULE_3__providers_commons_commons__["a" /* CommonsProvider */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["b" /* AlertController */]])
 ], ExperienceWritingPage);
 
 //# sourceMappingURL=experience-writing.js.map
-
-/***/ }),
-
-/***/ 11:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return CommonsProvider; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_http__ = __webpack_require__(86);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_add_operator_map__ = __webpack_require__(87);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_add_operator_map___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_rxjs_add_operator_map__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_ionic_angular__ = __webpack_require__(5);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__ionic_storage__ = __webpack_require__(234);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__storage_storage__ = __webpack_require__(13);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__ngrx_store__ = __webpack_require__(23);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__reducers_user_reducer__ = __webpack_require__(236);
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-
-
-
-
-
-
-
-
-/*
-  Generated class for the CommonsProvider provider.
-
-  See https://angular.io/guide/dependency-injection for more info on providers
-  and Angular DI.
-*/
-var CommonsProvider = (function () {
-    function CommonsProvider(http, toastCtrl, alertCtrl, localStorage, storage, userStore) {
-        this.http = http;
-        this.toastCtrl = toastCtrl;
-        this.alertCtrl = alertCtrl;
-        this.localStorage = localStorage;
-        this.storage = storage;
-        this.userStore = userStore;
-        this.glosary = null;
-        console.log('Hello CommonsProvider Provider');
-        this.setUserId("59f7562af36d282363087270"); //Yo
-        // this.setUserId("59f7588ef36d282363087491"); //Cor
-        // this.setUserId("5a00bb48eea55b00126725f8"); //Cele
-        this.setUserData();
-    }
-    CommonsProvider.prototype.setUserData = function () {
-        var _this = this;
-        this.storage.getUser(this.getUserId()).subscribe(function (user) {
-            _this.setLanguage(user.language);
-            _this.userStore.dispatch(Object(__WEBPACK_IMPORTED_MODULE_7__reducers_user_reducer__["a" /* setAvatar */])(user.avatar));
-            _this.userStore.dispatch(Object(__WEBPACK_IMPORTED_MODULE_7__reducers_user_reducer__["e" /* setUsername */])(user.username));
-            _this.userStore.dispatch(Object(__WEBPACK_IMPORTED_MODULE_7__reducers_user_reducer__["c" /* setUnreadMessages */])(user.notifications.unreadMessages));
-            _this.userStore.dispatch(Object(__WEBPACK_IMPORTED_MODULE_7__reducers_user_reducer__["d" /* setUnseenActivities */])(user.notifications.unseenActivities));
-        });
-    };
-    CommonsProvider.prototype.getUnreadMessages = function () {
-        var _this = this;
-        this.storage.getUnreadMessages(this.getUserId()).subscribe(function (user) {
-            _this.userStore.dispatch(Object(__WEBPACK_IMPORTED_MODULE_7__reducers_user_reducer__["c" /* setUnreadMessages */])(user.notifications.unreadMessages));
-        });
-    };
-    CommonsProvider.prototype.getUnseenActivities = function () {
-        var _this = this;
-        this.storage.getUnseenActivities(this.getUserId()).subscribe(function (user) {
-            _this.userStore.dispatch(Object(__WEBPACK_IMPORTED_MODULE_7__reducers_user_reducer__["d" /* setUnseenActivities */])(user.notifications.unseenActivities));
-        });
-    };
-    CommonsProvider.prototype.setLanguage = function (id) {
-        var _this = this;
-        this.storage.getLanguage(id).subscribe(function (language) {
-            _this.glosary = language.glosary;
-            _this.userStore.dispatch(Object(__WEBPACK_IMPORTED_MODULE_7__reducers_user_reducer__["b" /* setLanguage */])(id));
-        });
-    };
-    CommonsProvider.prototype.translate = function (caption, params) {
-        var translatedCaption = this.glosary[caption];
-        if (params) {
-            for (var key in params) {
-                translatedCaption = translatedCaption.replace(key, params[key]);
-            }
-        }
-        return translatedCaption;
-    };
-    CommonsProvider.prototype.setUserId = function (userId) {
-        sessionStorage.setItem("userId", userId);
-    };
-    CommonsProvider.prototype.getUserId = function () {
-        return sessionStorage.getItem("userId");
-    };
-    CommonsProvider.prototype.presentToast = function (message) {
-        var toast = this.toastCtrl.create({
-            message: message,
-            duration: 3000
-        });
-        toast.present();
-    };
-    CommonsProvider.prototype.presentAlert = function (title, message, _a) {
-        var _b = _a[0], text = _b.text, handler = _b.handler;
-        var confirm = this.alertCtrl.create({
-            title: title,
-            message: message,
-            buttons: [{ text: text, handler: handler }]
-        });
-        confirm.present();
-    };
-    CommonsProvider.prototype.cachePublications = function (publications) {
-        this.localStorage.set("publications", publications);
-    };
-    CommonsProvider.prototype.getCachedPublications = function () {
-        return this.localStorage.get("publications");
-    };
-    CommonsProvider.prototype.prettyDate = function (rowDate) {
-        var parsedRowDate = new Date(rowDate);
-        return (parsedRowDate.getDay() <= 9 ? '0' + parsedRowDate.getDay() : parsedRowDate.getDay()) + '/' + (parsedRowDate.getMonth() <= 8 ? '0' + (parsedRowDate.getMonth() + 1) : (parsedRowDate.getMonth() + 1)) + '/' + parsedRowDate.getFullYear();
-    };
-    CommonsProvider.prototype.dateDiff = function (dateSince, dateUntil) {
-        var diffInMs = Date.parse(dateUntil) - Date.parse(dateSince);
-        var diffInSeconds = diffInMs / 1000;
-        return diffInSeconds;
-    };
-    CommonsProvider.prototype.getAntiquity = function (dateSince) {
-        if (!Boolean(this.glosary)) {
-            return null;
-        }
-        var diffInSeconds = this.dateDiff(dateSince, (new Date()));
-        if (diffInSeconds < 0) {
-            return this.glosary.veryRecentActivitySentence;
-        }
-        if (diffInSeconds / 31104000 >= 1) {
-            var years = Math.floor(diffInSeconds / 31104000);
-            return this.glosary.antiquitySentence.replace(':x', years).
-                replace(':timeUnit', years > 1 ? this.glosary.timeUnits.YEAR.PLURAL.toLowerCase() : this.glosary.timeUnits.YEAR.SINGULAR.toLowerCase());
-        }
-        else {
-            if (diffInSeconds / 2592000 >= 1) {
-                var months = Math.floor(diffInSeconds / 2592000);
-                return this.glosary.antiquitySentence.replace(':x', months).
-                    replace(':timeUnit', months > 1 ? this.glosary.timeUnits.MONTH.PLURAL.toLowerCase() : this.glosary.timeUnits.MONTH.SINGULAR.toLowerCase());
-            }
-            else {
-                if (diffInSeconds / 86400 >= 1) {
-                    var days = Math.floor(diffInSeconds / 86400);
-                    return this.glosary.antiquitySentence.replace(':x', days).
-                        replace(':timeUnit', days > 1 ? this.glosary.timeUnits.DAY.PLURAL.toLowerCase() : this.glosary.timeUnits.DAY.SINGULAR.toLowerCase());
-                }
-                else {
-                    if (diffInSeconds / 3600 >= 1) {
-                        var hours = Math.floor(diffInSeconds / 3600);
-                        return this.glosary.antiquitySentence.replace(':x', hours).
-                            replace(':timeUnit', hours > 1 ? this.glosary.timeUnits.HOUR.PLURAL.toLowerCase() : this.glosary.timeUnits.HOUR.SINGULAR.toLowerCase());
-                    }
-                    else {
-                        if (diffInSeconds / 60 >= 1) {
-                            var minutes = Math.floor(diffInSeconds / 60);
-                            return this.glosary.antiquitySentence.replace(':x', minutes).
-                                replace(':timeUnit', minutes > 1 ? this.glosary.timeUnits.MINUTE.PLURAL.toLowerCase() : this.glosary.timeUnits.MINUTE.SINGULAR.toLowerCase());
-                        }
-                        else {
-                            var seconds = Math.floor(diffInSeconds);
-                            return this.glosary.antiquitySentence.replace(':x', seconds).
-                                replace(':timeUnit', seconds > 1 ? this.glosary.timeUnits.SECOND.PLURAL.toLowerCase() : this.glosary.timeUnits.SECOND.SINGULAR.toLowerCase());
-                        }
-                    }
-                }
-            }
-        }
-    };
-    CommonsProvider.prototype.getScoreGivenFromUser = function (assessments) {
-        if (assessments) {
-            var loggedUser_1 = this.getUserId();
-            var targetAssessment = assessments.filter(function (assessment) { return assessment.user == loggedUser_1; });
-            return targetAssessment.length > 0 ? targetAssessment[0].value : null;
-        }
-        return null;
-    };
-    CommonsProvider.prototype.getChatDescription = function (inbox) {
-        var currentUser = this.getUserId();
-        var chatDescription = null;
-        if (!inbox.name) {
-            chatDescription = inbox.participants.reduce(function (acum, item) {
-                if (item._id != currentUser) {
-                    return (acum != '' ? acum + ', ' + item.username : item.username);
-                }
-                return acum;
-            }, '');
-        }
-        else {
-            chatDescription = inbox.name;
-        }
-        return chatDescription;
-    };
-    CommonsProvider.prototype.getDefaultInboxAvatar = function () {
-        return __WEBPACK_IMPORTED_MODULE_5__storage_storage__["a" /* StorageProvider */].baseUrl.replace('/api/', '') + '/assets/avatar-images/unknown-group.png';
-    };
-    CommonsProvider.prototype.getAvatar = function (inbox) {
-        var currentUser = this.getUserId();
-        var avatar = null;
-        if (Boolean(inbox.avatar)) {
-            avatar = inbox.avatar;
-        }
-        else {
-            var targetUser = inbox.participants.filter(function (user) {
-                return user._id != currentUser;
-            });
-            if (targetUser.length == 1) {
-                avatar = targetUser[0].avatar;
-            }
-            else {
-                avatar = this.getDefaultInboxAvatar();
-            }
-        }
-        return avatar;
-    };
-    return CommonsProvider;
-}());
-CommonsProvider = __decorate([
-    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Injectable"])(),
-    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* Http */], __WEBPACK_IMPORTED_MODULE_3_ionic_angular__["r" /* ToastController */], __WEBPACK_IMPORTED_MODULE_3_ionic_angular__["b" /* AlertController */],
-        __WEBPACK_IMPORTED_MODULE_4__ionic_storage__["b" /* Storage */], __WEBPACK_IMPORTED_MODULE_5__storage_storage__["a" /* StorageProvider */], __WEBPACK_IMPORTED_MODULE_6__ngrx_store__["h" /* Store */]])
-], CommonsProvider);
-
-//# sourceMappingURL=commons.js.map
 
 /***/ }),
 
@@ -1085,7 +862,7 @@ var StorageProvider_1;
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AccountActionsMenuPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(5);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_commons_commons__ = __webpack_require__(11);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_commons_commons__ = __webpack_require__(9);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_storage_storage__ = __webpack_require__(13);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_ng_socket_io__ = __webpack_require__(71);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_ng_socket_io___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_ng_socket_io__);
@@ -1154,13 +931,13 @@ var AccountActionsMenuPage = (function () {
         var _this = this;
         if (!followed) {
             this.storage.addFollower({ followed: this.user._id, follower: this.loggedUser }).subscribe(function (followerAdded) {
-                _this.commons.presentToast("Se ha empezado a seguir al usuario con éxito");
+                _this.commons.presentToast(_this.commons.translate(["userFollowerAdded"], { ":user": _this.user.username }));
                 _this.viewCtrl.dismiss();
             });
         }
         else {
             this.storage.removeFollower(this.user._id, this.loggedUser).subscribe(function (followedRemoved) {
-                _this.commons.presentToast("Se ha dejado de seguir al usuario con éxito");
+                _this.commons.presentToast(_this.commons.translate(["userFollowerDeleted"], { ":user": _this.user.username }));
                 _this.viewCtrl.dismiss();
             });
         }
@@ -1197,14 +974,14 @@ var AccountActionsMenuPage = (function () {
     AccountActionsMenuPage.prototype.reportUser = function () {
         var _this = this;
         this.storage.createComplaint({ reporter: this.loggedUser, reported: this.user._id, publication: null }).subscribe(function () {
-            _this.commons.presentToast("El usuario ha sido denunciado con éxito");
+            _this.commons.presentToast(_this.commons.translate(["userReportSuccess"], { ":user": _this.user.username }));
             _this.viewCtrl.dismiss();
         });
     };
     AccountActionsMenuPage.prototype.changeLanguage = function (event) {
         var _this = this;
         this.storage.patchUser(this.loggedUser, { language: event }).first().subscribe(function () {
-            _this.commons.presentToast("El idioma ha sido modificado correctamente");
+            _this.commons.presentToast(_this.commons.translate(["languageUpdated"]));
             _this.commons.setLanguage(event);
             _this.viewCtrl.dismiss();
         });
@@ -1224,7 +1001,7 @@ var AccountActionsMenuPage = (function () {
         var _this = this;
         this.storage.patchUser(this.user._id, { username: this.user.username }).subscribe(function () {
             _this.commons.setUserData();
-            _this.commons.presentToast("El nombre de usuario ha sido actualizado con éxito");
+            _this.commons.presentToast(_this.commons.translate(["usernameUpdated"]));
             _this.viewCtrl.dismiss();
         });
     };
@@ -1249,18 +1026,18 @@ var AccountActionsMenuPage = (function () {
                 var avatarUrl = JSON.parse(uploadingResponse[0]["response"]);
                 _this.storage.patchUser(_this.user._id, { avatar: avatarUrl }).subscribe(function () {
                     loader.dismiss();
-                    _this.commons.presentToast("El avatar se ha actualizado con éxito");
+                    _this.commons.presentToast(_this.commons.translate(["avatarUpdated"]));
                     _this.user.avatar = avatarUrl;
                     _this.viewCtrl.dismiss();
                 });
             })
                 .catch(function (err) {
                 loader.dismiss();
-                _this.commons.presentToast("Se ha producido un error al actualizar el avatar");
+                _this.commons.presentToast(_this.commons.translate(["avatarUpdatedFailed"]));
                 _this.viewCtrl.dismiss();
             });
         }, function (err) {
-            _this.commons.presentToast("Se ha producido un error al cargar la imagen");
+            _this.commons.presentToast(_this.commons.translate(["imageUploadFailed"]));
             _this.viewCtrl.dismiss();
         });
     };
@@ -1279,11 +1056,14 @@ var AccountActionsMenuPage = (function () {
             return ft.upload(i, uri, options);
         }));
     };
+    AccountActionsMenuPage.prototype.getCaption = function (captionKey) {
+        return this.commons.translate([captionKey]);
+    };
     return AccountActionsMenuPage;
 }());
 AccountActionsMenuPage = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
-        selector: 'page-account-actions-menu',template:/*ion-inline-start:"C:\Users\Matias\WebstormProjects\turinsta\src\pages\account-actions-menu\account-actions-menu.html"*/'<!--\n  Generated template for the AccountActionsMenuPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-content no-padding>\n  <ion-list *ngIf="user._id==loggedUser">\n    <ion-item>\n      <ion-icon item-start name="quote" color="primary"></ion-icon>\n      <ion-label>Idioma</ion-label>\n      <ion-select [(ngModel)]="user.language" [interface]="\'popover\'" (ionChange)="changeLanguage($event)">\n        <ion-option *ngFor="let language of languages" [value]="language._id">\n          {{language.name}}\n        </ion-option>\n      </ion-select>\n    </ion-item>\n    <ion-item (click)="openUsernameWriting()">\n      <ion-icon item-start name="person" color="primary"></ion-icon>\n      <ion-label>Username</ion-label>\n    </ion-item>\n    <ion-item (click)="selectAvatar()">\n      <ion-icon item-start name="image" color="primary"></ion-icon>\n      <ion-label>Avatar</ion-label>\n    </ion-item>\n  </ion-list>\n  <ion-list *ngIf="user._id!=loggedUser">\n    <ion-item *ngIf="!followedes.includes(user._id)" (click)="handleFollowed(false)">\n      <ion-icon item-start name="person-add" color="primary"></ion-icon>\n      <p>Seguir usuario</p>\n    </ion-item>\n    <ion-item *ngIf="followedes.includes(user._id)" (click)="handleFollowed(true)">\n      <ion-icon item-start name="person" color="primary"></ion-icon>\n      <p>Dejar de seguir usuario</p>\n    </ion-item>\n    <ion-item *ngIf="followedes.includes(user._id)" (click)="openChat()">\n      <ion-icon item-start name="send" color="primary"></ion-icon>\n      <p>Enviar mensaje</p>\n    </ion-item>\n    <ion-item (click)="reportUser()">\n      <ion-icon item-start name="alert" color="danger"></ion-icon>\n      <p>Reportar usuario</p>\n    </ion-item>\n  </ion-list>\n</ion-content>\n'/*ion-inline-end:"C:\Users\Matias\WebstormProjects\turinsta\src\pages\account-actions-menu\account-actions-menu.html"*/,
+        selector: 'page-account-actions-menu',template:/*ion-inline-start:"C:\Users\Matias\WebstormProjects\turinsta\src\pages\account-actions-menu\account-actions-menu.html"*/'<!--\n  Generated template for the AccountActionsMenuPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-content no-padding>\n  <ion-list *ngIf="user._id==loggedUser">\n    <ion-item>\n      <ion-icon item-start name="quote" color="primary"></ion-icon>\n      <ion-label>{{getCaption("accountActionIdiom")}}</ion-label>\n      <ion-select [(ngModel)]="user.language" [interface]="\'popover\'" (ionChange)="changeLanguage($event)">\n        <ion-option *ngFor="let language of languages" [value]="language._id">\n          {{language.name}}\n        </ion-option>\n      </ion-select>\n    </ion-item>\n    <ion-item (click)="openUsernameWriting()">\n      <ion-icon item-start name="finger-print" color="primary"></ion-icon>\n      <ion-label>{{getCaption("username")}}</ion-label>\n    </ion-item>\n    <ion-item (click)="selectAvatar()">\n      <ion-icon item-start name="contact" color="primary"></ion-icon>\n      <ion-label>{{getCaption("avatar")}}</ion-label>\n    </ion-item>\n  </ion-list>\n  <ion-list *ngIf="user._id!=loggedUser">\n    <ion-item *ngIf="!followedes.includes(user._id)" (click)="handleFollowed(false)">\n      <ion-icon item-start name="person-add" color="primary"></ion-icon>\n      <p>{{getCaption("publicationActionFollowUser")}}</p>\n    </ion-item>\n    <ion-item *ngIf="followedes.includes(user._id)" (click)="handleFollowed(true)">\n      <ion-icon item-start name="person" color="primary"></ion-icon>\n      <p>{{getCaption("publicationActionStopFollowUser")}}</p>\n    </ion-item>\n    <ion-item *ngIf="followedes.includes(user._id)" (click)="openChat()">\n      <ion-icon item-start name="send" color="primary"></ion-icon>\n      <p>{{getCaption("accountActionSendMessage")}}</p>\n    </ion-item>\n    <ion-item (click)="reportUser()">\n      <ion-icon item-start name="alert" color="danger"></ion-icon>\n      <p>{{getCaption("accountActionReportUser")}}</p>\n    </ion-item>\n  </ion-list>\n</ion-content>\n'/*ion-inline-end:"C:\Users\Matias\WebstormProjects\turinsta\src\pages\account-actions-menu\account-actions-menu.html"*/,
     }),
     __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* NavParams */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["s" /* ViewController */],
         __WEBPACK_IMPORTED_MODULE_2__providers_commons_commons__["a" /* CommonsProvider */], __WEBPACK_IMPORTED_MODULE_3__providers_storage_storage__["a" /* StorageProvider */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* ModalController */], __WEBPACK_IMPORTED_MODULE_6__ngrx_store__["h" /* Store */],
@@ -1301,7 +1081,7 @@ AccountActionsMenuPage = __decorate([
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return UsernameWritingPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(5);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_commons_commons__ = __webpack_require__(11);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_commons_commons__ = __webpack_require__(9);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1341,7 +1121,7 @@ var UsernameWritingPage = (function () {
             return true;
         }
         else {
-            this.commons.presentToast("Nombre de usuario inválido");
+            this.commons.presentToast(this.commons.translate(["invalidUsername"]));
         }
     };
     UsernameWritingPage.prototype.confirmSave = function () {
@@ -1367,11 +1147,14 @@ var UsernameWritingPage = (function () {
             confirm_1.present();
         }
     };
+    UsernameWritingPage.prototype.getCaption = function (captionKey) {
+        return this.commons.translate([captionKey]);
+    };
     return UsernameWritingPage;
 }());
 UsernameWritingPage = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
-        selector: 'page-username-writing',template:/*ion-inline-start:"C:\Users\Matias\WebstormProjects\turinsta\src\pages\username-writing\username-writing.html"*/'<!--\n  Generated template for the UsernameWritingPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-header>\n  <ion-navbar>\n    <ion-item no-lines style="text-align: center">\n      <button item-start ion-button clear (click)="dismissUsernameWriting()">\n        <ion-icon name="close"></ion-icon>\n      </button>\n      <ion-title>Modificar nombre de usuario</ion-title>\n      <button *ngIf="username" item-end ion-button clear (click)="confirmSave()">\n        <ion-icon name="checkmark" color="success"></ion-icon>\n      </button>\n    </ion-item>\n  </ion-navbar>\n</ion-header>\n<ion-content no-padding style="height: 100%; width: 100%">\n  <ion-item>\n    <ion-label stacked>Nombre de usuario</ion-label>\n    <ion-textarea [(ngModel)]="username" style="width: 100%"></ion-textarea>\n  </ion-item>\n</ion-content>\n'/*ion-inline-end:"C:\Users\Matias\WebstormProjects\turinsta\src\pages\username-writing\username-writing.html"*/,
+        selector: 'page-username-writing',template:/*ion-inline-start:"C:\Users\Matias\WebstormProjects\turinsta\src\pages\username-writing\username-writing.html"*/'<!--\n  Generated template for the UsernameWritingPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-header>\n  <ion-navbar>\n    <ion-item no-lines style="text-align: center">\n      <button item-start ion-button clear (click)="dismissUsernameWriting()">\n        <ion-icon name="close"></ion-icon>\n      </button>\n      <button *ngIf="username" item-end ion-button clear (click)="confirmSave()">\n        <ion-icon name="checkmark" color="success"></ion-icon>\n      </button>\n    </ion-item>\n  </ion-navbar>\n</ion-header>\n<ion-content no-padding style="height: 100%; width: 100%">\n  <ion-item>\n    <ion-label stacked>{{getCaption("username")}}</ion-label>\n    <ion-textarea [(ngModel)]="username" style="width: 100%"></ion-textarea>\n  </ion-item>\n</ion-content>\n'/*ion-inline-end:"C:\Users\Matias\WebstormProjects\turinsta\src\pages\username-writing\username-writing.html"*/,
     }),
     __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* NavParams */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["s" /* ViewController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["b" /* AlertController */], __WEBPACK_IMPORTED_MODULE_2__providers_commons_commons__["a" /* CommonsProvider */]])
 ], UsernameWritingPage);
@@ -1388,7 +1171,7 @@ UsernameWritingPage = __decorate([
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_storage_storage__ = __webpack_require__(13);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_commons_commons__ = __webpack_require__(11);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_commons_commons__ = __webpack_require__(9);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1456,15 +1239,18 @@ var DescriptionWritingPage = (function () {
     DescriptionWritingPage.prototype.saveDescription = function () {
         var _this = this;
         this.storageService.patchPublication(this.publicationId, { description: [this.description.content] }).subscribe(function (patchedPublication) {
-            _this.commons.presentToast("La descripción ha sido actualizada con éxito");
+            _this.commons.presentToast(_this.commons.translate(["descriptionEditSuccess"]));
             _this.viewCtrl.dismiss(_this.description.content);
         });
+    };
+    DescriptionWritingPage.prototype.getCaption = function (captionKey) {
+        return this.commons.translate([captionKey]);
     };
     return DescriptionWritingPage;
 }());
 DescriptionWritingPage = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
-        selector: 'page-description-writing',template:/*ion-inline-start:"C:\Users\Matias\WebstormProjects\turinsta\src\pages\description-writing\description-writing.html"*/'<!--\n  Generated template for the DescriptionWritingPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-header>\n  <ion-navbar>\n    <ion-item no-lines style="text-align: center">\n      <button item-start ion-button clear (click)="dismissDescriptionWriting()">\n        <ion-icon name="close"></ion-icon>\n      </button>\n      <ion-title>Descripción</ion-title>\n      <button *ngIf="description.content" item-end ion-button clear (click)="confirmSave()">\n        <ion-icon name="checkmark" color="success"></ion-icon>\n      </button>\n    </ion-item>\n  </ion-navbar>\n</ion-header>\n<ion-content no-padding style="height: 100%; width: 100%">\n  <ion-item style="height: 85%">\n    <ion-label stacked>Descripción</ion-label>\n    <ion-textarea [(ngModel)]="description.content" style="width: 100%"></ion-textarea>\n  </ion-item>\n  <ion-item style="height: 15%">\n    <my-emoji-picker item-end [data]=description></my-emoji-picker>\n  </ion-item>\n</ion-content>\n'/*ion-inline-end:"C:\Users\Matias\WebstormProjects\turinsta\src\pages\description-writing\description-writing.html"*/,
+        selector: 'page-description-writing',template:/*ion-inline-start:"C:\Users\Matias\WebstormProjects\turinsta\src\pages\description-writing\description-writing.html"*/'<!--\n  Generated template for the DescriptionWritingPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-header>\n  <ion-navbar>\n    <ion-item no-lines style="text-align: center">\n      <button item-start ion-button clear (click)="dismissDescriptionWriting()">\n        <ion-icon name="close"></ion-icon>\n      </button>\n      <!--<ion-title>Descripción</ion-title>-->\n      <button *ngIf="description.content" item-end ion-button clear (click)="confirmSave()">\n        <ion-icon name="checkmark" color="success"></ion-icon>\n      </button>\n    </ion-item>\n  </ion-navbar>\n</ion-header>\n<ion-content no-padding style="height: 100%; width: 100%">\n  <ion-item style="height: 85%">\n    <ion-label stacked>{{getCaption("publicationDescription")}}</ion-label>\n    <ion-textarea [(ngModel)]="description.content" style="width: 100%"></ion-textarea>\n  </ion-item>\n  <ion-item style="height: 15%">\n    <my-emoji-picker item-end [data]=description></my-emoji-picker>\n  </ion-item>\n</ion-content>\n'/*ion-inline-end:"C:\Users\Matias\WebstormProjects\turinsta\src\pages\description-writing\description-writing.html"*/,
     }),
     __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* NavParams */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["s" /* ViewController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["b" /* AlertController */], __WEBPACK_IMPORTED_MODULE_2__providers_storage_storage__["a" /* StorageProvider */], __WEBPACK_IMPORTED_MODULE_3__providers_commons_commons__["a" /* CommonsProvider */]])
 ], DescriptionWritingPage);
@@ -1480,7 +1266,7 @@ DescriptionWritingPage = __decorate([
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ActivitiesPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(5);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_commons_commons__ = __webpack_require__(11);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_commons_commons__ = __webpack_require__(9);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_storage_storage__ = __webpack_require__(13);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__publication_writing_publication_writing__ = __webpack_require__(51);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__account_account__ = __webpack_require__(75);
@@ -1573,20 +1359,23 @@ var ActivitiesPage = (function () {
     };
     ActivitiesPage.prototype.getActivityCaption = function (caption, user, params) {
         if (params) {
-            return this.commons.translate(caption, __assign({}, params, { ':user': user }));
+            return this.commons.translate([caption], __assign({}, params, { ':user': user }));
         }
         else {
-            return this.commons.translate(caption, {});
+            return this.commons.translate([caption], {});
         }
     };
     ActivitiesPage.prototype.getAntiquity = function (date) {
         return this.commons.getAntiquity(date);
     };
+    ActivitiesPage.prototype.getCaption = function (captionKey) {
+        return this.commons.translate([captionKey]);
+    };
     return ActivitiesPage;
 }());
 ActivitiesPage = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
-        selector: 'page-activities',template:/*ion-inline-start:"C:\Users\Matias\WebstormProjects\turinsta\src\pages\activities\activities.html"*/'<!--\n  Generated template for the ActivitiesPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-header>\n  <ion-toolbar>\n    <ion-segment [(ngModel)]="directionFilter.value" color="secondary">\n      <ion-segment-button value="IN" (click)="getInActivities()">\n        <ion-icon name="cloud-download"></ion-icon>\n      </ion-segment-button>\n      <ion-segment-button value="OUT" (click)="getOutActivities()">\n        <ion-icon name="cloud-upload"></ion-icon>\n      </ion-segment-button>\n    </ion-segment>\n  </ion-toolbar>\n</ion-header>\n<ion-content no-padding>\n  <div [ngSwitch]="directionFilter.value">\n    <div *ngSwitchCase="\'IN\'" style="text-align: center">\n      <ion-list *ngSwitchCase="\'IN\'">\n        <ion-item *ngFor="let activity of activities | containsFilter:{\'key\':\'direction\', \'value\':\'IN\'}; let i=index" [ngClass]="{\'newActivity\': i<unseenActivitiesCount}">\n          <ion-avatar class="in-activity-avatar" item-start (click)="openUser(activity.relatedUsers[0]._id)">\n            <img src="{{activity.relatedUsers[0].avatar}}">\n          </ion-avatar>\n          <p class="publication-important-text" text-wrap>{{getActivityCaption(activity.caption, activity.relatedUsers[0].username,activity.params)}}</p>\n          <ion-note>{{getAntiquity(activity.timestamps.created)}}</ion-note>\n          <ion-thumbnail item-end (click)="openPublication(activity.publication)">\n            <img *ngIf="activity.publication" src="{{activity.publication.images[0].url}}">\n          </ion-thumbnail>\n        </ion-item>\n      </ion-list>\n      <empty-content *ngIf="emptyActivities(\'IN\')" [message]="\'No tienes actividades de entrada\'"></empty-content>\n    </div>\n    <div *ngSwitchCase="\'OUT\'" style="text-align: center">\n      <ion-list>\n        <ion-item *ngFor="let activity of activities | containsFilter:{\'key\':\'direction\', \'value\':\'OUT\'}">\n          <p class="publication-important-text" text-wrap>{{getActivityCaption(activity.caption,activity.relatedUsers.length? activity.relatedUsers[0].username : \'\',activity.params)}}</p>\n          <ion-note>{{getAntiquity(activity.timestamps.created)}}</ion-note>\n          <ion-thumbnail *ngIf="activity.publication" item-end (click)="openPublication(activity.publication)">\n            <img src="{{activity.publication.images[0].url}}">\n          </ion-thumbnail>\n          <ion-avatar class="out-activity-avatar" *ngIf="!activity.publication && activity.relatedUsers" item-end (click)="openUser(activity.relatedUsers[0]._id)">\n            <img src="{{activity.relatedUsers[0].avatar}}">\n          </ion-avatar>\n        </ion-item>\n      </ion-list>\n      <empty-content *ngIf="emptyActivities(\'OUT\')" [message]="\'No tienes actividades de salida\'"></empty-content>\n    </div>\n  </div>\n</ion-content>\n'/*ion-inline-end:"C:\Users\Matias\WebstormProjects\turinsta\src\pages\activities\activities.html"*/,
+        selector: 'page-activities',template:/*ion-inline-start:"C:\Users\Matias\WebstormProjects\turinsta\src\pages\activities\activities.html"*/'<!--\n  Generated template for the ActivitiesPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-header>\n  <ion-toolbar>\n    <ion-segment [(ngModel)]="directionFilter.value" color="secondary">\n      <ion-segment-button value="IN" (click)="getInActivities()">\n        <ion-icon name="cloud-download"></ion-icon>\n      </ion-segment-button>\n      <ion-segment-button value="OUT" (click)="getOutActivities()">\n        <ion-icon name="cloud-upload"></ion-icon>\n      </ion-segment-button>\n    </ion-segment>\n  </ion-toolbar>\n</ion-header>\n<ion-content no-padding>\n  <div [ngSwitch]="directionFilter.value">\n    <div *ngSwitchCase="\'IN\'" style="text-align: center">\n      <ion-list *ngSwitchCase="\'IN\'">\n        <ion-item *ngFor="let activity of activities | containsFilter:{\'key\':\'direction\', \'value\':\'IN\'}; let i=index" [ngClass]="{\'newActivity\': i<unseenActivitiesCount}">\n          <ion-avatar class="in-activity-avatar" item-start (click)="openUser(activity.relatedUsers[0]._id)">\n            <img src="{{activity.relatedUsers[0].avatar}}">\n          </ion-avatar>\n          <p class="publication-important-text" text-wrap>{{getActivityCaption(activity.caption, activity.relatedUsers[0].username,activity.params)}}</p>\n          <ion-note>{{getAntiquity(activity.timestamps.created)}}</ion-note>\n          <ion-thumbnail item-end (click)="openPublication(activity.publication)">\n            <img *ngIf="activity.publication" src="{{activity.publication.images[0].url}}">\n          </ion-thumbnail>\n        </ion-item>\n      </ion-list>\n      <empty-content *ngIf="emptyActivities(\'IN\')" [message]="getCaption(\'inActivityListEmpty\')"></empty-content>\n    </div>\n    <div *ngSwitchCase="\'OUT\'" style="text-align: center">\n      <ion-list>\n        <ion-item *ngFor="let activity of activities | containsFilter:{\'key\':\'direction\', \'value\':\'OUT\'}">\n          <p class="publication-important-text" text-wrap>{{getActivityCaption(activity.caption,activity.relatedUsers.length? activity.relatedUsers[0].username : \'\',activity.params)}}</p>\n          <ion-note>{{getAntiquity(activity.timestamps.created)}}</ion-note>\n          <ion-thumbnail *ngIf="activity.publication" item-end (click)="openPublication(activity.publication)">\n            <img src="{{activity.publication.images[0].url}}">\n          </ion-thumbnail>\n          <ion-avatar class="out-activity-avatar" *ngIf="!activity.publication && activity.relatedUsers" item-end (click)="openUser(activity.relatedUsers[0]._id)">\n            <img src="{{activity.relatedUsers[0].avatar}}">\n          </ion-avatar>\n        </ion-item>\n      </ion-list>\n      <empty-content *ngIf="emptyActivities(\'OUT\')" [message]="getCaption(\'outActivityListEmpty\')"></empty-content>\n    </div>\n  </div>\n</ion-content>\n'/*ion-inline-end:"C:\Users\Matias\WebstormProjects\turinsta\src\pages\activities\activities.html"*/,
     }),
     __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* NavParams */], __WEBPACK_IMPORTED_MODULE_2__providers_commons_commons__["a" /* CommonsProvider */],
         __WEBPACK_IMPORTED_MODULE_3__providers_storage_storage__["a" /* StorageProvider */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* ModalController */]])
@@ -1603,9 +1392,9 @@ ActivitiesPage = __decorate([
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ChatActionsMenuPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(5);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__inbox_writing_inbox_writing__ = __webpack_require__(105);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__inbox_writing_inbox_writing__ = __webpack_require__(104);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_storage_storage__ = __webpack_require__(13);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__providers_commons_commons__ = __webpack_require__(11);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__providers_commons_commons__ = __webpack_require__(9);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1678,13 +1467,13 @@ var ChatActionsMenuPage = (function () {
         participants.splice(participants.indexOf(this.commons.getUserId()), 1);
         if (participants.length == 0) {
             this.storage.deleteInbox(this.chat._id).subscribe(function () {
-                _this.commons.presentToast("Has salido del grupo con éxito");
+                _this.commons.presentToast(_this.commons.translate(["leftGroupSuccess"], { ":group": _this.chat.name }));
                 _this.viewCtrl.dismiss('CHAT_DELETED');
             });
         }
         else {
             this.storage.patchInbox(this.chat._id, { participants: participants }).subscribe(function () {
-                _this.commons.presentToast("Has salido del grupo con éxito");
+                _this.commons.presentToast(_this.commons.translate(["leftGroupSuccess"], { ":group": _this.chat.name }));
                 _this.viewCtrl.dismiss('CHAT_DELETED');
             });
         }
@@ -1715,15 +1504,21 @@ var ChatActionsMenuPage = (function () {
         var participants = this.chat.participants.map(function (user) { return user._id; });
         participants.splice(participants.indexOf(this.commons.getUserId()), 1);
         this.storage.deleteInbox(this.chat._id).subscribe(function () {
-            _this.commons.presentToast("Has borrado el chat con éxito");
+            _this.commons.presentToast(_this.commons.translate(["deleteChatSuccess"], { ":user": _this.chat.participants.filter(function (user) {
+                    return user._id != _this.commons.getUserId();
+                })[0].username
+            }));
             _this.viewCtrl.dismiss('CHAT_DELETED');
         });
+    };
+    ChatActionsMenuPage.prototype.getCaption = function (captionKey) {
+        return this.commons.translate([captionKey]);
     };
     return ChatActionsMenuPage;
 }());
 ChatActionsMenuPage = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
-        selector: 'page-chat-actions-menu',template:/*ion-inline-start:"C:\Users\Matias\WebstormProjects\turinsta\src\pages\chat-actions-menu\chat-actions-menu.html"*/'<!--\n  Generated template for the ChatActionsMenuPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-content no-padding>\n  <ion-list>\n    <ion-item *ngIf="chat.group" (click)="editChat()">\n      <ion-icon item-start name="create" color="primary"></ion-icon>\n      <p>Editar grupo</p>\n    </ion-item>\n    <ion-item *ngIf="chat.group" (click)="confirmLeaveChat()">\n      <ion-icon item-start name="exit" color="danger"></ion-icon>\n      <p>Abandonar grupo</p>\n    </ion-item>\n    <ion-item *ngIf="!chat.group" (click)="confirmDeleteChat()">\n      <ion-icon item-start name="trash" color="danger"></ion-icon>\n      <p>Borrar chat</p>\n    </ion-item>\n  </ion-list>\n</ion-content>\n'/*ion-inline-end:"C:\Users\Matias\WebstormProjects\turinsta\src\pages\chat-actions-menu\chat-actions-menu.html"*/,
+        selector: 'page-chat-actions-menu',template:/*ion-inline-start:"C:\Users\Matias\WebstormProjects\turinsta\src\pages\chat-actions-menu\chat-actions-menu.html"*/'<!--\n  Generated template for the ChatActionsMenuPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-content no-padding>\n  <ion-list>\n    <ion-item *ngIf="chat.group" (click)="editChat()">\n      <ion-icon item-start name="create" color="primary"></ion-icon>\n      <p>{{getCaption("chatActionEdit")}}</p>\n    </ion-item>\n    <ion-item *ngIf="chat.group" (click)="confirmLeaveChat()">\n      <ion-icon item-start name="exit" color="danger"></ion-icon>\n      <p>{{getCaption("chatActionLeftGroup")}}</p>\n    </ion-item>\n    <ion-item *ngIf="!chat.group" (click)="confirmDeleteChat()">\n      <ion-icon item-start name="trash" color="danger"></ion-icon>\n      <p>{{getCaption("chatActionDeleteChat")}}</p>\n    </ion-item>\n  </ion-list>\n</ion-content>\n'/*ion-inline-end:"C:\Users\Matias\WebstormProjects\turinsta\src\pages\chat-actions-menu\chat-actions-menu.html"*/,
     }),
     __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* NavParams */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* ModalController */],
         __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["s" /* ViewController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["b" /* AlertController */],
@@ -1793,7 +1588,7 @@ MyEmojiPickerPage = __decorate([
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_storage_storage__ = __webpack_require__(13);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_commons_commons__ = __webpack_require__(11);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_commons_commons__ = __webpack_require__(9);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1863,7 +1658,7 @@ var PlaceSelectingPage = (function () {
     PlaceSelectingPage.prototype.updatePlace = function () {
         var _this = this;
         this.storageService.patchPublication(this.publicationId, { places: [this.placeSelected] }).subscribe(function (patchedPublication) {
-            _this.commons.presentToast("La ubicación ha sido actualizada con éxito");
+            _this.commons.presentToast(_this.commons.translate(["placeUpdated"]));
             _this.viewCtrl.dismiss(_this.placeSelected);
         });
     };
@@ -1871,7 +1666,7 @@ var PlaceSelectingPage = (function () {
 }());
 PlaceSelectingPage = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
-        selector: 'page-place-selecting',template:/*ion-inline-start:"C:\Users\Matias\WebstormProjects\turinsta\src\pages\place-selecting\place-selecting.html"*/'<!--\n  Generated template for the PlaceSelectingPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-header>\n  <ion-navbar>\n    <ion-item no-lines style="text-align: center">\n      <button item-start ion-button clear (click)="dismissPlaceSelecting()">\n        <ion-icon name="close"></ion-icon>\n      </button>\n      <ion-title>Ingrese una ubicación</ion-title>\n      <button item-end *ngIf="placeSelected" ion-button clear (click)="confirmSave()">\n        <ion-icon name="checkmark" color="success"></ion-icon>\n      </button>\n    </ion-item>\n  </ion-navbar>\n</ion-header>\n\n<ion-content padding>\n  <place-filter [placeSelecting]=true (placeSelected)="setPlace($event)"></place-filter>\n</ion-content>\n'/*ion-inline-end:"C:\Users\Matias\WebstormProjects\turinsta\src\pages\place-selecting\place-selecting.html"*/,
+        selector: 'page-place-selecting',template:/*ion-inline-start:"C:\Users\Matias\WebstormProjects\turinsta\src\pages\place-selecting\place-selecting.html"*/'<!--\n  Generated template for the PlaceSelectingPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-header>\n  <ion-navbar>\n    <ion-item no-lines style="text-align: center">\n      <button item-start ion-button clear (click)="dismissPlaceSelecting()">\n        <ion-icon name="close"></ion-icon>\n      </button>\n      <button item-end *ngIf="placeSelected" ion-button clear (click)="confirmSave()">\n        <ion-icon name="checkmark" color="success"></ion-icon>\n      </button>\n    </ion-item>\n  </ion-navbar>\n</ion-header>\n\n<ion-content padding>\n  <place-filter [placeSelecting]=true (placeSelected)="setPlace($event)"></place-filter>\n</ion-content>\n'/*ion-inline-end:"C:\Users\Matias\WebstormProjects\turinsta\src\pages\place-selecting\place-selecting.html"*/,
     }),
     __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* NavParams */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["s" /* ViewController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["b" /* AlertController */], __WEBPACK_IMPORTED_MODULE_2__providers_storage_storage__["a" /* StorageProvider */], __WEBPACK_IMPORTED_MODULE_3__providers_commons_commons__["a" /* CommonsProvider */]])
 ], PlaceSelectingPage);
@@ -1884,11 +1679,56 @@ PlaceSelectingPage = __decorate([
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return PlacesPage; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(5);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+/**
+ * Generated class for the PlacesPage page.
+ *
+ * See https://ionicframework.com/docs/components/#navigation for more info on
+ * Ionic pages and navigation.
+ */
+var PlacesPage = (function () {
+    function PlacesPage(navCtrl, navParams) {
+        this.navCtrl = navCtrl;
+        this.navParams = navParams;
+    }
+    PlacesPage.prototype.ionViewDidLoad = function () {
+        console.log('ionViewDidLoad PlacesPage');
+    };
+    return PlacesPage;
+}());
+PlacesPage = __decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
+        selector: 'page-places',template:/*ion-inline-start:"C:\Users\Matias\WebstormProjects\turinsta\src\pages\places\places.html"*/'<!--\n  Generated template for the PlacesPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-content padding>\n  <h2>Places</h2>\n</ion-content>\n'/*ion-inline-end:"C:\Users\Matias\WebstormProjects\turinsta\src\pages\places\places.html"*/,
+    }),
+    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* NavParams */]])
+], PlacesPage);
+
+//# sourceMappingURL=places.js.map
+
+/***/ }),
+
+/***/ 179:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return PublicationActionsMenuPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_storage_storage__ = __webpack_require__(13);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_commons_commons__ = __webpack_require__(11);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_commons_commons__ = __webpack_require__(9);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__account_account__ = __webpack_require__(75);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -1932,19 +1772,22 @@ var PublicationActionsMenuPage = (function () {
         this.user = this.navParams.get("user");
     };
     PublicationActionsMenuPage.prototype.checkNotOwner = function () {
-        return this.user != this.commons.getUserId();
+        if (this.user) {
+            return this.user._id != this.commons.getUserId();
+        }
+        return false;
     };
     PublicationActionsMenuPage.prototype.handleFavorite = function () {
         var _this = this;
         if (!this.followedPublication) {
             this.storageService.addPublicationFollower({ publication: this.publication, user: this.commons.getUserId() }).subscribe(function (favoriteAdded) {
-                _this.commons.presentToast("Se ha guardado la publicación en favoritos con éxito");
+                _this.commons.presentToast(_this.commons.translate(["favoritePublicationAdded"], { ":user": _this.user.username }));
                 _this.viewCtrl.dismiss();
             });
         }
         else {
             this.storageService.removePublicationFollower(this.commons.getUserId(), this.publication).subscribe(function (favoriteRemoved) {
-                _this.commons.presentToast("Se ha quitado la publicación de favoritos con éxito");
+                _this.commons.presentToast(_this.commons.translate(["favoritePublicationDeleted"], { ":user": _this.user.username }));
                 _this.viewCtrl.dismiss();
             });
         }
@@ -1952,14 +1795,14 @@ var PublicationActionsMenuPage = (function () {
     PublicationActionsMenuPage.prototype.handleUser = function () {
         var _this = this;
         if (!this.followedUser) {
-            this.storageService.addFollower({ followed: this.user, follower: this.commons.getUserId() }).subscribe(function (followerAdded) {
-                _this.commons.presentToast("Se ha empezado a seguir al usuario con éxito");
+            this.storageService.addFollower({ followed: this.user._id, follower: this.commons.getUserId() }).subscribe(function (followerAdded) {
+                _this.commons.presentToast(_this.commons.translate(["userFollowerAdded"], { ":user": _this.user.username }));
                 _this.viewCtrl.dismiss();
             });
         }
         else {
-            this.storageService.removeFollower(this.user, this.commons.getUserId()).subscribe(function (followedRemoved) {
-                _this.commons.presentToast("Se ha dejado de seguir al usuario con éxito");
+            this.storageService.removeFollower(this.user._id, this.commons.getUserId()).subscribe(function (followedRemoved) {
+                _this.commons.presentToast(_this.commons.translate(["userFollowerDeleted"], { ":user": _this.user.username }));
                 _this.viewCtrl.dismiss();
             });
         }
@@ -2017,23 +1860,26 @@ var PublicationActionsMenuPage = (function () {
     };
     PublicationActionsMenuPage.prototype.viewUser = function () {
         var _this = this;
-        var publicationWritingModal = this.modalCtrl.create(__WEBPACK_IMPORTED_MODULE_4__account_account__["a" /* AccountPage */], { user: this.user });
+        var publicationWritingModal = this.modalCtrl.create(__WEBPACK_IMPORTED_MODULE_4__account_account__["a" /* AccountPage */], { user: this.user._id });
         publicationWritingModal.present().then(function () {
             _this.viewCtrl.dismiss();
         });
     };
     PublicationActionsMenuPage.prototype.denunciate = function () {
         var _this = this;
-        this.storageService.createComplaint({ reporter: this.commons.getUserId(), reported: this.user, publication: this.publication }).subscribe(function () {
-            _this.commons.presentToast("La publicación ha sido denunciada con éxito");
+        this.storageService.createComplaint({ reporter: this.commons.getUserId(), reported: this.user._id, publication: this.publication }).subscribe(function () {
+            _this.commons.presentToast(_this.commons.translate(["publicationReportSuccess"]));
             _this.viewCtrl.dismiss();
         });
+    };
+    PublicationActionsMenuPage.prototype.getCaption = function (captionKey) {
+        return this.commons.translate([captionKey]);
     };
     return PublicationActionsMenuPage;
 }());
 PublicationActionsMenuPage = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
-        selector: 'page-publication-actions-menu',template:/*ion-inline-start:"C:\Users\Matias\WebstormProjects\turinsta\src\pages\publication-actions-menu\publication-actions-menu.html"*/'<!--\n  Generated template for the PublicationActionsMenuPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-content no-padding>\n  <ion-list>\n    <ion-item *ngIf="checkNotOwner()" (click)="handleFavorite()">\n      <ion-icon item-start name="heart"></ion-icon>\n      <p *ngIf="!followedPublication">Agregar a favoritos</p>\n      <p *ngIf="followedPublication">Quitar de favoritos</p>\n    </ion-item>\n    <ion-item (click)="locatePlace()">\n      <ion-icon item-start class="publication-icon" name="pin" color="secondary"></ion-icon>\n      <p>Ubicar en mapa</p>\n    </ion-item>\n    <ion-item (click)="presentShareActionSheet()">\n      <ion-icon item-start class="publication-icon" name="share" color="secondary"></ion-icon>\n      <p>Compartir</p>\n    </ion-item>\n    <ion-item *ngIf="checkNotOwner()" (click)="handleUser()">\n      <ion-icon item-start name="person-add"></ion-icon>\n      <p *ngIf="!followedUser">Seguir usuario</p>\n      <p *ngIf="followedUser">Dejar de seguir usuario</p>\n    </ion-item>\n    <ion-item *ngIf="checkNotOwner()" (click)="viewUser()">\n      <ion-icon item-start name="contact"></ion-icon>\n      <p>Ver perfil de usuario</p>\n    </ion-item>\n    <ion-item *ngIf="checkNotOwner()" (click)="denunciate()">\n      <ion-icon item-start name="alert"></ion-icon>\n      <p>Denunciar</p>\n    </ion-item>\n  </ion-list>\n</ion-content>\n'/*ion-inline-end:"C:\Users\Matias\WebstormProjects\turinsta\src\pages\publication-actions-menu\publication-actions-menu.html"*/,
+        selector: 'page-publication-actions-menu',template:/*ion-inline-start:"C:\Users\Matias\WebstormProjects\turinsta\src\pages\publication-actions-menu\publication-actions-menu.html"*/'<!--\n  Generated template for the PublicationActionsMenuPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-content no-padding>\n  <ion-list>\n    <ion-item *ngIf="checkNotOwner()" (click)="handleFavorite()">\n      <ion-icon item-start name="heart" color="danger"></ion-icon>\n      <p *ngIf="!followedPublication">{{getCaption("publicationActionAddToFavorites")}}</p>\n      <p *ngIf="followedPublication">{{getCaption("publicationActionRemoveFromFavorites")}}</p>\n    </ion-item>\n    <ion-item (click)="locatePlace()">\n      <ion-icon item-start class="publication-icon" name="pin" color="secondary"></ion-icon>\n      <p>{{getCaption("publicationActionLocateInMap")}}</p>\n    </ion-item>\n    <ion-item (click)="presentShareActionSheet()">\n      <ion-icon item-start class="publication-icon" name="share" color="warning"></ion-icon>\n      <p>{{getCaption("publicationActionShare")}}</p>\n    </ion-item>\n    <ion-item *ngIf="checkNotOwner()" (click)="handleUser()">\n      <ion-icon item-start name="person-add" color="success"></ion-icon>\n      <p *ngIf="!followedUser">{{getCaption("publicationActionFollowUser")}}</p>\n      <p *ngIf="followedUser">{{getCaption("publicationActionStopFollowUser")}}</p>\n    </ion-item>\n    <ion-item *ngIf="checkNotOwner()" (click)="viewUser()">\n      <ion-icon item-start name="contact" color="primary"></ion-icon>\n      <p>{{getCaption("publicationActionSeeUser")}}</p>\n    </ion-item>\n    <ion-item *ngIf="checkNotOwner()" (click)="denunciate()">\n      <ion-icon item-start name="alert" color="danger"></ion-icon>\n      <p>{{getCaption("publicationActionReportPublication")}}</p>\n    </ion-item>\n  </ion-list>\n</ion-content>\n'/*ion-inline-end:"C:\Users\Matias\WebstormProjects\turinsta\src\pages\publication-actions-menu\publication-actions-menu.html"*/,
     }),
     __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* NavParams */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["s" /* ViewController */], __WEBPACK_IMPORTED_MODULE_2__providers_storage_storage__["a" /* StorageProvider */], __WEBPACK_IMPORTED_MODULE_3__providers_commons_commons__["a" /* CommonsProvider */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* ActionSheetController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* ModalController */]])
 ], PublicationActionsMenuPage);
@@ -2042,112 +1888,7 @@ PublicationActionsMenuPage = __decorate([
 
 /***/ }),
 
-/***/ 179:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return PlacesPage; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(5);
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-
-
-/**
- * Generated class for the PlacesPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
-var PlacesPage = (function () {
-    function PlacesPage(navCtrl, navParams) {
-        this.navCtrl = navCtrl;
-        this.navParams = navParams;
-    }
-    PlacesPage.prototype.ionViewDidLoad = function () {
-        console.log('ionViewDidLoad PlacesPage');
-    };
-    return PlacesPage;
-}());
-PlacesPage = __decorate([
-    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
-        selector: 'page-places',template:/*ion-inline-start:"C:\Users\Matias\WebstormProjects\turinsta\src\pages\places\places.html"*/'<!--\n  Generated template for the PlacesPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-content padding>\n  <h2>Places</h2>\n</ion-content>\n'/*ion-inline-end:"C:\Users\Matias\WebstormProjects\turinsta\src\pages\places\places.html"*/,
-    }),
-    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* NavParams */]])
-], PlacesPage);
-
-//# sourceMappingURL=places.js.map
-
-/***/ }),
-
 /***/ 180:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return PublicationOrderByPage; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(5);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__ngrx_store__ = __webpack_require__(23);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_reducers_publication_reducer__ = __webpack_require__(56);
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-
-
-
-
-/**
- * Generated class for the PublicationOrderByPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
-var PublicationOrderByPage = (function () {
-    function PublicationOrderByPage(navCtrl, navParams, viewCtrl, store) {
-        this.navCtrl = navCtrl;
-        this.navParams = navParams;
-        this.viewCtrl = viewCtrl;
-        this.store = store;
-        this.sortValue = null;
-    }
-    PublicationOrderByPage.prototype.ionViewDidLoad = function () {
-        var _this = this;
-        console.log('ionViewDidLoad PublicationOrderByPage');
-        this.store.select("publications").subscribe(function (state) {
-            _this.sortValue = state.sort.field;
-        });
-    };
-    PublicationOrderByPage.prototype.close = function (order) {
-        this.store.dispatch(Object(__WEBPACK_IMPORTED_MODULE_3__providers_reducers_publication_reducer__["j" /* setSort */])(order));
-        this.viewCtrl.dismiss();
-    };
-    return PublicationOrderByPage;
-}());
-PublicationOrderByPage = __decorate([
-    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
-        selector: 'page-publication-order-by',template:/*ion-inline-start:"C:\Users\Matias\WebstormProjects\turinsta\src\pages\publication-order-by\publication-order-by.html"*/'<!--\n  Generated template for the PublicationOrderByPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-content no-padding>\n  <ion-list radio-group [(ngModel)]="sortValue">\n    <ion-list-header>Ordenar por</ion-list-header>\n    <ion-item>\n      <ion-label>Más recientes</ion-label>\n      <ion-radio value="publication.timestamps.created" (click)="close({field: \'publication.timestamps.created\', way: -1})"></ion-radio>\n    </ion-item>\n    <ion-item>\n      <ion-label>Más populares</ion-label>\n      <ion-radio value="publication.followers" (click)="close({field: \'publication.followers\', way: -1})"></ion-radio>\n    </ion-item>\n    <ion-item>\n      <ion-label>Mejor calificadas</ion-label>\n      <ion-radio value="publication.score" (click)="close({field: \'publication.score\', way: -1})"></ion-radio>\n    </ion-item>\n    <ion-item>\n      <ion-label>Usuarios más populares</ion-label>\n      <ion-radio value="user.followers" (click)="close({field: \'user.followers\', way: -1})"></ion-radio>\n    </ion-item>\n    <ion-item>\n      <ion-label>Usuarios mejor calificados</ion-label>\n      <ion-radio value="user.score" (click)="close({field: \'user.score\', way: -1})"></ion-radio>\n    </ion-item>\n  </ion-list>\n</ion-content>\n'/*ion-inline-end:"C:\Users\Matias\WebstormProjects\turinsta\src\pages\publication-order-by\publication-order-by.html"*/,
-    }),
-    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* NavParams */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["s" /* ViewController */], __WEBPACK_IMPORTED_MODULE_2__ngrx_store__["h" /* Store */]])
-], PublicationOrderByPage);
-
-//# sourceMappingURL=publication-order-by.js.map
-
-/***/ }),
-
-/***/ 181:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -2156,7 +1897,7 @@ PublicationOrderByPage = __decorate([
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__ngrx_store__ = __webpack_require__(23);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_reducers_publication_reducer__ = __webpack_require__(56);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__providers_commons_commons__ = __webpack_require__(11);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__providers_commons_commons__ = __webpack_require__(9);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -2217,16 +1958,85 @@ var PublicationUserFilterPage = (function () {
         }
         this.viewCtrl.dismiss();
     };
+    PublicationUserFilterPage.prototype.getCaption = function (captionKey) {
+        return this.commons.translate([captionKey]);
+    };
     return PublicationUserFilterPage;
 }());
 PublicationUserFilterPage = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
-        selector: 'page-publication-user-filter',template:/*ion-inline-start:"C:\Users\Matias\WebstormProjects\turinsta\src\pages\publication-user-filter\publication-user-filter.html"*/'<!--\n  Generated template for the PublicationUserFilterPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n\n<ion-content no-padding>\n  <ion-list radio-group [(ngModel)]="userFilter">\n    <ion-list-header>Visualizar</ion-list-header>\n    <ion-item>\n      <ion-label>Todos</ion-label>\n      <ion-radio value="{{null}}" (click)="close()"></ion-radio>\n    </ion-item>\n    <ion-item>\n      <ion-label>Seguidos</ion-label>\n      <ion-radio value="{{loggedUser}}" (click)="close({key: \'user.followers\', value: loggedUser, operation: \'CONTAINS\'})"></ion-radio>\n    </ion-item>\n    <ion-item>\n      <ion-input item-start [(ngModel)]="customUser" placeholder="Buscar por nombre..."></ion-input>\n      <button item-end ion-button (click)="close({key: \'user.username\', value: customUser, operation: \'LIKE\'})" icon-only clear><ion-icon name="ios-arrow-dropright" color="primary"></ion-icon></button>\n    </ion-item>\n  </ion-list>\n</ion-content>\n'/*ion-inline-end:"C:\Users\Matias\WebstormProjects\turinsta\src\pages\publication-user-filter\publication-user-filter.html"*/,
+        selector: 'page-publication-user-filter',template:/*ion-inline-start:"C:\Users\Matias\WebstormProjects\turinsta\src\pages\publication-user-filter\publication-user-filter.html"*/'<!--\n  Generated template for the PublicationUserFilterPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n\n<ion-content no-padding>\n  <ion-list radio-group [(ngModel)]="userFilter">\n    <ion-list-header>{{getCaption("userFilterVisualize")}}</ion-list-header>\n    <ion-item>\n      <ion-label>{{getCaption("userFilterAll")}}</ion-label>\n      <ion-radio value="{{null}}" (click)="close()"></ion-radio>\n    </ion-item>\n    <ion-item>\n      <ion-label>{{getCaption("userFilterFollowed")}}</ion-label>\n      <ion-radio value="{{loggedUser}}" (click)="close({key: \'user.followers\', value: loggedUser, operation: \'CONTAINS\'})"></ion-radio>\n    </ion-item>\n    <ion-item>\n      <ion-input item-start [(ngModel)]="customUser" placeholder="{{getCaption(\'userFilterByName\')}}"></ion-input>\n      <button item-end ion-button (click)="close({key: \'user.username\', value: customUser, operation: \'LIKE\'})" icon-only clear><ion-icon name="ios-arrow-dropright" color="primary"></ion-icon></button>\n    </ion-item>\n  </ion-list>\n</ion-content>\n'/*ion-inline-end:"C:\Users\Matias\WebstormProjects\turinsta\src\pages\publication-user-filter\publication-user-filter.html"*/,
     }),
     __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* NavParams */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["s" /* ViewController */], __WEBPACK_IMPORTED_MODULE_2__ngrx_store__["h" /* Store */], __WEBPACK_IMPORTED_MODULE_4__providers_commons_commons__["a" /* CommonsProvider */]])
 ], PublicationUserFilterPage);
 
 //# sourceMappingURL=publication-user-filter.js.map
+
+/***/ }),
+
+/***/ 181:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return PublicationOrderByPage; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__ngrx_store__ = __webpack_require__(23);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_reducers_publication_reducer__ = __webpack_require__(56);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__providers_commons_commons__ = __webpack_require__(9);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+
+
+/**
+ * Generated class for the PublicationOrderByPage page.
+ *
+ * See https://ionicframework.com/docs/components/#navigation for more info on
+ * Ionic pages and navigation.
+ */
+var PublicationOrderByPage = (function () {
+    function PublicationOrderByPage(navCtrl, navParams, viewCtrl, store, commons) {
+        this.navCtrl = navCtrl;
+        this.navParams = navParams;
+        this.viewCtrl = viewCtrl;
+        this.store = store;
+        this.commons = commons;
+        this.sortValue = null;
+    }
+    PublicationOrderByPage.prototype.ionViewDidLoad = function () {
+        var _this = this;
+        console.log('ionViewDidLoad PublicationOrderByPage');
+        this.store.select("publications").subscribe(function (state) {
+            _this.sortValue = state.sort.field;
+        });
+    };
+    PublicationOrderByPage.prototype.close = function (order) {
+        this.store.dispatch(Object(__WEBPACK_IMPORTED_MODULE_3__providers_reducers_publication_reducer__["j" /* setSort */])(order));
+        this.viewCtrl.dismiss();
+    };
+    PublicationOrderByPage.prototype.getCaption = function (captionKey) {
+        return this.commons.translate([captionKey]);
+    };
+    return PublicationOrderByPage;
+}());
+PublicationOrderByPage = __decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
+        selector: 'page-publication-order-by',template:/*ion-inline-start:"C:\Users\Matias\WebstormProjects\turinsta\src\pages\publication-order-by\publication-order-by.html"*/'<!--\n  Generated template for the PublicationOrderByPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-content no-padding>\n  <ion-list radio-group [(ngModel)]="sortValue">\n    <ion-list-header>{{getCaption("orderBy")}}</ion-list-header>\n    <ion-item>\n      <ion-label>{{getCaption("orderByMostRecent")}}</ion-label>\n      <ion-radio value="publication.timestamps.created" (click)="close({field: \'publication.timestamps.created\', way: -1})"></ion-radio>\n    </ion-item>\n    <ion-item>\n      <ion-label>{{getCaption("orderByMostPopulated")}}</ion-label>\n      <ion-radio value="publication.followers" (click)="close({field: \'publication.followers\', way: -1})"></ion-radio>\n    </ion-item>\n    <ion-item>\n      <ion-label>{{getCaption("orderByMostQualified")}}</ion-label>\n      <ion-radio value="publication.score" (click)="close({field: \'publication.score\', way: -1})"></ion-radio>\n    </ion-item>\n    <ion-item>\n      <ion-label>{{getCaption("orderByMostPopularUsers")}}</ion-label>\n      <ion-radio value="user.followers" (click)="close({field: \'user.followers\', way: -1})"></ion-radio>\n    </ion-item>\n    <ion-item>\n      <ion-label>{{getCaption("orderByMostQualifiedUsers")}}</ion-label>\n      <ion-radio value="user.score" (click)="close({field: \'user.score\', way: -1})"></ion-radio>\n    </ion-item>\n  </ion-list>\n</ion-content>\n'/*ion-inline-end:"C:\Users\Matias\WebstormProjects\turinsta\src\pages\publication-order-by\publication-order-by.html"*/,
+    }),
+    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* NavParams */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["s" /* ViewController */], __WEBPACK_IMPORTED_MODULE_2__ngrx_store__["h" /* Store */], __WEBPACK_IMPORTED_MODULE_4__providers_commons_commons__["a" /* CommonsProvider */]])
+], PublicationOrderByPage);
+
+//# sourceMappingURL=publication-order-by.js.map
 
 /***/ }),
 
@@ -2264,11 +2074,11 @@ var map = {
 		14
 	],
 	"../pages/chat-actions-menu/chat-actions-menu.module": [
-		728,
+		725,
 		13
 	],
 	"../pages/chat/chat.module": [
-		725,
+		728,
 		12
 	],
 	"../pages/comment-writing/comment-writing.module": [
@@ -2296,27 +2106,27 @@ var map = {
 		6
 	],
 	"../pages/places/places.module": [
-		734,
+		733,
 		5
 	],
 	"../pages/publication-actions-menu/publication-actions-menu.module": [
-		733,
+		734,
 		4
 	],
 	"../pages/publication-order-by/publication-order-by.module": [
-		735,
+		738,
 		3
 	],
 	"../pages/publication-user-filter/publication-user-filter.module": [
-		736,
+		735,
 		2
 	],
 	"../pages/publication-writing/publication-writing.module": [
-		737,
+		736,
 		1
 	],
 	"../pages/username-writing/username-writing.module": [
-		738,
+		737,
 		0
 	]
 };
@@ -2426,13 +2236,13 @@ function userReducer(state, _a) {
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return TabsPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__home_home__ = __webpack_require__(324);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__places_places__ = __webpack_require__(179);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__places_places__ = __webpack_require__(178);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__activities_activities__ = __webpack_require__(174);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__account_account__ = __webpack_require__(75);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__ngrx_store__ = __webpack_require__(23);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__ionic_native_badge__ = __webpack_require__(96);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__providers_storage_storage__ = __webpack_require__(13);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__providers_commons_commons__ = __webpack_require__(11);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__providers_commons_commons__ = __webpack_require__(9);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -2585,7 +2395,7 @@ HomePage = __decorate([
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_add_operator_map__ = __webpack_require__(87);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_add_operator_map___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_rxjs_add_operator_map__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__storage_storage__ = __webpack_require__(13);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__commons_commons__ = __webpack_require__(11);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__commons_commons__ = __webpack_require__(9);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_ng_socket_io__ = __webpack_require__(71);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_ng_socket_io___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_ng_socket_io__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__ngrx_store__ = __webpack_require__(23);
@@ -2673,7 +2483,7 @@ Object(__WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__["a" /* pl
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_ionic_angular__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__app_component__ = __webpack_require__(656);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__pages_home_home__ = __webpack_require__(324);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__pages_places_places__ = __webpack_require__(179);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__pages_places_places__ = __webpack_require__(178);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__pages_activities_activities__ = __webpack_require__(174);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__pages_account_account__ = __webpack_require__(75);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__pages_tabs_tabs__ = __webpack_require__(323);
@@ -2695,10 +2505,10 @@ Object(__WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__["a" /* pl
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_24__components_publication_body_publication_body__ = __webpack_require__(666);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_25__components_publication_footer_publication_footer__ = __webpack_require__(667);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_26__components_experience_list_experience_list__ = __webpack_require__(668);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_27__providers_commons_commons__ = __webpack_require__(11);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_27__providers_commons_commons__ = __webpack_require__(9);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_28__pipes_contains_filter_contains_filter__ = __webpack_require__(669);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_29__pages_publication_order_by_publication_order_by__ = __webpack_require__(180);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_30__pages_publication_user_filter_publication_user_filter__ = __webpack_require__(181);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_29__pages_publication_order_by_publication_order_by__ = __webpack_require__(181);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_30__pages_publication_user_filter_publication_user_filter__ = __webpack_require__(180);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_31__components_filters_bar_filters_bar__ = __webpack_require__(670);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_32__components_place_filter_place_filter__ = __webpack_require__(671);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_33__components_user_filter_user_filter__ = __webpack_require__(672);
@@ -2708,11 +2518,11 @@ Object(__WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__["a" /* pl
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_37__providers_imgcache_imgcache__ = __webpack_require__(103);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_38__components_publication_image_publication_image__ = __webpack_require__(710);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_39__pages_experience_writing_experience_writing__ = __webpack_require__(106);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_40__pages_comment_writing_comment_writing__ = __webpack_require__(104);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_40__pages_comment_writing_comment_writing__ = __webpack_require__(105);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_41__components_my_emoji_picker_my_emoji_picker__ = __webpack_require__(711);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_42__components_score_input_score_input__ = __webpack_require__(712);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_43__components_publication_actions_publication_actions__ = __webpack_require__(713);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_44__pages_publication_actions_menu_publication_actions_menu__ = __webpack_require__(178);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_44__pages_publication_actions_menu_publication_actions_menu__ = __webpack_require__(179);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_45__pages_my_emoji_picker_my_emoji_picker__ = __webpack_require__(176);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_46__pages_publication_writing_publication_writing__ = __webpack_require__(51);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_47__pages_place_selecting_place_selecting__ = __webpack_require__(177);
@@ -2724,7 +2534,7 @@ Object(__WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__["a" /* pl
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_53__components_inbox_list_inbox_list__ = __webpack_require__(716);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_54__components_inbox_inbox__ = __webpack_require__(717);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_55__pages_chat_chat__ = __webpack_require__(59);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_56__pages_inbox_writing_inbox_writing__ = __webpack_require__(105);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_56__pages_inbox_writing_inbox_writing__ = __webpack_require__(104);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_57__providers_notification_notification__ = __webpack_require__(326);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_58__ionic_native_push__ = __webpack_require__(325);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_59__providers_reducers_user_reducer__ = __webpack_require__(236);
@@ -2871,20 +2681,20 @@ AppModule = __decorate([
                     { loadChildren: '../pages/account-actions-menu/account-actions-menu.module#AccountActionsMenuPageModule', name: 'AccountActionsMenuPage', segment: 'account-actions-menu', priority: 'low', defaultHistory: [] },
                     { loadChildren: '../pages/account/account.module#AccountPageModule', name: 'AccountPage', segment: 'account', priority: 'low', defaultHistory: [] },
                     { loadChildren: '../pages/activities/activities.module#ActivitiesPageModule', name: 'ActivitiesPage', segment: 'activities', priority: 'low', defaultHistory: [] },
-                    { loadChildren: '../pages/chat/chat.module#ChatPageModule', name: 'ChatPage', segment: 'chat', priority: 'low', defaultHistory: [] },
+                    { loadChildren: '../pages/chat-actions-menu/chat-actions-menu.module#ChatActionsMenuPageModule', name: 'ChatActionsMenuPage', segment: 'chat-actions-menu', priority: 'low', defaultHistory: [] },
                     { loadChildren: '../pages/comment-writing/comment-writing.module#CommentWritingPageModule', name: 'CommentWritingPage', segment: 'comment-writing', priority: 'low', defaultHistory: [] },
                     { loadChildren: '../pages/description-writing/description-writing.module#DescriptionWritingPageModule', name: 'DescriptionWritingPage', segment: 'description-writing', priority: 'low', defaultHistory: [] },
-                    { loadChildren: '../pages/chat-actions-menu/chat-actions-menu.module#ChatActionsMenuPageModule', name: 'ChatActionsMenuPage', segment: 'chat-actions-menu', priority: 'low', defaultHistory: [] },
+                    { loadChildren: '../pages/chat/chat.module#ChatPageModule', name: 'ChatPage', segment: 'chat', priority: 'low', defaultHistory: [] },
                     { loadChildren: '../pages/experience-writing/experience-writing.module#ExperienceWritingPageModule', name: 'ExperienceWritingPage', segment: 'experience-writing', priority: 'low', defaultHistory: [] },
                     { loadChildren: '../pages/inbox-writing/inbox-writing.module#InboxWritingPageModule', name: 'InboxWritingPage', segment: 'inbox-writing', priority: 'low', defaultHistory: [] },
                     { loadChildren: '../pages/my-emoji-picker/my-emoji-picker.module#MyEmojiPickerPageModule', name: 'MyEmojiPickerPage', segment: 'my-emoji-picker', priority: 'low', defaultHistory: [] },
                     { loadChildren: '../pages/place-selecting/place-selecting.module#PlaceSelectingPageModule', name: 'PlaceSelectingPage', segment: 'place-selecting', priority: 'low', defaultHistory: [] },
-                    { loadChildren: '../pages/publication-actions-menu/publication-actions-menu.module#PublicationActionsMenuPageModule', name: 'PublicationActionsMenuPage', segment: 'publication-actions-menu', priority: 'low', defaultHistory: [] },
                     { loadChildren: '../pages/places/places.module#PlacesPageModule', name: 'PlacesPage', segment: 'places', priority: 'low', defaultHistory: [] },
-                    { loadChildren: '../pages/publication-order-by/publication-order-by.module#PublicationOrderByPageModule', name: 'PublicationOrderByPage', segment: 'publication-order-by', priority: 'low', defaultHistory: [] },
+                    { loadChildren: '../pages/publication-actions-menu/publication-actions-menu.module#PublicationActionsMenuPageModule', name: 'PublicationActionsMenuPage', segment: 'publication-actions-menu', priority: 'low', defaultHistory: [] },
                     { loadChildren: '../pages/publication-user-filter/publication-user-filter.module#PublicationUserFilterPageModule', name: 'PublicationUserFilterPage', segment: 'publication-user-filter', priority: 'low', defaultHistory: [] },
                     { loadChildren: '../pages/publication-writing/publication-writing.module#PublicationWritingPageModule', name: 'PublicationWritingPage', segment: 'publication-writing', priority: 'low', defaultHistory: [] },
-                    { loadChildren: '../pages/username-writing/username-writing.module#UsernameWritingPageModule', name: 'UsernameWritingPage', segment: 'username-writing', priority: 'low', defaultHistory: [] }
+                    { loadChildren: '../pages/username-writing/username-writing.module#UsernameWritingPageModule', name: 'UsernameWritingPage', segment: 'username-writing', priority: 'low', defaultHistory: [] },
+                    { loadChildren: '../pages/publication-order-by/publication-order-by.module#PublicationOrderByPageModule', name: 'PublicationOrderByPage', segment: 'publication-order-by', priority: 'low', defaultHistory: [] }
                 ]
             }),
             __WEBPACK_IMPORTED_MODULE_13__angular_http__["c" /* HttpModule */],
@@ -2962,7 +2772,7 @@ AppModule = __decorate([
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_storage_storage__ = __webpack_require__(13);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_commons_commons__ = __webpack_require__(11);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_commons_commons__ = __webpack_require__(9);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__description_writing_description_writing__ = __webpack_require__(173);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__ionic_native_image_picker__ = __webpack_require__(97);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__ionic_native_file_transfer__ = __webpack_require__(98);
@@ -3057,11 +2867,11 @@ var PublicationWritingPage = (function () {
     };
     PublicationWritingPage.prototype.checkNeededField = function () {
         if (!this.publication.images || this.publication.images.length == 0) {
-            this.commons.presentToast("La publicación debe tener al menos una imagen");
+            this.commons.presentToast(this.commons.translate(["missingPublicationImages"]));
             return false;
         }
         if (!this.publication.places || this.publication.places.length == 0) {
-            this.commons.presentToast("Debe proporcionar un destino");
+            this.commons.presentToast(this.commons.translate(["missingPublicationPlaces"]));
             return false;
         }
         return true;
@@ -3138,7 +2948,7 @@ var PublicationWritingPage = (function () {
             return true;
         }
         else {
-            this.commons.presentToast("La publicación debe tener al menos una imagen");
+            this.commons.presentToast(this.commons.translate(["missingPublicationImages"]));
             return false;
         }
     };
@@ -3149,10 +2959,9 @@ var PublicationWritingPage = (function () {
             cssClass: "fullscreen-loading"
         });
         loader.present();
-        sessionStorage.setItem("this.publication", JSON.stringify(this.publication));
         if (Boolean(this.publication._id)) {
             this.storageService.updatePublication(this.publication).subscribe(function (editedPublication) {
-                _this.commons.presentToast("La publicación ha sido actualizada con éxito");
+                _this.commons.presentToast(_this.commons.translate(["publicationEdited"]));
                 _this.viewCtrl.dismiss();
             });
         }
@@ -3168,28 +2977,28 @@ var PublicationWritingPage = (function () {
                     }))
                         .then(function () {
                         loader.dismiss();
-                        _this.commons.presentToast("La publicación ha sido grabada con éxito");
+                        _this.commons.presentToast(_this.commons.translate(["publicationCreated"]));
                         _this.viewCtrl.dismiss();
                     })
                         .catch(function (err) {
                         loader.dismiss();
-                        _this.commons.presentToast("No se han podido subir las imágenes");
+                        _this.commons.presentToast(_this.commons.translate(["imagesUploadFailed"]));
                     });
                 })
                     .catch(function (err) {
                     loader.dismiss();
-                    _this.commons.presentToast("No se han podido subir las experiencias");
+                    _this.commons.presentToast(_this.commons.translate(["experienceUploadFailed"]));
                 });
             }, function (error) {
                 loader.dismiss();
-                _this.commons.presentToast("No se ha podido subir la publicación");
+                _this.commons.presentToast(_this.commons.translate(["publicationUploadFailed"]));
             });
         }
     };
     PublicationWritingPage.prototype.deletePublication = function () {
         var _this = this;
         this.storageService.deletePublication(this.publication._id).subscribe(function (deletedPublication) {
-            _this.commons.presentToast("La publicación ha sido eliminada con éxito");
+            _this.commons.presentToast(_this.commons.translate(["publicationDeleted"]));
             _this.viewCtrl.dismiss();
         });
     };
@@ -3233,12 +3042,12 @@ var PublicationWritingPage = (function () {
                 _this.uploadPics(file_uris)
                     .then(function (values) {
                     loader_1.dismiss();
-                    _this.commons.presentToast("Las imágenes se han grabado con éxito");
+                    _this.commons.presentToast(_this.commons.translate(["imageUploadSuccess"]));
                     _this.publication.images = JSON.parse(values[0]["response"]).images;
                 })
                     .catch(function (err) {
                     loader_1.dismiss();
-                    _this.commons.presentToast("Se ha producido un error al grabar las imágenes");
+                    _this.commons.presentToast(_this.commons.translate(["saveImagesFailed"]));
                 });
             }
             else {
@@ -3247,7 +3056,7 @@ var PublicationWritingPage = (function () {
                 }
                 _this.publication.images = _this.publication.images.concat(file_uris.map(function (uri) { return { url: uri }; }));
             }
-        }, function (err) { return _this.commons.presentToast("Se ha producido un error al cargar la imagen"); });
+        }, function (err) { return _this.commons.presentToast(_this.commons.translate(["imagesUploadFailed"])); });
     };
     PublicationWritingPage.prototype.removeImage = function () {
         var _this = this;
@@ -3255,7 +3064,7 @@ var PublicationWritingPage = (function () {
         var imageId = this.publication.images[imageIndex]._id;
         if (this.publication._id) {
             this.storageService.deletePublicationImage(this.publication._id, imageId).subscribe(function (updatedPublication) {
-                _this.commons.presentToast("La imagen ha sido eliminada con éxito");
+                _this.commons.presentToast(_this.commons.translate(["imageDeleteSuccess"]));
             });
         }
         this.publication.images.splice(imageIndex, 1);
@@ -3295,12 +3104,15 @@ var PublicationWritingPage = (function () {
     PublicationWritingPage.prototype.deleteDescription = function () {
         var _this = this;
         this.storageService.patchPublication(this.publication._id, { description: null }).subscribe(function (patchedPublication) {
-            _this.commons.presentToast("La descripción ha sido eliminada con éxito");
+            _this.commons.presentToast(_this.commons.translate(["descriptionDeleteSuccess"]));
             _this.publication.description = null;
         });
     };
     PublicationWritingPage.prototype.prettyDate = function (rowDate) {
         return this.commons.prettyDate(rowDate);
+    };
+    PublicationWritingPage.prototype.getCaption = function (captionKey) {
+        return this.commons.translate([captionKey]);
     };
     return PublicationWritingPage;
 }());
@@ -3310,7 +3122,7 @@ __decorate([
 ], PublicationWritingPage.prototype, "slides", void 0);
 PublicationWritingPage = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
-        selector: 'page-publication-writing',template:/*ion-inline-start:"C:\Users\Matias\WebstormProjects\turinsta\src\pages\publication-writing\publication-writing.html"*/'<!--\n  Generated template for the PublicationWritingPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-header>\n  <ion-navbar>\n    <ion-item no-lines style="text-align: center">\n      <button item-start ion-button clear (click)="dismissPublication()">\n        <ion-icon name="close"></ion-icon>\n      </button>\n      <ion-title *ngIf="!publication._id">Nueva publicación</ion-title>\n      <ion-title *ngIf="publication._id">Ver publicación</ion-title>\n      <div *ngIf="checkEditPermission() && publication._id" item-end>\n        <button ion-button clear (click)="confirmDelete()">\n          <ion-icon name="trash" color="danger"></ion-icon>\n        </button>\n      </div>\n      <div *ngIf="!publication._id" item-end>\n        <button ion-button clear (click)="confirmSave()">\n          <ion-icon name="checkmark" color="success"></ion-icon>\n        </button>\n      </div>\n    </ion-item>\n  </ion-navbar>\n</ion-header>\n<ion-content padding>\n  <publication-header [user]=user [publication]=publication [edit]="checkEditPermission()" (changePlace)="setPlace($event)"></publication-header>\n  <ion-item *ngIf="!publication._id  && !publication.images" (click)="addImage()" no-lines>\n    <button item-start ion-button icon-only clear item-start><ion-icon name="images"></ion-icon></button>\n    <p class="publication-important-text">Agregar imágenes</p>\n  </ion-item>\n  <ion-slides *ngIf="publication._id || publication.images">\n    <ion-slide style="align-items: start" *ngFor="let image of publication.images">\n      <div class="image-action-buttons" *ngIf="checkEditPermission()">\n        <button ion-button icon-only clear (click)="addImage()">\n          <ion-icon name="add" color="success"></ion-icon>\n        </button>\n        <button ion-button icon-only clear (click)="confirmDeleteImage()">\n          <ion-icon name="remove" color="danger"></ion-icon>\n        </button>\n      </div>\n      <publication-image [id]=image._id [url]=image.url></publication-image>\n    </ion-slide>\n  </ion-slides>\n  <ion-item no-lines no-padding class="text-with-ellipsis" style="width: 100%">\n    <p *ngIf="publication.description" item-start class="publication-description"><b>{{user.username}}</b>&nbsp;{{publication.description}}</p>\n    <div *ngIf="checkEditPermission() && publication.description" item-right>\n      <button ion-button icon-only clear (click)="presentDescriptionWriting()">\n        <ion-icon name="create"></ion-icon>\n      </button>\n      <button ion-button icon-only clear (click)="confirmDeleteDescription()">\n        <ion-icon name="trash" color="danger"></ion-icon>\n      </button>\n    </div>\n    <div *ngIf="checkEditPermission() && !publication.description" (click)="presentDescriptionWriting()" ion-item>\n      <button ion-button icon-only clear  item-start>\n        <ion-icon name="add" color="success"></ion-icon>\n      </button>\n      <p class="publication-important-text">Agregar descripción</p>\n    </div>\n    <p *ngIf="publication.timestamps" item-end class="text-with-ellipsis">{{prettyDate(publication.timestamps.created)}}</p>\n  </ion-item>\n  <ion-item>\n    <ion-item no-lines>\n      <p>Experiencias (<span>{{experiences.length}}</span>)</p>\n      <button item-end ion-button icon-only clear (click)="toogleExperienceList()">\n        <ion-icon name="{{experienceListOpened ? \'ios-arrow-dropdown\' : \'ios-arrow-dropright\'}}"></ion-icon>\n      </button>\n    </ion-item>\n    <experience-list *ngIf="experienceListOpened" [experiences]=experiences [publicationOwner]=user._id [publicationId]=publication._id></experience-list>\n  </ion-item>\n  <ion-item *ngIf="publication._id">\n    <ion-item no-lines>\n      <p>Comentarios (<span>{{comments.length}}</span>)</p>\n      <button item-end ion-button icon-only clear (click)="toogleCommentList()">\n        <ion-icon name="{{commentListOpened ? \'ios-arrow-dropdown\' : \'ios-arrow-dropright\'}}"></ion-icon>\n      </button>\n    </ion-item>\n    <comment-list *ngIf="publication._id && commentListOpened" [comments]=comments [publicationId]=publication._id [publicationOwner]=user._id></comment-list>\n  </ion-item>\n  <ion-item *ngIf="publication._id && !checkEditPermission()">\n    <score-handler [publicationScore]="scoreGivenFromUser()" [publicationId]="publication._id" [scoreInputShowed]=true (scoreChanged)="updateScore($event)"></score-handler>\n  </ion-item>\n</ion-content>\n'/*ion-inline-end:"C:\Users\Matias\WebstormProjects\turinsta\src\pages\publication-writing\publication-writing.html"*/,
+        selector: 'page-publication-writing',template:/*ion-inline-start:"C:\Users\Matias\WebstormProjects\turinsta\src\pages\publication-writing\publication-writing.html"*/'<!--\n  Generated template for the PublicationWritingPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-header>\n  <ion-navbar>\n    <ion-item no-lines style="text-align: center">\n      <button item-start ion-button clear (click)="dismissPublication()">\n        <ion-icon name="close"></ion-icon>\n      </button>\n      <div *ngIf="checkEditPermission() && publication._id" item-end>\n        <button ion-button clear (click)="confirmDelete()">\n          <ion-icon name="trash" color="danger"></ion-icon>\n        </button>\n      </div>\n      <div *ngIf="!publication._id" item-end>\n        <button ion-button clear (click)="confirmSave()">\n          <ion-icon name="checkmark" color="success"></ion-icon>\n        </button>\n      </div>\n    </ion-item>\n  </ion-navbar>\n</ion-header>\n<ion-content padding>\n  <publication-header [user]=user [publication]=publication [edit]="checkEditPermission()" (changePlace)="setPlace($event)"></publication-header>\n  <ion-item *ngIf="!publication._id  && !publication.images" (click)="addImage()" no-lines>\n    <button item-start ion-button icon-only clear item-start><ion-icon name="images"></ion-icon></button>\n    <p class="publication-important-text">{{getCaption("publicationWritingAddImages")}}</p>\n  </ion-item>\n  <ion-slides *ngIf="publication._id || publication.images">\n    <ion-slide style="align-items: start" *ngFor="let image of publication.images">\n      <div class="image-action-buttons" *ngIf="checkEditPermission()">\n        <button ion-button icon-only clear (click)="addImage()">\n          <ion-icon name="add" color="success"></ion-icon>\n        </button>\n        <button ion-button icon-only clear (click)="confirmDeleteImage()">\n          <ion-icon name="remove" color="danger"></ion-icon>\n        </button>\n      </div>\n      <publication-image [id]=image._id [url]=image.url></publication-image>\n    </ion-slide>\n  </ion-slides>\n  <ion-item no-lines no-padding class="text-with-ellipsis" style="width: 100%">\n    <p *ngIf="publication.description" item-start class="publication-description"><b>{{user.username}}</b>&nbsp;{{publication.description}}</p>\n    <div *ngIf="checkEditPermission() && publication.description" item-right>\n      <button ion-button icon-only clear (click)="presentDescriptionWriting()">\n        <ion-icon name="create"></ion-icon>\n      </button>\n      <button ion-button icon-only clear (click)="confirmDeleteDescription()">\n        <ion-icon name="trash" color="danger"></ion-icon>\n      </button>\n    </div>\n    <div *ngIf="checkEditPermission() && !publication.description" (click)="presentDescriptionWriting()" ion-item>\n      <button ion-button icon-only clear  item-start>\n        <ion-icon name="add" color="success"></ion-icon>\n      </button>\n      <p class="publication-important-text">{{getCaption("publicationWritingAddDescription")}}</p>\n    </div>\n    <p *ngIf="publication.timestamps" item-end class="text-with-ellipsis">{{prettyDate(publication.timestamps.created)}}</p>\n  </ion-item>\n  <ion-item>\n    <ion-item no-lines>\n      <p>{{getCaption("publicationWritingExperiences")}} (<span>{{experiences.length}}</span>)</p>\n      <button item-end ion-button icon-only clear (click)="toogleExperienceList()">\n        <ion-icon name="{{experienceListOpened ? \'ios-arrow-dropdown\' : \'ios-arrow-dropright\'}}"></ion-icon>\n      </button>\n    </ion-item>\n    <experience-list *ngIf="experienceListOpened" [experiences]=experiences [publicationOwner]=user._id [publicationId]=publication._id></experience-list>\n  </ion-item>\n  <ion-item *ngIf="publication._id">\n    <ion-item no-lines>\n      <p>{{getCaption("publicationWritingComments")}} (<span>{{comments.length}}</span>)</p>\n      <button item-end ion-button icon-only clear (click)="toogleCommentList()">\n        <ion-icon name="{{commentListOpened ? \'ios-arrow-dropdown\' : \'ios-arrow-dropright\'}}"></ion-icon>\n      </button>\n    </ion-item>\n    <comment-list *ngIf="publication._id && commentListOpened" [comments]=comments [publicationId]=publication._id [publicationOwner]=user._id></comment-list>\n  </ion-item>\n  <ion-item *ngIf="publication._id && !checkEditPermission()">\n    <score-handler [publicationScore]="scoreGivenFromUser()" [publicationId]="publication._id" [scoreInputShowed]=true (scoreChanged)="updateScore($event)"></score-handler>\n  </ion-item>\n</ion-content>\n'/*ion-inline-end:"C:\Users\Matias\WebstormProjects\turinsta\src\pages\publication-writing\publication-writing.html"*/,
     }),
     __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* NavParams */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["s" /* ViewController */],
         __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["b" /* AlertController */], __WEBPACK_IMPORTED_MODULE_2__providers_storage_storage__["a" /* StorageProvider */], __WEBPACK_IMPORTED_MODULE_3__providers_commons_commons__["a" /* CommonsProvider */],
@@ -3523,7 +3335,7 @@ function publicationReducer(state, _a) {
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ChatPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(5);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_commons_commons__ = __webpack_require__(11);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_commons_commons__ = __webpack_require__(9);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs__ = __webpack_require__(140);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_rxjs__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__providers_storage_storage__ = __webpack_require__(13);
@@ -3802,7 +3614,7 @@ ChatPage = __decorate([
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__providers_imgcache_imgcache__ = __webpack_require__(103);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__ionic_native_push__ = __webpack_require__(325);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__providers_notification_notification__ = __webpack_require__(326);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__providers_commons_commons__ = __webpack_require__(11);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__providers_commons_commons__ = __webpack_require__(9);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__pages_chat_chat__ = __webpack_require__(59);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__providers_storage_storage__ = __webpack_require__(13);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_11_ng_socket_io__ = __webpack_require__(71);
@@ -4002,7 +3814,7 @@ PublicationComponent = __decorate([
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__providers_storage_storage__ = __webpack_require__(13);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_ionic_angular__ = __webpack_require__(5);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_commons_commons__ = __webpack_require__(11);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_commons_commons__ = __webpack_require__(9);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__pages_experience_writing_experience_writing__ = __webpack_require__(106);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -4068,7 +3880,7 @@ var ExperienceComponent = (function () {
     ExperienceComponent.prototype.removeExperience = function () {
         var _this = this;
         this.storage.deleteExperience(this.data).subscribe(function (deletedExperience) {
-            _this.commonsService.presentToast("Experiencia borrada con éxito");
+            _this.commonsService.presentToast(_this.commonsService.translate(["experienceDeleteSuccess"]));
         });
     };
     ExperienceComponent.prototype.checkEditionPermission = function () {
@@ -4102,9 +3914,9 @@ ExperienceComponent = __decorate([
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return CommentComponent; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__providers_storage_storage__ = __webpack_require__(13);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_commons_commons__ = __webpack_require__(11);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_commons_commons__ = __webpack_require__(9);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_ionic_angular__ = __webpack_require__(5);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__pages_comment_writing_comment_writing__ = __webpack_require__(104);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__pages_comment_writing_comment_writing__ = __webpack_require__(105);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -4168,7 +3980,7 @@ var CommentComponent = (function () {
     CommentComponent.prototype.deleteComment = function () {
         var _this = this;
         this.storageService.deleteComment(this.commonsService.getUserId(), this.comment).subscribe(function (deletedComment) {
-            _this.commonsService.presentToast("Comentario borrado con éxito");
+            _this.commonsService.presentToast(_this.commonsService.translate(["commentDeleteSuccess"]));
         });
     };
     CommentComponent.prototype.checkEditionPermission = function () {
@@ -4211,8 +4023,8 @@ CommentComponent = __decorate([
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__providers_storage_storage__ = __webpack_require__(13);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__ngrx_store__ = __webpack_require__(23);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_commons_commons__ = __webpack_require__(11);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__pages_comment_writing_comment_writing__ = __webpack_require__(104);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_commons_commons__ = __webpack_require__(9);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__pages_comment_writing_comment_writing__ = __webpack_require__(105);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_ionic_angular__ = __webpack_require__(5);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -4256,6 +4068,9 @@ var CommentListComponent = (function () {
         });
         experienceWritingModal.present();
     };
+    CommentListComponent.prototype.getCaption = function (captionKey) {
+        return this.commonsService.translate([captionKey]);
+    };
     return CommentListComponent;
 }());
 __decorate([
@@ -4276,7 +4091,7 @@ __decorate([
 ], CommentListComponent.prototype, "commentId", void 0);
 CommentListComponent = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
-        selector: 'comment-list',template:/*ion-inline-start:"C:\Users\Matias\WebstormProjects\turinsta\src\components\comment-list\comment-list.html"*/'<!-- Generated template for the CommentListComponent component -->\n<ion-list class="comment-list">\n  <comment *ngFor="let comment of comments" [comment]=comment [publicationId]=publicationId [publicationOwner]=publicationOwner></comment>\n  <ion-item no-padding>\n    <ion-note item-start style="font-size: x-small" (click)="presentCommentWritingModal()">Escribe un comentario...</ion-note>\n  </ion-item>\n</ion-list>\n'/*ion-inline-end:"C:\Users\Matias\WebstormProjects\turinsta\src\components\comment-list\comment-list.html"*/
+        selector: 'comment-list',template:/*ion-inline-start:"C:\Users\Matias\WebstormProjects\turinsta\src\components\comment-list\comment-list.html"*/'<!-- Generated template for the CommentListComponent component -->\n<ion-list class="comment-list">\n  <comment *ngFor="let comment of comments" [comment]=comment [publicationId]=publicationId [publicationOwner]=publicationOwner></comment>\n  <ion-item no-padding>\n    <ion-note item-start style="font-size: x-small" (click)="presentCommentWritingModal()">{{getCaption("writeComment")}}</ion-note>\n  </ion-item>\n</ion-list>\n'/*ion-inline-end:"C:\Users\Matias\WebstormProjects\turinsta\src\components\comment-list\comment-list.html"*/
     }),
     __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__providers_storage_storage__["a" /* StorageProvider */], __WEBPACK_IMPORTED_MODULE_3__providers_commons_commons__["a" /* CommonsProvider */], __WEBPACK_IMPORTED_MODULE_2__ngrx_store__["h" /* Store */], __WEBPACK_IMPORTED_MODULE_5_ionic_angular__["j" /* ModalController */]])
 ], CommentListComponent);
@@ -4297,7 +4112,7 @@ CommentListComponent = __decorate([
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__reducers_publication_reducer__ = __webpack_require__(56);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__ngrx_store__ = __webpack_require__(23);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__storage__ = __webpack_require__(13);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__commons_commons__ = __webpack_require__(11);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__commons_commons__ = __webpack_require__(9);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -4384,7 +4199,7 @@ var PublicationEffects = (function () {
                             return [4 /*yield*/, this.commons.getCachedPublications().then(function (cachedPublications) { return cachedPublications; })];
                         case 1:
                             cachedPublications = _a.sent();
-                            this.commons.presentToast("Error al actualizar las publicaciones");
+                            this.commons.presentToast(this.commons.translate(["publicationUpdatingFailed"]));
                             this.offlineMode = true;
                             this.alreadyCached = false;
                             _a.label = 2;
@@ -4415,6 +4230,7 @@ PublicationEffects = __decorate([
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return PublicationListComponent; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__providers_commons_commons__ = __webpack_require__(9);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -4425,6 +4241,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 
+
 /**
  * Generated class for the PublicationListComponent component.
  *
@@ -4432,10 +4249,14 @@ var __metadata = (this && this.__metadata) || function (k, v) {
  * Components.
  */
 var PublicationListComponent = (function () {
-    function PublicationListComponent() {
+    function PublicationListComponent(commons) {
+        this.commons = commons;
         this.data = null;
         console.log('Hello PublicationListComponent Component');
     }
+    PublicationListComponent.prototype.getCaption = function (captionKey) {
+        return this.commons.translate([captionKey]);
+    };
     return PublicationListComponent;
 }());
 __decorate([
@@ -4444,10 +4265,10 @@ __decorate([
 ], PublicationListComponent.prototype, "data", void 0);
 PublicationListComponent = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
-        selector: 'publication-list',template:/*ion-inline-start:"C:\Users\Matias\WebstormProjects\turinsta\src\components\publication-list\publication-list.html"*/'<!-- Generated template for the PublicationListComponent component -->\n<ion-list>\n  <publication *ngFor="let publication of data.publications" [data]="publication"></publication>\n</ion-list>\n<empty-content *ngIf="!data.publications.length" [message]="\'Sin resultados...\'"></empty-content>\n\n'/*ion-inline-end:"C:\Users\Matias\WebstormProjects\turinsta\src\components\publication-list\publication-list.html"*/,
+        selector: 'publication-list',template:/*ion-inline-start:"C:\Users\Matias\WebstormProjects\turinsta\src\components\publication-list\publication-list.html"*/'<!-- Generated template for the PublicationListComponent component -->\n<ion-list>\n  <publication *ngFor="let publication of data.publications" [data]="publication"></publication>\n</ion-list>\n<empty-content *ngIf="!data.publications.length" [message]="getCaption(\'publicationListEmpty\')"></empty-content>\n\n'/*ion-inline-end:"C:\Users\Matias\WebstormProjects\turinsta\src\components\publication-list\publication-list.html"*/,
         changeDetection: __WEBPACK_IMPORTED_MODULE_0__angular_core__["ChangeDetectionStrategy"].OnPush
     }),
-    __metadata("design:paramtypes", [])
+    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__providers_commons_commons__["a" /* CommonsProvider */]])
 ], PublicationListComponent);
 
 //# sourceMappingURL=publication-list.js.map
@@ -4550,7 +4371,7 @@ PublicationHeaderComponent = __decorate([
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return PublicationBodyComponent; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(5);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_commons_commons__ = __webpack_require__(11);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_commons_commons__ = __webpack_require__(9);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -4633,7 +4454,7 @@ PublicationBodyComponent = __decorate([
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return PublicationFooterComponent; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(5);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_commons_commons__ = __webpack_require__(11);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_commons_commons__ = __webpack_require__(9);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__pages_publication_writing_publication_writing__ = __webpack_require__(51);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -4731,7 +4552,7 @@ PublicationFooterComponent = __decorate([
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ExperienceListComponent; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__providers_commons_commons__ = __webpack_require__(11);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__providers_commons_commons__ = __webpack_require__(9);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_ionic_angular__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__pages_experience_writing_experience_writing__ = __webpack_require__(106);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -4899,6 +4720,7 @@ FiltersBarComponent = __decorate([
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_reducers_publication_reducer__ = __webpack_require__(56);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ngrx_store__ = __webpack_require__(23);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__providers_storage_storage__ = __webpack_require__(13);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__providers_commons_commons__ = __webpack_require__(9);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -4913,6 +4735,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
+
 /**
  * Generated class for the PlaceFilterComponent component.
  *
@@ -4920,11 +4743,11 @@ var __metadata = (this && this.__metadata) || function (k, v) {
  * Components.
  */
 var PlaceFilterComponent = (function () {
-    function PlaceFilterComponent(store, storageService) {
+    function PlaceFilterComponent(store, storageService, commons) {
         this.store = store;
         this.storageService = storageService;
+        this.commons = commons;
         this.searchInput = { place_id: null, name: null };
-        // places = [{name: "Bariloche, Argentina"}, {name:"Madrid, España"}, {name:"Sydney, Australia"}, {name:"Tokio, Japón"}];
         this.places = [];
         this.placeFilter = null;
         this.showAutocomplete = false;
@@ -4976,6 +4799,9 @@ var PlaceFilterComponent = (function () {
             this.store.dispatch(Object(__WEBPACK_IMPORTED_MODULE_2__providers_reducers_publication_reducer__["e" /* cleanFilters */])());
         }
     };
+    PlaceFilterComponent.prototype.getSearchCaption = function () {
+        return this.commons.translate(["searchPlaceholder"]);
+    };
     return PlaceFilterComponent;
 }());
 __decorate([
@@ -4992,9 +4818,9 @@ __decorate([
 ], PlaceFilterComponent.prototype, "placeSelected", void 0);
 PlaceFilterComponent = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
-        selector: 'place-filter',template:/*ion-inline-start:"C:\Users\Matias\WebstormProjects\turinsta\src\components\place-filter\place-filter.html"*/'<!-- Generated template for the PlaceFilterComponent component -->\n<ion-item no-padding no-lines>\n  <ion-searchbar item-start\n                 [(ngModel)]="searchInput.name"\n                 [animated]=true\n                 [autocomplete]="on"\n                 [autocorrect]="on"\n                 [debounce]=1000\n                 placeholder="Buscar"\n                 (ionInput)="onSearchInput($event)"\n                 (ionClear)="onSearchClear($event)">\n  </ion-searchbar>\n  <ion-select no-padding no-margin item-end [disabled]="!showAutocomplete" [(ngModel)]="placeFilter" interface="action-sheet" (ionCancel)="cancelAutocomplete()" (ionChange)="setPlaceFilter()" cancelText="Cancelar" style="width: 2%">\n    <ion-option *ngFor="let place of places; let i = index" value="{{i}}">{{place.description}}</ion-option>\n  </ion-select>\n</ion-item>\n'/*ion-inline-end:"C:\Users\Matias\WebstormProjects\turinsta\src\components\place-filter\place-filter.html"*/
+        selector: 'place-filter',template:/*ion-inline-start:"C:\Users\Matias\WebstormProjects\turinsta\src\components\place-filter\place-filter.html"*/'<!-- Generated template for the PlaceFilterComponent component -->\n<ion-item no-padding no-lines>\n  <ion-searchbar item-start\n                 [(ngModel)]="searchInput.name"\n                 [animated]=true\n                 [autocomplete]="on"\n                 [autocorrect]="on"\n                 [debounce]=1000\n                 placeholder="{{getSearchCaption()}}"\n                 (ionInput)="onSearchInput($event)"\n                 (ionClear)="onSearchClear($event)">\n  </ion-searchbar>\n  <ion-select no-padding no-margin item-end [disabled]="!showAutocomplete" [(ngModel)]="placeFilter" interface="action-sheet" (ionCancel)="cancelAutocomplete()" (ionChange)="setPlaceFilter()" cancelText="Cancelar" style="width: 2%">\n    <ion-option *ngFor="let place of places; let i = index" value="{{i}}">{{place.description}}</ion-option>\n  </ion-select>\n</ion-item>\n'/*ion-inline-end:"C:\Users\Matias\WebstormProjects\turinsta\src\components\place-filter\place-filter.html"*/
     }),
-    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_3__ngrx_store__["h" /* Store */], __WEBPACK_IMPORTED_MODULE_4__providers_storage_storage__["a" /* StorageProvider */]])
+    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_3__ngrx_store__["h" /* Store */], __WEBPACK_IMPORTED_MODULE_4__providers_storage_storage__["a" /* StorageProvider */], __WEBPACK_IMPORTED_MODULE_5__providers_commons_commons__["a" /* CommonsProvider */]])
 ], PlaceFilterComponent);
 
 //# sourceMappingURL=place-filter.js.map
@@ -5007,7 +4833,7 @@ PlaceFilterComponent = __decorate([
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return UserFilterComponent; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__pages_publication_user_filter_publication_user_filter__ = __webpack_require__(181);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__pages_publication_user_filter_publication_user_filter__ = __webpack_require__(180);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_ionic_angular__ = __webpack_require__(5);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -5058,7 +4884,7 @@ UserFilterComponent = __decorate([
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return OrderingCriterionComponent; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(5);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__pages_publication_order_by_publication_order_by__ = __webpack_require__(180);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__pages_publication_order_by_publication_order_by__ = __webpack_require__(181);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -5316,8 +5142,8 @@ ScoreInputComponent = __decorate([
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return PublicationActionsComponent; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(5);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__pages_publication_actions_menu_publication_actions_menu__ = __webpack_require__(178);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_commons_commons__ = __webpack_require__(11);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__pages_publication_actions_menu_publication_actions_menu__ = __webpack_require__(179);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_commons_commons__ = __webpack_require__(9);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -5351,7 +5177,7 @@ var PublicationActionsComponent = (function () {
         var loggedUser = this.commons.getUserId();
         this.followedPublication = this.publication.followers.indexOf(loggedUser) != -1;
         this.followedUser = this.user.followers.indexOf(loggedUser) != -1;
-        var popover = this.popoverCtrl.create(__WEBPACK_IMPORTED_MODULE_2__pages_publication_actions_menu_publication_actions_menu__["a" /* PublicationActionsMenuPage */], { publication: this.publication._id, user: this.user._id, followedPublication: this.followedPublication, followedUser: this.followedUser });
+        var popover = this.popoverCtrl.create(__WEBPACK_IMPORTED_MODULE_2__pages_publication_actions_menu_publication_actions_menu__["a" /* PublicationActionsMenuPage */], { publication: this.publication._id, user: this.user, followedPublication: this.followedPublication, followedUser: this.followedUser });
         popover.present({
             ev: myEvent
         });
@@ -5385,7 +5211,7 @@ PublicationActionsComponent = __decorate([
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_storage_storage__ = __webpack_require__(13);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_commons_commons__ = __webpack_require__(11);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_commons_commons__ = __webpack_require__(9);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -5482,9 +5308,9 @@ ScoreHandlerComponent = __decorate([
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return InboxListComponent; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__providers_commons_commons__ = __webpack_require__(11);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__providers_commons_commons__ = __webpack_require__(9);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_storage_storage__ = __webpack_require__(13);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__pages_inbox_writing_inbox_writing__ = __webpack_require__(105);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__pages_inbox_writing_inbox_writing__ = __webpack_require__(104);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_ionic_angular__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__ngrx_store__ = __webpack_require__(23);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_ng_socket_io__ = __webpack_require__(71);
@@ -5619,6 +5445,9 @@ var InboxListComponent = (function () {
             }
         });
     };
+    InboxListComponent.prototype.getCaption = function (captionKey) {
+        return this.commons.translate([captionKey]);
+    };
     return InboxListComponent;
 }());
 __decorate([
@@ -5631,7 +5460,7 @@ __decorate([
 ], InboxListComponent.prototype, "inboxesUpdated", void 0);
 InboxListComponent = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
-        selector: 'inbox-list',template:/*ion-inline-start:"C:\Users\Matias\WebstormProjects\turinsta\src\components\inbox-list\inbox-list.html"*/'<!-- Generated template for the InboxListComponent component -->\n<ion-list>\n  <inbox *ngFor="let inbox of inboxes" [data]=inbox [unreadMessagesCount]="getUnreadMessagesFromInbox(inbox)" [autoOpen]="hasToAutoOpen(inbox._id)" (alreadyAutoOpen)="alreadyAutoOpen($event)" (updateInboxes)="getInboxes($event)"></inbox>\n</ion-list>\n<empty-content *ngIf="!inboxes.length" [message]="\'No tienes conversaciones, inicia una!\'"></empty-content>\n<ion-fab bottom right>\n  <button ion-fab mini color="success"><ion-icon name="add"></ion-icon></button>\n  <ion-fab-list side="left">\n    <button ion-fab><ion-icon name="ios-people" (click)="presentNewInboxModal(true)"></ion-icon></button>\n    <button ion-fab><ion-icon name="ios-person" (click)="presentNewInboxModal(false)"></ion-icon></button>\n  </ion-fab-list>\n</ion-fab>\n'/*ion-inline-end:"C:\Users\Matias\WebstormProjects\turinsta\src\components\inbox-list\inbox-list.html"*/
+        selector: 'inbox-list',template:/*ion-inline-start:"C:\Users\Matias\WebstormProjects\turinsta\src\components\inbox-list\inbox-list.html"*/'<!-- Generated template for the InboxListComponent component -->\n<ion-list>\n  <inbox *ngFor="let inbox of inboxes" [data]=inbox [unreadMessagesCount]="getUnreadMessagesFromInbox(inbox)" [autoOpen]="hasToAutoOpen(inbox._id)" (alreadyAutoOpen)="alreadyAutoOpen($event)" (updateInboxes)="getInboxes($event)"></inbox>\n</ion-list>\n<empty-content *ngIf="!inboxes.length" [message]="getCaption(\'inboxListEmpty\')"></empty-content>\n<ion-fab bottom right>\n  <button ion-fab mini color="success"><ion-icon name="add"></ion-icon></button>\n  <ion-fab-list side="left">\n    <button ion-fab><ion-icon name="ios-people" (click)="presentNewInboxModal(true)"></ion-icon></button>\n    <button ion-fab><ion-icon name="ios-person" (click)="presentNewInboxModal(false)"></ion-icon></button>\n  </ion-fab-list>\n</ion-fab>\n'/*ion-inline-end:"C:\Users\Matias\WebstormProjects\turinsta\src\components\inbox-list\inbox-list.html"*/
     }),
     __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_2__providers_storage_storage__["a" /* StorageProvider */], __WEBPACK_IMPORTED_MODULE_1__providers_commons_commons__["a" /* CommonsProvider */], __WEBPACK_IMPORTED_MODULE_4_ionic_angular__["j" /* ModalController */], __WEBPACK_IMPORTED_MODULE_5__ngrx_store__["h" /* Store */]])
 ], InboxListComponent);
@@ -5650,7 +5479,7 @@ InboxListComponent = __decorate([
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__pages_chat_chat__ = __webpack_require__(59);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_ng_socket_io__ = __webpack_require__(71);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_ng_socket_io___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_ng_socket_io__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__providers_commons_commons__ = __webpack_require__(11);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__providers_commons_commons__ = __webpack_require__(9);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__providers_storage_storage__ = __webpack_require__(13);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__ionic_native_badge__ = __webpack_require__(96);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -5929,7 +5758,7 @@ PublicationResumeComponent = __decorate([
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AccountActionsComponent; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__providers_commons_commons__ = __webpack_require__(11);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__providers_commons_commons__ = __webpack_require__(9);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_ionic_angular__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__pages_account_actions_menu_account_actions_menu__ = __webpack_require__(171);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -5990,7 +5819,7 @@ AccountActionsComponent = __decorate([
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_storage_storage__ = __webpack_require__(13);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_commons_commons__ = __webpack_require__(11);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_commons_commons__ = __webpack_require__(9);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__publication_writing_publication_writing__ = __webpack_require__(51);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -6067,16 +5896,257 @@ var AccountPage = (function () {
             publicationWritingModal.present();
         });
     };
+    AccountPage.prototype.getCaption = function (captionKey) {
+        return this.commons.translate([captionKey]);
+    };
     return AccountPage;
 }());
 AccountPage = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
-        selector: 'page-account',template:/*ion-inline-start:"C:\Users\Matias\WebstormProjects\turinsta\src\pages\account\account.html"*/'<!--\n  Generated template for the AccountPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-content *ngIf="user" text-center>\n  <ion-item class="text-with-ellipsis">\n    <ion-avatar class="out-activity-avatar" item-start>\n      <img src="{{user.avatar}}"/>\n    </ion-avatar>\n    <p>{{user.followers.length}} seguidores / {{user.followedes.length}} seguidos</p>\n    <h2 class="publication-important-text">{{user.username}}</h2>\n    <p item-right>{{user.score | number:\'1.0-1\' }} <ion-icon name="star" color="star"></ion-icon>\n      / {{user.publications.length}} <ion-icon name="images" color="secondary"></ion-icon>\n    </p>\n    <account-actions item-end [user]="user"></account-actions>\n  </ion-item>\n  <ion-segment [(ngModel)]="show.section" color="secondary">\n    <ion-segment-button value="PUBLICATIONS">\n      <ion-icon name="images"></ion-icon>\n    </ion-segment-button>\n    <ion-segment-button value="FAVORITES" (click)="getFavorites()">\n      <ion-icon name="heart"></ion-icon>\n    </ion-segment-button>\n  </ion-segment>\n  <div [ngSwitch]="show.section" padding>\n    <ion-list *ngSwitchCase="\'PUBLICATIONS\'">\n      <publication-resume *ngFor="let publication of publications" [publication]="publication" (openPublication)="openPublication($event)"></publication-resume>\n      <empty-content *ngIf="!publications.length" [message]="\'No tienes publicaciones, crea una!\'"></empty-content>\n    </ion-list>\n    <ion-list *ngSwitchCase="\'FAVORITES\'">\n      <publication-resume *ngFor="let favorite of favorites" [publication]="favorite" (openPublication)="openPublication($event)"></publication-resume>\n      <empty-content *ngIf="!favorites.length" [message]="\'No tienes favoritos, agrega uno!\'"></empty-content>\n    </ion-list>\n  </div>\n</ion-content>\n'/*ion-inline-end:"C:\Users\Matias\WebstormProjects\turinsta\src\pages\account\account.html"*/,
+        selector: 'page-account',template:/*ion-inline-start:"C:\Users\Matias\WebstormProjects\turinsta\src\pages\account\account.html"*/'<!--\n  Generated template for the AccountPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-content *ngIf="user" text-center>\n  <ion-item class="text-with-ellipsis">\n    <ion-avatar class="out-activity-avatar" item-start>\n      <img src="{{user.avatar}}"/>\n    </ion-avatar>\n    <p>{{user.followers.length}} {{getCaption(\'followers\')}} / {{user.followedes.length}} {{getCaption(\'followedes\')}}</p>\n    <h2 class="publication-important-text">{{user.username}}</h2>\n    <p item-right>{{user.score | number:\'1.0-1\' }} <ion-icon name="star" color="star"></ion-icon>\n      / {{user.publications.length}} <ion-icon name="images" color="secondary"></ion-icon>\n    </p>\n    <account-actions item-end [user]="user"></account-actions>\n  </ion-item>\n  <ion-segment [(ngModel)]="show.section" color="secondary">\n    <ion-segment-button value="PUBLICATIONS">\n      <ion-icon name="images"></ion-icon>\n    </ion-segment-button>\n    <ion-segment-button value="FAVORITES" (click)="getFavorites()">\n      <ion-icon name="heart"></ion-icon>\n    </ion-segment-button>\n  </ion-segment>\n  <div [ngSwitch]="show.section" padding>\n    <ion-list *ngSwitchCase="\'PUBLICATIONS\'">\n      <publication-resume *ngFor="let publication of publications" [publication]="publication" (openPublication)="openPublication($event)"></publication-resume>\n      <empty-content *ngIf="!publications.length" [message]="\'No tienes publicaciones, crea una!\'"></empty-content>\n    </ion-list>\n    <ion-list *ngSwitchCase="\'FAVORITES\'">\n      <publication-resume *ngFor="let favorite of favorites" [publication]="favorite" (openPublication)="openPublication($event)"></publication-resume>\n      <empty-content *ngIf="!favorites.length" [message]="\'No tienes favoritos, agrega uno!\'"></empty-content>\n    </ion-list>\n  </div>\n</ion-content>\n'/*ion-inline-end:"C:\Users\Matias\WebstormProjects\turinsta\src\pages\account\account.html"*/,
     }),
     __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* NavParams */], __WEBPACK_IMPORTED_MODULE_2__providers_storage_storage__["a" /* StorageProvider */], __WEBPACK_IMPORTED_MODULE_3__providers_commons_commons__["a" /* CommonsProvider */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* ModalController */]])
 ], AccountPage);
 
 //# sourceMappingURL=account.js.map
+
+/***/ }),
+
+/***/ 9:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return CommonsProvider; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_http__ = __webpack_require__(86);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_add_operator_map__ = __webpack_require__(87);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_add_operator_map___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_rxjs_add_operator_map__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_ionic_angular__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__ionic_storage__ = __webpack_require__(234);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__storage_storage__ = __webpack_require__(13);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__ngrx_store__ = __webpack_require__(23);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__reducers_user_reducer__ = __webpack_require__(236);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+
+
+
+
+
+/*
+  Generated class for the CommonsProvider provider.
+
+  See https://angular.io/guide/dependency-injection for more info on providers
+  and Angular DI.
+*/
+var CommonsProvider = (function () {
+    function CommonsProvider(http, toastCtrl, alertCtrl, localStorage, storage, userStore) {
+        this.http = http;
+        this.toastCtrl = toastCtrl;
+        this.alertCtrl = alertCtrl;
+        this.localStorage = localStorage;
+        this.storage = storage;
+        this.userStore = userStore;
+        this.glosary = null;
+        console.log('Hello CommonsProvider Provider');
+        this.setUserId("59f7562af36d282363087270"); //Yo
+        // this.setUserId("59f7588ef36d282363087491"); //Cor
+        // this.setUserId("5a00bb48eea55b00126725f8"); //Cele
+        this.setUserData();
+    }
+    CommonsProvider.prototype.setUserData = function () {
+        var _this = this;
+        this.storage.getUser(this.getUserId()).subscribe(function (user) {
+            _this.setLanguage(user.language);
+            _this.userStore.dispatch(Object(__WEBPACK_IMPORTED_MODULE_7__reducers_user_reducer__["a" /* setAvatar */])(user.avatar));
+            _this.userStore.dispatch(Object(__WEBPACK_IMPORTED_MODULE_7__reducers_user_reducer__["e" /* setUsername */])(user.username));
+            _this.userStore.dispatch(Object(__WEBPACK_IMPORTED_MODULE_7__reducers_user_reducer__["c" /* setUnreadMessages */])(user.notifications.unreadMessages));
+            _this.userStore.dispatch(Object(__WEBPACK_IMPORTED_MODULE_7__reducers_user_reducer__["d" /* setUnseenActivities */])(user.notifications.unseenActivities));
+        });
+    };
+    CommonsProvider.prototype.getUnreadMessages = function () {
+        var _this = this;
+        this.storage.getUnreadMessages(this.getUserId()).subscribe(function (user) {
+            _this.userStore.dispatch(Object(__WEBPACK_IMPORTED_MODULE_7__reducers_user_reducer__["c" /* setUnreadMessages */])(user.notifications.unreadMessages));
+        });
+    };
+    CommonsProvider.prototype.getUnseenActivities = function () {
+        var _this = this;
+        this.storage.getUnseenActivities(this.getUserId()).subscribe(function (user) {
+            _this.userStore.dispatch(Object(__WEBPACK_IMPORTED_MODULE_7__reducers_user_reducer__["d" /* setUnseenActivities */])(user.notifications.unseenActivities));
+        });
+    };
+    CommonsProvider.prototype.setLanguage = function (id) {
+        var _this = this;
+        this.storage.getLanguage(id).subscribe(function (language) {
+            _this.glosary = language.glosary;
+            _this.userStore.dispatch(Object(__WEBPACK_IMPORTED_MODULE_7__reducers_user_reducer__["b" /* setLanguage */])(id));
+        });
+    };
+    CommonsProvider.prototype.translate = function (captionKeys, params) {
+        if (params === void 0) { params = null; }
+        var translatedCaption = this.glosary;
+        if (translatedCaption) {
+            for (var i = 0; i < captionKeys.length; ++i) {
+                translatedCaption = translatedCaption[captionKeys[i]];
+            }
+            if (params) {
+                for (var key in params) {
+                    translatedCaption = translatedCaption.replace(key, params[key]);
+                }
+            }
+        }
+        return translatedCaption;
+    };
+    CommonsProvider.prototype.setUserId = function (userId) {
+        sessionStorage.setItem("userId", userId);
+    };
+    CommonsProvider.prototype.getUserId = function () {
+        return sessionStorage.getItem("userId");
+    };
+    CommonsProvider.prototype.presentToast = function (message) {
+        var toast = this.toastCtrl.create({
+            message: message,
+            duration: 3000
+        });
+        toast.present();
+    };
+    CommonsProvider.prototype.presentAlert = function (title, message, _a) {
+        var _b = _a[0], text = _b.text, handler = _b.handler;
+        var confirm = this.alertCtrl.create({
+            title: title,
+            message: message,
+            buttons: [{ text: text, handler: handler }]
+        });
+        confirm.present();
+    };
+    CommonsProvider.prototype.cachePublications = function (publications) {
+        this.localStorage.set("publications", publications);
+    };
+    CommonsProvider.prototype.getCachedPublications = function () {
+        return this.localStorage.get("publications");
+    };
+    CommonsProvider.prototype.prettyDate = function (rowDate) {
+        var parsedRowDate = new Date(rowDate);
+        return (parsedRowDate.getDay() <= 9 ? '0' + parsedRowDate.getDay() : parsedRowDate.getDay()) + '/' + (parsedRowDate.getMonth() <= 8 ? '0' + (parsedRowDate.getMonth() + 1) : (parsedRowDate.getMonth() + 1)) + '/' + parsedRowDate.getFullYear();
+    };
+    CommonsProvider.prototype.dateDiff = function (dateSince, dateUntil) {
+        var diffInMs = Date.parse(dateUntil) - Date.parse(dateSince);
+        var diffInSeconds = diffInMs / 1000;
+        return diffInSeconds;
+    };
+    CommonsProvider.prototype.getAntiquity = function (dateSince) {
+        if (!Boolean(this.glosary)) {
+            return null;
+        }
+        var diffInSeconds = this.dateDiff(dateSince, (new Date()));
+        if (diffInSeconds < 0) {
+            return this.glosary.veryRecentActivitySentence;
+        }
+        if (diffInSeconds / 31104000 >= 1) {
+            var years = Math.floor(diffInSeconds / 31104000);
+            return this.glosary.antiquitySentence.replace(':x', years).
+                replace(':timeUnit', years > 1 ? this.glosary.timeUnits.YEAR.PLURAL.toLowerCase() : this.glosary.timeUnits.YEAR.SINGULAR.toLowerCase());
+        }
+        else {
+            if (diffInSeconds / 2592000 >= 1) {
+                var months = Math.floor(diffInSeconds / 2592000);
+                return this.glosary.antiquitySentence.replace(':x', months).
+                    replace(':timeUnit', months > 1 ? this.glosary.timeUnits.MONTH.PLURAL.toLowerCase() : this.glosary.timeUnits.MONTH.SINGULAR.toLowerCase());
+            }
+            else {
+                if (diffInSeconds / 86400 >= 1) {
+                    var days = Math.floor(diffInSeconds / 86400);
+                    return this.glosary.antiquitySentence.replace(':x', days).
+                        replace(':timeUnit', days > 1 ? this.glosary.timeUnits.DAY.PLURAL.toLowerCase() : this.glosary.timeUnits.DAY.SINGULAR.toLowerCase());
+                }
+                else {
+                    if (diffInSeconds / 3600 >= 1) {
+                        var hours = Math.floor(diffInSeconds / 3600);
+                        return this.glosary.antiquitySentence.replace(':x', hours).
+                            replace(':timeUnit', hours > 1 ? this.glosary.timeUnits.HOUR.PLURAL.toLowerCase() : this.glosary.timeUnits.HOUR.SINGULAR.toLowerCase());
+                    }
+                    else {
+                        if (diffInSeconds / 60 >= 1) {
+                            var minutes = Math.floor(diffInSeconds / 60);
+                            return this.glosary.antiquitySentence.replace(':x', minutes).
+                                replace(':timeUnit', minutes > 1 ? this.glosary.timeUnits.MINUTE.PLURAL.toLowerCase() : this.glosary.timeUnits.MINUTE.SINGULAR.toLowerCase());
+                        }
+                        else {
+                            var seconds = Math.floor(diffInSeconds);
+                            return this.glosary.antiquitySentence.replace(':x', seconds).
+                                replace(':timeUnit', seconds > 1 ? this.glosary.timeUnits.SECOND.PLURAL.toLowerCase() : this.glosary.timeUnits.SECOND.SINGULAR.toLowerCase());
+                        }
+                    }
+                }
+            }
+        }
+    };
+    CommonsProvider.prototype.getScoreGivenFromUser = function (assessments) {
+        if (assessments) {
+            var loggedUser_1 = this.getUserId();
+            var targetAssessment = assessments.filter(function (assessment) { return assessment.user == loggedUser_1; });
+            return targetAssessment.length > 0 ? targetAssessment[0].value : null;
+        }
+        return null;
+    };
+    CommonsProvider.prototype.getChatDescription = function (inbox) {
+        var currentUser = this.getUserId();
+        var chatDescription = null;
+        if (!inbox.name) {
+            chatDescription = inbox.participants.reduce(function (acum, item) {
+                if (item._id != currentUser) {
+                    return (acum != '' ? acum + ', ' + item.username : item.username);
+                }
+                return acum;
+            }, '');
+        }
+        else {
+            chatDescription = inbox.name;
+        }
+        return chatDescription;
+    };
+    CommonsProvider.prototype.getDefaultInboxAvatar = function () {
+        return __WEBPACK_IMPORTED_MODULE_5__storage_storage__["a" /* StorageProvider */].baseUrl.replace('/api/', '') + '/assets/avatar-images/unknown-group.png';
+    };
+    CommonsProvider.prototype.getAvatar = function (inbox) {
+        var currentUser = this.getUserId();
+        var avatar = null;
+        if (Boolean(inbox.avatar)) {
+            avatar = inbox.avatar;
+        }
+        else {
+            var targetUser = inbox.participants.filter(function (user) {
+                return user._id != currentUser;
+            });
+            if (targetUser.length == 1) {
+                avatar = targetUser[0].avatar;
+            }
+            else {
+                avatar = this.getDefaultInboxAvatar();
+            }
+        }
+        return avatar;
+    };
+    return CommonsProvider;
+}());
+CommonsProvider = __decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Injectable"])(),
+    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* Http */], __WEBPACK_IMPORTED_MODULE_3_ionic_angular__["r" /* ToastController */], __WEBPACK_IMPORTED_MODULE_3_ionic_angular__["b" /* AlertController */],
+        __WEBPACK_IMPORTED_MODULE_4__ionic_storage__["b" /* Storage */], __WEBPACK_IMPORTED_MODULE_5__storage_storage__["a" /* StorageProvider */], __WEBPACK_IMPORTED_MODULE_6__ngrx_store__["h" /* Store */]])
+], CommonsProvider);
+
+//# sourceMappingURL=commons.js.map
 
 /***/ })
 

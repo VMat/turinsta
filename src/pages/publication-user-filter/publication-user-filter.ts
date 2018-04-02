@@ -57,4 +57,8 @@ export class PublicationUserFilterPage {
     this.viewCtrl.dismiss();
   }
 
+  getCaption(captionKey){
+    return this.commons.translate([captionKey]);
+  }
+
 }

@@ -10,8 +10,6 @@
       <button item-start ion-button clear (click)="dismissPublication()">
         <ion-icon name="close"></ion-icon>
       </button>
-      <ion-title *ngIf="!publication._id">Nueva publicación</ion-title>
-      <ion-title *ngIf="publication._id">Ver publicación</ion-title>
       <div *ngIf="checkEditPermission() && publication._id" item-end>
         <button ion-button clear (click)="confirmDelete()">
           <ion-icon name="trash" color="danger"></ion-icon>
@@ -29,7 +27,7 @@
   <publication-header [user]=user [publication]=publication [edit]="checkEditPermission()" (changePlace)="setPlace($event)"></publication-header>
   <ion-item *ngIf="!publication._id  && !publication.images" (click)="addImage()" no-lines>
     <button item-start ion-button icon-only clear item-start><ion-icon name="images"></ion-icon></button>
-    <p class="publication-important-text">Agregar imágenes</p>
+    <p class="publication-important-text">{{getCaption("publicationWritingAddImages")}}</p>
   </ion-item>
   <ion-slides *ngIf="publication._id || publication.images">
     <ion-slide style="align-items: start" *ngFor="let image of publication.images">
@@ -58,13 +56,13 @@
       <button ion-button icon-only clear  item-start>
         <ion-icon name="add" color="success"></ion-icon>
       </button>
-      <p class="publication-important-text">Agregar descripción</p>
+      <p class="publication-important-text">{{getCaption("publicationWritingAddDescription")}}</p>
     </div>
     <p *ngIf="publication.timestamps" item-end class="text-with-ellipsis">{{prettyDate(publication.timestamps.created)}}</p>
   </ion-item>
   <ion-item>
     <ion-item no-lines>
-      <p>Experiencias (<span>{{experiences.length}}</span>)</p>
+      <p>{{getCaption("publicationWritingExperiences")}} (<span>{{experiences.length}}</span>)</p>
       <button item-end ion-button icon-only clear (click)="toogleExperienceList()">
         <ion-icon name="{{experienceListOpened ? 'ios-arrow-dropdown' : 'ios-arrow-dropright'}}"></ion-icon>
       </button>
@@ -73,7 +71,7 @@
   </ion-item>
   <ion-item *ngIf="publication._id">
     <ion-item no-lines>
-      <p>Comentarios (<span>{{comments.length}}</span>)</p>
+      <p>{{getCaption("publicationWritingComments")}} (<span>{{comments.length}}</span>)</p>
       <button item-end ion-button icon-only clear (click)="toogleCommentList()">
         <ion-icon name="{{commentListOpened ? 'ios-arrow-dropdown' : 'ios-arrow-dropright'}}"></ion-icon>
       </button>

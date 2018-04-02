@@ -63,11 +63,11 @@ export class ExperienceWritingPage {
 
   checkNeededField(){
     if(!this.experience.category){
-      this.commons.presentToast("Debe seleccionar una categoría");
+      this.commons.presentToast(this.commons.translate(["missingExperienceCategory"]));
       return false;
     }
     if(!this.experience.type){
-      this.commons.presentToast("Debe seleccionar un tipo de experiencia");
+      this.commons.presentToast(this.commons.translate(["missingExperienceType"]));
       return false;
     }
     return true;
@@ -80,14 +80,14 @@ export class ExperienceWritingPage {
       unpopulatedExperience.type = this.experience.type._id;
       if(Boolean(this.experience._id)){
         this.storageService.updateExperience(unpopulatedExperience).subscribe((editedExperience)=>{
-          this.commons.presentToast("La experiencia ha sido actualizada con éxito");
+          this.commons.presentToast(this.commons.translate(["experienceEditSuccess"]));
           this.viewCtrl.dismiss(this.experience);
         });
       }
       else{
         if(this.experience.publication){
           this.storageService.createExperience(unpopulatedExperience).subscribe((newExperience)=>{
-            this.commons.presentToast("La experiencia ha sido grabada con éxito");
+            this.commons.presentToast(this.commons.translate(["experienceUploadSuccess"]));
             this.viewCtrl.dismiss(this.experience);
           });
         }
@@ -104,6 +104,10 @@ export class ExperienceWritingPage {
 
   setType(type){
     this.experience.type = type;
+  }
+
+  getCaption(captionKey){
+    return this.commons.translate([captionKey]);
   }
 
 }

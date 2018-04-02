@@ -28,7 +28,7 @@ export class PublicationActionsComponent {
     let loggedUser = this.commons.getUserId();
     this.followedPublication = this.publication.followers.indexOf(loggedUser)!=-1;
     this.followedUser =  this.user.followers.indexOf(loggedUser)!=-1;
-    let popover = this.popoverCtrl.create(PublicationActionsMenuPage, {publication: this.publication._id, user: this.user._id, followedPublication: this.followedPublication, followedUser: this.followedUser});
+    let popover = this.popoverCtrl.create(PublicationActionsMenuPage, {publication: this.publication._id, user: this.user, followedPublication: this.followedPublication, followedUser: this.followedUser});
     popover.present({
       ev: myEvent
     });

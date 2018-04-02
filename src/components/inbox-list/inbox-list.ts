@@ -125,4 +125,8 @@ export class InboxListComponent {
       }
     });
   }
+
+  getCaption(captionKey){
+    return this.commons.translate([captionKey]);
+  }
 }

@@ -8,15 +8,15 @@
   <ion-list>
     <ion-item *ngIf="chat.group" (click)="editChat()">
       <ion-icon item-start name="create" color="primary"></ion-icon>
-      <p>Editar grupo</p>
+      <p>{{getCaption("chatActionEdit")}}</p>
     </ion-item>
     <ion-item *ngIf="chat.group" (click)="confirmLeaveChat()">
       <ion-icon item-start name="exit" color="danger"></ion-icon>
-      <p>Abandonar grupo</p>
+      <p>{{getCaption("chatActionLeftGroup")}}</p>
     </ion-item>
     <ion-item *ngIf="!chat.group" (click)="confirmDeleteChat()">
       <ion-icon item-start name="trash" color="danger"></ion-icon>
-      <p>Borrar chat</p>
+      <p>{{getCaption("chatActionDeleteChat")}}</p>
     </ion-item>
   </ion-list>
 </ion-content>

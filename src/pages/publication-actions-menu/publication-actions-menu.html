@@ -7,30 +7,30 @@
 <ion-content no-padding>
   <ion-list>
     <ion-item *ngIf="checkNotOwner()" (click)="handleFavorite()">
-      <ion-icon item-start name="heart"></ion-icon>
-      <p *ngIf="!followedPublication">Agregar a favoritos</p>
-      <p *ngIf="followedPublication">Quitar de favoritos</p>
+      <ion-icon item-start name="heart" color="danger"></ion-icon>
+      <p *ngIf="!followedPublication">{{getCaption("publicationActionAddToFavorites")}}</p>
+      <p *ngIf="followedPublication">{{getCaption("publicationActionRemoveFromFavorites")}}</p>
     </ion-item>
     <ion-item (click)="locatePlace()">
       <ion-icon item-start class="publication-icon" name="pin" color="secondary"></ion-icon>
-      <p>Ubicar en mapa</p>
+      <p>{{getCaption("publicationActionLocateInMap")}}</p>
     </ion-item>
     <ion-item (click)="presentShareActionSheet()">
-      <ion-icon item-start class="publication-icon" name="share" color="secondary"></ion-icon>
-      <p>Compartir</p>
+      <ion-icon item-start class="publication-icon" name="share" color="warning"></ion-icon>
+      <p>{{getCaption("publicationActionShare")}}</p>
     </ion-item>
     <ion-item *ngIf="checkNotOwner()" (click)="handleUser()">
-      <ion-icon item-start name="person-add"></ion-icon>
-      <p *ngIf="!followedUser">Seguir usuario</p>
-      <p *ngIf="followedUser">Dejar de seguir usuario</p>
+      <ion-icon item-start name="person-add" color="success"></ion-icon>
+      <p *ngIf="!followedUser">{{getCaption("publicationActionFollowUser")}}</p>
+      <p *ngIf="followedUser">{{getCaption("publicationActionStopFollowUser")}}</p>
     </ion-item>
     <ion-item *ngIf="checkNotOwner()" (click)="viewUser()">
-      <ion-icon item-start name="contact"></ion-icon>
-      <p>Ver perfil de usuario</p>
+      <ion-icon item-start name="contact" color="primary"></ion-icon>
+      <p>{{getCaption("publicationActionSeeUser")}}</p>
     </ion-item>
     <ion-item *ngIf="checkNotOwner()" (click)="denunciate()">
-      <ion-icon item-start name="alert"></ion-icon>
-      <p>Denunciar</p>
+      <ion-icon item-start name="alert" color="danger"></ion-icon>
+      <p>{{getCaption("publicationActionReportPublication")}}</p>
     </ion-item>
   </ion-list>
 </ion-content>

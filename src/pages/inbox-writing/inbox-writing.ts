@@ -90,7 +90,7 @@ export class InboxWritingPage {
         this.selectedUsers.push(userId)
       }
       else{
-        this.commons.presentToast("Has alcanzado el límite de 20 participantes");
+        this.commons.presentToast(this.commons.translate(["groupParticipantsExceed"]));
       }
     }
   }
@@ -113,7 +113,7 @@ export class InboxWritingPage {
       }
     )
     .catch(()=>{
-      this.commons.presentToast("Se ha producido un error al cargar las imágenes");
+      this.commons.presentToast(this.commons.translate(["imagesUploadFailed"]));
     });
   }
 
@@ -140,11 +140,11 @@ export class InboxWritingPage {
 
   checkNeededField(){
     if(this.selectedUsers.length==0){
-      this.commons.presentToast("Debe seleccionar al menos un usuario");
+      this.commons.presentToast(this.commons.translate(["missingGroupParticipant"]));
       return false;
     }
     if(!this.inboxName){
-      this.commons.presentToast("Debe proporcionar un nombre al grupo");
+      this.commons.presentToast(this.commons.translate(["missingGroupName"]));
       return false;
     }
     return true;
@@ -213,7 +213,7 @@ export class InboxWritingPage {
           }).subscribe(() => {
             this.storage.getInbox(this.inbox._id).subscribe((patchedInbox) => {
               loader.dismiss();
-              this.commons.presentToast("Se ha actualizado el grupo con éxito");
+              this.commons.presentToast(this.commons.translate(["groupUpdated"],{":group": this.inbox.name}));
               this.viewCtrl.dismiss(patchedInbox);
             })
           });
@@ -223,7 +223,7 @@ export class InboxWritingPage {
         this.storage.patchInbox(this.inbox._id,{participants: this.selectedUsers, name: this.inboxName, avatar: this.inboxAvatar}).subscribe(()=>{
           this.storage.getInbox(this.inbox._id).subscribe((patchedInbox)=>{
             loader.dismiss();
-            this.commons.presentToast("Se ha actualizado el grupo con éxito");
+            this.commons.presentToast(this.commons.translate(["groupUpdated"],{":group": this.inbox.name}));
             this.viewCtrl.dismiss(patchedInbox);
           })
         });
@@ -236,7 +236,7 @@ export class InboxWritingPage {
           this.viewCtrl.dismiss({name: this.inboxName, participants: this.selectedUsers, avatar: avatarUrl, messages: [], group: true, creator: this.commons.getUserId()});
         })
           .catch((error)=>{
-            this.commons.presentToast("Se ha producido un error al guardar el avatar");
+            this.commons.presentToast(this.commons.translate(["avatarUpdatedFailed"]));
           });
       }
       else{
@@ -251,5 +251,9 @@ export class InboxWritingPage {
       this.followedes = followedes;
       event.complete();
     });
+  }
+
+  getCaption(captionKey){
+    return this.commons.translate([captionKey]);
   }
 }

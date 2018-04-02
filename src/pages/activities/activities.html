@@ -31,7 +31,7 @@
           </ion-thumbnail>
         </ion-item>
       </ion-list>
-      <empty-content *ngIf="emptyActivities('IN')" [message]="'No tienes actividades de entrada'"></empty-content>
+      <empty-content *ngIf="emptyActivities('IN')" [message]="getCaption('inActivityListEmpty')"></empty-content>
     </div>
     <div *ngSwitchCase="'OUT'" style="text-align: center">
       <ion-list>
@@ -46,7 +46,7 @@
           </ion-avatar>
         </ion-item>
       </ion-list>
-      <empty-content *ngIf="emptyActivities('OUT')" [message]="'No tienes actividades de salida'"></empty-content>
+      <empty-content *ngIf="emptyActivities('OUT')" [message]="getCaption('outActivityListEmpty')"></empty-content>
     </div>
   </div>
 </ion-content>

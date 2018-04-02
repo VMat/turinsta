@@ -10,7 +10,7 @@
       <button item-start ion-button clear (click)="dismissDescriptionWriting()">
         <ion-icon name="close"></ion-icon>
       </button>
-      <ion-title>Descripción</ion-title>
+      <!--<ion-title>Descripción</ion-title>-->
       <button *ngIf="description.content" item-end ion-button clear (click)="confirmSave()">
         <ion-icon name="checkmark" color="success"></ion-icon>
       </button>
@@ -19,7 +19,7 @@
 </ion-header>
 <ion-content no-padding style="height: 100%; width: 100%">
   <ion-item style="height: 85%">
-    <ion-label stacked>Descripción</ion-label>
+    <ion-label stacked>{{getCaption("publicationDescription")}}</ion-label>
     <ion-textarea [(ngModel)]="description.content" style="width: 100%"></ion-textarea>
   </ion-item>
   <ion-item style="height: 15%">

@@ -37,7 +37,7 @@ export class PublicationEffects {
           let cachedPublications = null;
           if(!this.offlineMode){
             cachedPublications = await this.commons.getCachedPublications().then((cachedPublications)=>{return cachedPublications});
-            this.commons.presentToast("Error al actualizar las publicaciones");
+            this.commons.presentToast(this.commons.translate(["publicationUpdatingFailed"]));
             this.offlineMode = true;
             this.alreadyCached = false;
           }

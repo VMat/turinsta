@@ -10,7 +10,6 @@
       <button item-start ion-button clear (click)="dismissUsernameWriting()">
         <ion-icon name="close"></ion-icon>
       </button>
-      <ion-title>Modificar nombre de usuario</ion-title>
       <button *ngIf="username" item-end ion-button clear (click)="confirmSave()">
         <ion-icon name="checkmark" color="success"></ion-icon>
       </button>
@@ -19,7 +18,7 @@
 </ion-header>
 <ion-content no-padding style="height: 100%; width: 100%">
   <ion-item>
-    <ion-label stacked>Nombre de usuario</ion-label>
+    <ion-label stacked>{{getCaption("username")}}</ion-label>
     <ion-textarea [(ngModel)]="username" style="width: 100%"></ion-textarea>
   </ion-item>
 </ion-content>

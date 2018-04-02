@@ -2,5 +2,5 @@
 <ion-list>
   <publication *ngFor="let publication of data.publications" [data]="publication"></publication>
 </ion-list>
-<empty-content *ngIf="!data.publications.length" [message]="'Sin resultados...'"></empty-content>
+<empty-content *ngIf="!data.publications.length" [message]="getCaption('publicationListEmpty')"></empty-content>
 

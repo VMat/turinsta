@@ -56,7 +56,7 @@ export class ExperienceComponent {
 
   removeExperience(){
     this.storage.deleteExperience(this.data).subscribe((deletedExperience)=>{
-      this.commonsService.presentToast("Experiencia borrada con éxito");
+      this.commonsService.presentToast(this.commonsService.translate(["experienceDeleteSuccess"]));
     });
   }
 

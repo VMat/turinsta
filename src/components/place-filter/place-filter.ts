@@ -4,6 +4,7 @@ import {cleanFilters, addFilter} from "../../providers/reducers/publication.redu
 import {AppState} from "../../providers/models/publication.model";
 import {Store} from "@ngrx/store";
 import {StorageProvider} from "../../providers/storage/storage";
+import {CommonsProvider} from "../../providers/commons/commons";
 
 /**
  * Generated class for the PlaceFilterComponent component.
@@ -17,7 +18,6 @@ import {StorageProvider} from "../../providers/storage/storage";
 })
 export class PlaceFilterComponent {
   searchInput: any = {place_id: null, name: null};
-  // places = [{name: "Bariloche, Argentina"}, {name:"Madrid, España"}, {name:"Sydney, Australia"}, {name:"Tokio, Japón"}];
   places = [];
   placeFilter = null;
   showAutocomplete = false;
@@ -25,7 +25,7 @@ export class PlaceFilterComponent {
   @Input() placeSelecting: boolean = false;
   @Output() placeSelected = new EventEmitter<string>();
 
-  constructor(private store: Store<AppState>, private storageService: StorageProvider) {
+  constructor(private store: Store<AppState>, private storageService: StorageProvider, private commons: CommonsProvider) {
     console.log('Hello PlaceFilterComponent Component');
   }
 
@@ -74,5 +74,9 @@ export class PlaceFilterComponent {
     else{
       this.store.dispatch(cleanFilters());
     }
+  }
+
+  getSearchCaption(){
+    return this.commons.translate(["searchPlaceholder"]);
   }
 }

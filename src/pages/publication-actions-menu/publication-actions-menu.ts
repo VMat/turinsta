@@ -26,7 +26,7 @@ export class PublicationActionsMenuPage {
   followedPublication: boolean = null;
   followedUser: boolean = null;
   publication: string = null;
-  user: string = null;
+  user: any = null;
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad PublicationActionsMenuPage');
@@ -37,19 +37,22 @@ export class PublicationActionsMenuPage {
   }
 
   checkNotOwner(){
-    return this.user != this.commons.getUserId();
+    if(this.user){
+      return this.user._id != this.commons.getUserId();
+    }
+    return false;
   }
 
   handleFavorite(){
     if(!this.followedPublication){
       this.storageService.addPublicationFollower({publication: this.publication, user: this.commons.getUserId()}).subscribe((favoriteAdded)=>{
-        this.commons.presentToast("Se ha guardado la publicación en favoritos con éxito");
+        this.commons.presentToast(this.commons.translate(["favoritePublicationAdded"],{":user": this.user.username}));
         this.viewCtrl.dismiss();
       })
     }
     else{
       this.storageService.removePublicationFollower(this.commons.getUserId(),this.publication).subscribe((favoriteRemoved)=>{
-        this.commons.presentToast("Se ha quitado la publicación de favoritos con éxito");
+        this.commons.presentToast(this.commons.translate(["favoritePublicationDeleted"],{":user": this.user.username}));
         this.viewCtrl.dismiss();
       });
     }
@@ -57,14 +60,14 @@ export class PublicationActionsMenuPage {
 
   handleUser(){
     if(!this.followedUser){
-      this.storageService.addFollower({followed: this.user, follower: this.commons.getUserId()}).subscribe((followerAdded)=>{
-        this.commons.presentToast("Se ha empezado a seguir al usuario con éxito");
+      this.storageService.addFollower({followed: this.user._id, follower: this.commons.getUserId()}).subscribe((followerAdded)=>{
+        this.commons.presentToast(this.commons.translate(["userFollowerAdded"],{":user": this.user.username}));
         this.viewCtrl.dismiss();
       })
     }
     else{
-      this.storageService.removeFollower(this.user, this.commons.getUserId()).subscribe((followedRemoved)=>{
-        this.commons.presentToast("Se ha dejado de seguir al usuario con éxito");
+      this.storageService.removeFollower(this.user._id, this.commons.getUserId()).subscribe((followedRemoved)=>{
+        this.commons.presentToast(this.commons.translate(["userFollowerDeleted"],{":user": this.user.username}));
         this.viewCtrl.dismiss();
       })
     }
@@ -126,17 +129,21 @@ export class PublicationActionsMenuPage {
   }
 
   viewUser(){
-    let publicationWritingModal = this.modalCtrl.create(AccountPage, {user: this.user});
+    let publicationWritingModal = this.modalCtrl.create(AccountPage, {user: this.user._id});
     publicationWritingModal.present().then(()=>{
       this.viewCtrl.dismiss();
     });
   }
 
   denunciate(){
-    this.storageService.createComplaint({reporter: this.commons.getUserId(), reported: this.user, publication: this.publication}).subscribe(()=>{
-      this.commons.presentToast("La publicación ha sido denunciada con éxito");
+    this.storageService.createComplaint({reporter: this.commons.getUserId(), reported: this.user._id, publication: this.publication}).subscribe(()=>{
+      this.commons.presentToast(this.commons.translate(["publicationReportSuccess"]));
       this.viewCtrl.dismiss();
     });
+  }
+
+  getCaption(captionKey){
+    return this.commons.translate([captionKey]);
   }
 
 }

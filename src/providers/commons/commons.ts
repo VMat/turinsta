@@ -57,11 +57,16 @@ export class CommonsProvider {
     });
   }
 
-  translate(caption,params){
-    let translatedCaption = this.glosary[caption];
-    if(params){
-      for(let key in params){
-        translatedCaption = translatedCaption.replace(key,params[key]);
+  translate(captionKeys,params=null){
+    let translatedCaption = this.glosary;
+    if(translatedCaption){
+      for(let i=0; i<captionKeys.length; ++i){
+        translatedCaption = translatedCaption[captionKeys[i]];
+      }
+      if(params){
+        for(let key in params){
+          translatedCaption = translatedCaption.replace(key,params[key]);
+        }
       }
     }
     return translatedCaption;
@@ -75,7 +80,7 @@ export class CommonsProvider {
     return sessionStorage.getItem("userId");
   }
 
-  presentToast(message) {
+  presentToast(message){
     let toast = this.toastCtrl.create({
       message: message,
       duration: 3000

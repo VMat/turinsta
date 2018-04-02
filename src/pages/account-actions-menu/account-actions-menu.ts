@@ -51,13 +51,13 @@ export class AccountActionsMenuPage {
   handleFollowed(followed){
     if(!followed){
       this.storage.addFollower({followed: this.user._id, follower: this.loggedUser}).subscribe((followerAdded)=>{
-        this.commons.presentToast("Se ha empezado a seguir al usuario con éxito");
+        this.commons.presentToast(this.commons.translate(["userFollowerAdded"],{":user": this.user.username}));
         this.viewCtrl.dismiss();
       })
     }
     else{
       this.storage.removeFollower(this.user._id, this.loggedUser).subscribe((followedRemoved)=>{
-        this.commons.presentToast("Se ha dejado de seguir al usuario con éxito");
+        this.commons.presentToast(this.commons.translate(["userFollowerDeleted"],{":user": this.user.username}));
         this.viewCtrl.dismiss();
       })
     }
@@ -94,14 +94,14 @@ export class AccountActionsMenuPage {
 
   reportUser(){
     this.storage.createComplaint({reporter: this.loggedUser, reported: this.user._id, publication: null}).subscribe(()=>{
-      this.commons.presentToast("El usuario ha sido denunciado con éxito");
+      this.commons.presentToast(this.commons.translate(["userReportSuccess"],{":user": this.user.username}));
       this.viewCtrl.dismiss();
     });
   }
 
   changeLanguage(event){
     this.storage.patchUser(this.loggedUser,{language: event}).first().subscribe(()=>{
-      this.commons.presentToast("El idioma ha sido modificado correctamente");
+      this.commons.presentToast(this.commons.translate(["languageUpdated"]));
       this.commons.setLanguage(event);
       this.viewCtrl.dismiss();
     });
@@ -121,7 +121,7 @@ export class AccountActionsMenuPage {
   changeUsername(){
     this.storage.patchUser(this.user._id,{username: this.user.username}).subscribe(()=>{
       this.commons.setUserData();
-      this.commons.presentToast("El nombre de usuario ha sido actualizado con éxito");
+      this.commons.presentToast(this.commons.translate(["usernameUpdated"]));
       this.viewCtrl.dismiss();
     })
   }
@@ -148,19 +148,19 @@ export class AccountActionsMenuPage {
             let avatarUrl = JSON.parse(uploadingResponse[0]["response"]);
             this.storage.patchUser(this.user._id, {avatar: avatarUrl}).subscribe(()=>{
               loader.dismiss();
-              this.commons.presentToast("El avatar se ha actualizado con éxito");
+              this.commons.presentToast(this.commons.translate(["avatarUpdated"]));
               this.user.avatar = avatarUrl;
               this.viewCtrl.dismiss();
             });
           })
           .catch((err) => {
             loader.dismiss();
-            this.commons.presentToast("Se ha producido un error al actualizar el avatar");
+            this.commons.presentToast(this.commons.translate(["avatarUpdatedFailed"]));
             this.viewCtrl.dismiss();
           });
       },
       (err) => {
-        this.commons.presentToast("Se ha producido un error al cargar la imagen")
+        this.commons.presentToast(this.commons.translate(["imageUploadFailed"]));
         this.viewCtrl.dismiss();
       }
     );
@@ -181,6 +181,10 @@ export class AccountActionsMenuPage {
         return ft.upload(i, uri, options);
       })
     );
+  }
+
+  getCaption(captionKey){
+    return this.commons.translate([captionKey]);
   }
 
 }

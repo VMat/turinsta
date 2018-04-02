@@ -57,16 +57,19 @@ export class CommentWritingPage {
   saveComment(){
     if(Boolean(this.comment._id)){
       this.storageService.updateComment(this.comment).subscribe((editedComment)=>{
-        this.commons.presentToast("El comentario ha sido actualizado con éxito");
+        this.commons.presentToast(this.commons.translate(["commentEditSuccess"]));
         this.viewCtrl.dismiss();
       });
     }
     else{
       this.storageService.createComment(this.comment).subscribe((newComment)=>{
-        this.commons.presentToast("El comentario ha sido grabado con éxito");
+        this.commons.presentToast(this.commons.translate(["responseCreateSuccess"]));
         this.viewCtrl.dismiss();
       });
     }
   }
 
+  getCaption(captionKey){
+    return this.commons.translate([captionKey]);
+  }
 }
