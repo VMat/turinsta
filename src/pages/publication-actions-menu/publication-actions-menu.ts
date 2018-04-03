@@ -88,7 +88,7 @@ export class PublicationActionsMenuPage {
 
   presentShareActionSheet() {
     let actionSheet = this.actionSheetCtrl.create({
-      title: 'Compartir con...',
+      title: this.commons.translate(["shareWith"]),
       buttons: [
         {
           text: 'Instagram',

@@ -100,17 +100,17 @@ export class PublicationWritingPage {
   confirmSave() {
     if(this.checkNeededField()){
       let confirm = this.alertCtrl.create({
-        title: 'Confirmar operación',
-        message: '¿Está seguro que desea guardar la publicación?',
+        title: this.commons.translate(['confirmOperation']),
+        message: this.commons.translate(['confirmSavePublication']),
         buttons: [
           {
-            text: 'Aceptar',
+            text: this.commons.translate(['accept']),
             handler: () => {
               this.savePublication();
             }
           },
           {
-            text: 'Cancelar',
+            text: this.commons.translate(['cancel']),
             handler: () => {
             }
           }
@@ -122,17 +122,17 @@ export class PublicationWritingPage {
 
   confirmDelete() {
     let confirm = this.alertCtrl.create({
-      title: 'Confirmar operación',
-      message: '¿Está seguro que desea eliminar la publicación?',
+      title: this.commons.translate(['confirmOperation']),
+      message: this.commons.translate(['confirmDeletePublication']),
       buttons: [
         {
-          text: 'Aceptar',
+          text: this.commons.translate(['accept']),
           handler: () => {
             this.deletePublication();
           }
         },
         {
-          text: 'Cancelar',
+          text: this.commons.translate(['cancel']),
           handler: () => {
           }
         }
@@ -144,17 +144,17 @@ export class PublicationWritingPage {
   confirmDeleteImage() {
     if(this.checkMinImageCount()){
       let confirm = this.alertCtrl.create({
-        title: 'Confirmar operación',
-        message: '¿Está seguro que desea eliminar la imagen?',
+        title: this.commons.translate(['confirmOperation']),
+        message: this.commons.translate(['confirmDeleteImage']),
         buttons: [
           {
-            text: 'Aceptar',
+            text: this.commons.translate(['accept']),
             handler: () => {
               this.removeImage();
             }
           },
           {
-            text: 'Cancelar',
+            text: this.commons.translate(['cancel']),
             handler: () => {
             }
           }
@@ -176,7 +176,7 @@ export class PublicationWritingPage {
 
   savePublication(){
     let loader = this.loadingCtrl.create({
-      content: "Guardando publicación...",
+      content: this.commons.translate(['savingPublication']),
       cssClass: "fullscreen-loading"
     });
     loader.present();
@@ -263,7 +263,7 @@ export class PublicationWritingPage {
         }
         if(this.publication._id){
           let loader = this.loadingCtrl.create({
-            content: "Subiendo imágenes..."
+            content: this.commons.translate(['uploadingImages'])
           });
           loader.present();
           this.uploadPics(file_uris)
@@ -312,17 +312,17 @@ export class PublicationWritingPage {
 
   confirmDeleteDescription(){
     let confirm = this.alertCtrl.create({
-      title: 'Confirmar operación',
-      message: '¿Está seguro que desea eliminar la descripción?',
+      title: this.commons.translate(['confirmOperation']),
+      message: this.commons.translate(['confirmDeleteDescription']),
       buttons: [
         {
-          text: 'Aceptar',
+          text: this.commons.translate(['accept']),
           handler: () => {
             this.deleteDescription();
           }
         },
         {
-          text: 'Cancelar',
+          text: this.commons.translate(['cancel']),
           handler: () => {
           }
         }

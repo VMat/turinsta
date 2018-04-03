@@ -1,9 +1,8 @@
 import {Component, Input, Output, EventEmitter} from '@angular/core';
 import {ImgcacheService} from "../../providers/imgcache/imgcache";
-import {CommonsProvider} from "../../providers/commons/commons";
 import {ModalController} from "ionic-angular";
-import {PlaceFilterComponent} from "../place-filter/place-filter";
 import {PlaceSelectingPage} from "../../pages/place-selecting/place-selecting";
+import {CommonsProvider} from "../../providers/commons/commons";
 
 /**
  * Generated class for the PublicationHeaderComponent component.
@@ -23,7 +22,7 @@ export class PublicationHeaderComponent {
   @Output() changePlace = new EventEmitter<any>();
   cachedAvatar: string = null;
 
-  constructor(private imgCacheService:ImgcacheService, private modalCtrl: ModalController){
+  constructor(private imgCacheService:ImgcacheService, private modalCtrl: ModalController, private commons: CommonsProvider){
     console.log('Hello PublicationHeaderComponent Component');
   }
 
@@ -47,5 +46,9 @@ export class PublicationHeaderComponent {
         this.changePlace.emit(place);
       }
     })
+  }
+
+  getCaption(captionKey){
+    return this.commons.translate([captionKey]);
   }
 }

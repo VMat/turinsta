@@ -2,8 +2,6 @@ import { Component } from '@angular/core';
 import {IonicPage, NavController, NavParams, ModalController} from 'ionic-angular';
 import {CommonsProvider} from "../../providers/commons/commons";
 import {StorageProvider} from "../../providers/storage/storage";
-import {Badge} from "@ionic-native/badge";
-import {setUnseenActivities} from "../../providers/reducers/user.reducer";
 import {PublicationWritingPage} from "../publication-writing/publication-writing";
 import {AccountPage} from "../account/account";
 

@@ -39,17 +39,17 @@ export class PlaceSelectingPage {
   confirmSave() {
     if(Boolean(this.publicationId)){
       let confirm = this.alertCtrl.create({
-        title: 'Confirmar operación',
-        message: '¿Está seguro que desea guardar la ubicación?',
+        title: this.commons.translate(['confirmOperation']),
+        message: this.commons.translate(['confirmSavePlace']),
         buttons: [
           {
-            text: 'Aceptar',
+            text: this.commons.translate(['accept']),
             handler: () => {
               this.updatePlace();
             }
           },
           {
-            text: 'Cancelar',
+            text: this.commons.translate(['cancel']),
             handler: () => {
             }
           }

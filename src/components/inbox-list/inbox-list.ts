@@ -108,7 +108,6 @@ export class InboxListComponent {
           }
         }
         else{
-          sessionStorage.setItem("newInbox", JSON.stringify(newInbox));
           this.storage.createInbox(newInbox).subscribe((createdInbox)=>{
             this.storage.getInbox(createdInbox._id).subscribe((inbox)=>{
               let socket = new Socket({url: StorageProvider.baseUrl.replace('/api/','')});

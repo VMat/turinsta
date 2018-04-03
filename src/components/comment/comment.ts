@@ -31,17 +31,17 @@ export class CommentComponent{
 
   confirmDelete(){
     let confirm = this.alertCtrl.create({
-      title: 'Confirmar operación',
-      message: '¿Está seguro que desea borrar el comentario?',
+      title: this.commonsService.translate(['confirmOperation']),
+      message: this.commonsService.translate(['confirmDeleteComment']),
       buttons: [
         {
-          text: 'Aceptar',
+          text: this.commonsService.translate(['accept']),
           handler: () => {
             this.deleteComment();
           }
         },
         {
-          text: 'Cancelar',
+          text: this.commonsService.translate(['cancel']),
           handler: () => {
           }
         }

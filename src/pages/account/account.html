@@ -27,11 +27,13 @@
   <div [ngSwitch]="show.section" padding>
     <ion-list *ngSwitchCase="'PUBLICATIONS'">
       <publication-resume *ngFor="let publication of publications" [publication]="publication" (openPublication)="openPublication($event)"></publication-resume>
-      <empty-content *ngIf="!publications.length" [message]="'No tienes publicaciones, crea una!'"></empty-content>
+      <empty-content *ngIf="!publications.length && user._id==loggedUser" [message]="getCaption('ownPublicationListEmpty')"></empty-content>
+      <empty-content *ngIf="!publications.length && user._id!=loggedUser" [message]="getCaption('foreignPublicationListEmpty')"></empty-content>
     </ion-list>
     <ion-list *ngSwitchCase="'FAVORITES'">
       <publication-resume *ngFor="let favorite of favorites" [publication]="favorite" (openPublication)="openPublication($event)"></publication-resume>
-      <empty-content *ngIf="!favorites.length" [message]="'No tienes favoritos, agrega uno!'"></empty-content>
+      <empty-content *ngIf="!favorites.length && user._id==loggedUser" [message]="getCaption('ownFavoriteListEmpty')"></empty-content>
+      <empty-content *ngIf="!favorites.length && user._id!=loggedUser" [message]="getCaption('foreignFavoriteListEmpty')"></empty-content>
     </ion-list>
   </div>
 </ion-content>

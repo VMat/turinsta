@@ -35,17 +35,17 @@ export class CommentWritingPage {
 
   confirmSave() {
     let confirm = this.alertCtrl.create({
-      title: 'Confirmar operación',
-      message: '¿Está seguro que desea guardar el comentario?',
+      title: this.commons.translate(["confirmOperation"]),
+      message: this.commons.translate(["confirmSaveComment"]),
       buttons: [
         {
-          text: 'Aceptar',
+          text: this.commons.translate(['accept']),
           handler: () => {
             this.saveComment();
           }
         },
         {
-          text: 'Cancelar',
+          text: this.commons.translate(['cancel']),
           handler: () => {
           }
         }

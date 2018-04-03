@@ -64,7 +64,7 @@ export class ChatPage {
 
       this.isWriting().subscribe((data)=>{
         let targetUser = this.chat.participants.filter((user)=>{return user._id == data["user"]});
-        this.chatInfo = targetUser[0].username + " está escribiendo";
+        this.chatInfo = this.commons.translate(["isWriting"],{":user": targetUser[0].username});
       });
 
       this.leftWriting().subscribe((data)=>{
@@ -101,7 +101,7 @@ export class ChatPage {
     if(targetUser.length>0){
       return targetUser[0].username;
     }
-    return "Usuario que dejó el grupo";
+    return this.commons.translate(["unknownUser"]);
   }
 
   updateMessageStatus(status){

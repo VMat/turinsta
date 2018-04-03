@@ -36,17 +36,17 @@ export class DescriptionWritingPage {
   confirmSave() {
     if(Boolean(this.publicationId)){
       let confirm = this.alertCtrl.create({
-        title: 'Confirmar operación',
-        message: '¿Está seguro que desea modificar la descripción?',
+        title: this.commons.translate(['confirmOperation']),
+        message: this.commons.translate(['confirmEditDescription']),
         buttons: [
           {
-            text: 'Aceptar',
+            text: this.commons.translate(['accept']),
             handler: () => {
               this.saveDescription();
             }
           },
           {
-            text: 'Cancelar',
+            text: this.commons.translate(['cancel']),
             handler: () => {
             }
           }

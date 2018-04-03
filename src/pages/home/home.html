@@ -25,7 +25,7 @@
         <ion-infinite-scroll (ionInfinite)="doInfinite($event)">
           <ion-infinite-scroll-content
             loadingSpinner="bubbles"
-            loadingText="Obteniendo más información...">
+            loadingText="{{getCaption('gettingMoreInformation')}}">
           </ion-infinite-scroll-content>
         </ion-infinite-scroll>
       </ion-content>
@@ -33,7 +33,7 @@
     <ion-slide>
       <ion-header>
         <ion-navbar>
-          <ion-title>Chats</ion-title>
+          <ion-title>{{getCaption('chats')}}</ion-title>
         </ion-navbar>
       </ion-header>
       <ion-content>

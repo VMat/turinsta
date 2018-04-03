@@ -25,17 +25,17 @@ export class ExperienceComponent {
 
   confirmDelete(){
     let confirm = this.alertCtrl.create({
-      title: 'Confirmar operación',
-      message: '¿Está seguro que desea borrar la experiencia?',
+      title: this.commonsService.translate(['confirmOperation']),
+      message: this.commonsService.translate(['confirmDeleteExperience']),
       buttons: [
         {
-          text: 'Aceptar',
+          text: this.commonsService.translate(['accept']),
           handler: () => {
             this.removeExperience();
           }
         },
         {
-          text: 'Cancelar',
+          text: this.commonsService.translate(['cancel']),
           handler: () => {
           }
         }

@@ -1,4 +1,4 @@
-import {Component, Input, ViewChild, Output, EventEmitter} from '@angular/core';
+import {Component, Input, ViewChild} from '@angular/core';
 import {Slides} from "ionic-angular";
 import {CommonsProvider} from "../../providers/commons/commons";
 

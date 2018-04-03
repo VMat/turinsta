@@ -43,17 +43,17 @@ export class ChatActionsMenuPage {
 
   confirmLeaveChat(){
     let confirm = this.alertCtrl.create({
-      title: 'Confirmar operación',
-      message: '¿Está seguro que desea salir del grupo?',
+      title: this.commons.translate(['confirmOperation']),
+      message: this.commons.translate(['confirmLeaveGroup']),
       buttons: [
         {
-          text: 'Aceptar',
+          text: this.commons.translate(['accept']),
           handler: () => {
             this.leaveChat();
           }
         },
         {
-          text: 'Cancelar',
+          text: this.commons.translate(['cancel']),
           handler: () => {
           }
         }
@@ -81,17 +81,17 @@ export class ChatActionsMenuPage {
 
   confirmDeleteChat(){
     let confirm = this.alertCtrl.create({
-      title: 'Confirmar operación',
-      message: '¿Está seguro que desea borrar el chat?',
+      title: this.commons.translate(['confirmOperation']),
+      message: this.commons.translate(['confirmDeleteChat']),
       buttons: [
         {
-          text: 'Aceptar',
+          text: this.commons.translate(['accept']),
           handler: () => {
             this.deleteChat();
           }
         },
         {
-          text: 'Cancelar',
+          text: this.commons.translate(['cancel']),
           handler: () => {
           }
         }

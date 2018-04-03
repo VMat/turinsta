@@ -12,11 +12,8 @@ import { Component } from '@angular/core';
 })
 export class FiltersBarComponent {
 
-  text: string;
-
   constructor() {
     console.log('Hello FiltersBarComponent Component');
-    this.text = 'Hello World';
   }
 
 }

@@ -155,17 +155,17 @@ export class InboxWritingPage {
       let confirm = null;
       if(this.inbox){
         confirm = this.alertCtrl.create({
-          title: 'Confirmar operación',
-          message: '¿Está seguro que desea modificar el grupo?',
+          title: this.commons.translate(['confirmOperation']),
+          message: this.commons.translate(['confirmEditGroup']),
           buttons: [
             {
-              text: 'Aceptar',
+              text: this.commons.translate(['accept']),
               handler: () => {
                 this.saveInbox();
               }
             },
             {
-              text: 'Cancelar',
+              text: this.commons.translate(['cancel']),
               handler: () => {
               }
             }
@@ -174,17 +174,17 @@ export class InboxWritingPage {
       }
       else{
         confirm = this.alertCtrl.create({
-          title: 'Confirmar operación',
-          message: '¿Está seguro que desea crear el grupo?',
+          title: this.commons.translate(['confirmOperation']),
+          message: this.commons.translate(['confirmSaveGroup']),
           buttons: [
             {
-              text: 'Aceptar',
+              text: this.commons.translate(['accept']),
               handler: () => {
                 this.saveInbox();
               }
             },
             {
-              text: 'Cancelar',
+              text: this.commons.translate(['cancel']),
               handler: () => {
               }
             }
@@ -197,7 +197,7 @@ export class InboxWritingPage {
 
   saveInbox(){
     let loader = this.loadingCtrl.create({
-      content: "Actualizando grupo...",
+      content: this.commons.translate(['updatingGroup']),
       cssClass: "fullscreen-loading"
     });
     loader.present();

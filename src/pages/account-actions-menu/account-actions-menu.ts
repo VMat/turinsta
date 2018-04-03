@@ -140,7 +140,7 @@ export class AccountActionsMenuPage {
           return false;
         }
         let loader = this.loadingCtrl.create({
-          content: "Subiendo imágenes..."
+          content: this.commons.translate(['uploadingImages'])
         });
         loader.present();
         this.uploadPics(file_uris)

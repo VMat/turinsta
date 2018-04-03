@@ -5,6 +5,7 @@ import {Observable} from "rxjs";
 import {Store} from "@ngrx/store";
 import {getPublications, incrementPublicationRange} from "../../providers/reducers/publication.reducer";
 import {PublicationWritingPage} from "../publication-writing/publication-writing";
+import {CommonsProvider} from "../../providers/commons/commons";
 
 @Component({
   selector: 'page-home',
@@ -18,7 +19,7 @@ export class HomePage{
   updateInboxes: boolean = true;
   @ViewChild(Slides) slides: Slides;
 
-  constructor(public storageService:StorageProvider, public navCtrl: NavController, private store: Store<any>, private modalCtrl: ModalController) {
+  constructor(public storageService:StorageProvider, public navCtrl: NavController, private store: Store<any>, private modalCtrl: ModalController, private commons: CommonsProvider) {
     this.store.dispatch(getPublications());
     this.publications = store.select("publications");
     this.store.select("user","unreadMessages").subscribe((unreadMessages)=>{
@@ -47,5 +48,9 @@ export class HomePage{
     setTimeout(()=>{
       event.complete();
     },2000)
+  }
+
+  getCaption(captionKey){
+    return this.commons.translate([captionKey]);
   }
 }

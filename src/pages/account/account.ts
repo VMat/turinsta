@@ -24,6 +24,7 @@ export class AccountPage {
   PUBLICATION_LIMIT = 50;
   FAVORITE_LIMIT = 50;
   user :any = null;
+  loggedUser: string = null;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private storage: StorageProvider, private commons: CommonsProvider, private modalCtrl: ModalController){
   }
@@ -44,6 +45,7 @@ export class AccountPage {
     this.PUBLICATION_LIMIT = 50;
     this.FAVORITE_LIMIT = 50;
     this.getUser();
+    this.loggedUser = this.commons.getUserId();
   }
 
   getUser(){

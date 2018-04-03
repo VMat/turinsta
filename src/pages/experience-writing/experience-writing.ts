@@ -42,17 +42,17 @@ export class ExperienceWritingPage {
 
   confirmSave() {
     let confirm = this.alertCtrl.create({
-      title: 'Confirmar operación',
-      message: '¿Está seguro que desea guardar la experiencia?',
+      title: this.commons.translate(['confirmOperation']),
+      message: this.commons.translate(['confirmSaveExperience']),
       buttons: [
         {
-          text: 'Aceptar',
+          text: this.commons.translate(['accept']),
           handler: () => {
             this.saveExperience();
           }
         },
         {
-          text: 'Cancelar',
+          text: this.commons.translate(['cancel']),
           handler: () => {
           }
         }
