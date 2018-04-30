@@ -24,6 +24,7 @@ PlaceInterface.getN = (params)=>{
     },
     {
       $group: {
+        _id: "$_id",
         place: { $first : "$$ROOT"}
         // user: {
         //   $first: "$userData"
