@@ -19,7 +19,7 @@ PlaceInterface.insert = (publication)=>{
         places[0].publications.push(publication._id);
         return Commons.update(Places, places[0]);
       }
-      return Commons.insert(new Places({name: publication.places[0].name, googlePlacesId: publication.places[0].place_id, publications: [publication._id]}))
+      return Commons.insert(new Places({... publication.places[0], publications: [publication._id]}))
     })
 };
 
