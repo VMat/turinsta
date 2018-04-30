@@ -1739,8 +1739,9 @@ var PlacesPage = (function () {
                 searchParams.push({ key: "places.publications.user", value: _this.navParams.data.user, operation: "EQUAL" });
             }
             _this.storage.getPlaces(searchParams).subscribe(function (places) {
+                console.log("placesss", places);
                 var mapLoaded = _this.maps.init(_this.mapElement.nativeElement, _this.pleaseConnect.nativeElement).then(function (map) {
-                    _this.mapCluster.addCluster(map, places);
+                    _this.mapCluster.addCluster(map, places.map(function (place) { return place.place; }));
                 });
             });
         });

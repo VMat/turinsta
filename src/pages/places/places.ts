@@ -40,8 +40,9 @@ export class PlacesPage {
       }
 
       this.storage.getPlaces(searchParams).subscribe((places)=>{
+        console.log("placesss",places);
         let mapLoaded = this.maps.init(this.mapElement.nativeElement, this.pleaseConnect.nativeElement).then((map) => {
-          this.mapCluster.addCluster(map,places);
+          this.mapCluster.addCluster(map,places.map((place)=>{return place.place}));
         })
       });
 
