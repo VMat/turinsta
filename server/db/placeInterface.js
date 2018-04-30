@@ -17,12 +17,6 @@ PlaceInterface.getN = (params)=>{
       }
     },
     {
-      $unwind: {
-        path: "$publicationData",
-        preserveNullAndEmptyArrays: true
-      }
-    },
-    {
       $group: {
         _id: "$_id",
         place: { $first : "$$ROOT"},
