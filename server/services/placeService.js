@@ -11,9 +11,9 @@ placeService.autoCompletePlace = (placeInput)=>{
   })
 };
 
-placeService.searchPlace = (placeInput)=>{
+placeService.getPlaceDetails = (placeId)=>{
   return new Promise((resolve, reject)=>{
-    GooglePlacesService.searchPlace(placeInput).
+    GooglePlacesService.placeDetailsRequest(placeId).
     then(places=>resolve(places)).
     catch(error=>reject(error))
   })

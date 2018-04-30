@@ -23,10 +23,10 @@ GooglePlacesService.autoCompletePlace = (searchInput) => {
 
 };
 
-GooglePlacesService.searchPlace = (placeId) => {
+GooglePlacesService.placeDetailsRequest = (placeId) => {
 
   return new Promise((resolve, reject) => {
-    googlePlacesMethods.placeSearch(placeId, (error, response)=>{
+    googlePlacesMethods.placeDetailsRequest(placeId, (error, response)=>{
       if(error){
         reject(error);
       }

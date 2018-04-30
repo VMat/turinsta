@@ -220,10 +220,10 @@ export class StorageProvider {
       .map((res: Response) => res.json());
   }
 
-  searchPlace(placeId){
+  getPlaceDetails(placeId){
     let params = new URLSearchParams();
     params.set("placeId", placeId);
-    return this.http.get(StorageProvider.baseUrl + 'places/search', {params: params, headers: StorageProvider.headers})
+    return this.http.get(StorageProvider.baseUrl + 'places/details', {params: params, headers: StorageProvider.headers})
       .map((res: Response) => res.json());
   }
 

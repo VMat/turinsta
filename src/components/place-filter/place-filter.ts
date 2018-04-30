@@ -34,7 +34,7 @@ export class PlaceFilterComponent {
       this.searchInput = {place_id: this.places[this.placeFilter].place_id, name: this.places[this.placeFilter].description};
       this.showAutocomplete = false;
       if(this.placeSelecting){
-        this.storageService.searchPlace(this.searchInput.place_id).subscribe((place)=>{
+        this.storageService.getPlaceDetails(this.searchInput.place_id).subscribe((place)=>{
           console.log(place);
           this.placeSelected.emit(this.searchInput);
         });

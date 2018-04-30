@@ -7,8 +7,8 @@ router.get('/autoComplete',(req, res)=>{
     .catch(error=>{res.status(500).send(error)})
 });
 
-router.get('/search',(req, res)=>{
-  placeService.searchPlace(req.query)
+router.get('/details',(req, res)=>{
+  placeService.getPlaceDetails(req.query.placeId)
     .then(places=>{res.status(200).json(places)})
     .catch(error=>{res.status(500).send(error)})
 });

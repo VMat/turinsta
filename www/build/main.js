@@ -837,10 +837,10 @@ var StorageProvider = StorageProvider_1 = (function () {
         return this.http.get(StorageProvider_1.baseUrl + 'places/autoComplete', { params: params, headers: StorageProvider_1.headers })
             .map(function (res) { return res.json(); });
     };
-    StorageProvider.prototype.searchPlace = function (placeId) {
+    StorageProvider.prototype.getPlaceDetails = function (placeId) {
         var params = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["d" /* URLSearchParams */]();
         params.set("placeId", placeId);
-        return this.http.get(StorageProvider_1.baseUrl + 'places/search', { params: params, headers: StorageProvider_1.headers })
+        return this.http.get(StorageProvider_1.baseUrl + 'places/details', { params: params, headers: StorageProvider_1.headers })
             .map(function (res) { return res.json(); });
     };
     StorageProvider.prototype.createComplaint = function (complaint) {
