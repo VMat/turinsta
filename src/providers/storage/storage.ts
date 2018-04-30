@@ -227,11 +227,11 @@ export class StorageProvider {
       .map((res: Response) => res.json());
   }
 
-  getPlaces(searchParam){
+  getPlaces(filters){
     let params = new URLSearchParams();
-    for(let i in searchParam){
-      params.set(i, searchParam[i]);
-    }
+    filters.forEach((filter)=>{
+      params.set(filter.key, JSON.stringify({value: filter.value, operation: filter.operation}));
+    });
 
     return this.http.get(StorageProvider.baseUrl + 'places', {params: params, headers: StorageProvider.headers})
       .map((res: Response) => res.json());

@@ -29,7 +29,15 @@ export class PlacesPage {
 
     this.platform.ready().then(() => {
 
-      let searchParams = this.navParams.data ? this.navParams.data : {};
+      let searchParams = [];
+
+      if(this.navParams.data.publication){
+        searchParams.push({key: "places.publications", value: this.navParams.data.publication, operation: "CONTAINS"})
+      }
+
+      if(this.navParams.data.user){
+        searchParams.push({key: "places.publications.user", value: this.navParams.data.user, operation: "EQUAL"})
+      }
 
       this.storage.getPlaces(searchParams).subscribe((places)=>{
         let mapLoaded = this.maps.init(this.mapElement.nativeElement, this.pleaseConnect.nativeElement).then((map) => {

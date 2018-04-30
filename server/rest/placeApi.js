@@ -14,7 +14,12 @@ router.get('/details',(req, res)=>{
 });
 
 router.get('/',(req, res)=>{
-  placeService.getPlaces(req.query)
+  let rowSearchParams = JSON.parse(decodeURI(JSON.stringify(req.query)));
+  let searchParams = {};
+  for(let i in rowSearchParams){
+    searchParams[i] = JSON.parse(rowSearchParams[i]);
+  }
+  placeService.getPlaces(searchParams)
     .then(places=>{res.status(200).json(places)})
     .catch(error=>{res.status(500).send(error)})
 });

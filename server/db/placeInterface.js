@@ -1,11 +1,43 @@
 const Publications = require('../models/publication');
 const Places = require('../models/place');
+const Users = require('../models/user');
 const Commons = require('./commons');
 
 let PlaceInterface = {};
 
 PlaceInterface.getN = (params)=>{
-  return Commons.getN(Places,params);
+  let filters = Commons.processAggregateParams(params);
+  return Places.aggregate([
+    {
+      $lookup: {
+        from: "Publications",
+        localField: "publications",
+        foreignField: "_id",
+        as: "publications"
+      }
+    },
+    {
+      $lookup: {
+        from: "Users",
+        localField: "publications.user",
+        foreignField: "_id",
+        as: "publications.user"
+      }
+    },
+    {
+      $group: {
+        _id: "$_id",
+        place: { $first : "$$ROOT"}
+        // user: {
+        //   $first: "$userData"
+        // },
+        // experiences: {
+        //   $addToSet: "$experiences"
+        // },
+      }
+    },
+    ...filters
+  ]).exec();
 };
 
 PlaceInterface.getOne = (id)=>{

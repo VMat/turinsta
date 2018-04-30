@@ -843,11 +843,11 @@ var StorageProvider = StorageProvider_1 = (function () {
         return this.http.get(StorageProvider_1.baseUrl + 'places/details', { params: params, headers: StorageProvider_1.headers })
             .map(function (res) { return res.json(); });
     };
-    StorageProvider.prototype.getPlaces = function (searchParam) {
+    StorageProvider.prototype.getPlaces = function (filters) {
         var params = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["d" /* URLSearchParams */]();
-        for (var i in searchParam) {
-            params.set(i, searchParam[i]);
-        }
+        filters.forEach(function (filter) {
+            params.set(filter.key, JSON.stringify({ value: filter.value, operation: filter.operation }));
+        });
         return this.http.get(StorageProvider_1.baseUrl + 'places', { params: params, headers: StorageProvider_1.headers })
             .map(function (res) { return res.json(); });
     };
@@ -1731,7 +1731,13 @@ var PlacesPage = (function () {
     PlacesPage.prototype.ionViewDidLoad = function () {
         var _this = this;
         this.platform.ready().then(function () {
-            var searchParams = _this.navParams.data ? _this.navParams.data : {};
+            var searchParams = [];
+            if (_this.navParams.data.publication) {
+                searchParams.push({ key: "places.publications", value: _this.navParams.data.publication, operation: "CONTAINS" });
+            }
+            if (_this.navParams.data.user) {
+                searchParams.push({ key: "places.publications.user", value: _this.navParams.data.user, operation: "EQUAL" });
+            }
             _this.storage.getPlaces(searchParams).subscribe(function (places) {
                 var mapLoaded = _this.maps.init(_this.mapElement.nativeElement, _this.pleaseConnect.nativeElement).then(function (map) {
                     _this.mapCluster.addCluster(map, places);
