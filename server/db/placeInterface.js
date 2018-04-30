@@ -25,12 +25,12 @@ PlaceInterface.getN = (params)=>{
     {
       $group: {
         _id: "$_id",
-        place: { $first : "$$ROOT"}
+        place: { $first : "$$ROOT"},
+        publications: {
+          $addToSet: "$publications"
+        },
         // user: {
         //   $first: "$userData"
-        // },
-        // experiences: {
-        //   $addToSet: "$experiences"
         // },
       }
     },
