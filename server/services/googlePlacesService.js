@@ -4,7 +4,7 @@ const googlePlacesMethods = googlePlaces(googleApiKey,"json"); // GET METHODS
 
 let GooglePlacesService = {};
 
-GooglePlacesService.searchPlace = (searchInput) => {
+GooglePlacesService.autoCompletePlace = (searchInput) => {
 
   // let parameters = {
   //   input: 'sydney lyr'
@@ -12,6 +12,21 @@ GooglePlacesService.searchPlace = (searchInput) => {
 
   return new Promise((resolve, reject) => {
     googlePlacesMethods.placeAutocomplete(searchInput, (error, response)=>{
+      if(error){
+        reject(error);
+      }
+      else{
+        resolve(response);
+      }
+    });
+  });
+
+};
+
+GooglePlacesService.searchPlace = (placeId) => {
+
+  return new Promise((resolve, reject) => {
+    googlePlacesMethods.placeSearch(placeId, (error, response)=>{
       if(error){
         reject(error);
       }

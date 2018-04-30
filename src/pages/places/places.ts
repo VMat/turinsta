@@ -1,5 +1,7 @@
-import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import {Component, ViewChild, ElementRef} from '@angular/core';
+import {IonicPage, NavController, NavParams, Platform} from 'ionic-angular';
+import {GoogleMapsProvider} from "../../providers/google-maps/google-maps";
+import {GoogleMapsClusterProvider} from "../../providers/google-maps-cluster/google-maps-cluster";
 
 /**
  * Generated class for the PlacesPage page.
@@ -15,11 +17,21 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 })
 export class PlacesPage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  @ViewChild('map') mapElement: ElementRef;
+  @ViewChild('pleaseConnect') pleaseConnect: ElementRef;
+
+  constructor(public navCtrl: NavController, public navParams: NavParams, public platform: Platform, public maps: GoogleMapsProvider, public mapCluster: GoogleMapsClusterProvider) {
+
   }
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad PlacesPage');
-  }
+  ionViewDidLoad(): void {
 
+    this.platform.ready().then(() => {
+
+      let mapLoaded = this.maps.init(this.mapElement.nativeElement, this.pleaseConnect.nativeElement).then((map) => {
+        this.mapCluster.addCluster(map);
+      })
+    });
+
+  }
 }

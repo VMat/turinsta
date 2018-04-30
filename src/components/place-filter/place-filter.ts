@@ -34,7 +34,10 @@ export class PlaceFilterComponent {
       this.searchInput = {place_id: this.places[this.placeFilter].place_id, name: this.places[this.placeFilter].description};
       this.showAutocomplete = false;
       if(this.placeSelecting){
-        this.placeSelected.emit(this.searchInput);
+        this.storageService.searchPlace(this.searchInput.place_id).subscribe((place)=>{
+          console.log(place);
+          this.placeSelected.emit(this.searchInput);
+        });
       }
       else{
         this.store.dispatch(addFilter({key:"publication.places.place_id", value: this.places[this.placeFilter].place_id, operation: "EQUAL"}));
@@ -44,8 +47,9 @@ export class PlaceFilterComponent {
 
   onSearchInput(event){
     if(this.searchInput.name != null ? (this.searchInput.name.trim()).length >=3: false){
-      this.storageService.searchPlace(this.searchInput.name).subscribe((places)=>{
+      this.storageService.autoCompletePlace(this.searchInput.name).subscribe((places)=>{
         this.places = places.predictions;
+        console.log(places.predictions);
         setTimeout(() => {
           if(this.select._options.length){
             this.placeFilter = null;

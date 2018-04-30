@@ -109,4 +109,5 @@
         <variable name="FCM_VERSION" value="11.6.2" />
     </plugin>
     <plugin name="cordova-plugin-badge" spec="^0.8.7" />
+    <plugin name="cordova-plugin-geolocation" spec="^4.0.1" />
 </widget>

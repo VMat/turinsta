@@ -3,6 +3,14 @@ const GooglePlacesService = require('./googlePlacesService');
 
 let placeService = {};
 
+placeService.autoCompletePlace = (placeInput)=>{
+  return new Promise((resolve, reject)=>{
+    GooglePlacesService.autocompletePlace(placeInput).
+    then(places=>resolve(places)).
+    catch(error=>reject(error))
+  })
+};
+
 placeService.searchPlace = (placeInput)=>{
   return new Promise((resolve, reject)=>{
     GooglePlacesService.searchPlace(placeInput).

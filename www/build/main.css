@@ -39981,6 +39981,33 @@ page-my-emoji-picker button {
   overflow: hidden !important;
 }
 
+page-places #please-connect {
+  position: absolute;
+  background-color: #000;
+  opacity: 0.5;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+}
+
+page-places #please-connect p {
+  color: #fff;
+  font-weight: bold;
+  text-align: center;
+  position: relative;
+  font-size: 1.6em;
+  top: 30%;
+}
+
+page-places .scroll {
+  height: 100%;
+}
+
+page-places #map {
+  width: 100%;
+  height: 100%;
+}
+
 page-publication-actions-menu ion-item {
   cursor: pointer;
 }

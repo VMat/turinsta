@@ -1,6 +1,12 @@
 const router = require('express').Router();
 const placeService = require('../services/placeService');
 
+router.get('/autoComplete',(req, res)=>{
+  placeService.autoCompletePlace(req.query)
+    .then(places=>{res.status(200).json(places)})
+    .catch(error=>{res.status(500).send(error)})
+});
+
 router.get('/search',(req, res)=>{
   placeService.searchPlace(req.query)
     .then(places=>{res.status(200).json(places)})

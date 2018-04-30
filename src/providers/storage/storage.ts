@@ -213,9 +213,16 @@ export class StorageProvider {
       .map((res: Response) => res.json());
   }
 
-  searchPlace(searchInput){
+  autoCompletePlace(searchInput){
     let params = new URLSearchParams();
     params.set("input", searchInput);
+    return this.http.get(StorageProvider.baseUrl + 'places/autoComplete', {params: params, headers: StorageProvider.headers})
+      .map((res: Response) => res.json());
+  }
+
+  searchPlace(placeId){
+    let params = new URLSearchParams();
+    params.set("placeId", placeId);
     return this.http.get(StorageProvider.baseUrl + 'places/search', {params: params, headers: StorageProvider.headers})
       .map((res: Response) => res.json());
   }

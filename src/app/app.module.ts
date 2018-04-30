@@ -69,6 +69,11 @@ import {PublicationResumeComponent} from "../components/publication-resume/publi
 import {AccountActionsComponent} from "../components/account-actions/account-actions";
 import {AccountActionsMenuPage} from "../pages/account-actions-menu/account-actions-menu";
 import {UsernameWritingPage} from "../pages/username-writing/username-writing";
+import { GoogleMapsProvider } from '../providers/google-maps/google-maps';
+import { ConnectivityProvider } from '../providers/connectivity/connectivity';
+import { GoogleMapsClusterProvider } from '../providers/google-maps-cluster/google-maps-cluster';
+import {Network} from "@ionic-native/network";
+import {Geolocation} from "@ionic-native/geolocation";
 
 @NgModule({
   declarations: [
@@ -172,7 +177,12 @@ import {UsernameWritingPage} from "../pages/username-writing/username-writing";
     File,
     NotificationProvider,
     Push,
-    Badge
+    Badge,
+    GoogleMapsProvider,
+    ConnectivityProvider,
+    GoogleMapsClusterProvider,
+    Network,
+    Geolocation
   ]
 })
 export class AppModule {}
