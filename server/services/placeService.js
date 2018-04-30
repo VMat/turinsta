@@ -5,7 +5,7 @@ let placeService = {};
 
 placeService.autoCompletePlace = (placeInput)=>{
   return new Promise((resolve, reject)=>{
-    GooglePlacesService.autocompletePlace(placeInput).
+    GooglePlacesService.autoCompletePlace(placeInput).
     then(places=>resolve(places)).
     catch(error=>reject(error))
   })
