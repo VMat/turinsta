@@ -1732,12 +1732,14 @@ var PlacesPage = (function () {
         var _this = this;
         this.platform.ready().then(function () {
             var searchParams = [];
-            if (_this.navParams.data.publication) {
-                searchParams.push({ key: "places.publications", value: _this.navParams.data.publication, operation: "CONTAINS" });
-            }
-            if (_this.navParams.data.user) {
-                searchParams.push({ key: "places.publications.user", value: _this.navParams.data.user, operation: "EQUAL" });
-            }
+            // if(this.navParams.data.publication){
+            // searchParams.push({key: "place.publications", value: this.navParams.data.publication, operation: "CONTAINS"})
+            searchParams.push({ key: "place.publications", value: "5ab19a0e51b5d70014b0c40a", operation: "CONTAINS" });
+            // }
+            // if(this.navParams.data.user){
+            //   searchParams.push({key: "place.publications.user", value: this.navParams.data.user, operation: "EQUAL"})
+            //   searchParams.push({key: "place.publications.user", value: "59f7588ef36d282363087491", operation: "EQUAL"})
+            // }
             _this.storage.getPlaces(searchParams).subscribe(function (places) {
                 console.log("placesss", places);
                 var mapLoaded = _this.maps.init(_this.mapElement.nativeElement, _this.pleaseConnect.nativeElement).then(function (map) {
