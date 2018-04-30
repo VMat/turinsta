@@ -13,7 +13,7 @@ PlaceInterface.getOne = (id)=>{
 };
 
 PlaceInterface.insert = (publication)=>{
-  return Commons.getN(Places,{googlePlacesId: publication.places[0].place_id},1)
+  return Commons.getN(Places,{place_id: publication.places[0].place_id},1)
     .then((places)=>{
       if(places.length>0){
         places[0].publications.push(publication._id);
