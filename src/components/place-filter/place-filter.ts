@@ -36,7 +36,7 @@ export class PlaceFilterComponent {
       if(this.placeSelecting){
         this.storageService.getPlaceDetails(this.searchInput.place_id).subscribe((place)=>{
           console.log("place details", place);
-          this.placeSelected.emit(this.searchInput);
+          this.placeSelected.emit({...this.searchInput, location: place.result.geometry.location});
         });
       }
       else{

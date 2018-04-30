@@ -5,6 +5,7 @@ const Schema = mongoose.Schema;
 const placeSchema = new Schema({
   name: String,
   googlePlacesId: String,
+  location: {lat: Number, lng: Number},
   publications:[{type: Schema.Types.ObjectId, ref: 'Publications'}]
 });
 
