@@ -222,7 +222,7 @@ export class StorageProvider {
 
   getPlaceDetails(placeId){
     let params = new URLSearchParams();
-    params.set("placeId", placeId);
+    params.set("placeid", placeId);
     return this.http.get(StorageProvider.baseUrl + 'places/details', {params: params, headers: StorageProvider.headers})
       .map((res: Response) => res.json());
   }

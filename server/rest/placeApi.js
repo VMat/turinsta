@@ -8,7 +8,7 @@ router.get('/autoComplete',(req, res)=>{
 });
 
 router.get('/details',(req, res)=>{
-  placeService.getPlaceDetails(req.query.placeId)
+  placeService.getPlaceDetails(req.query)
     .then(places=>{res.status(200).json(places)})
     .catch(error=>{res.status(500).send(error)})
 });
