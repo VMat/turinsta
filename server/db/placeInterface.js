@@ -13,12 +13,12 @@ PlaceInterface.getN = (params)=>{
         from: "Publications",
         localField: "publications",
         foreignField: "_id",
-        as: "publications"
+        as: "publicationData"
       }
     },
     {
       $unwind: {
-        path: "$publications",
+        path: "$publicationData",
         preserveNullAndEmptyArrays: true
       }
     },
@@ -27,8 +27,8 @@ PlaceInterface.getN = (params)=>{
         _id: "$_id",
         place: { $first : "$$ROOT"},
         publications: {
-          $addToSet: "$publications"
-        },
+          $addToSet: "$publicationData"
+        }
         // user: {
         //   $first: "$userData"
         // },
