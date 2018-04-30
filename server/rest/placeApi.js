@@ -14,7 +14,7 @@ router.get('/details',(req, res)=>{
 });
 
 router.get('/',(req, res)=>{
-  placeService.getPlaces()
+  placeService.getPlaces(req.query)
     .then(places=>{res.status(200).json(places)})
     .catch(error=>{res.status(500).send(error)})
 });

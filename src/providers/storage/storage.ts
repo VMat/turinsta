@@ -227,6 +227,16 @@ export class StorageProvider {
       .map((res: Response) => res.json());
   }
 
+  getPlaces(searchParam){
+    let params = new URLSearchParams();
+    for(let i in searchParam){
+      params.set(i, searchParam[i]);
+    }
+
+    return this.http.get(StorageProvider.baseUrl + 'places', {params: params, headers: StorageProvider.headers})
+      .map((res: Response) => res.json());
+  }
+
   createComplaint(complaint){
     return this.http.post(StorageProvider.baseUrl + 'complaints/',complaint,{headers: StorageProvider.headers})
       .map((res: Response) => res.json());

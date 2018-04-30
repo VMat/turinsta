@@ -4,8 +4,8 @@ const Commons = require('./commons');
 
 let PlaceInterface = {};
 
-PlaceInterface.getAll = ()=>{
-  return Commons.getAll(Places);
+PlaceInterface.getN = (params)=>{
+  return Commons.getN(Places,params);
 };
 
 PlaceInterface.getOne = (id)=>{

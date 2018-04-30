@@ -19,9 +19,9 @@ placeService.getPlaceDetails = (placeId)=>{
   })
 };
 
-placeService.getPlaces = ()=>{
+placeService.getPlaces = (params)=>{
   return new Promise((resolve, reject)=>{
-    storageService.getPlaces().
+    storageService.getPlaces(params).
     then(places=>resolve(places)).
     catch(error=>reject(error))
   })

@@ -206,8 +206,8 @@ storageService.changeMessageStatus = (id,messageId,userId,status)=>{
   return db.changeMessageStatus(id,messageId,userId,status);
 };
 
-storageService.getPlaces = ()=>{
-  return db.getPlaces();
+storageService.getPlaces = (params)=>{
+  return db.getPlaces(params);
 };
 
 storageService.getPlace = (id)=>{

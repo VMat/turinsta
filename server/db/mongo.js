@@ -1221,8 +1221,8 @@ db.changeMessageStatus = (id,messageId,userId,status)=>{
   return inboxInterface.changeMessageStatus(id,messageId,userId,status);
 };
 
-db.getPlaces = ()=>{
-  return placeInterface.getAll();
+db.getPlaces = (params)=>{
+  return placeInterface.getN(params);
 };
 
 db.getPlace = (id)=>{
