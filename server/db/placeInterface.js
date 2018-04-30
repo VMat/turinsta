@@ -18,7 +18,7 @@ PlaceInterface.getN = (params)=>{
     },
     {
       $unwind: {
-        path: "$place.publications",
+        path: "$publications",
         preserveNullAndEmptyArrays: true
       }
     },
