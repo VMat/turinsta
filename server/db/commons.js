@@ -92,12 +92,7 @@ Commons.processAggregateParams = (params) => {
     switch(params[i].operation){
 
         case 'EQUAL':{
-          if(i=='_id'){
-            filters.push({$match: {[i]: mongoose.Types.ObjectId(params[i].value)}});
-          }
-          else{
-            filters.push({$match: {[i]: mongoose.Types.ObjectId(params[i].value)}});
-          }
+          filters.push({$match: {[i]: mongoose.Types.ObjectId(params[i].value)}});
           break;
         }
         case 'LIKE':{
@@ -121,7 +116,7 @@ Commons.processAggregateParams = (params) => {
           break;
         }
         case 'CONTAINS':{
-          filters.push({$match: {[i]: {$elemMatch: {$eq: mongoose.Types.ObjectId(params[i].value)}}}});
+          filters.push({$match: {[i]: {$elemMatch: {$eq: params[i].value}}}});
           break;
         }
     }

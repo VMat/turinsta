@@ -1738,7 +1738,7 @@ var PlacesPage = (function () {
             // }
             // if(this.navParams.data.user){
             //   searchParams.push({key: "place.publications.user", value: this.navParams.data.user, operation: "EQUAL"})
-            //   searchParams.push({key: "place.publications.user", value: "59f7588ef36d282363087491", operation: "EQUAL"})
+            //   searchParams.push({key: "place.publications.user", value: "59f7588ef36d282363087491", operation: "EQUAL"});
             // }
             _this.storage.getPlaces(searchParams).subscribe(function (places) {
                 console.log("placesss", places);
