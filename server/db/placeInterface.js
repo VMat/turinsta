@@ -13,19 +13,13 @@ PlaceInterface.getN = (params)=>{
         from: "Publications",
         localField: "publications",
         foreignField: "_id",
-        as: "publicationData"
+        as: "publications"
       }
     },
     {
       $group: {
         _id: "$_id",
-        place: { $first : "$$ROOT"},
-        publications: {
-          $addToSet: "$publicationData"
-        }
-        // user: {
-        //   $first: "$userData"
-        // },
+        place: { $first : "$$ROOT"}
       }
     },
     ...filters
