@@ -13,27 +13,30 @@ PlaceInterface.getN = (params)=>{
         from: "Publications",
         localField: "publications",
         foreignField: "_id",
-        as: "publications"
+        as: "publicationsData"
       }
     },
     {
       $lookup: {
         from: "Users",
-        localField: "publications.user",
+        localField: "publicationsData.user",
         foreignField: "_id",
-        as: "publications.user"
+        as: "publicationsData.user"
       }
     },
     {
       $unwind: {
-        path: "$publications.user",
+        path: "$publicationsData.user",
         preserveNullAndEmptyArrays: true
       }
     },
     {
       $group: {
         _id: "$_id",
-        place: { $first : "$$ROOT"}
+        place: { $first : "$$ROOT"},
+        publications: {
+          $addToSet: "$publicationsData"
+        },
       }
     },
     ...filters
