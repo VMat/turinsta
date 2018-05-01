@@ -17,11 +17,23 @@ PlaceInterface.getN = (params)=>{
       }
     },
     {
+      $unwind: {
+        path: "$publications",
+        preserveNullAndEmptyArrays: true
+      }
+    },
+    {
       $lookup: {
         from: "Users",
         localField: "publications.user",
         foreignField: "_id",
         as: "publications.user"
+      }
+    },
+    {
+      $unwind: {
+        path: "$publications.user",
+        preserveNullAndEmptyArrays: true
       }
     },
     {
