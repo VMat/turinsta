@@ -9,6 +9,12 @@ PlaceInterface.getN = (params)=>{
   let filters = Commons.processAggregateParams(params);
   return Places.aggregate([
     {
+      $unwind: {
+        path: "$publications",
+        preserveNullAndEmptyArrays: true
+      }
+    },
+    {
       $lookup: {
         from: "Publications",
         localField: "publications",
