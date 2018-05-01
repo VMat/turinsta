@@ -17,6 +17,14 @@ PlaceInterface.getN = (params)=>{
       }
     },
     {
+      $lookup: {
+        from: "Users",
+        localField: "publications.user",
+        foreignField: "_id",
+        as: "publications.user"
+      }
+    },
+    {
       $group: {
         _id: "$_id",
         place: { $first : "$$ROOT"}

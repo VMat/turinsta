@@ -31,15 +31,17 @@ export class PlacesPage {
 
       let searchParams = [];
 
-      // if(this.navParams.data.publication){
-        // searchParams.push({key: "place.publications", value: this.navParams.data.publication, operation: "CONTAINS"})
-        searchParams.push({key: "place.publications._id", value: "5ab19a0e51b5d70014b0c40a", operation: "EQUAL"});
-        // }
+      if(this.navParams.data.publication){
+        searchParams.push({key: "place.publications._id", value: this.navParams.data.publication, operation: "CONTAINS"})
+      }
 
-      // if(this.navParams.data.user){
-      //   searchParams.push({key: "place.publications.user", value: this.navParams.data.user, operation: "EQUAL"})
-      //   searchParams.push({key: "place.publications.user", value: "59f7588ef36d282363087491", operation: "EQUAL"});
-      // }
+      if(this.navParams.data.user){
+        searchParams.push({key: "place.publications.user", value: this.navParams.data.user, operation: "EQUAL"})
+      }
+
+      if(this.navParams.data.favorites){
+        searchParams.push({key: "place.publications._id", value: this.navParams.data.favorites, operation: "IN"})
+      }
 
       this.storage.getPlaces(searchParams).subscribe((places)=>{
         console.log("placesss",places);
