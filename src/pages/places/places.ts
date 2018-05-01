@@ -33,7 +33,7 @@ export class PlacesPage {
 
       // if(this.navParams.data.publication){
         // searchParams.push({key: "place.publications", value: this.navParams.data.publication, operation: "CONTAINS"})
-        searchParams.push({key: "place.publications", value: "5ab19a0e51b5d70014b0c40a", operation: "CONTAINS"});
+        searchParams.push({key: "publications", value: "5ab19a0e51b5d70014b0c40a", operation: "CONTAINS"});
         // }
 
       // if(this.navParams.data.user){
