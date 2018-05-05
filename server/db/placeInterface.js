@@ -45,11 +45,12 @@ PlaceInterface.getN = (params)=>{
     {
       $group: {
         _id: "$_id",
+        publicationIds: "$publications",
         place: { $first : "$$ROOT"},
         publications: {
           $addToSet: "$publicationsData"
         },
-        publicationIds: "$publications"
+        publicationIdss: "$publicationsData._id",
       }
     },
     ...filters
