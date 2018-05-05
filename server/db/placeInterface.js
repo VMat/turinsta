@@ -9,6 +9,12 @@ PlaceInterface.getN = (params)=>{
   let filters = Commons.processAggregateParams(params);
   return Places.aggregate([
     {
+      $lookup: {
+        foreignField: "publications",
+        as: "publicationIds"
+      }
+    },
+    {
       $unwind: {
         path: "$publications",
         preserveNullAndEmptyArrays: true
@@ -48,6 +54,12 @@ PlaceInterface.getN = (params)=>{
         place: { $first : "$$ROOT"},
         publications: {
           $addToSet: "$publicationsData"
+        },
+        publicationIds: {
+          $addToSet: "$publicationIds"
+        },
+        publicationIdss: {
+          publicationIds: "$publications"
         },
       }
     },

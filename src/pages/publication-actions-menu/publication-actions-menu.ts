@@ -7,6 +7,7 @@ import {StorageProvider} from "../../providers/storage/storage";
 import {CommonsProvider} from "../../providers/commons/commons";
 import {NotificationProvider} from "../../providers/notification/notification";
 import {AccountPage} from "../account/account";
+import {PlacesPage} from "../places/places";
 
 /**
  * Generated class for the PublicationActionsMenuPage page.
@@ -74,16 +75,8 @@ export class PublicationActionsMenuPage {
   }
 
   locatePlace(){
-    alert("Ubicando destino en mapa...");
-    // this.localNotifications.schedule({
-    //   title: "Test Title",
-    //   text: "Delayed Notification",
-    //   at: new Date(new Date().getTime() + 5 * 1000),
-    //   sound: null
-    // });
-    // this.notifications.hasPermission();
-
-    // this.notifications.create({title: "Localizando...", text: "Ubicando destino en mapa"});
+    let placesPage = this.modalCtrl.create(PlacesPage, {publication: this.publication});
+    placesPage.present();
   }
 
   presentShareActionSheet() {

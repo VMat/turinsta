@@ -31,7 +31,10 @@ export class PublicationUserFilterPage {
   KEYS: any = {};
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public viewCtrl: ViewController, public store: Store<AppState>, public commons: CommonsProvider, private storage: StorageProvider) {
-    this.store.select("publications").subscribe((state)=>{
+  }
+
+  ionViewWillEnter(){
+    this.store.select("publications").first().subscribe((state)=>{
       if(this.filter){
         let userFilter = eval("state." + this.filter);
         if(userFilter){

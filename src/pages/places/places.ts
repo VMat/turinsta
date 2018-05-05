@@ -21,13 +21,13 @@ export class PlacesPage {
 
   @ViewChild('map') mapElement: ElementRef;
   @ViewChild('pleaseConnect') pleaseConnect: ElementRef;
-  searchParams: any = [];
+  searchParam: any = null;
   mapLoaded: any = null;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public platform: Platform, public maps: GoogleMapsProvider, public mapCluster: GoogleMapsClusterProvider, private storage: StorageProvider, private store: Store<any>) {
     this.store.select("publications","placeFilter").subscribe((state)=> {
-      this.searchParams = state;
-      this.storage.getPlaces(this.searchParams).first().subscribe((places)=>{
+      this.searchParam = state;
+      this.storage.getPlaces(this.searchParam).first().subscribe((places)=>{
         console.log("placesChangeFilters",places);
         if(this.mapLoaded){
           this.mapCluster.removeClusters();
@@ -41,18 +41,18 @@ export class PlacesPage {
 
     this.platform.ready().then(() => {
 
-      if(this.navParams.data.publication){
-        this.searchParams.push({key: "place.publications._id", value: this.navParams.data.publication, operation: "CONTAINS"})
+      if(this.navParams.get("publication")){
+        this.searchParam = {key: "publications._id", value: this.navParams.get("publication"), operation: "CONTAINS"};
       }
 
-      if(this.navParams.data.user){
-        this.searchParams.push({key: "place.publications.user", value: this.navParams.data.user, operation: "EQUAL"})
+      if(this.navParams.get("user")){
+        this.searchParam = {key: "publications.user", value: this.navParams.get("user"), operation: "EQUAL"};
       }
 
-      if(this.navParams.data.favorites){
-        this.searchParams.push({key: "place.publications._id", value: this.navParams.data.favorites, operation: "IN"})
+      if(this.navParams.get("favorites")){
+        this.searchParam = {key: "publications._id", value: this.navParams.get("favorites"), operation: "IN"};
       }
-      this.storage.getPlaces(this.searchParams).subscribe((places)=>{
+      this.storage.getPlaces(this.searchParam).subscribe((places)=>{
         console.log("placesDidLoad",places);
         this.maps.init(this.mapElement.nativeElement, this.pleaseConnect.nativeElement).then((map) => {
           this.mapLoaded = map;
