@@ -10,15 +10,23 @@
     <ion-list-header>{{getCaption("userFilterVisualize")}}</ion-list-header>
     <ion-item>
       <ion-label>{{getCaption("userFilterAll")}}</ion-label>
-      <ion-radio value="{{null}}" (click)="close()"></ion-radio>
+      <ion-radio value="{{KEYS.ALL}}" (click)="close()"></ion-radio>
     </ion-item>
     <ion-item>
       <ion-label>{{getCaption("userFilterFollowed")}}</ion-label>
-      <ion-radio value="{{loggedUser}}" (click)="close({key: 'user.followers', value: loggedUser, operation: 'CONTAINS'})"></ion-radio>
+      <ion-radio value="{{KEYS.FOLLOWERS}}" (click)="close({key: userPath + '.followers', value: loggedUser, operation: 'CONTAINS'})"></ion-radio>
+    </ion-item>
+    <ion-item>
+      <ion-label>{{getCaption("userFilterOwn")}}</ion-label>
+      <ion-radio value="{{KEYS.OWN}}" (click)="close({key: userPath + '._id', value: loggedUser, operation: 'EQUAL'})"></ion-radio>
+    </ion-item>
+    <ion-item>
+      <ion-label>{{getCaption("publicationFilterFavorite")}}</ion-label>
+      <ion-radio value="{{KEYS.FAVORITES}}" (click)="close({key: publicationPath + '._id', value: favorites, operation: 'IN'})"></ion-radio>
     </ion-item>
     <ion-item>
       <ion-input item-start [(ngModel)]="customUser" placeholder="{{getCaption('userFilterByName')}}"></ion-input>
-      <button item-end ion-button (click)="close({key: 'user.username', value: customUser, operation: 'LIKE'})" icon-only clear><ion-icon name="ios-arrow-dropright" color="primary"></ion-icon></button>
+      <button item-end ion-button (click)="close({key: userPath + '.username', value: customUser, operation: 'LIKE'})" icon-only clear><ion-icon name="ios-arrow-dropright" color="primary"></ion-icon></button>
     </ion-item>
   </ion-list>
 </ion-content>

@@ -14,19 +14,15 @@ export class GoogleMapsProvider {
   mapLoaded: any;
   mapLoadedObserver: any;
   currentMarker: any;
-  apiKey: string;
+  apiKey: string = "AIzaSyBTdZkqYTHpobvsNlKYaZOpov1F07IpW3Y";
 
   constructor(public connectivityService: ConnectivityProvider, public geolocation: Geolocation) {
-
   }
 
   init(mapElement: any, pleaseConnect: any): Promise<any> {
-
     this.mapElement = mapElement;
     this.pleaseConnect = pleaseConnect;
-
     return this.loadGoogleMaps();
-
   }
 
   loadGoogleMaps(): Promise<any> {
@@ -41,7 +37,6 @@ export class GoogleMapsProvider {
         if(this.connectivityService.isOnline()){
 
           window['mapInit'] = () => {
-
             this.initMap().then((map) => {
               resolve(map);
             });
@@ -81,15 +76,12 @@ export class GoogleMapsProvider {
   }
 
   initMap(): Promise<any> {
-
     this.mapInitialised = true;
 
     return new Promise((resolve) => {
 
-      this.geolocation.getCurrentPosition().then((position) => {
-
-        //let latLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
-        let latLng = new google.maps.LatLng(-31.563910, 147.154312);
+      this.geolocation.getCurrentPosition({timeout: 2000}).then((position) => {
+        let latLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
 
         let mapOptions = {
           center: latLng,
@@ -99,9 +91,19 @@ export class GoogleMapsProvider {
 
         this.map = new google.maps.Map(this.mapElement, mapOptions);
         resolve(this.map);
+      })
+      .catch((e)=>{
+        let latLng = new google.maps.LatLng(0, 0);
 
+        let mapOptions = {
+          center: latLng,
+          zoom: 2,
+          mapTypeId: google.maps.MapTypeId.ROADMAP
+        };
+
+        this.map = new google.maps.Map(this.mapElement, mapOptions);
+        resolve(this.map);
       });
-
     });
 
   }

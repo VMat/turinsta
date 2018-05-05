@@ -1,12 +1,26 @@
 <ion-header class="tabs-header">
   <ion-navbar [ngSwitch]="activeTab">
     <ion-item no-lines *ngSwitchCase="'home'">
-      <user-filter item-start></user-filter>
+      <user-filter
+        [userPath]="'user'"
+        [publicationPath]="'publication'"
+        [filter]="'filters.user'"
+        [dispatchName]="'SET_PUBLICATION_USER_FILTER'"
+        item-start
+      >
+      </user-filter>
       <ion-title align="center">TurInsta</ion-title>
       <ordering-criterion item-end></ordering-criterion>
     </ion-item>
     <ion-item no-lines *ngSwitchCase="'places'">
-      <user-filter item-start></user-filter>
+      <user-filter
+        [userPath]="'publications.user'"
+        [publicationPath]="'publications'"
+        [filter]="'placeFilter'"
+        [dispatchName]="'SET_PLACE_FILTER'"
+        item-start
+      >
+      </user-filter>
       <ion-title align="center">TurInsta</ion-title>
     </ion-item>
     <ion-item no-lines *ngSwitchDefault>

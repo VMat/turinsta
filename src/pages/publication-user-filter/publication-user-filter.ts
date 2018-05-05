@@ -1,9 +1,10 @@
-import { Component } from '@angular/core';
+import {Component, Input} from '@angular/core';
 import {IonicPage, NavController, NavParams, ViewController} from 'ionic-angular';
 import {AppState} from "../../providers/models/publication.model";
 import {Store} from "@ngrx/store";
-import {addFilter, removeFilter} from "../../providers/reducers/publication.reducer";
+import {setFilter} from "../../providers/reducers/publication.reducer";
 import {CommonsProvider} from "../../providers/commons/commons";
+import {StorageProvider} from "../../providers/storage/storage";
 
 /**
  * Generated class for the PublicationUserFilterPage page.
@@ -22,36 +23,54 @@ export class PublicationUserFilterPage {
   userFilter: string = null;
   customUser: string = null;
   loggedUser: string = null;
+  favorites: any = [];
+  userPath: string = null;
+  publicationPath: string = null;
+  filter: string = null;
+  dispatchName: string = null;
+  KEYS: any = {};
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public viewCtrl: ViewController, public store: Store<AppState>, public commons: CommonsProvider) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public viewCtrl: ViewController, public store: Store<AppState>, public commons: CommonsProvider, private storage: StorageProvider) {
     this.store.select("publications").subscribe((state)=>{
-      let userFilter = state.filters.filter(filter => filter.key == "user.username" || filter.key == "user.followers");
-      if(userFilter.length > 0){
-        if(userFilter[0].operation == "LIKE"){
-          this.customUser = userFilter[0].value;
-          this.userFilter = userFilter[0].value;
-        }
-        else{
-          this.userFilter = userFilter[0].value;
+      if(this.filter){
+        let userFilter = eval("state." + this.filter);
+        if(userFilter){
+          if(userFilter.operation == "LIKE"){
+            this.customUser = userFilter.value;
+            this.userFilter = userFilter.value;
+          }
+          else{
+            this.userFilter = userFilter.key;
+          }
         }
       }
     });
-    this.loggedUser = commons.getUserId();
   }
 
-  ionViewDidLoad() {
+  ionViewWillLoad() {
+    this.loggedUser = this.commons.getUserId();
+    this.userPath = this.navParams.get("userPath");
+    this.publicationPath = this.navParams.get("publicationPath");
+    this.filter = this.navParams.get("filter");
+    this.dispatchName = this.navParams.get("dispatchName");
+    this.storage.getFavorites(this.loggedUser,0).subscribe((favorites)=>{
+      this.favorites = favorites;
+    });
+    this.KEYS = {
+      ALL: null,
+      FOLLOWERS: this.userPath + '.followers',
+      OWN: this.userPath + '._id',
+      FAVORITES: this.publicationPath + '._id',
+    };
     console.log('ionViewDidLoad PublicationUserFilterPage');
   }
 
   close(filter){
     if(Boolean(filter)){
-      this.store.dispatch(removeFilter("user.username"));
-      this.store.dispatch(removeFilter("user.followers"));
-      this.store.dispatch(addFilter(filter));
+      this.store.dispatch(setFilter(this.dispatchName, filter));
     }
     else{
-      this.store.dispatch(removeFilter("user.username"));
-      this.store.dispatch(removeFilter("user.followers"));
+      this.store.dispatch(setFilter(this.dispatchName, null));
     }
 
     this.viewCtrl.dismiss();

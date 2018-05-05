@@ -95,6 +95,10 @@ Commons.processAggregateParams = (params) => {
           filters.push({$match: {[i]: mongoose.Types.ObjectId(params[i].value)}});
           break;
         }
+        case 'EQUAL_NOT_ID':{
+          filters.push({$match: {[i]: params[i].value}});
+          break;
+        }
         case 'LIKE':{
           filters.push({$match: {[i]: {$regex: params[i].value, $options: "i"}}});
           break;

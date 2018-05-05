@@ -1,6 +1,6 @@
 import {Component, ViewChild, Input, Output, EventEmitter} from '@angular/core';
 import {Select} from "ionic-angular";
-import {cleanFilters, addFilter} from "../../providers/reducers/publication.reducer";
+import {setFilter} from "../../providers/reducers/publication.reducer";
 import {AppState} from "../../providers/models/publication.model";
 import {Store} from "@ngrx/store";
 import {StorageProvider} from "../../providers/storage/storage";
@@ -24,6 +24,7 @@ export class PlaceFilterComponent {
   @ViewChild(Select) select: Select;
   @Input() placeSelecting: boolean = false;
   @Output() placeSelected = new EventEmitter<string>();
+  REDUCER_NAME = "SET_PUBLICATION_PLACE_FILTER";
 
   constructor(private store: Store<AppState>, private storageService: StorageProvider, private commons: CommonsProvider) {
     console.log('Hello PlaceFilterComponent Component');
@@ -40,7 +41,7 @@ export class PlaceFilterComponent {
         });
       }
       else{
-        this.store.dispatch(addFilter({key:"publication.places.place_id", value: this.places[this.placeFilter].place_id, operation: "EQUAL"}));
+        this.store.dispatch(setFilter(this.REDUCER_NAME,{key:"publication.places.place_id", value: this.places[this.placeFilter].place_id, operation: "EQUAL_NOT_ID"}));
       }
     }
   }
@@ -76,7 +77,7 @@ export class PlaceFilterComponent {
       this.placeSelected.emit(null);
     }
     else{
-      this.store.dispatch(cleanFilters());
+      this.store.dispatch(setFilter(this.REDUCER_NAME,null));
     }
   }
 

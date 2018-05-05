@@ -4,9 +4,9 @@ export const GET_PUBLICATIONS = "GET_PUBLICATIONS";
 export const GET_PUBLICATIONS_SUCCESS = "GET_PUBLICATIONS_SUCCESS";
 export const GET_PUBLICATIONS_ERROR = "GET_PUBLICATIONS_ERROR";
 export const INCREMENT_PUBLICATION_RANGE = "INCREMENT_PUBLICATION_RANGE";
-export const ADD_FILTER = "ADD_FILTER";
-export const REMOVE_FILTER = "REMOVE_FILTER";
-export const CLEAN_FILTERS = "CLEAN_FILTERS";
+export const SET_PUBLICATION_USER_FILTER = "SET_PUBLICATION_USER_FILTER";
+export const SET_PUBLICATION_PLACE_FILTER = "SET_PUBLICATION_PLACE_FILTER";
+export const SET_PLACE_FILTER = "SET_PLACE_FILTER";
 export const SET_SORT = "SET_SORT";
 
 export function getPublications() {
@@ -21,23 +21,10 @@ export function incrementPublicationRange(){
   }
 }
 
-export function addFilter(filter){
+export function setFilter(dispatchName, filter){
   return {
-    type: ADD_FILTER,
+    type: dispatchName,
     payload: filter
-  }
-}
-
-export function removeFilter(filterKey){
-  return {
-    type: REMOVE_FILTER,
-    payload: filterKey
-  }
-}
-
-export function cleanFilters(){
-  return {
-    type: CLEAN_FILTERS
   }
 }
 
@@ -51,7 +38,8 @@ export function setSort(sort){
 const initialState = {
   publications: [],
   range: 2,
-  filters: [],
+  filters: {user: null, place: null},
+  placeFilter: null,
   sort: {field: "publication.timestamps.created", way: -1},
   pending: false,
   error: null
@@ -155,26 +143,18 @@ export function publicationReducer(state = initialState, { type, payload } ) {
     case INCREMENT_PUBLICATION_RANGE:{
       return tassign(state, {range: state.publications.length >= state.range ? state.range + 10 : state.range});
     }
-    case ADD_FILTER: {
-      let filtersCopy = [...state.filters];
-      filtersCopy.push(payload);
+    case SET_PUBLICATION_USER_FILTER: {
+      let filtersCopy = {...state.filters};
+      filtersCopy.user = payload;
       return tassign(state, {filters: filtersCopy});
     }
-    case REMOVE_FILTER:{
-      let index = null;
-      state.filters.forEach((filter,i)=>{
-        if(filter.key == payload){
-          index = i;
-        }
-      });
-      let filtersCopy = [...state.filters];
-      if(index!=null){
-        filtersCopy.splice(index,1);
-      }
+    case SET_PUBLICATION_PLACE_FILTER: {
+      let filtersCopy = {...state.filters};
+      filtersCopy.place = payload;
       return tassign(state, {filters: filtersCopy});
     }
-    case CLEAN_FILTERS:{
-      return tassign(state, {filters: []})
+    case SET_PLACE_FILTER: {
+      return tassign(state, {placeFilter: payload});
     }
     case SET_SORT:{
       return tassign(state, {sort: payload})

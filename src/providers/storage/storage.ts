@@ -21,10 +21,11 @@ export class StorageProvider {
 
   getPublications(range,filters,sort) {
     let params = new URLSearchParams();
-    filters.forEach((filter)=>{
-      params.set(filter.key, JSON.stringify({value: filter.value, operation: filter.operation}));
-    });
-
+    for(let prop in filters){
+      if(filters[prop]){
+        params.set(filters[prop].key, JSON.stringify({value: filters[prop].value, operation: filters[prop].operation}));
+      }
+    }
     return this.http.get(StorageProvider.baseUrl + 'publications/count/' + range + '/sort/' + sort.field + '/' + sort.way, {params: params, headers: StorageProvider.headers})
       .map((res:Response) => res.json());
   }
@@ -227,12 +228,11 @@ export class StorageProvider {
       .map((res: Response) => res.json());
   }
 
-  getPlaces(filters){
+  getPlaces(filter){
     let params = new URLSearchParams();
-    filters.forEach((filter)=>{
+    if(filter){
       params.set(filter.key, JSON.stringify({value: filter.value, operation: filter.operation}));
-    });
-
+    }
     return this.http.get(StorageProvider.baseUrl + 'places', {params: params, headers: StorageProvider.headers})
       .map((res: Response) => res.json());
   }
