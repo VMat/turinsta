@@ -49,12 +49,7 @@ PlaceInterface.getN = (params)=>{
         publications: {
           $addToSet: "$publicationsData"
         },
-        publicationIds: {
-          $addToSet: "$publicationIds"
-        },
-        publicationIdss: {
-          publicationIds: "$publications"
-        },
+        publicationIds: "$publications"
       }
     },
     ...filters
