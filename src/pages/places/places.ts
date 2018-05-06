@@ -1,9 +1,10 @@
 import {Component, ViewChild, ElementRef} from '@angular/core';
-import {IonicPage, NavController, NavParams, Platform} from 'ionic-angular';
+import {IonicPage, NavController, NavParams, Platform, ViewController} from 'ionic-angular';
 import {GoogleMapsProvider} from "../../providers/google-maps/google-maps";
 import {GoogleMapsClusterProvider} from "../../providers/google-maps-cluster/google-maps-cluster";
 import {StorageProvider} from "../../providers/storage/storage";
 import {Store} from "@ngrx/store";
+import {CommonsProvider} from "../../providers/commons/commons";
 
 /**
  * Generated class for the PlacesPage page.
@@ -23,8 +24,9 @@ export class PlacesPage {
   @ViewChild('pleaseConnect') pleaseConnect: ElementRef;
   searchParam: any = null;
   mapLoaded: any = null;
+  modal: boolean = false;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public platform: Platform, public maps: GoogleMapsProvider, public mapCluster: GoogleMapsClusterProvider, private storage: StorageProvider, private store: Store<any>) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public platform: Platform, public maps: GoogleMapsProvider, public mapCluster: GoogleMapsClusterProvider, private commons: CommonsProvider, private storage: StorageProvider, private store: Store<any>, private viewCtrl: ViewController) {
     this.store.select("publications","placeFilter").subscribe((state)=> {
       this.searchParam = state;
       this.storage.getPlaces(this.searchParam).first().subscribe((places)=>{
@@ -41,8 +43,12 @@ export class PlacesPage {
 
     this.platform.ready().then(() => {
 
+      if(this.navParams.get("modal")){
+        this.modal = true;
+      }
+
       if(this.navParams.get("publication")){
-        this.searchParam = {key: "publications._id", value: this.navParams.get("publication"), operation: "CONTAINS"};
+        this.searchParam = {key: "publicationIds", value: this.navParams.get("publication"), operation: "CONTAINS"};
       }
 
       if(this.navParams.get("user")){
@@ -60,5 +66,14 @@ export class PlacesPage {
         })
       });
     });
+  }
+
+  dismissModal(){
+    this.maps.disableMap();
+    this.viewCtrl.dismiss();
+  }
+
+  getCaption(captionKey){
+    return this.commons.translate([captionKey]);
   }
 }

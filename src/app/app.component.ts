@@ -12,6 +12,7 @@ import {StorageProvider} from "../providers/storage/storage";
 import { Socket } from 'ng-socket-io';
 import {PublicationWritingPage} from "../pages/publication-writing/publication-writing";
 import {Store} from "@ngrx/store";
+import {AccountPage} from "../pages/account/account";
 
 
 @Component({
@@ -79,9 +80,8 @@ export class MyApp {
               break;
             }
             case 'user':{
-              // this.storageService.getUser(action.category).subscribe((user)=>{
-              //   this.nav.setRoot(UserPage,{user: this.commons.getUserId()});
-              // });
+              let accountPageModal = this.modalCtrl.create(AccountPage, {user: action.category});
+              accountPageModal.present();
               break;
             }
             case 'publication':{

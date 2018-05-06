@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import {IonicPage, NavController, NavParams, ModalController} from 'ionic-angular';
+import {IonicPage, NavController, NavParams, ModalController, ViewController} from 'ionic-angular';
 import {StorageProvider} from "../../providers/storage/storage";
 import {CommonsProvider} from "../../providers/commons/commons";
 import {PublicationWritingPage} from "../publication-writing/publication-writing";
@@ -25,8 +25,9 @@ export class AccountPage {
   FAVORITE_LIMIT = 50;
   user :any = null;
   loggedUser: string = null;
+  modal: boolean = false;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private storage: StorageProvider, private commons: CommonsProvider, private modalCtrl: ModalController){
+  constructor(public navCtrl: NavController, public navParams: NavParams, private storage: StorageProvider, private commons: CommonsProvider, private modalCtrl: ModalController, private viewCtrl: ViewController){
   }
 
   ionViewDidLoad() {
@@ -34,6 +35,9 @@ export class AccountPage {
   }
 
   ionViewWillLoad() {
+    if(this.navParams.get("modal")){
+      this.modal = this.navParams.get("modal");
+    }
     console.log('ionViewDidLoad AccountPage');
   }
 
@@ -79,5 +83,9 @@ export class AccountPage {
 
   getCaption(captionKey){
     return this.commons.translate([captionKey]);
+  }
+
+  dismissModal(){
+    this.viewCtrl.dismiss();
   }
 }

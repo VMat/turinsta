@@ -60,7 +60,9 @@ export class GoogleMapsProvider {
       else {
 
         if(this.connectivityService.isOnline()){
-          this.initMap();
+          this.initMap().then((map) => {
+            resolve(map);
+          });
           this.enableMap();
         }
         else {
@@ -85,7 +87,7 @@ export class GoogleMapsProvider {
 
         let mapOptions = {
           center: latLng,
-          zoom: 2,
+          zoom: 1,
           mapTypeId: google.maps.MapTypeId.ROADMAP
         };
 
@@ -97,7 +99,7 @@ export class GoogleMapsProvider {
 
         let mapOptions = {
           center: latLng,
-          zoom: 2,
+          zoom: 1,
           mapTypeId: google.maps.MapTypeId.ROADMAP
         };
 

@@ -5,6 +5,13 @@
   Ionic pages and navigation.
 -->
 <ion-content *ngIf="user" text-center>
+  <ion-navbar *ngIf="modal">
+    <ion-item no-lines>
+      <button item-start ion-button clear (click)="dismissModal()">
+        <ion-icon name="close"></ion-icon>
+      </button>
+    </ion-item>
+  </ion-navbar>
   <ion-item class="text-with-ellipsis">
     <ion-avatar class="out-activity-avatar" item-start>
       <img src="{{user.avatar}}"/>

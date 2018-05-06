@@ -75,8 +75,10 @@ export class PublicationActionsMenuPage {
   }
 
   locatePlace(){
-    let placesPage = this.modalCtrl.create(PlacesPage, {publication: this.publication});
-    placesPage.present();
+    let placesPage = this.modalCtrl.create(PlacesPage, {modal: true, publication: this.publication});
+    placesPage.present().then(()=>{
+      this.viewCtrl.dismiss();
+    });
   }
 
   presentShareActionSheet() {
@@ -122,8 +124,8 @@ export class PublicationActionsMenuPage {
   }
 
   viewUser(){
-    let publicationWritingModal = this.modalCtrl.create(AccountPage, {user: this.user._id});
-    publicationWritingModal.present().then(()=>{
+    let accountPageModal = this.modalCtrl.create(AccountPage, {modal: true, user: this.user._id});
+    accountPageModal.present().then(()=>{
       this.viewCtrl.dismiss();
     });
   }

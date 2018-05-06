@@ -123,10 +123,10 @@ ImgcacheService = __decorate([
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_storage_storage__ = __webpack_require__(13);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_commons_commons__ = __webpack_require__(9);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_commons_commons__ = __webpack_require__(8);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__ionic_native_image_picker__ = __webpack_require__(89);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__ionic_native_file_transfer__ = __webpack_require__(90);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_rxjs__ = __webpack_require__(139);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_rxjs__ = __webpack_require__(142);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_rxjs___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6_rxjs__);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -402,7 +402,7 @@ InboxWritingPage = __decorate([
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_storage_storage__ = __webpack_require__(13);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_commons_commons__ = __webpack_require__(9);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_commons_commons__ = __webpack_require__(8);
 var __assign = (this && this.__assign) || Object.assign || function(t) {
     for (var s, i = 1, n = arguments.length; i < n; i++) {
         s = arguments[i];
@@ -509,7 +509,7 @@ CommentWritingPage = __decorate([
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_storage_storage__ = __webpack_require__(13);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_commons_commons__ = __webpack_require__(9);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_commons_commons__ = __webpack_require__(8);
 var __assign = (this && this.__assign) || Object.assign || function(t) {
     for (var s, i = 1, n = arguments.length; i < n; i++) {
         s = arguments[i];
@@ -651,10 +651,11 @@ ExperienceWritingPage = __decorate([
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return PlacesPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(5);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_google_maps_google_maps__ = __webpack_require__(269);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_google_maps_cluster_google_maps_cluster__ = __webpack_require__(273);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_google_maps_google_maps__ = __webpack_require__(283);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_google_maps_cluster_google_maps_cluster__ = __webpack_require__(287);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__providers_storage_storage__ = __webpack_require__(13);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__ngrx_store__ = __webpack_require__(23);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__providers_commons_commons__ = __webpack_require__(8);
 var __assign = (this && this.__assign) || Object.assign || function(t) {
     for (var s, i = 1, n = arguments.length; i < n; i++) {
         s = arguments[i];
@@ -678,6 +679,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
+
 /**
  * Generated class for the PlacesPage page.
  *
@@ -685,17 +687,20 @@ var __metadata = (this && this.__metadata) || function (k, v) {
  * Ionic pages and navigation.
  */
 var PlacesPage = (function () {
-    function PlacesPage(navCtrl, navParams, platform, maps, mapCluster, storage, store) {
+    function PlacesPage(navCtrl, navParams, platform, maps, mapCluster, commons, storage, store, viewCtrl) {
         var _this = this;
         this.navCtrl = navCtrl;
         this.navParams = navParams;
         this.platform = platform;
         this.maps = maps;
         this.mapCluster = mapCluster;
+        this.commons = commons;
         this.storage = storage;
         this.store = store;
+        this.viewCtrl = viewCtrl;
         this.searchParam = null;
         this.mapLoaded = null;
+        this.modal = false;
         this.store.select("publications", "placeFilter").subscribe(function (state) {
             _this.searchParam = state;
             _this.storage.getPlaces(_this.searchParam).first().subscribe(function (places) {
@@ -710,8 +715,11 @@ var PlacesPage = (function () {
     PlacesPage.prototype.ionViewDidLoad = function () {
         var _this = this;
         this.platform.ready().then(function () {
+            if (_this.navParams.get("modal")) {
+                _this.modal = true;
+            }
             if (_this.navParams.get("publication")) {
-                _this.searchParam = { key: "publications._id", value: _this.navParams.get("publication"), operation: "CONTAINS" };
+                _this.searchParam = { key: "publicationIds", value: _this.navParams.get("publication"), operation: "CONTAINS" };
             }
             if (_this.navParams.get("user")) {
                 _this.searchParam = { key: "publications.user", value: _this.navParams.get("user"), operation: "EQUAL" };
@@ -728,6 +736,13 @@ var PlacesPage = (function () {
             });
         });
     };
+    PlacesPage.prototype.dismissModal = function () {
+        this.maps.disableMap();
+        this.viewCtrl.dismiss();
+    };
+    PlacesPage.prototype.getCaption = function (captionKey) {
+        return this.commons.translate([captionKey]);
+    };
     return PlacesPage;
 }());
 __decorate([
@@ -740,9 +755,9 @@ __decorate([
 ], PlacesPage.prototype, "pleaseConnect", void 0);
 PlacesPage = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
-        selector: 'page-places',template:/*ion-inline-start:"C:\Users\Matias\WebstormProjects\turinsta\src\pages\places\places.html"*/'<!--\n  Generated template for the PlacesPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-content>\n\n  <div #pleaseConnect id="please-connect">\n    <p>Please connect to the Internet...</p>\n  </div>\n\n  <div #map id="map"></div>\n\n</ion-content>\n'/*ion-inline-end:"C:\Users\Matias\WebstormProjects\turinsta\src\pages\places\places.html"*/,
+        selector: 'page-places',template:/*ion-inline-start:"C:\Users\Matias\WebstormProjects\turinsta\src\pages\places\places.html"*/'<!--\n  Generated template for the PlacesPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-header *ngIf="modal">\n  <ion-navbar>\n    <ion-item no-lines>\n      <button item-start ion-button clear (click)="dismissModal()">\n        <ion-icon name="close"></ion-icon>\n      </button>\n    </ion-item>\n  </ion-navbar>\n</ion-header>\n\n<ion-content>\n  <div #pleaseConnect id="please-connect">\n    <p>{{getCaption("connecting")}}</p>\n  </div>\n  <div #map id="map"></div>\n</ion-content>\n'/*ion-inline-end:"C:\Users\Matias\WebstormProjects\turinsta\src\pages\places\places.html"*/,
     }),
-    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* NavParams */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["n" /* Platform */], __WEBPACK_IMPORTED_MODULE_2__providers_google_maps_google_maps__["a" /* GoogleMapsProvider */], __WEBPACK_IMPORTED_MODULE_3__providers_google_maps_cluster_google_maps_cluster__["a" /* GoogleMapsClusterProvider */], __WEBPACK_IMPORTED_MODULE_4__providers_storage_storage__["a" /* StorageProvider */], __WEBPACK_IMPORTED_MODULE_5__ngrx_store__["h" /* Store */]])
+    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* NavParams */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["n" /* Platform */], __WEBPACK_IMPORTED_MODULE_2__providers_google_maps_google_maps__["a" /* GoogleMapsProvider */], __WEBPACK_IMPORTED_MODULE_3__providers_google_maps_cluster_google_maps_cluster__["a" /* GoogleMapsClusterProvider */], __WEBPACK_IMPORTED_MODULE_6__providers_commons_commons__["a" /* CommonsProvider */], __WEBPACK_IMPORTED_MODULE_4__providers_storage_storage__["a" /* StorageProvider */], __WEBPACK_IMPORTED_MODULE_5__ngrx_store__["h" /* Store */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["s" /* ViewController */]])
 ], PlacesPage);
 
 //# sourceMappingURL=places.js.map
@@ -755,8 +770,8 @@ PlacesPage = __decorate([
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return StorageProvider; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_http__ = __webpack_require__(67);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_add_operator_map__ = __webpack_require__(68);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_http__ = __webpack_require__(68);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_add_operator_map__ = __webpack_require__(69);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_add_operator_map___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_rxjs_add_operator_map__);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -984,7 +999,7 @@ var StorageProvider_1;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_storage_storage__ = __webpack_require__(13);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_commons_commons__ = __webpack_require__(9);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_commons_commons__ = __webpack_require__(8);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1076,860 +1091,16 @@ DescriptionWritingPage = __decorate([
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ChatActionsMenuPage; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(5);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__inbox_writing_inbox_writing__ = __webpack_require__(104);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_storage_storage__ = __webpack_require__(13);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__providers_commons_commons__ = __webpack_require__(9);
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-
-
-
-
-
-/**
- * Generated class for the ChatActionsMenuPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
-var ChatActionsMenuPage = (function () {
-    function ChatActionsMenuPage(navCtrl, navParams, modalCtrl, viewCtrl, alertCtrl, storage, commons) {
-        this.navCtrl = navCtrl;
-        this.navParams = navParams;
-        this.modalCtrl = modalCtrl;
-        this.viewCtrl = viewCtrl;
-        this.alertCtrl = alertCtrl;
-        this.storage = storage;
-        this.commons = commons;
-        this.chat = null;
-    }
-    ChatActionsMenuPage.prototype.ionViewDidLoad = function () {
-        console.log('ionViewDidLoad ChatActionsMenuPage');
-    };
-    ChatActionsMenuPage.prototype.ionViewWillLoad = function () {
-        this.chat = this.navParams.get("chat");
-    };
-    ChatActionsMenuPage.prototype.editChat = function () {
-        var _this = this;
-        var inboxWritingModal = this.modalCtrl.create(__WEBPACK_IMPORTED_MODULE_2__inbox_writing_inbox_writing__["a" /* InboxWritingPage */], { chat: this.chat, multipleSelection: true });
-        inboxWritingModal.present();
-        inboxWritingModal.onDidDismiss(function (updatedInbox) {
-            _this.viewCtrl.dismiss(updatedInbox);
-        });
-    };
-    ChatActionsMenuPage.prototype.confirmLeaveChat = function () {
-        var _this = this;
-        var confirm = this.alertCtrl.create({
-            title: this.commons.translate(['confirmOperation']),
-            message: this.commons.translate(['confirmLeaveGroup']),
-            buttons: [
-                {
-                    text: this.commons.translate(['accept']),
-                    handler: function () {
-                        _this.leaveChat();
-                    }
-                },
-                {
-                    text: this.commons.translate(['cancel']),
-                    handler: function () {
-                    }
-                }
-            ]
-        });
-        confirm.present();
-    };
-    ChatActionsMenuPage.prototype.leaveChat = function () {
-        var _this = this;
-        var participants = this.chat.participants.map(function (user) { return user._id; });
-        participants.splice(participants.indexOf(this.commons.getUserId()), 1);
-        if (participants.length == 0) {
-            this.storage.deleteInbox(this.chat._id).subscribe(function () {
-                _this.commons.presentToast(_this.commons.translate(["leftGroupSuccess"], { ":group": _this.chat.name }));
-                _this.viewCtrl.dismiss('CHAT_DELETED');
-            });
-        }
-        else {
-            this.storage.patchInbox(this.chat._id, { participants: participants }).subscribe(function () {
-                _this.commons.presentToast(_this.commons.translate(["leftGroupSuccess"], { ":group": _this.chat.name }));
-                _this.viewCtrl.dismiss('CHAT_DELETED');
-            });
-        }
-    };
-    ChatActionsMenuPage.prototype.confirmDeleteChat = function () {
-        var _this = this;
-        var confirm = this.alertCtrl.create({
-            title: this.commons.translate(['confirmOperation']),
-            message: this.commons.translate(['confirmDeleteChat']),
-            buttons: [
-                {
-                    text: this.commons.translate(['accept']),
-                    handler: function () {
-                        _this.deleteChat();
-                    }
-                },
-                {
-                    text: this.commons.translate(['cancel']),
-                    handler: function () {
-                    }
-                }
-            ]
-        });
-        confirm.present();
-    };
-    ChatActionsMenuPage.prototype.deleteChat = function () {
-        var _this = this;
-        var participants = this.chat.participants.map(function (user) { return user._id; });
-        participants.splice(participants.indexOf(this.commons.getUserId()), 1);
-        this.storage.deleteInbox(this.chat._id).subscribe(function () {
-            _this.commons.presentToast(_this.commons.translate(["deleteChatSuccess"], { ":user": _this.chat.participants.filter(function (user) {
-                    return user._id != _this.commons.getUserId();
-                })[0].username
-            }));
-            _this.viewCtrl.dismiss('CHAT_DELETED');
-        });
-    };
-    ChatActionsMenuPage.prototype.getCaption = function (captionKey) {
-        return this.commons.translate([captionKey]);
-    };
-    return ChatActionsMenuPage;
-}());
-ChatActionsMenuPage = __decorate([
-    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
-        selector: 'page-chat-actions-menu',template:/*ion-inline-start:"C:\Users\Matias\WebstormProjects\turinsta\src\pages\chat-actions-menu\chat-actions-menu.html"*/'<!--\n  Generated template for the ChatActionsMenuPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-content no-padding>\n  <ion-list>\n    <ion-item *ngIf="chat.group" (click)="editChat()">\n      <ion-icon item-start name="create" color="primary"></ion-icon>\n      <p>{{getCaption("chatActionEdit")}}</p>\n    </ion-item>\n    <ion-item *ngIf="chat.group" (click)="confirmLeaveChat()">\n      <ion-icon item-start name="exit" color="danger"></ion-icon>\n      <p>{{getCaption("chatActionLeftGroup")}}</p>\n    </ion-item>\n    <ion-item *ngIf="!chat.group" (click)="confirmDeleteChat()">\n      <ion-icon item-start name="trash" color="danger"></ion-icon>\n      <p>{{getCaption("chatActionDeleteChat")}}</p>\n    </ion-item>\n  </ion-list>\n</ion-content>\n'/*ion-inline-end:"C:\Users\Matias\WebstormProjects\turinsta\src\pages\chat-actions-menu\chat-actions-menu.html"*/,
-    }),
-    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* NavParams */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* ModalController */],
-        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["s" /* ViewController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["b" /* AlertController */],
-        __WEBPACK_IMPORTED_MODULE_3__providers_storage_storage__["a" /* StorageProvider */], __WEBPACK_IMPORTED_MODULE_4__providers_commons_commons__["a" /* CommonsProvider */]])
-], ChatActionsMenuPage);
-
-//# sourceMappingURL=chat-actions-menu.js.map
-
-/***/ }),
-
-/***/ 174:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return MyEmojiPickerPage; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(5);
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-
-
-/**
- * Generated class for the MyEmojiPickerPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
-var MyEmojiPickerPage = (function () {
-    function MyEmojiPickerPage(navCtrl, navParams) {
-        this.navCtrl = navCtrl;
-        this.navParams = navParams;
-        this.showEmojiPicker = true;
-        this.data = null;
-    }
-    MyEmojiPickerPage.prototype.ionViewDidLoad = function () {
-        this.data = this.navParams.get("data");
-        console.log('ionViewDidLoad MyEmojiPickerPage');
-    };
-    MyEmojiPickerPage.prototype.handleSelection = function ($event) {
-        this.data.content = Boolean(this.data.content) ? this.data.content + $event.char : $event.char;
-    };
-    return MyEmojiPickerPage;
-}());
-MyEmojiPickerPage = __decorate([
-    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
-        selector: 'page-my-emoji-picker',template:/*ion-inline-start:"C:\Users\Matias\WebstormProjects\turinsta\src\pages\my-emoji-picker\my-emoji-picker.html"*/'<!--\n  Generated template for the MyEmojiPickerPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-content no-padding>\n  <button\n          [(emojiPickerIf)]="showEmojiPicker"\n          (emojiPickerSelect)="handleSelection($event)">\n  </button>\n</ion-content>\n'/*ion-inline-end:"C:\Users\Matias\WebstormProjects\turinsta\src\pages\my-emoji-picker\my-emoji-picker.html"*/,
-    }),
-    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* NavParams */]])
-], MyEmojiPickerPage);
-
-//# sourceMappingURL=my-emoji-picker.js.map
-
-/***/ }),
-
-/***/ 175:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return PlaceSelectingPage; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(5);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_storage_storage__ = __webpack_require__(13);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_commons_commons__ = __webpack_require__(9);
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-
-
-
-
-/**
- * Generated class for the PlaceSelectingPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
-var PlaceSelectingPage = (function () {
-    function PlaceSelectingPage(navCtrl, navParams, viewCtrl, alertCtrl, storageService, commons) {
-        this.navCtrl = navCtrl;
-        this.navParams = navParams;
-        this.viewCtrl = viewCtrl;
-        this.alertCtrl = alertCtrl;
-        this.storageService = storageService;
-        this.commons = commons;
-        this.placeSelected = null;
-        this.publicationId = null;
-    }
-    PlaceSelectingPage.prototype.ionViewDidLoad = function () {
-        this.publicationId = this.navParams.get("publicationId");
-        console.log('ionViewDidLoad PlaceSelectingPage');
-    };
-    PlaceSelectingPage.prototype.setPlace = function (event) {
-        this.placeSelected = event;
-    };
-    PlaceSelectingPage.prototype.dismissPlaceSelecting = function () {
-        this.viewCtrl.dismiss();
-    };
-    PlaceSelectingPage.prototype.confirmSave = function () {
-        var _this = this;
-        if (Boolean(this.publicationId)) {
-            var confirm_1 = this.alertCtrl.create({
-                title: this.commons.translate(['confirmOperation']),
-                message: this.commons.translate(['confirmSavePlace']),
-                buttons: [
-                    {
-                        text: this.commons.translate(['accept']),
-                        handler: function () {
-                            _this.updatePlace();
-                        }
-                    },
-                    {
-                        text: this.commons.translate(['cancel']),
-                        handler: function () {
-                        }
-                    }
-                ]
-            });
-            confirm_1.present();
-        }
-        else {
-            this.viewCtrl.dismiss(this.placeSelected);
-        }
-    };
-    PlaceSelectingPage.prototype.updatePlace = function () {
-        var _this = this;
-        this.storageService.patchPublication(this.publicationId, { places: [this.placeSelected] }).subscribe(function (patchedPublication) {
-            _this.commons.presentToast(_this.commons.translate(["placeUpdated"]));
-            _this.viewCtrl.dismiss(_this.placeSelected);
-        });
-    };
-    return PlaceSelectingPage;
-}());
-PlaceSelectingPage = __decorate([
-    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
-        selector: 'page-place-selecting',template:/*ion-inline-start:"C:\Users\Matias\WebstormProjects\turinsta\src\pages\place-selecting\place-selecting.html"*/'<!--\n  Generated template for the PlaceSelectingPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-header>\n  <ion-navbar>\n    <ion-item no-lines style="text-align: center">\n      <button item-start ion-button clear (click)="dismissPlaceSelecting()">\n        <ion-icon name="close"></ion-icon>\n      </button>\n      <button item-end *ngIf="placeSelected" ion-button clear (click)="confirmSave()">\n        <ion-icon name="checkmark" color="success"></ion-icon>\n      </button>\n    </ion-item>\n  </ion-navbar>\n</ion-header>\n<ion-content padding>\n  <place-filter [placeSelecting]=true (placeSelected)="setPlace($event)"></place-filter>\n</ion-content>\n'/*ion-inline-end:"C:\Users\Matias\WebstormProjects\turinsta\src\pages\place-selecting\place-selecting.html"*/,
-    }),
-    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* NavParams */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["s" /* ViewController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["b" /* AlertController */], __WEBPACK_IMPORTED_MODULE_2__providers_storage_storage__["a" /* StorageProvider */], __WEBPACK_IMPORTED_MODULE_3__providers_commons_commons__["a" /* CommonsProvider */]])
-], PlaceSelectingPage);
-
-//# sourceMappingURL=place-selecting.js.map
-
-/***/ }),
-
-/***/ 176:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return PublicationActionsMenuPage; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(5);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_storage_storage__ = __webpack_require__(13);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_commons_commons__ = __webpack_require__(9);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__account_account__ = __webpack_require__(77);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__places_places__ = __webpack_require__(107);
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-
-
-
-
-
-
-/**
- * Generated class for the PublicationActionsMenuPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
-var PublicationActionsMenuPage = (function () {
-    function PublicationActionsMenuPage(navCtrl, navParams, viewCtrl, storageService, commons, actionSheetCtrl, modalCtrl) {
-        this.navCtrl = navCtrl;
-        this.navParams = navParams;
-        this.viewCtrl = viewCtrl;
-        this.storageService = storageService;
-        this.commons = commons;
-        this.actionSheetCtrl = actionSheetCtrl;
-        this.modalCtrl = modalCtrl;
-        this.followedPublication = null;
-        this.followedUser = null;
-        this.publication = null;
-        this.user = null;
-    }
-    PublicationActionsMenuPage.prototype.ionViewDidLoad = function () {
-        console.log('ionViewDidLoad PublicationActionsMenuPage');
-        this.followedPublication = this.navParams.get("followedPublication");
-        this.followedUser = this.navParams.get("followedUser");
-        this.publication = this.navParams.get("publication");
-        this.user = this.navParams.get("user");
-    };
-    PublicationActionsMenuPage.prototype.checkNotOwner = function () {
-        if (this.user) {
-            return this.user._id != this.commons.getUserId();
-        }
-        return false;
-    };
-    PublicationActionsMenuPage.prototype.handleFavorite = function () {
-        var _this = this;
-        if (!this.followedPublication) {
-            this.storageService.addPublicationFollower({ publication: this.publication, user: this.commons.getUserId() }).subscribe(function (favoriteAdded) {
-                _this.commons.presentToast(_this.commons.translate(["favoritePublicationAdded"], { ":user": _this.user.username }));
-                _this.viewCtrl.dismiss();
-            });
-        }
-        else {
-            this.storageService.removePublicationFollower(this.commons.getUserId(), this.publication).subscribe(function (favoriteRemoved) {
-                _this.commons.presentToast(_this.commons.translate(["favoritePublicationDeleted"], { ":user": _this.user.username }));
-                _this.viewCtrl.dismiss();
-            });
-        }
-    };
-    PublicationActionsMenuPage.prototype.handleUser = function () {
-        var _this = this;
-        if (!this.followedUser) {
-            this.storageService.addFollower({ followed: this.user._id, follower: this.commons.getUserId() }).subscribe(function (followerAdded) {
-                _this.commons.presentToast(_this.commons.translate(["userFollowerAdded"], { ":user": _this.user.username }));
-                _this.viewCtrl.dismiss();
-            });
-        }
-        else {
-            this.storageService.removeFollower(this.user._id, this.commons.getUserId()).subscribe(function (followedRemoved) {
-                _this.commons.presentToast(_this.commons.translate(["userFollowerDeleted"], { ":user": _this.user.username }));
-                _this.viewCtrl.dismiss();
-            });
-        }
-    };
-    PublicationActionsMenuPage.prototype.locatePlace = function () {
-        var placesPage = this.modalCtrl.create(__WEBPACK_IMPORTED_MODULE_5__places_places__["a" /* PlacesPage */], { publication: this.publication });
-        placesPage.present();
-    };
-    PublicationActionsMenuPage.prototype.presentShareActionSheet = function () {
-        var _this = this;
-        var actionSheet = this.actionSheetCtrl.create({
-            title: this.commons.translate(["shareWith"]),
-            buttons: [
-                {
-                    text: 'Instagram',
-                    icon: 'logo-instagram',
-                    handler: function () {
-                        _this.sharePublication();
-                    }
-                },
-                {
-                    text: 'Facebook',
-                    icon: 'logo-facebook',
-                    handler: function () {
-                        _this.sharePublication();
-                    }
-                },
-                {
-                    text: 'Twitter',
-                    icon: 'logo-twitter',
-                    handler: function () {
-                        _this.sharePublication();
-                    }
-                },
-                {
-                    text: 'Cancelar',
-                    role: 'cancel',
-                    handler: function () {
-                        console.log('Cancel clicked');
-                    }
-                }
-            ]
-        });
-        actionSheet.present();
-    };
-    PublicationActionsMenuPage.prototype.sharePublication = function () {
-        alert("Compartiendo publicación...");
-    };
-    PublicationActionsMenuPage.prototype.viewUser = function () {
-        var _this = this;
-        var publicationWritingModal = this.modalCtrl.create(__WEBPACK_IMPORTED_MODULE_4__account_account__["a" /* AccountPage */], { user: this.user._id });
-        publicationWritingModal.present().then(function () {
-            _this.viewCtrl.dismiss();
-        });
-    };
-    PublicationActionsMenuPage.prototype.denunciate = function () {
-        var _this = this;
-        this.storageService.createComplaint({ reporter: this.commons.getUserId(), reported: this.user._id, publication: this.publication }).subscribe(function () {
-            _this.commons.presentToast(_this.commons.translate(["publicationReportSuccess"]));
-            _this.viewCtrl.dismiss();
-        });
-    };
-    PublicationActionsMenuPage.prototype.getCaption = function (captionKey) {
-        return this.commons.translate([captionKey]);
-    };
-    return PublicationActionsMenuPage;
-}());
-PublicationActionsMenuPage = __decorate([
-    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
-        selector: 'page-publication-actions-menu',template:/*ion-inline-start:"C:\Users\Matias\WebstormProjects\turinsta\src\pages\publication-actions-menu\publication-actions-menu.html"*/'<!--\n  Generated template for the PublicationActionsMenuPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-content no-padding>\n  <ion-list>\n    <ion-item *ngIf="checkNotOwner()" (click)="handleFavorite()">\n      <ion-icon item-start name="heart" color="danger"></ion-icon>\n      <p *ngIf="!followedPublication">{{getCaption("publicationActionAddToFavorites")}}</p>\n      <p *ngIf="followedPublication">{{getCaption("publicationActionRemoveFromFavorites")}}</p>\n    </ion-item>\n    <ion-item (click)="locatePlace()">\n      <ion-icon item-start class="publication-icon" name="pin" color="secondary"></ion-icon>\n      <p>{{getCaption("publicationActionLocateInMap")}}</p>\n    </ion-item>\n    <ion-item (click)="presentShareActionSheet()">\n      <ion-icon item-start class="publication-icon" name="share" color="warning"></ion-icon>\n      <p>{{getCaption("publicationActionShare")}}</p>\n    </ion-item>\n    <ion-item *ngIf="checkNotOwner()" (click)="handleUser()">\n      <ion-icon item-start name="person-add" color="success"></ion-icon>\n      <p *ngIf="!followedUser">{{getCaption("publicationActionFollowUser")}}</p>\n      <p *ngIf="followedUser">{{getCaption("publicationActionStopFollowUser")}}</p>\n    </ion-item>\n    <ion-item *ngIf="checkNotOwner()" (click)="viewUser()">\n      <ion-icon item-start name="contact" color="primary"></ion-icon>\n      <p>{{getCaption("publicationActionSeeUser")}}</p>\n    </ion-item>\n    <ion-item *ngIf="checkNotOwner()" (click)="denunciate()">\n      <ion-icon item-start name="alert" color="danger"></ion-icon>\n      <p>{{getCaption("publicationActionReportPublication")}}</p>\n    </ion-item>\n  </ion-list>\n</ion-content>\n'/*ion-inline-end:"C:\Users\Matias\WebstormProjects\turinsta\src\pages\publication-actions-menu\publication-actions-menu.html"*/,
-    }),
-    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* NavParams */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["s" /* ViewController */], __WEBPACK_IMPORTED_MODULE_2__providers_storage_storage__["a" /* StorageProvider */], __WEBPACK_IMPORTED_MODULE_3__providers_commons_commons__["a" /* CommonsProvider */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* ActionSheetController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* ModalController */]])
-], PublicationActionsMenuPage);
-
-//# sourceMappingURL=publication-actions-menu.js.map
-
-/***/ }),
-
-/***/ 177:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return PublicationOrderByPage; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(5);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__ngrx_store__ = __webpack_require__(23);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_reducers_publication_reducer__ = __webpack_require__(54);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__providers_commons_commons__ = __webpack_require__(9);
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-
-
-
-
-
-/**
- * Generated class for the PublicationOrderByPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
-var PublicationOrderByPage = (function () {
-    function PublicationOrderByPage(navCtrl, navParams, viewCtrl, store, commons) {
-        this.navCtrl = navCtrl;
-        this.navParams = navParams;
-        this.viewCtrl = viewCtrl;
-        this.store = store;
-        this.commons = commons;
-        this.sortValue = null;
-    }
-    PublicationOrderByPage.prototype.ionViewDidLoad = function () {
-        var _this = this;
-        console.log('ionViewDidLoad PublicationOrderByPage');
-        this.store.select("publications").subscribe(function (state) {
-            _this.sortValue = state.sort.field;
-        });
-    };
-    PublicationOrderByPage.prototype.close = function (order) {
-        this.store.dispatch(Object(__WEBPACK_IMPORTED_MODULE_3__providers_reducers_publication_reducer__["h" /* setSort */])(order));
-        this.viewCtrl.dismiss();
-    };
-    PublicationOrderByPage.prototype.getCaption = function (captionKey) {
-        return this.commons.translate([captionKey]);
-    };
-    return PublicationOrderByPage;
-}());
-PublicationOrderByPage = __decorate([
-    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
-        selector: 'page-publication-order-by',template:/*ion-inline-start:"C:\Users\Matias\WebstormProjects\turinsta\src\pages\publication-order-by\publication-order-by.html"*/'<!--\n  Generated template for the PublicationOrderByPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-content no-padding>\n  <ion-list radio-group [(ngModel)]="sortValue">\n    <ion-list-header>{{getCaption("orderBy")}}</ion-list-header>\n    <ion-item>\n      <ion-label>{{getCaption("orderByMostRecent")}}</ion-label>\n      <ion-radio value="publication.timestamps.created" (click)="close({field: \'publication.timestamps.created\', way: -1})"></ion-radio>\n    </ion-item>\n    <ion-item>\n      <ion-label>{{getCaption("orderByMostPopulated")}}</ion-label>\n      <ion-radio value="publication.followers" (click)="close({field: \'publication.followers\', way: -1})"></ion-radio>\n    </ion-item>\n    <ion-item>\n      <ion-label>{{getCaption("orderByMostQualified")}}</ion-label>\n      <ion-radio value="publication.score" (click)="close({field: \'publication.score\', way: -1})"></ion-radio>\n    </ion-item>\n    <ion-item>\n      <ion-label>{{getCaption("orderByMostPopularUsers")}}</ion-label>\n      <ion-radio value="user.followers" (click)="close({field: \'user.followers\', way: -1})"></ion-radio>\n    </ion-item>\n    <ion-item>\n      <ion-label>{{getCaption("orderByMostQualifiedUsers")}}</ion-label>\n      <ion-radio value="user.score" (click)="close({field: \'user.score\', way: -1})"></ion-radio>\n    </ion-item>\n  </ion-list>\n</ion-content>\n'/*ion-inline-end:"C:\Users\Matias\WebstormProjects\turinsta\src\pages\publication-order-by\publication-order-by.html"*/,
-    }),
-    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* NavParams */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["s" /* ViewController */], __WEBPACK_IMPORTED_MODULE_2__ngrx_store__["h" /* Store */], __WEBPACK_IMPORTED_MODULE_4__providers_commons_commons__["a" /* CommonsProvider */]])
-], PublicationOrderByPage);
-
-//# sourceMappingURL=publication-order-by.js.map
-
-/***/ }),
-
-/***/ 178:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return PublicationUserFilterPage; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(5);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__ngrx_store__ = __webpack_require__(23);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_reducers_publication_reducer__ = __webpack_require__(54);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__providers_commons_commons__ = __webpack_require__(9);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__providers_storage_storage__ = __webpack_require__(13);
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-
-
-
-
-
-
-/**
- * Generated class for the PublicationUserFilterPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
-var PublicationUserFilterPage = (function () {
-    function PublicationUserFilterPage(navCtrl, navParams, viewCtrl, store, commons, storage) {
-        this.navCtrl = navCtrl;
-        this.navParams = navParams;
-        this.viewCtrl = viewCtrl;
-        this.store = store;
-        this.commons = commons;
-        this.storage = storage;
-        this.userFilter = null;
-        this.customUser = null;
-        this.loggedUser = null;
-        this.favorites = [];
-        this.userPath = null;
-        this.publicationPath = null;
-        this.filter = null;
-        this.dispatchName = null;
-        this.KEYS = {};
-    }
-    PublicationUserFilterPage.prototype.ionViewWillEnter = function () {
-        var _this = this;
-        this.store.select("publications").first().subscribe(function (state) {
-            if (_this.filter) {
-                var userFilter = eval("state." + _this.filter);
-                if (userFilter) {
-                    if (userFilter.operation == "LIKE") {
-                        _this.customUser = userFilter.value;
-                        _this.userFilter = userFilter.value;
-                    }
-                    else {
-                        _this.userFilter = userFilter.key;
-                    }
-                }
-            }
-        });
-    };
-    PublicationUserFilterPage.prototype.ionViewWillLoad = function () {
-        var _this = this;
-        this.loggedUser = this.commons.getUserId();
-        this.userPath = this.navParams.get("userPath");
-        this.publicationPath = this.navParams.get("publicationPath");
-        this.filter = this.navParams.get("filter");
-        this.dispatchName = this.navParams.get("dispatchName");
-        this.storage.getFavorites(this.loggedUser, 0).subscribe(function (favorites) {
-            _this.favorites = favorites;
-        });
-        this.KEYS = {
-            ALL: null,
-            FOLLOWERS: this.userPath + '.followers',
-            OWN: this.userPath + '._id',
-            FAVORITES: this.publicationPath + '._id',
-        };
-        console.log('ionViewDidLoad PublicationUserFilterPage');
-    };
-    PublicationUserFilterPage.prototype.close = function (filter) {
-        if (Boolean(filter)) {
-            this.store.dispatch(Object(__WEBPACK_IMPORTED_MODULE_3__providers_reducers_publication_reducer__["g" /* setFilter */])(this.dispatchName, filter));
-        }
-        else {
-            this.store.dispatch(Object(__WEBPACK_IMPORTED_MODULE_3__providers_reducers_publication_reducer__["g" /* setFilter */])(this.dispatchName, null));
-        }
-        this.viewCtrl.dismiss();
-    };
-    PublicationUserFilterPage.prototype.getCaption = function (captionKey) {
-        return this.commons.translate([captionKey]);
-    };
-    return PublicationUserFilterPage;
-}());
-PublicationUserFilterPage = __decorate([
-    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
-        selector: 'page-publication-user-filter',template:/*ion-inline-start:"C:\Users\Matias\WebstormProjects\turinsta\src\pages\publication-user-filter\publication-user-filter.html"*/'<!--\n  Generated template for the PublicationUserFilterPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n\n<ion-content no-padding>\n  <ion-list radio-group [(ngModel)]="userFilter">\n    <ion-list-header>{{getCaption("userFilterVisualize")}}</ion-list-header>\n    <ion-item>\n      <ion-label>{{getCaption("userFilterAll")}}</ion-label>\n      <ion-radio value="{{KEYS.ALL}}" (click)="close()"></ion-radio>\n    </ion-item>\n    <ion-item>\n      <ion-label>{{getCaption("userFilterFollowed")}}</ion-label>\n      <ion-radio value="{{KEYS.FOLLOWERS}}" (click)="close({key: userPath + \'.followers\', value: loggedUser, operation: \'CONTAINS\'})"></ion-radio>\n    </ion-item>\n    <ion-item>\n      <ion-label>{{getCaption("userFilterOwn")}}</ion-label>\n      <ion-radio value="{{KEYS.OWN}}" (click)="close({key: userPath + \'._id\', value: loggedUser, operation: \'EQUAL\'})"></ion-radio>\n    </ion-item>\n    <ion-item>\n      <ion-label>{{getCaption("publicationFilterFavorite")}}</ion-label>\n      <ion-radio value="{{KEYS.FAVORITES}}" (click)="close({key: publicationPath + \'._id\', value: favorites, operation: \'IN\'})"></ion-radio>\n    </ion-item>\n    <ion-item>\n      <ion-input item-start [(ngModel)]="customUser" placeholder="{{getCaption(\'userFilterByName\')}}"></ion-input>\n      <button item-end ion-button (click)="close({key: userPath + \'.username\', value: customUser, operation: \'LIKE\'})" icon-only clear><ion-icon name="ios-arrow-dropright" color="primary"></ion-icon></button>\n    </ion-item>\n  </ion-list>\n</ion-content>\n'/*ion-inline-end:"C:\Users\Matias\WebstormProjects\turinsta\src\pages\publication-user-filter\publication-user-filter.html"*/,
-    }),
-    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* NavParams */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["s" /* ViewController */], __WEBPACK_IMPORTED_MODULE_2__ngrx_store__["h" /* Store */], __WEBPACK_IMPORTED_MODULE_4__providers_commons_commons__["a" /* CommonsProvider */], __WEBPACK_IMPORTED_MODULE_5__providers_storage_storage__["a" /* StorageProvider */]])
-], PublicationUserFilterPage);
-
-//# sourceMappingURL=publication-user-filter.js.map
-
-/***/ }),
-
-/***/ 179:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ActivitiesPage; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(5);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_commons_commons__ = __webpack_require__(9);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_storage_storage__ = __webpack_require__(13);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__publication_writing_publication_writing__ = __webpack_require__(51);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__account_account__ = __webpack_require__(77);
-var __assign = (this && this.__assign) || Object.assign || function(t) {
-    for (var s, i = 1, n = arguments.length; i < n; i++) {
-        s = arguments[i];
-        for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
-            t[p] = s[p];
-    }
-    return t;
-};
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-
-
-
-
-
-
-/**
- * Generated class for the ActivitiesPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
-var ActivitiesPage = (function () {
-    function ActivitiesPage(navCtrl, navParams, commons, storageService, modalCtrl) {
-        this.navCtrl = navCtrl;
-        this.navParams = navParams;
-        this.commons = commons;
-        this.storageService = storageService;
-        this.modalCtrl = modalCtrl;
-        this.activities = [];
-        this.directionFilter = { key: 'direction', value: 'IN', operation: 'EQUAL' };
-        this.IN_LIMIT = 50;
-        this.OUT_LIMIT = 50;
-        this.unseenActivitiesCount = null;
-    }
-    ActivitiesPage.prototype.initializeValues = function () {
-        this.directionFilter = { key: 'direction', value: 'IN', operation: 'EQUAL' };
-        this.IN_LIMIT = 50;
-        this.OUT_LIMIT = 50;
-        this.unseenActivitiesCount = this.navParams.get('unseenActivitiesCount') ? this.navParams.get('unseenActivitiesCount') : 0;
-        this.getInActivities();
-    };
-    ActivitiesPage.prototype.getOutActivities = function () {
-        var _this = this;
-        this.directionFilter.value = 'OUT';
-        this.storageService.getActivities(this.commons.getUserId(), [this.directionFilter], this.OUT_LIMIT).subscribe(function (activities) {
-            _this.activities = activities;
-        });
-    };
-    ;
-    ActivitiesPage.prototype.getInActivities = function () {
-        var _this = this;
-        this.directionFilter.value = 'IN';
-        this.storageService.getActivities(this.commons.getUserId(), [this.directionFilter], this.IN_LIMIT).subscribe(function (activities) {
-            _this.activities = activities;
-        });
-    };
-    ;
-    ActivitiesPage.prototype.emptyActivities = function (direction) {
-        return !this.activities.some(function (activity) {
-            return activity.direction == direction;
-        });
-    };
-    ActivitiesPage.prototype.openPublication = function (publication) {
-        var _this = this;
-        this.storageService.getPublications(1, [{ key: "_id", operation: "EQUAL", value: publication._id }], { field: "publication.timestamps.created", way: -1 }).subscribe(function (publication) {
-            var publicationWritingModal = _this.modalCtrl.create(__WEBPACK_IMPORTED_MODULE_4__publication_writing_publication_writing__["a" /* PublicationWritingPage */], { user: publication[0].user, publication: publication[0].publication, experiences: publication[0].experiences, comments: publication[0].comments });
-            publicationWritingModal.present();
-        });
-    };
-    ActivitiesPage.prototype.openUser = function (user) {
-        var publicationWritingModal = this.modalCtrl.create(__WEBPACK_IMPORTED_MODULE_5__account_account__["a" /* AccountPage */], { user: user });
-        publicationWritingModal.present();
-    };
-    ActivitiesPage.prototype.ionViewWillEnter = function () {
-        this.initializeValues();
-    };
-    ActivitiesPage.prototype.ionViewDidLoad = function () {
-        console.log('ionViewDidLoad ActivitiesPage');
-    };
-    ActivitiesPage.prototype.getActivityCaption = function (caption, user, params) {
-        if (params) {
-            return this.commons.translate([caption], __assign({}, params, { ':user': user }));
-        }
-        else {
-            return this.commons.translate([caption], {});
-        }
-    };
-    ActivitiesPage.prototype.getAntiquity = function (date) {
-        return this.commons.getAntiquity(date);
-    };
-    ActivitiesPage.prototype.getCaption = function (captionKey) {
-        return this.commons.translate([captionKey]);
-    };
-    return ActivitiesPage;
-}());
-ActivitiesPage = __decorate([
-    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
-        selector: 'page-activities',template:/*ion-inline-start:"C:\Users\Matias\WebstormProjects\turinsta\src\pages\activities\activities.html"*/'<!--\n  Generated template for the ActivitiesPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-header>\n  <ion-toolbar>\n    <ion-segment [(ngModel)]="directionFilter.value" color="secondary">\n      <ion-segment-button value="IN" (click)="getInActivities()">\n        <ion-icon name="cloud-download"></ion-icon>\n      </ion-segment-button>\n      <ion-segment-button value="OUT" (click)="getOutActivities()">\n        <ion-icon name="cloud-upload"></ion-icon>\n      </ion-segment-button>\n    </ion-segment>\n  </ion-toolbar>\n</ion-header>\n<ion-content no-padding>\n  <div [ngSwitch]="directionFilter.value">\n    <div *ngSwitchCase="\'IN\'" style="text-align: center">\n      <ion-list *ngSwitchCase="\'IN\'">\n        <ion-item *ngFor="let activity of activities | containsFilter:{\'key\':\'direction\', \'value\':\'IN\'}; let i=index" [ngClass]="{\'newActivity\': i<unseenActivitiesCount}">\n          <ion-avatar class="in-activity-avatar" item-start (click)="openUser(activity.relatedUsers[0]._id)">\n            <img src="{{activity.relatedUsers[0].avatar}}">\n          </ion-avatar>\n          <p class="publication-important-text" text-wrap>{{getActivityCaption(activity.caption, activity.relatedUsers[0].username,activity.params)}}</p>\n          <ion-note>{{getAntiquity(activity.timestamps.created)}}</ion-note>\n          <ion-thumbnail item-end (click)="openPublication(activity.publication)">\n            <img *ngIf="activity.publication" src="{{activity.publication.images[0].url}}">\n          </ion-thumbnail>\n        </ion-item>\n      </ion-list>\n      <empty-content *ngIf="emptyActivities(\'IN\')" [message]="getCaption(\'inActivityListEmpty\')"></empty-content>\n    </div>\n    <div *ngSwitchCase="\'OUT\'" style="text-align: center">\n      <ion-list>\n        <ion-item *ngFor="let activity of activities | containsFilter:{\'key\':\'direction\', \'value\':\'OUT\'}">\n          <p class="publication-important-text" text-wrap>{{getActivityCaption(activity.caption,activity.relatedUsers.length? activity.relatedUsers[0].username : \'\',activity.params)}}</p>\n          <ion-note>{{getAntiquity(activity.timestamps.created)}}</ion-note>\n          <ion-thumbnail *ngIf="activity.publication" item-end (click)="openPublication(activity.publication)">\n            <img src="{{activity.publication.images[0].url}}">\n          </ion-thumbnail>\n          <ion-avatar class="out-activity-avatar" *ngIf="!activity.publication && activity.relatedUsers" item-end (click)="openUser(activity.relatedUsers[0]._id)">\n            <img src="{{activity.relatedUsers[0].avatar}}">\n          </ion-avatar>\n        </ion-item>\n      </ion-list>\n      <empty-content *ngIf="emptyActivities(\'OUT\')" [message]="getCaption(\'outActivityListEmpty\')"></empty-content>\n    </div>\n  </div>\n</ion-content>\n'/*ion-inline-end:"C:\Users\Matias\WebstormProjects\turinsta\src\pages\activities\activities.html"*/,
-    }),
-    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* NavParams */], __WEBPACK_IMPORTED_MODULE_2__providers_commons_commons__["a" /* CommonsProvider */],
-        __WEBPACK_IMPORTED_MODULE_3__providers_storage_storage__["a" /* StorageProvider */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* ModalController */]])
-], ActivitiesPage);
-
-//# sourceMappingURL=activities.js.map
-
-/***/ }),
-
-/***/ 180:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return UsernameWritingPage; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(5);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_commons_commons__ = __webpack_require__(9);
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-
-
-
-/**
- * Generated class for the UsernameWritingPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
-var UsernameWritingPage = (function () {
-    function UsernameWritingPage(navCtrl, navParams, viewCtrl, alertCtrl, commons) {
-        this.navCtrl = navCtrl;
-        this.navParams = navParams;
-        this.viewCtrl = viewCtrl;
-        this.alertCtrl = alertCtrl;
-        this.commons = commons;
-        this.username = null;
-    }
-    UsernameWritingPage.prototype.ionViewDidLoad = function () {
-        this.username = this.navParams.get("username");
-        console.log('ionViewDidLoad UsernameWritingPage');
-    };
-    UsernameWritingPage.prototype.dismissUsernameWriting = function () {
-        this.viewCtrl.dismiss();
-    };
-    UsernameWritingPage.prototype.checkUsername = function () {
-        if (this.username) {
-            return true;
-        }
-        else {
-            this.commons.presentToast(this.commons.translate(["invalidUsername"]));
-        }
-    };
-    UsernameWritingPage.prototype.confirmSave = function () {
-        var _this = this;
-        if (this.checkUsername()) {
-            var confirm_1 = this.alertCtrl.create({
-                title: this.commons.translate(['confirmOperation']),
-                message: this.commons.translate(['confirmEditPlace']),
-                buttons: [
-                    {
-                        text: this.commons.translate(['accept']),
-                        handler: function () {
-                            _this.viewCtrl.dismiss(_this.username);
-                        }
-                    },
-                    {
-                        text: this.commons.translate(['cancel']),
-                        handler: function () {
-                        }
-                    }
-                ]
-            });
-            confirm_1.present();
-        }
-    };
-    UsernameWritingPage.prototype.getCaption = function (captionKey) {
-        return this.commons.translate([captionKey]);
-    };
-    return UsernameWritingPage;
-}());
-UsernameWritingPage = __decorate([
-    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
-        selector: 'page-username-writing',template:/*ion-inline-start:"C:\Users\Matias\WebstormProjects\turinsta\src\pages\username-writing\username-writing.html"*/'<!--\n  Generated template for the UsernameWritingPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-header>\n  <ion-navbar>\n    <ion-item no-lines style="text-align: center">\n      <button item-start ion-button clear (click)="dismissUsernameWriting()">\n        <ion-icon name="close"></ion-icon>\n      </button>\n      <button *ngIf="username" item-end ion-button clear (click)="confirmSave()">\n        <ion-icon name="checkmark" color="success"></ion-icon>\n      </button>\n    </ion-item>\n  </ion-navbar>\n</ion-header>\n<ion-content no-padding style="height: 100%; width: 100%">\n  <ion-item>\n    <ion-label stacked>{{getCaption("username")}}</ion-label>\n    <ion-textarea [(ngModel)]="username" style="width: 100%"></ion-textarea>\n  </ion-item>\n</ion-content>\n'/*ion-inline-end:"C:\Users\Matias\WebstormProjects\turinsta\src\pages\username-writing\username-writing.html"*/,
-    }),
-    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* NavParams */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["s" /* ViewController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["b" /* AlertController */], __WEBPACK_IMPORTED_MODULE_2__providers_commons_commons__["a" /* CommonsProvider */]])
-], UsernameWritingPage);
-
-//# sourceMappingURL=username-writing.js.map
-
-/***/ }),
-
-/***/ 181:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AccountActionsMenuPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(5);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_commons_commons__ = __webpack_require__(9);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_commons_commons__ = __webpack_require__(8);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_storage_storage__ = __webpack_require__(13);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_ng_socket_io__ = __webpack_require__(76);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_ng_socket_io__ = __webpack_require__(74);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_ng_socket_io___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_ng_socket_io__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__chat_chat__ = __webpack_require__(59);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__chat_chat__ = __webpack_require__(60);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__ngrx_store__ = __webpack_require__(23);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__username_writing_username_writing__ = __webpack_require__(180);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__username_writing_username_writing__ = __webpack_require__(174);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__ionic_native_image_picker__ = __webpack_require__(89);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__ionic_native_file_transfer__ = __webpack_require__(90);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -2135,6 +1306,853 @@ AccountActionsMenuPage = __decorate([
 
 /***/ }),
 
+/***/ 174:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return UsernameWritingPage; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_commons_commons__ = __webpack_require__(8);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+/**
+ * Generated class for the UsernameWritingPage page.
+ *
+ * See https://ionicframework.com/docs/components/#navigation for more info on
+ * Ionic pages and navigation.
+ */
+var UsernameWritingPage = (function () {
+    function UsernameWritingPage(navCtrl, navParams, viewCtrl, alertCtrl, commons) {
+        this.navCtrl = navCtrl;
+        this.navParams = navParams;
+        this.viewCtrl = viewCtrl;
+        this.alertCtrl = alertCtrl;
+        this.commons = commons;
+        this.username = null;
+    }
+    UsernameWritingPage.prototype.ionViewDidLoad = function () {
+        this.username = this.navParams.get("username");
+        console.log('ionViewDidLoad UsernameWritingPage');
+    };
+    UsernameWritingPage.prototype.dismissUsernameWriting = function () {
+        this.viewCtrl.dismiss();
+    };
+    UsernameWritingPage.prototype.checkUsername = function () {
+        if (this.username) {
+            return true;
+        }
+        else {
+            this.commons.presentToast(this.commons.translate(["invalidUsername"]));
+        }
+    };
+    UsernameWritingPage.prototype.confirmSave = function () {
+        var _this = this;
+        if (this.checkUsername()) {
+            var confirm_1 = this.alertCtrl.create({
+                title: this.commons.translate(['confirmOperation']),
+                message: this.commons.translate(['confirmEditPlace']),
+                buttons: [
+                    {
+                        text: this.commons.translate(['accept']),
+                        handler: function () {
+                            _this.viewCtrl.dismiss(_this.username);
+                        }
+                    },
+                    {
+                        text: this.commons.translate(['cancel']),
+                        handler: function () {
+                        }
+                    }
+                ]
+            });
+            confirm_1.present();
+        }
+    };
+    UsernameWritingPage.prototype.getCaption = function (captionKey) {
+        return this.commons.translate([captionKey]);
+    };
+    return UsernameWritingPage;
+}());
+UsernameWritingPage = __decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
+        selector: 'page-username-writing',template:/*ion-inline-start:"C:\Users\Matias\WebstormProjects\turinsta\src\pages\username-writing\username-writing.html"*/'<!--\n  Generated template for the UsernameWritingPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-header>\n  <ion-navbar>\n    <ion-item no-lines style="text-align: center">\n      <button item-start ion-button clear (click)="dismissUsernameWriting()">\n        <ion-icon name="close"></ion-icon>\n      </button>\n      <button *ngIf="username" item-end ion-button clear (click)="confirmSave()">\n        <ion-icon name="checkmark" color="success"></ion-icon>\n      </button>\n    </ion-item>\n  </ion-navbar>\n</ion-header>\n<ion-content no-padding style="height: 100%; width: 100%">\n  <ion-item>\n    <ion-label stacked>{{getCaption("username")}}</ion-label>\n    <ion-textarea [(ngModel)]="username" style="width: 100%"></ion-textarea>\n  </ion-item>\n</ion-content>\n'/*ion-inline-end:"C:\Users\Matias\WebstormProjects\turinsta\src\pages\username-writing\username-writing.html"*/,
+    }),
+    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* NavParams */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["s" /* ViewController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["b" /* AlertController */], __WEBPACK_IMPORTED_MODULE_2__providers_commons_commons__["a" /* CommonsProvider */]])
+], UsernameWritingPage);
+
+//# sourceMappingURL=username-writing.js.map
+
+/***/ }),
+
+/***/ 175:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ActivitiesPage; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_commons_commons__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_storage_storage__ = __webpack_require__(13);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__publication_writing_publication_writing__ = __webpack_require__(51);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__account_account__ = __webpack_require__(59);
+var __assign = (this && this.__assign) || Object.assign || function(t) {
+    for (var s, i = 1, n = arguments.length; i < n; i++) {
+        s = arguments[i];
+        for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+            t[p] = s[p];
+    }
+    return t;
+};
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+
+
+
+/**
+ * Generated class for the ActivitiesPage page.
+ *
+ * See https://ionicframework.com/docs/components/#navigation for more info on
+ * Ionic pages and navigation.
+ */
+var ActivitiesPage = (function () {
+    function ActivitiesPage(navCtrl, navParams, commons, storageService, modalCtrl) {
+        this.navCtrl = navCtrl;
+        this.navParams = navParams;
+        this.commons = commons;
+        this.storageService = storageService;
+        this.modalCtrl = modalCtrl;
+        this.activities = [];
+        this.directionFilter = { key: 'direction', value: 'IN', operation: 'EQUAL' };
+        this.IN_LIMIT = 50;
+        this.OUT_LIMIT = 50;
+        this.unseenActivitiesCount = null;
+    }
+    ActivitiesPage.prototype.initializeValues = function () {
+        this.directionFilter = { key: 'direction', value: 'IN', operation: 'EQUAL' };
+        this.IN_LIMIT = 50;
+        this.OUT_LIMIT = 50;
+        this.unseenActivitiesCount = this.navParams.get('unseenActivitiesCount') ? this.navParams.get('unseenActivitiesCount') : 0;
+        this.getInActivities();
+    };
+    ActivitiesPage.prototype.getOutActivities = function () {
+        var _this = this;
+        this.directionFilter.value = 'OUT';
+        this.storageService.getActivities(this.commons.getUserId(), [this.directionFilter], this.OUT_LIMIT).subscribe(function (activities) {
+            _this.activities = activities;
+        });
+    };
+    ;
+    ActivitiesPage.prototype.getInActivities = function () {
+        var _this = this;
+        this.directionFilter.value = 'IN';
+        this.storageService.getActivities(this.commons.getUserId(), [this.directionFilter], this.IN_LIMIT).subscribe(function (activities) {
+            _this.activities = activities;
+        });
+    };
+    ;
+    ActivitiesPage.prototype.emptyActivities = function (direction) {
+        return !this.activities.some(function (activity) {
+            return activity.direction == direction;
+        });
+    };
+    ActivitiesPage.prototype.openPublication = function (publication) {
+        var _this = this;
+        this.storageService.getPublications(1, [{ key: "_id", operation: "EQUAL", value: publication._id }], { field: "publication.timestamps.created", way: -1 }).subscribe(function (publication) {
+            var publicationWritingModal = _this.modalCtrl.create(__WEBPACK_IMPORTED_MODULE_4__publication_writing_publication_writing__["a" /* PublicationWritingPage */], { user: publication[0].user, publication: publication[0].publication, experiences: publication[0].experiences, comments: publication[0].comments });
+            publicationWritingModal.present();
+        });
+    };
+    ActivitiesPage.prototype.openUser = function (user) {
+        var publicationWritingModal = this.modalCtrl.create(__WEBPACK_IMPORTED_MODULE_5__account_account__["a" /* AccountPage */], { user: user });
+        publicationWritingModal.present();
+    };
+    ActivitiesPage.prototype.ionViewWillEnter = function () {
+        this.initializeValues();
+    };
+    ActivitiesPage.prototype.ionViewDidLoad = function () {
+        console.log('ionViewDidLoad ActivitiesPage');
+    };
+    ActivitiesPage.prototype.getActivityCaption = function (caption, user, params) {
+        if (params) {
+            return this.commons.translate([caption], __assign({}, params, { ':user': user }));
+        }
+        else {
+            return this.commons.translate([caption], {});
+        }
+    };
+    ActivitiesPage.prototype.getAntiquity = function (date) {
+        return this.commons.getAntiquity(date);
+    };
+    ActivitiesPage.prototype.getCaption = function (captionKey) {
+        return this.commons.translate([captionKey]);
+    };
+    return ActivitiesPage;
+}());
+ActivitiesPage = __decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
+        selector: 'page-activities',template:/*ion-inline-start:"C:\Users\Matias\WebstormProjects\turinsta\src\pages\activities\activities.html"*/'<!--\n  Generated template for the ActivitiesPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-header>\n  <ion-toolbar>\n    <ion-segment [(ngModel)]="directionFilter.value" color="secondary">\n      <ion-segment-button value="IN" (click)="getInActivities()">\n        <ion-icon name="cloud-download"></ion-icon>\n      </ion-segment-button>\n      <ion-segment-button value="OUT" (click)="getOutActivities()">\n        <ion-icon name="cloud-upload"></ion-icon>\n      </ion-segment-button>\n    </ion-segment>\n  </ion-toolbar>\n</ion-header>\n<ion-content no-padding>\n  <div [ngSwitch]="directionFilter.value">\n    <div *ngSwitchCase="\'IN\'" style="text-align: center">\n      <ion-list *ngSwitchCase="\'IN\'">\n        <ion-item *ngFor="let activity of activities | containsFilter:{\'key\':\'direction\', \'value\':\'IN\'}; let i=index" [ngClass]="{\'newActivity\': i<unseenActivitiesCount}">\n          <ion-avatar class="in-activity-avatar" item-start (click)="openUser(activity.relatedUsers[0]._id)">\n            <img src="{{activity.relatedUsers[0].avatar}}">\n          </ion-avatar>\n          <p class="publication-important-text" text-wrap>{{getActivityCaption(activity.caption, activity.relatedUsers[0].username,activity.params)}}</p>\n          <ion-note>{{getAntiquity(activity.timestamps.created)}}</ion-note>\n          <ion-thumbnail item-end (click)="openPublication(activity.publication)">\n            <img *ngIf="activity.publication" src="{{activity.publication.images[0].url}}">\n          </ion-thumbnail>\n        </ion-item>\n      </ion-list>\n      <empty-content *ngIf="emptyActivities(\'IN\')" [message]="getCaption(\'inActivityListEmpty\')"></empty-content>\n    </div>\n    <div *ngSwitchCase="\'OUT\'" style="text-align: center">\n      <ion-list>\n        <ion-item *ngFor="let activity of activities | containsFilter:{\'key\':\'direction\', \'value\':\'OUT\'}">\n          <p class="publication-important-text" text-wrap>{{getActivityCaption(activity.caption,activity.relatedUsers.length? activity.relatedUsers[0].username : \'\',activity.params)}}</p>\n          <ion-note>{{getAntiquity(activity.timestamps.created)}}</ion-note>\n          <ion-thumbnail *ngIf="activity.publication" item-end (click)="openPublication(activity.publication)">\n            <img src="{{activity.publication.images[0].url}}">\n          </ion-thumbnail>\n          <ion-avatar class="out-activity-avatar" *ngIf="!activity.publication && activity.relatedUsers" item-end (click)="openUser(activity.relatedUsers[0]._id)">\n            <img src="{{activity.relatedUsers[0].avatar}}">\n          </ion-avatar>\n        </ion-item>\n      </ion-list>\n      <empty-content *ngIf="emptyActivities(\'OUT\')" [message]="getCaption(\'outActivityListEmpty\')"></empty-content>\n    </div>\n  </div>\n</ion-content>\n'/*ion-inline-end:"C:\Users\Matias\WebstormProjects\turinsta\src\pages\activities\activities.html"*/,
+    }),
+    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* NavParams */], __WEBPACK_IMPORTED_MODULE_2__providers_commons_commons__["a" /* CommonsProvider */],
+        __WEBPACK_IMPORTED_MODULE_3__providers_storage_storage__["a" /* StorageProvider */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* ModalController */]])
+], ActivitiesPage);
+
+//# sourceMappingURL=activities.js.map
+
+/***/ }),
+
+/***/ 176:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ChatActionsMenuPage; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__inbox_writing_inbox_writing__ = __webpack_require__(104);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_storage_storage__ = __webpack_require__(13);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__providers_commons_commons__ = __webpack_require__(8);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+
+
+/**
+ * Generated class for the ChatActionsMenuPage page.
+ *
+ * See https://ionicframework.com/docs/components/#navigation for more info on
+ * Ionic pages and navigation.
+ */
+var ChatActionsMenuPage = (function () {
+    function ChatActionsMenuPage(navCtrl, navParams, modalCtrl, viewCtrl, alertCtrl, storage, commons) {
+        this.navCtrl = navCtrl;
+        this.navParams = navParams;
+        this.modalCtrl = modalCtrl;
+        this.viewCtrl = viewCtrl;
+        this.alertCtrl = alertCtrl;
+        this.storage = storage;
+        this.commons = commons;
+        this.chat = null;
+    }
+    ChatActionsMenuPage.prototype.ionViewDidLoad = function () {
+        console.log('ionViewDidLoad ChatActionsMenuPage');
+    };
+    ChatActionsMenuPage.prototype.ionViewWillLoad = function () {
+        this.chat = this.navParams.get("chat");
+    };
+    ChatActionsMenuPage.prototype.editChat = function () {
+        var _this = this;
+        var inboxWritingModal = this.modalCtrl.create(__WEBPACK_IMPORTED_MODULE_2__inbox_writing_inbox_writing__["a" /* InboxWritingPage */], { chat: this.chat, multipleSelection: true });
+        inboxWritingModal.present();
+        inboxWritingModal.onDidDismiss(function (updatedInbox) {
+            _this.viewCtrl.dismiss(updatedInbox);
+        });
+    };
+    ChatActionsMenuPage.prototype.confirmLeaveChat = function () {
+        var _this = this;
+        var confirm = this.alertCtrl.create({
+            title: this.commons.translate(['confirmOperation']),
+            message: this.commons.translate(['confirmLeaveGroup']),
+            buttons: [
+                {
+                    text: this.commons.translate(['accept']),
+                    handler: function () {
+                        _this.leaveChat();
+                    }
+                },
+                {
+                    text: this.commons.translate(['cancel']),
+                    handler: function () {
+                    }
+                }
+            ]
+        });
+        confirm.present();
+    };
+    ChatActionsMenuPage.prototype.leaveChat = function () {
+        var _this = this;
+        var participants = this.chat.participants.map(function (user) { return user._id; });
+        participants.splice(participants.indexOf(this.commons.getUserId()), 1);
+        if (participants.length == 0) {
+            this.storage.deleteInbox(this.chat._id).subscribe(function () {
+                _this.commons.presentToast(_this.commons.translate(["leftGroupSuccess"], { ":group": _this.chat.name }));
+                _this.viewCtrl.dismiss('CHAT_DELETED');
+            });
+        }
+        else {
+            this.storage.patchInbox(this.chat._id, { participants: participants }).subscribe(function () {
+                _this.commons.presentToast(_this.commons.translate(["leftGroupSuccess"], { ":group": _this.chat.name }));
+                _this.viewCtrl.dismiss('CHAT_DELETED');
+            });
+        }
+    };
+    ChatActionsMenuPage.prototype.confirmDeleteChat = function () {
+        var _this = this;
+        var confirm = this.alertCtrl.create({
+            title: this.commons.translate(['confirmOperation']),
+            message: this.commons.translate(['confirmDeleteChat']),
+            buttons: [
+                {
+                    text: this.commons.translate(['accept']),
+                    handler: function () {
+                        _this.deleteChat();
+                    }
+                },
+                {
+                    text: this.commons.translate(['cancel']),
+                    handler: function () {
+                    }
+                }
+            ]
+        });
+        confirm.present();
+    };
+    ChatActionsMenuPage.prototype.deleteChat = function () {
+        var _this = this;
+        var participants = this.chat.participants.map(function (user) { return user._id; });
+        participants.splice(participants.indexOf(this.commons.getUserId()), 1);
+        this.storage.deleteInbox(this.chat._id).subscribe(function () {
+            _this.commons.presentToast(_this.commons.translate(["deleteChatSuccess"], { ":user": _this.chat.participants.filter(function (user) {
+                    return user._id != _this.commons.getUserId();
+                })[0].username
+            }));
+            _this.viewCtrl.dismiss('CHAT_DELETED');
+        });
+    };
+    ChatActionsMenuPage.prototype.getCaption = function (captionKey) {
+        return this.commons.translate([captionKey]);
+    };
+    return ChatActionsMenuPage;
+}());
+ChatActionsMenuPage = __decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
+        selector: 'page-chat-actions-menu',template:/*ion-inline-start:"C:\Users\Matias\WebstormProjects\turinsta\src\pages\chat-actions-menu\chat-actions-menu.html"*/'<!--\n  Generated template for the ChatActionsMenuPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-content no-padding>\n  <ion-list>\n    <ion-item *ngIf="chat.group" (click)="editChat()">\n      <ion-icon item-start name="create" color="primary"></ion-icon>\n      <p>{{getCaption("chatActionEdit")}}</p>\n    </ion-item>\n    <ion-item *ngIf="chat.group" (click)="confirmLeaveChat()">\n      <ion-icon item-start name="exit" color="danger"></ion-icon>\n      <p>{{getCaption("chatActionLeftGroup")}}</p>\n    </ion-item>\n    <ion-item *ngIf="!chat.group" (click)="confirmDeleteChat()">\n      <ion-icon item-start name="trash" color="danger"></ion-icon>\n      <p>{{getCaption("chatActionDeleteChat")}}</p>\n    </ion-item>\n  </ion-list>\n</ion-content>\n'/*ion-inline-end:"C:\Users\Matias\WebstormProjects\turinsta\src\pages\chat-actions-menu\chat-actions-menu.html"*/,
+    }),
+    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* NavParams */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* ModalController */],
+        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["s" /* ViewController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["b" /* AlertController */],
+        __WEBPACK_IMPORTED_MODULE_3__providers_storage_storage__["a" /* StorageProvider */], __WEBPACK_IMPORTED_MODULE_4__providers_commons_commons__["a" /* CommonsProvider */]])
+], ChatActionsMenuPage);
+
+//# sourceMappingURL=chat-actions-menu.js.map
+
+/***/ }),
+
+/***/ 177:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return MyEmojiPickerPage; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(5);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+/**
+ * Generated class for the MyEmojiPickerPage page.
+ *
+ * See https://ionicframework.com/docs/components/#navigation for more info on
+ * Ionic pages and navigation.
+ */
+var MyEmojiPickerPage = (function () {
+    function MyEmojiPickerPage(navCtrl, navParams) {
+        this.navCtrl = navCtrl;
+        this.navParams = navParams;
+        this.showEmojiPicker = true;
+        this.data = null;
+    }
+    MyEmojiPickerPage.prototype.ionViewDidLoad = function () {
+        this.data = this.navParams.get("data");
+        console.log('ionViewDidLoad MyEmojiPickerPage');
+    };
+    MyEmojiPickerPage.prototype.handleSelection = function ($event) {
+        this.data.content = Boolean(this.data.content) ? this.data.content + $event.char : $event.char;
+    };
+    return MyEmojiPickerPage;
+}());
+MyEmojiPickerPage = __decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
+        selector: 'page-my-emoji-picker',template:/*ion-inline-start:"C:\Users\Matias\WebstormProjects\turinsta\src\pages\my-emoji-picker\my-emoji-picker.html"*/'<!--\n  Generated template for the MyEmojiPickerPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-content no-padding>\n  <button\n          [(emojiPickerIf)]="showEmojiPicker"\n          (emojiPickerSelect)="handleSelection($event)">\n  </button>\n</ion-content>\n'/*ion-inline-end:"C:\Users\Matias\WebstormProjects\turinsta\src\pages\my-emoji-picker\my-emoji-picker.html"*/,
+    }),
+    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* NavParams */]])
+], MyEmojiPickerPage);
+
+//# sourceMappingURL=my-emoji-picker.js.map
+
+/***/ }),
+
+/***/ 178:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return PlaceSelectingPage; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_storage_storage__ = __webpack_require__(13);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_commons_commons__ = __webpack_require__(8);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+
+/**
+ * Generated class for the PlaceSelectingPage page.
+ *
+ * See https://ionicframework.com/docs/components/#navigation for more info on
+ * Ionic pages and navigation.
+ */
+var PlaceSelectingPage = (function () {
+    function PlaceSelectingPage(navCtrl, navParams, viewCtrl, alertCtrl, storageService, commons) {
+        this.navCtrl = navCtrl;
+        this.navParams = navParams;
+        this.viewCtrl = viewCtrl;
+        this.alertCtrl = alertCtrl;
+        this.storageService = storageService;
+        this.commons = commons;
+        this.placeSelected = null;
+        this.publicationId = null;
+    }
+    PlaceSelectingPage.prototype.ionViewDidLoad = function () {
+        this.publicationId = this.navParams.get("publicationId");
+        console.log('ionViewDidLoad PlaceSelectingPage');
+    };
+    PlaceSelectingPage.prototype.setPlace = function (event) {
+        this.placeSelected = event;
+    };
+    PlaceSelectingPage.prototype.dismissPlaceSelecting = function () {
+        this.viewCtrl.dismiss();
+    };
+    PlaceSelectingPage.prototype.confirmSave = function () {
+        var _this = this;
+        if (Boolean(this.publicationId)) {
+            var confirm_1 = this.alertCtrl.create({
+                title: this.commons.translate(['confirmOperation']),
+                message: this.commons.translate(['confirmSavePlace']),
+                buttons: [
+                    {
+                        text: this.commons.translate(['accept']),
+                        handler: function () {
+                            _this.updatePlace();
+                        }
+                    },
+                    {
+                        text: this.commons.translate(['cancel']),
+                        handler: function () {
+                        }
+                    }
+                ]
+            });
+            confirm_1.present();
+        }
+        else {
+            this.viewCtrl.dismiss(this.placeSelected);
+        }
+    };
+    PlaceSelectingPage.prototype.updatePlace = function () {
+        var _this = this;
+        this.storageService.patchPublication(this.publicationId, { places: [this.placeSelected] }).subscribe(function (patchedPublication) {
+            _this.commons.presentToast(_this.commons.translate(["placeUpdated"]));
+            _this.viewCtrl.dismiss(_this.placeSelected);
+        });
+    };
+    return PlaceSelectingPage;
+}());
+PlaceSelectingPage = __decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
+        selector: 'page-place-selecting',template:/*ion-inline-start:"C:\Users\Matias\WebstormProjects\turinsta\src\pages\place-selecting\place-selecting.html"*/'<!--\n  Generated template for the PlaceSelectingPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-header>\n  <ion-navbar>\n    <ion-item no-lines style="text-align: center">\n      <button item-start ion-button clear (click)="dismissPlaceSelecting()">\n        <ion-icon name="close"></ion-icon>\n      </button>\n      <button item-end *ngIf="placeSelected" ion-button clear (click)="confirmSave()">\n        <ion-icon name="checkmark" color="success"></ion-icon>\n      </button>\n    </ion-item>\n  </ion-navbar>\n</ion-header>\n<ion-content padding>\n  <place-filter [placeSelecting]=true (placeSelected)="setPlace($event)"></place-filter>\n</ion-content>\n'/*ion-inline-end:"C:\Users\Matias\WebstormProjects\turinsta\src\pages\place-selecting\place-selecting.html"*/,
+    }),
+    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* NavParams */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["s" /* ViewController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["b" /* AlertController */], __WEBPACK_IMPORTED_MODULE_2__providers_storage_storage__["a" /* StorageProvider */], __WEBPACK_IMPORTED_MODULE_3__providers_commons_commons__["a" /* CommonsProvider */]])
+], PlaceSelectingPage);
+
+//# sourceMappingURL=place-selecting.js.map
+
+/***/ }),
+
+/***/ 179:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return PublicationActionsMenuPage; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_storage_storage__ = __webpack_require__(13);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_commons_commons__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__account_account__ = __webpack_require__(59);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__places_places__ = __webpack_require__(107);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+
+
+
+/**
+ * Generated class for the PublicationActionsMenuPage page.
+ *
+ * See https://ionicframework.com/docs/components/#navigation for more info on
+ * Ionic pages and navigation.
+ */
+var PublicationActionsMenuPage = (function () {
+    function PublicationActionsMenuPage(navCtrl, navParams, viewCtrl, storageService, commons, actionSheetCtrl, modalCtrl) {
+        this.navCtrl = navCtrl;
+        this.navParams = navParams;
+        this.viewCtrl = viewCtrl;
+        this.storageService = storageService;
+        this.commons = commons;
+        this.actionSheetCtrl = actionSheetCtrl;
+        this.modalCtrl = modalCtrl;
+        this.followedPublication = null;
+        this.followedUser = null;
+        this.publication = null;
+        this.user = null;
+    }
+    PublicationActionsMenuPage.prototype.ionViewDidLoad = function () {
+        console.log('ionViewDidLoad PublicationActionsMenuPage');
+        this.followedPublication = this.navParams.get("followedPublication");
+        this.followedUser = this.navParams.get("followedUser");
+        this.publication = this.navParams.get("publication");
+        this.user = this.navParams.get("user");
+    };
+    PublicationActionsMenuPage.prototype.checkNotOwner = function () {
+        if (this.user) {
+            return this.user._id != this.commons.getUserId();
+        }
+        return false;
+    };
+    PublicationActionsMenuPage.prototype.handleFavorite = function () {
+        var _this = this;
+        if (!this.followedPublication) {
+            this.storageService.addPublicationFollower({ publication: this.publication, user: this.commons.getUserId() }).subscribe(function (favoriteAdded) {
+                _this.commons.presentToast(_this.commons.translate(["favoritePublicationAdded"], { ":user": _this.user.username }));
+                _this.viewCtrl.dismiss();
+            });
+        }
+        else {
+            this.storageService.removePublicationFollower(this.commons.getUserId(), this.publication).subscribe(function (favoriteRemoved) {
+                _this.commons.presentToast(_this.commons.translate(["favoritePublicationDeleted"], { ":user": _this.user.username }));
+                _this.viewCtrl.dismiss();
+            });
+        }
+    };
+    PublicationActionsMenuPage.prototype.handleUser = function () {
+        var _this = this;
+        if (!this.followedUser) {
+            this.storageService.addFollower({ followed: this.user._id, follower: this.commons.getUserId() }).subscribe(function (followerAdded) {
+                _this.commons.presentToast(_this.commons.translate(["userFollowerAdded"], { ":user": _this.user.username }));
+                _this.viewCtrl.dismiss();
+            });
+        }
+        else {
+            this.storageService.removeFollower(this.user._id, this.commons.getUserId()).subscribe(function (followedRemoved) {
+                _this.commons.presentToast(_this.commons.translate(["userFollowerDeleted"], { ":user": _this.user.username }));
+                _this.viewCtrl.dismiss();
+            });
+        }
+    };
+    PublicationActionsMenuPage.prototype.locatePlace = function () {
+        var _this = this;
+        var placesPage = this.modalCtrl.create(__WEBPACK_IMPORTED_MODULE_5__places_places__["a" /* PlacesPage */], { modal: true, publication: this.publication });
+        placesPage.present().then(function () {
+            _this.viewCtrl.dismiss();
+        });
+    };
+    PublicationActionsMenuPage.prototype.presentShareActionSheet = function () {
+        var _this = this;
+        var actionSheet = this.actionSheetCtrl.create({
+            title: this.commons.translate(["shareWith"]),
+            buttons: [
+                {
+                    text: 'Instagram',
+                    icon: 'logo-instagram',
+                    handler: function () {
+                        _this.sharePublication();
+                    }
+                },
+                {
+                    text: 'Facebook',
+                    icon: 'logo-facebook',
+                    handler: function () {
+                        _this.sharePublication();
+                    }
+                },
+                {
+                    text: 'Twitter',
+                    icon: 'logo-twitter',
+                    handler: function () {
+                        _this.sharePublication();
+                    }
+                },
+                {
+                    text: 'Cancelar',
+                    role: 'cancel',
+                    handler: function () {
+                        console.log('Cancel clicked');
+                    }
+                }
+            ]
+        });
+        actionSheet.present();
+    };
+    PublicationActionsMenuPage.prototype.sharePublication = function () {
+        alert("Compartiendo publicación...");
+    };
+    PublicationActionsMenuPage.prototype.viewUser = function () {
+        var _this = this;
+        var accountPageModal = this.modalCtrl.create(__WEBPACK_IMPORTED_MODULE_4__account_account__["a" /* AccountPage */], { modal: true, user: this.user._id });
+        accountPageModal.present().then(function () {
+            _this.viewCtrl.dismiss();
+        });
+    };
+    PublicationActionsMenuPage.prototype.denunciate = function () {
+        var _this = this;
+        this.storageService.createComplaint({ reporter: this.commons.getUserId(), reported: this.user._id, publication: this.publication }).subscribe(function () {
+            _this.commons.presentToast(_this.commons.translate(["publicationReportSuccess"]));
+            _this.viewCtrl.dismiss();
+        });
+    };
+    PublicationActionsMenuPage.prototype.getCaption = function (captionKey) {
+        return this.commons.translate([captionKey]);
+    };
+    return PublicationActionsMenuPage;
+}());
+PublicationActionsMenuPage = __decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
+        selector: 'page-publication-actions-menu',template:/*ion-inline-start:"C:\Users\Matias\WebstormProjects\turinsta\src\pages\publication-actions-menu\publication-actions-menu.html"*/'<!--\n  Generated template for the PublicationActionsMenuPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-content no-padding>\n  <ion-list>\n    <ion-item *ngIf="checkNotOwner()" (click)="handleFavorite()">\n      <ion-icon item-start name="heart" color="danger"></ion-icon>\n      <p *ngIf="!followedPublication">{{getCaption("publicationActionAddToFavorites")}}</p>\n      <p *ngIf="followedPublication">{{getCaption("publicationActionRemoveFromFavorites")}}</p>\n    </ion-item>\n    <ion-item (click)="locatePlace()">\n      <ion-icon item-start class="publication-icon" name="pin" color="secondary"></ion-icon>\n      <p>{{getCaption("publicationActionLocateInMap")}}</p>\n    </ion-item>\n    <ion-item (click)="presentShareActionSheet()">\n      <ion-icon item-start class="publication-icon" name="share" color="warning"></ion-icon>\n      <p>{{getCaption("publicationActionShare")}}</p>\n    </ion-item>\n    <ion-item *ngIf="checkNotOwner()" (click)="handleUser()">\n      <ion-icon item-start name="person-add" color="success"></ion-icon>\n      <p *ngIf="!followedUser">{{getCaption("publicationActionFollowUser")}}</p>\n      <p *ngIf="followedUser">{{getCaption("publicationActionStopFollowUser")}}</p>\n    </ion-item>\n    <ion-item *ngIf="checkNotOwner()" (click)="viewUser()">\n      <ion-icon item-start name="contact" color="primary"></ion-icon>\n      <p>{{getCaption("publicationActionSeeUser")}}</p>\n    </ion-item>\n    <ion-item *ngIf="checkNotOwner()" (click)="denunciate()">\n      <ion-icon item-start name="alert" color="danger"></ion-icon>\n      <p>{{getCaption("publicationActionReportPublication")}}</p>\n    </ion-item>\n  </ion-list>\n</ion-content>\n'/*ion-inline-end:"C:\Users\Matias\WebstormProjects\turinsta\src\pages\publication-actions-menu\publication-actions-menu.html"*/,
+    }),
+    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* NavParams */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["s" /* ViewController */], __WEBPACK_IMPORTED_MODULE_2__providers_storage_storage__["a" /* StorageProvider */], __WEBPACK_IMPORTED_MODULE_3__providers_commons_commons__["a" /* CommonsProvider */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* ActionSheetController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* ModalController */]])
+], PublicationActionsMenuPage);
+
+//# sourceMappingURL=publication-actions-menu.js.map
+
+/***/ }),
+
+/***/ 180:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return PublicationOrderByPage; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__ngrx_store__ = __webpack_require__(23);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_reducers_publication_reducer__ = __webpack_require__(56);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__providers_commons_commons__ = __webpack_require__(8);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+
+
+/**
+ * Generated class for the PublicationOrderByPage page.
+ *
+ * See https://ionicframework.com/docs/components/#navigation for more info on
+ * Ionic pages and navigation.
+ */
+var PublicationOrderByPage = (function () {
+    function PublicationOrderByPage(navCtrl, navParams, viewCtrl, store, commons) {
+        this.navCtrl = navCtrl;
+        this.navParams = navParams;
+        this.viewCtrl = viewCtrl;
+        this.store = store;
+        this.commons = commons;
+        this.sortValue = null;
+    }
+    PublicationOrderByPage.prototype.ionViewDidLoad = function () {
+        var _this = this;
+        console.log('ionViewDidLoad PublicationOrderByPage');
+        this.store.select("publications").subscribe(function (state) {
+            _this.sortValue = state.sort.field;
+        });
+    };
+    PublicationOrderByPage.prototype.close = function (order) {
+        this.store.dispatch(Object(__WEBPACK_IMPORTED_MODULE_3__providers_reducers_publication_reducer__["h" /* setSort */])(order));
+        this.viewCtrl.dismiss();
+    };
+    PublicationOrderByPage.prototype.getCaption = function (captionKey) {
+        return this.commons.translate([captionKey]);
+    };
+    return PublicationOrderByPage;
+}());
+PublicationOrderByPage = __decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
+        selector: 'page-publication-order-by',template:/*ion-inline-start:"C:\Users\Matias\WebstormProjects\turinsta\src\pages\publication-order-by\publication-order-by.html"*/'<!--\n  Generated template for the PublicationOrderByPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-content no-padding>\n  <ion-list radio-group [(ngModel)]="sortValue">\n    <ion-list-header>{{getCaption("orderBy")}}</ion-list-header>\n    <ion-item>\n      <ion-label>{{getCaption("orderByMostRecent")}}</ion-label>\n      <ion-radio value="publication.timestamps.created" (click)="close({field: \'publication.timestamps.created\', way: -1})"></ion-radio>\n    </ion-item>\n    <ion-item>\n      <ion-label>{{getCaption("orderByMostPopulated")}}</ion-label>\n      <ion-radio value="publication.followers" (click)="close({field: \'publication.followers\', way: -1})"></ion-radio>\n    </ion-item>\n    <ion-item>\n      <ion-label>{{getCaption("orderByMostQualified")}}</ion-label>\n      <ion-radio value="publication.score" (click)="close({field: \'publication.score\', way: -1})"></ion-radio>\n    </ion-item>\n    <ion-item>\n      <ion-label>{{getCaption("orderByMostPopularUsers")}}</ion-label>\n      <ion-radio value="user.followers" (click)="close({field: \'user.followers\', way: -1})"></ion-radio>\n    </ion-item>\n    <ion-item>\n      <ion-label>{{getCaption("orderByMostQualifiedUsers")}}</ion-label>\n      <ion-radio value="user.score" (click)="close({field: \'user.score\', way: -1})"></ion-radio>\n    </ion-item>\n  </ion-list>\n</ion-content>\n'/*ion-inline-end:"C:\Users\Matias\WebstormProjects\turinsta\src\pages\publication-order-by\publication-order-by.html"*/,
+    }),
+    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* NavParams */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["s" /* ViewController */], __WEBPACK_IMPORTED_MODULE_2__ngrx_store__["h" /* Store */], __WEBPACK_IMPORTED_MODULE_4__providers_commons_commons__["a" /* CommonsProvider */]])
+], PublicationOrderByPage);
+
+//# sourceMappingURL=publication-order-by.js.map
+
+/***/ }),
+
+/***/ 181:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return PublicationUserFilterPage; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__ngrx_store__ = __webpack_require__(23);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_reducers_publication_reducer__ = __webpack_require__(56);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__providers_commons_commons__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__providers_storage_storage__ = __webpack_require__(13);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+
+
+
+/**
+ * Generated class for the PublicationUserFilterPage page.
+ *
+ * See https://ionicframework.com/docs/components/#navigation for more info on
+ * Ionic pages and navigation.
+ */
+var PublicationUserFilterPage = (function () {
+    function PublicationUserFilterPage(navCtrl, navParams, viewCtrl, store, commons, storage) {
+        this.navCtrl = navCtrl;
+        this.navParams = navParams;
+        this.viewCtrl = viewCtrl;
+        this.store = store;
+        this.commons = commons;
+        this.storage = storage;
+        this.userFilter = null;
+        this.customUser = null;
+        this.loggedUser = null;
+        this.favorites = [];
+        this.userPath = null;
+        this.publicationPath = null;
+        this.filter = null;
+        this.dispatchName = null;
+        this.KEYS = {};
+    }
+    PublicationUserFilterPage.prototype.ionViewWillEnter = function () {
+        var _this = this;
+        this.store.select("publications").first().subscribe(function (state) {
+            if (_this.filter) {
+                var userFilter = eval("state." + _this.filter);
+                if (userFilter) {
+                    if (userFilter.operation == "LIKE") {
+                        _this.customUser = userFilter.value;
+                        _this.userFilter = userFilter.value;
+                    }
+                    else {
+                        _this.userFilter = userFilter.key;
+                    }
+                }
+            }
+        });
+    };
+    PublicationUserFilterPage.prototype.ionViewWillLoad = function () {
+        var _this = this;
+        this.loggedUser = this.commons.getUserId();
+        this.userPath = this.navParams.get("userPath");
+        this.publicationPath = this.navParams.get("publicationPath");
+        this.filter = this.navParams.get("filter");
+        this.dispatchName = this.navParams.get("dispatchName");
+        this.storage.getFavorites(this.loggedUser, 0).subscribe(function (favorites) {
+            _this.favorites = favorites;
+        });
+        this.KEYS = {
+            ALL: null,
+            FOLLOWERS: this.userPath + '.followers',
+            OWN: this.userPath + '._id',
+            FAVORITES: this.publicationPath + '._id',
+        };
+        console.log('ionViewDidLoad PublicationUserFilterPage');
+    };
+    PublicationUserFilterPage.prototype.close = function (filter) {
+        if (Boolean(filter)) {
+            this.store.dispatch(Object(__WEBPACK_IMPORTED_MODULE_3__providers_reducers_publication_reducer__["g" /* setFilter */])(this.dispatchName, filter));
+        }
+        else {
+            this.store.dispatch(Object(__WEBPACK_IMPORTED_MODULE_3__providers_reducers_publication_reducer__["g" /* setFilter */])(this.dispatchName, null));
+        }
+        this.viewCtrl.dismiss();
+    };
+    PublicationUserFilterPage.prototype.getCaption = function (captionKey) {
+        return this.commons.translate([captionKey]);
+    };
+    return PublicationUserFilterPage;
+}());
+PublicationUserFilterPage = __decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
+        selector: 'page-publication-user-filter',template:/*ion-inline-start:"C:\Users\Matias\WebstormProjects\turinsta\src\pages\publication-user-filter\publication-user-filter.html"*/'<!--\n  Generated template for the PublicationUserFilterPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n\n<ion-content no-padding>\n  <ion-list radio-group [(ngModel)]="userFilter">\n    <ion-list-header>{{getCaption("userFilterVisualize")}}</ion-list-header>\n    <ion-item>\n      <ion-label>{{getCaption("userFilterAll")}}</ion-label>\n      <ion-radio value="{{KEYS.ALL}}" (click)="close()"></ion-radio>\n    </ion-item>\n    <ion-item>\n      <ion-label>{{getCaption("userFilterFollowed")}}</ion-label>\n      <ion-radio value="{{KEYS.FOLLOWERS}}" (click)="close({key: userPath + \'.followers\', value: loggedUser, operation: \'CONTAINS\'})"></ion-radio>\n    </ion-item>\n    <ion-item>\n      <ion-label>{{getCaption("userFilterOwn")}}</ion-label>\n      <ion-radio value="{{KEYS.OWN}}" (click)="close({key: userPath + \'._id\', value: loggedUser, operation: \'EQUAL\'})"></ion-radio>\n    </ion-item>\n    <ion-item>\n      <ion-label>{{getCaption("publicationFilterFavorite")}}</ion-label>\n      <ion-radio value="{{KEYS.FAVORITES}}" (click)="close({key: publicationPath + \'._id\', value: favorites, operation: \'IN\'})"></ion-radio>\n    </ion-item>\n    <ion-item>\n      <ion-input item-start [(ngModel)]="customUser" placeholder="{{getCaption(\'userFilterByName\')}}"></ion-input>\n      <button item-end ion-button (click)="close({key: userPath + \'.username\', value: customUser, operation: \'LIKE\'})" icon-only clear><ion-icon name="ios-arrow-dropright" color="primary"></ion-icon></button>\n    </ion-item>\n  </ion-list>\n</ion-content>\n'/*ion-inline-end:"C:\Users\Matias\WebstormProjects\turinsta\src\pages\publication-user-filter\publication-user-filter.html"*/,
+    }),
+    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* NavParams */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["s" /* ViewController */], __WEBPACK_IMPORTED_MODULE_2__ngrx_store__["h" /* Store */], __WEBPACK_IMPORTED_MODULE_4__providers_commons_commons__["a" /* CommonsProvider */], __WEBPACK_IMPORTED_MODULE_5__providers_storage_storage__["a" /* StorageProvider */]])
+], PublicationUserFilterPage);
+
+//# sourceMappingURL=publication-user-filter.js.map
+
+/***/ }),
+
 /***/ 189:
 /***/ (function(module, exports) {
 
@@ -2157,7 +2175,7 @@ webpackEmptyAsyncContext.id = 189;
 
 var map = {
 	"../pages/account-actions-menu/account-actions-menu.module": [
-		744,
+		729,
 		16
 	],
 	"../pages/account/account.module": [
@@ -2165,63 +2183,63 @@ var map = {
 		15
 	],
 	"../pages/activities/activities.module": [
-		741,
+		730,
 		14
 	],
 	"../pages/chat-actions-menu/chat-actions-menu.module": [
-		729,
+		731,
 		13
 	],
 	"../pages/chat/chat.module": [
-		730,
+		732,
 		12
 	],
 	"../pages/comment-writing/comment-writing.module": [
-		731,
+		733,
 		11
 	],
 	"../pages/description-writing/description-writing.module": [
-		733,
+		734,
 		10
 	],
 	"../pages/experience-writing/experience-writing.module": [
-		732,
+		735,
 		9
 	],
 	"../pages/inbox-writing/inbox-writing.module": [
-		735,
+		736,
 		8
 	],
 	"../pages/my-emoji-picker/my-emoji-picker.module": [
-		734,
+		737,
 		7
 	],
 	"../pages/place-selecting/place-selecting.module": [
-		736,
+		739,
 		6
 	],
 	"../pages/places/places.module": [
-		737,
+		738,
 		5
 	],
 	"../pages/publication-actions-menu/publication-actions-menu.module": [
-		738,
+		740,
 		4
 	],
 	"../pages/publication-order-by/publication-order-by.module": [
-		739,
+		741,
 		3
 	],
 	"../pages/publication-user-filter/publication-user-filter.module": [
-		740,
+		742,
 		2
 	],
 	"../pages/publication-writing/publication-writing.module": [
-		742,
+		743,
 		1
 	],
 	"../pages/username-writing/username-writing.module": [
-		743,
+		744,
 		0
 	]
 };
@@ -2324,14 +2342,14 @@ function userReducer(state, _a) {
 
 /***/ }),
 
-/***/ 269:
+/***/ 283:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return GoogleMapsProvider; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__connectivity_connectivity__ = __webpack_require__(270);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__ionic_native_geolocation__ = __webpack_require__(272);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__connectivity_connectivity__ = __webpack_require__(284);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__ionic_native_geolocation__ = __webpack_require__(286);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -2382,7 +2400,9 @@ var GoogleMapsProvider = (function () {
             }
             else {
                 if (_this.connectivityService.isOnline()) {
-                    _this.initMap();
+                    _this.initMap().then(function (map) {
+                        resolve(map);
+                    });
                     _this.enableMap();
                 }
                 else {
@@ -2400,7 +2420,7 @@ var GoogleMapsProvider = (function () {
                 var latLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
                 var mapOptions = {
                     center: latLng,
-                    zoom: 2,
+                    zoom: 1,
                     mapTypeId: google.maps.MapTypeId.ROADMAP
                 };
                 _this.map = new google.maps.Map(_this.mapElement, mapOptions);
@@ -2410,7 +2430,7 @@ var GoogleMapsProvider = (function () {
                 var latLng = new google.maps.LatLng(0, 0);
                 var mapOptions = {
                     center: latLng,
-                    zoom: 2,
+                    zoom: 1,
                     mapTypeId: google.maps.MapTypeId.ROADMAP
                 };
                 _this.map = new google.maps.Map(_this.mapElement, mapOptions);
@@ -2460,13 +2480,13 @@ GoogleMapsProvider = __decorate([
 
 /***/ }),
 
-/***/ 270:
+/***/ 284:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ConnectivityProvider; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__ionic_native_network__ = __webpack_require__(271);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__ionic_native_network__ = __webpack_require__(285);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_ionic_angular__ = __webpack_require__(5);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -2519,16 +2539,16 @@ ConnectivityProvider = __decorate([
 
 /***/ }),
 
-/***/ 273:
+/***/ 287:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return GoogleMapsClusterProvider; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_http__ = __webpack_require__(67);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_node_js_marker_clusterer__ = __webpack_require__(623);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_http__ = __webpack_require__(68);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_node_js_marker_clusterer__ = __webpack_require__(644);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_node_js_marker_clusterer___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_node_js_marker_clusterer__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_map__ = __webpack_require__(68);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_map__ = __webpack_require__(69);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_map___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_map__);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -2587,12 +2607,12 @@ GoogleMapsClusterProvider = __decorate([
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__home_home__ = __webpack_require__(330);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__places_places__ = __webpack_require__(107);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__activities_activities__ = __webpack_require__(179);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__account_account__ = __webpack_require__(77);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__activities_activities__ = __webpack_require__(175);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__account_account__ = __webpack_require__(59);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__ngrx_store__ = __webpack_require__(23);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__ionic_native_badge__ = __webpack_require__(96);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__ionic_native_badge__ = __webpack_require__(98);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__providers_storage_storage__ = __webpack_require__(13);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__providers_commons_commons__ = __webpack_require__(9);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__providers_commons_commons__ = __webpack_require__(8);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -2666,9 +2686,9 @@ TabsPage = __decorate([
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_storage_storage__ = __webpack_require__(13);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ngrx_store__ = __webpack_require__(23);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__providers_reducers_publication_reducer__ = __webpack_require__(54);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__providers_reducers_publication_reducer__ = __webpack_require__(56);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__publication_writing_publication_writing__ = __webpack_require__(51);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__providers_commons_commons__ = __webpack_require__(9);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__providers_commons_commons__ = __webpack_require__(8);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -2747,12 +2767,12 @@ HomePage = __decorate([
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return NotificationProvider; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_http__ = __webpack_require__(67);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_add_operator_map__ = __webpack_require__(68);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_http__ = __webpack_require__(68);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_add_operator_map__ = __webpack_require__(69);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_add_operator_map___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_rxjs_add_operator_map__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__storage_storage__ = __webpack_require__(13);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__commons_commons__ = __webpack_require__(9);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_ng_socket_io__ = __webpack_require__(76);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__commons_commons__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_ng_socket_io__ = __webpack_require__(74);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_ng_socket_io___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_ng_socket_io__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__ngrx_store__ = __webpack_require__(23);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -2840,19 +2860,19 @@ Object(__WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__["a" /* pl
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__app_component__ = __webpack_require__(662);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__pages_home_home__ = __webpack_require__(330);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__pages_places_places__ = __webpack_require__(107);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__pages_activities_activities__ = __webpack_require__(179);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__pages_account_account__ = __webpack_require__(77);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__pages_activities_activities__ = __webpack_require__(175);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__pages_account_account__ = __webpack_require__(59);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__pages_tabs_tabs__ = __webpack_require__(329);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__components_publication_publication__ = __webpack_require__(664);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__ionic_native_status_bar__ = __webpack_require__(327);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__ionic_native_splash_screen__ = __webpack_require__(328);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__providers_storage_storage__ = __webpack_require__(13);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__angular_http__ = __webpack_require__(67);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__angular_http__ = __webpack_require__(68);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__components_experience_experience__ = __webpack_require__(665);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__components_comment_comment__ = __webpack_require__(666);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__components_comment_list_comment_list__ = __webpack_require__(667);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__ngrx_store__ = __webpack_require__(23);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__providers_reducers_publication_reducer__ = __webpack_require__(54);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__providers_reducers_publication_reducer__ = __webpack_require__(56);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_19__ngrx_effects__ = __webpack_require__(333);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_20__providers_storage_publication_effects__ = __webpack_require__(668);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_21__ngrx_store_devtools__ = __webpack_require__(669);
@@ -2861,10 +2881,10 @@ Object(__WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__["a" /* pl
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_24__components_publication_body_publication_body__ = __webpack_require__(672);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_25__components_publication_footer_publication_footer__ = __webpack_require__(673);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_26__components_experience_list_experience_list__ = __webpack_require__(674);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_27__providers_commons_commons__ = __webpack_require__(9);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_27__providers_commons_commons__ = __webpack_require__(8);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_28__pipes_contains_filter_contains_filter__ = __webpack_require__(675);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_29__pages_publication_order_by_publication_order_by__ = __webpack_require__(177);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_30__pages_publication_user_filter_publication_user_filter__ = __webpack_require__(178);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_29__pages_publication_order_by_publication_order_by__ = __webpack_require__(180);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_30__pages_publication_user_filter_publication_user_filter__ = __webpack_require__(181);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_31__components_filters_bar_filters_bar__ = __webpack_require__(676);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_32__components_place_filter_place_filter__ = __webpack_require__(677);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_33__components_user_filter_user_filter__ = __webpack_require__(678);
@@ -2878,10 +2898,10 @@ Object(__WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__["a" /* pl
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_41__components_my_emoji_picker_my_emoji_picker__ = __webpack_require__(717);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_42__components_score_input_score_input__ = __webpack_require__(718);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_43__components_publication_actions_publication_actions__ = __webpack_require__(719);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_44__pages_publication_actions_menu_publication_actions_menu__ = __webpack_require__(176);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_45__pages_my_emoji_picker_my_emoji_picker__ = __webpack_require__(174);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_44__pages_publication_actions_menu_publication_actions_menu__ = __webpack_require__(179);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_45__pages_my_emoji_picker_my_emoji_picker__ = __webpack_require__(177);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_46__pages_publication_writing_publication_writing__ = __webpack_require__(51);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_47__pages_place_selecting_place_selecting__ = __webpack_require__(175);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_47__pages_place_selecting_place_selecting__ = __webpack_require__(178);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_48__pages_description_writing_description_writing__ = __webpack_require__(172);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_49__ionic_native_image_picker__ = __webpack_require__(89);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_50__ionic_native_file_transfer__ = __webpack_require__(90);
@@ -2889,24 +2909,24 @@ Object(__WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__["a" /* pl
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_52__components_score_handler_score_handler__ = __webpack_require__(721);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_53__components_inbox_list_inbox_list__ = __webpack_require__(722);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_54__components_inbox_inbox__ = __webpack_require__(723);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_55__pages_chat_chat__ = __webpack_require__(59);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_55__pages_chat_chat__ = __webpack_require__(60);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_56__pages_inbox_writing_inbox_writing__ = __webpack_require__(104);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_57__providers_notification_notification__ = __webpack_require__(332);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_58__ionic_native_push__ = __webpack_require__(331);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_59__providers_reducers_user_reducer__ = __webpack_require__(236);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_60__ionic_native_badge__ = __webpack_require__(96);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_60__ionic_native_badge__ = __webpack_require__(98);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_61__components_empty_content_empty_content__ = __webpack_require__(724);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_62__pages_chat_actions_menu_chat_actions_menu__ = __webpack_require__(173);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_62__pages_chat_actions_menu_chat_actions_menu__ = __webpack_require__(176);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_63__components_chat_actions_chat_actions__ = __webpack_require__(725);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_64__components_publication_resume_publication_resume__ = __webpack_require__(726);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_65__components_account_actions_account_actions__ = __webpack_require__(727);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_66__pages_account_actions_menu_account_actions_menu__ = __webpack_require__(181);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_67__pages_username_writing_username_writing__ = __webpack_require__(180);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_68__providers_google_maps_google_maps__ = __webpack_require__(269);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_69__providers_connectivity_connectivity__ = __webpack_require__(270);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_70__providers_google_maps_cluster_google_maps_cluster__ = __webpack_require__(273);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_71__ionic_native_network__ = __webpack_require__(271);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_72__ionic_native_geolocation__ = __webpack_require__(272);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_66__pages_account_actions_menu_account_actions_menu__ = __webpack_require__(173);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_67__pages_username_writing_username_writing__ = __webpack_require__(174);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_68__providers_google_maps_google_maps__ = __webpack_require__(283);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_69__providers_connectivity_connectivity__ = __webpack_require__(284);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_70__providers_google_maps_cluster_google_maps_cluster__ = __webpack_require__(287);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_71__ionic_native_network__ = __webpack_require__(285);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_72__ionic_native_geolocation__ = __webpack_require__(286);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -3045,22 +3065,22 @@ AppModule = __decorate([
             __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["g" /* IonicModule */].forRoot(__WEBPACK_IMPORTED_MODULE_3__app_component__["a" /* MyApp */], {}, {
                 links: [
                     { loadChildren: '../pages/account/account.module#AccountPageModule', name: 'AccountPage', segment: 'account', priority: 'low', defaultHistory: [] },
+                    { loadChildren: '../pages/account-actions-menu/account-actions-menu.module#AccountActionsMenuPageModule', name: 'AccountActionsMenuPage', segment: 'account-actions-menu', priority: 'low', defaultHistory: [] },
+                    { loadChildren: '../pages/activities/activities.module#ActivitiesPageModule', name: 'ActivitiesPage', segment: 'activities', priority: 'low', defaultHistory: [] },
                     { loadChildren: '../pages/chat-actions-menu/chat-actions-menu.module#ChatActionsMenuPageModule', name: 'ChatActionsMenuPage', segment: 'chat-actions-menu', priority: 'low', defaultHistory: [] },
                     { loadChildren: '../pages/chat/chat.module#ChatPageModule', name: 'ChatPage', segment: 'chat', priority: 'low', defaultHistory: [] },
                     { loadChildren: '../pages/comment-writing/comment-writing.module#CommentWritingPageModule', name: 'CommentWritingPage', segment: 'comment-writing', priority: 'low', defaultHistory: [] },
-                    { loadChildren: '../pages/experience-writing/experience-writing.module#ExperienceWritingPageModule', name: 'ExperienceWritingPage', segment: 'experience-writing', priority: 'low', defaultHistory: [] },
                     { loadChildren: '../pages/description-writing/description-writing.module#DescriptionWritingPageModule', name: 'DescriptionWritingPage', segment: 'description-writing', priority: 'low', defaultHistory: [] },
-                    { loadChildren: '../pages/my-emoji-picker/my-emoji-picker.module#MyEmojiPickerPageModule', name: 'MyEmojiPickerPage', segment: 'my-emoji-picker', priority: 'low', defaultHistory: [] },
+                    { loadChildren: '../pages/experience-writing/experience-writing.module#ExperienceWritingPageModule', name: 'ExperienceWritingPage', segment: 'experience-writing', priority: 'low', defaultHistory: [] },
                     { loadChildren: '../pages/inbox-writing/inbox-writing.module#InboxWritingPageModule', name: 'InboxWritingPage', segment: 'inbox-writing', priority: 'low', defaultHistory: [] },
-                    { loadChildren: '../pages/place-selecting/place-selecting.module#PlaceSelectingPageModule', name: 'PlaceSelectingPage', segment: 'place-selecting', priority: 'low', defaultHistory: [] },
+                    { loadChildren: '../pages/my-emoji-picker/my-emoji-picker.module#MyEmojiPickerPageModule', name: 'MyEmojiPickerPage', segment: 'my-emoji-picker', priority: 'low', defaultHistory: [] },
                     { loadChildren: '../pages/places/places.module#PlacesPageModule', name: 'PlacesPage', segment: 'places', priority: 'low', defaultHistory: [] },
+                    { loadChildren: '../pages/place-selecting/place-selecting.module#PlaceSelectingPageModule', name: 'PlaceSelectingPage', segment: 'place-selecting', priority: 'low', defaultHistory: [] },
                     { loadChildren: '../pages/publication-actions-menu/publication-actions-menu.module#PublicationActionsMenuPageModule', name: 'PublicationActionsMenuPage', segment: 'publication-actions-menu', priority: 'low', defaultHistory: [] },
                     { loadChildren: '../pages/publication-order-by/publication-order-by.module#PublicationOrderByPageModule', name: 'PublicationOrderByPage', segment: 'publication-order-by', priority: 'low', defaultHistory: [] },
                     { loadChildren: '../pages/publication-user-filter/publication-user-filter.module#PublicationUserFilterPageModule', name: 'PublicationUserFilterPage', segment: 'publication-user-filter', priority: 'low', defaultHistory: [] },
-                    { loadChildren: '../pages/activities/activities.module#ActivitiesPageModule', name: 'ActivitiesPage', segment: 'activities', priority: 'low', defaultHistory: [] },
                     { loadChildren: '../pages/publication-writing/publication-writing.module#PublicationWritingPageModule', name: 'PublicationWritingPage', segment: 'publication-writing', priority: 'low', defaultHistory: [] },
-                    { loadChildren: '../pages/username-writing/username-writing.module#UsernameWritingPageModule', name: 'UsernameWritingPage', segment: 'username-writing', priority: 'low', defaultHistory: [] },
-                    { loadChildren: '../pages/account-actions-menu/account-actions-menu.module#AccountActionsMenuPageModule', name: 'AccountActionsMenuPage', segment: 'account-actions-menu', priority: 'low', defaultHistory: [] }
+                    { loadChildren: '../pages/username-writing/username-writing.module#UsernameWritingPageModule', name: 'UsernameWritingPage', segment: 'username-writing', priority: 'low', defaultHistory: [] }
                 ]
             }),
             __WEBPACK_IMPORTED_MODULE_13__angular_http__["c" /* HttpModule */],
@@ -3128,6 +3148,13 @@ AppModule = __decorate([
 
 /***/ }),
 
+/***/ 395:
+/***/ (function(module, exports) {
+
+/* (ignored) */
+
+/***/ }),
+
 /***/ 51:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -3136,7 +3163,7 @@ AppModule = __decorate([
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_storage_storage__ = __webpack_require__(13);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_commons_commons__ = __webpack_require__(9);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_commons_commons__ = __webpack_require__(8);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__description_writing_description_writing__ = __webpack_require__(172);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__ionic_native_image_picker__ = __webpack_require__(89);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__ionic_native_file_transfer__ = __webpack_require__(90);
@@ -3498,7 +3525,7 @@ PublicationWritingPage = __decorate([
 
 /***/ }),
 
-/***/ 54:
+/***/ 56:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -3684,14 +3711,125 @@ function publicationReducer(state, _a) {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AccountPage; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_storage_storage__ = __webpack_require__(13);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_commons_commons__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__publication_writing_publication_writing__ = __webpack_require__(51);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+
+
+/**
+ * Generated class for the AccountPage page.
+ *
+ * See https://ionicframework.com/docs/components/#navigation for more info on
+ * Ionic pages and navigation.
+ */
+var AccountPage = (function () {
+    function AccountPage(navCtrl, navParams, storage, commons, modalCtrl, viewCtrl) {
+        this.navCtrl = navCtrl;
+        this.navParams = navParams;
+        this.storage = storage;
+        this.commons = commons;
+        this.modalCtrl = modalCtrl;
+        this.viewCtrl = viewCtrl;
+        this.publications = [];
+        this.favorites = [];
+        this.show = { section: 'PUBLICATIONS' };
+        this.PUBLICATION_LIMIT = 50;
+        this.FAVORITE_LIMIT = 50;
+        this.user = null;
+        this.loggedUser = null;
+        this.modal = false;
+    }
+    AccountPage.prototype.ionViewDidLoad = function () {
+        console.log('ionViewDidLoad AccountPage');
+    };
+    AccountPage.prototype.ionViewWillLoad = function () {
+        if (this.navParams.get("modal")) {
+            this.modal = this.navParams.get("modal");
+        }
+        console.log('ionViewDidLoad AccountPage');
+    };
+    AccountPage.prototype.ionViewWillEnter = function () {
+        this.initializeValues();
+    };
+    AccountPage.prototype.initializeValues = function () {
+        this.PUBLICATION_LIMIT = 50;
+        this.FAVORITE_LIMIT = 50;
+        this.getUser();
+        this.loggedUser = this.commons.getUserId();
+    };
+    AccountPage.prototype.getUser = function () {
+        var _this = this;
+        var userId = null;
+        if (this.navParams.get("user")) {
+            userId = this.navParams.get("user");
+        }
+        else {
+            userId = this.commons.getUserId();
+        }
+        this.storage.getUser(userId).subscribe(function (user) {
+            _this.user = user;
+            _this.publications = user.publications;
+        });
+    };
+    AccountPage.prototype.getFavorites = function () {
+        var _this = this;
+        this.storage.getFavorites(this.user._id, this.FAVORITE_LIMIT).subscribe(function (favorites) {
+            _this.favorites = favorites;
+        });
+    };
+    AccountPage.prototype.openPublication = function (publicationId) {
+        var _this = this;
+        this.storage.getPublications(1, [{ key: "_id", operation: "EQUAL", value: publicationId }], { field: "publication.timestamps.created", way: -1 }).subscribe(function (publication) {
+            var publicationWritingModal = _this.modalCtrl.create(__WEBPACK_IMPORTED_MODULE_4__publication_writing_publication_writing__["a" /* PublicationWritingPage */], { user: publication[0].user, publication: publication[0].publication, experiences: publication[0].experiences, comments: publication[0].comments });
+            publicationWritingModal.present();
+        });
+    };
+    AccountPage.prototype.getCaption = function (captionKey) {
+        return this.commons.translate([captionKey]);
+    };
+    AccountPage.prototype.dismissModal = function () {
+        this.viewCtrl.dismiss();
+    };
+    return AccountPage;
+}());
+AccountPage = __decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
+        selector: 'page-account',template:/*ion-inline-start:"C:\Users\Matias\WebstormProjects\turinsta\src\pages\account\account.html"*/'<!--\n  Generated template for the AccountPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-content *ngIf="user" text-center>\n  <ion-navbar *ngIf="modal">\n    <ion-item no-lines>\n      <button item-start ion-button clear (click)="dismissModal()">\n        <ion-icon name="close"></ion-icon>\n      </button>\n    </ion-item>\n  </ion-navbar>\n  <ion-item class="text-with-ellipsis">\n    <ion-avatar class="out-activity-avatar" item-start>\n      <img src="{{user.avatar}}"/>\n    </ion-avatar>\n    <p>{{user.followers.length}} {{getCaption(\'followers\')}} / {{user.followedes.length}} {{getCaption(\'followedes\')}}</p>\n    <h2 class="publication-important-text">{{user.username}}</h2>\n    <p item-right>{{user.score | number:\'1.0-1\' }} <ion-icon name="star" color="star"></ion-icon>\n      / {{user.publications.length}} <ion-icon name="images" color="secondary"></ion-icon>\n    </p>\n    <account-actions item-end [user]="user"></account-actions>\n  </ion-item>\n  <ion-segment [(ngModel)]="show.section" color="secondary">\n    <ion-segment-button value="PUBLICATIONS">\n      <ion-icon name="images"></ion-icon>\n    </ion-segment-button>\n    <ion-segment-button value="FAVORITES" (click)="getFavorites()">\n      <ion-icon name="heart"></ion-icon>\n    </ion-segment-button>\n  </ion-segment>\n  <div [ngSwitch]="show.section" padding>\n    <ion-list *ngSwitchCase="\'PUBLICATIONS\'">\n      <publication-resume *ngFor="let publication of publications" [publication]="publication" (openPublication)="openPublication($event)"></publication-resume>\n      <empty-content *ngIf="!publications.length && user._id==loggedUser" [message]="getCaption(\'ownPublicationListEmpty\')"></empty-content>\n      <empty-content *ngIf="!publications.length && user._id!=loggedUser" [message]="getCaption(\'foreignPublicationListEmpty\')"></empty-content>\n    </ion-list>\n    <ion-list *ngSwitchCase="\'FAVORITES\'">\n      <publication-resume *ngFor="let favorite of favorites" [publication]="favorite" (openPublication)="openPublication($event)"></publication-resume>\n      <empty-content *ngIf="!favorites.length && user._id==loggedUser" [message]="getCaption(\'ownFavoriteListEmpty\')"></empty-content>\n      <empty-content *ngIf="!favorites.length && user._id!=loggedUser" [message]="getCaption(\'foreignFavoriteListEmpty\')"></empty-content>\n    </ion-list>\n  </div>\n</ion-content>\n'/*ion-inline-end:"C:\Users\Matias\WebstormProjects\turinsta\src\pages\account\account.html"*/,
+    }),
+    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* NavParams */], __WEBPACK_IMPORTED_MODULE_2__providers_storage_storage__["a" /* StorageProvider */], __WEBPACK_IMPORTED_MODULE_3__providers_commons_commons__["a" /* CommonsProvider */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* ModalController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["s" /* ViewController */]])
+], AccountPage);
+
+//# sourceMappingURL=account.js.map
+
+/***/ }),
+
+/***/ 60:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ChatPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(5);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_commons_commons__ = __webpack_require__(9);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs__ = __webpack_require__(139);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_commons_commons__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs__ = __webpack_require__(142);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_rxjs__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__providers_storage_storage__ = __webpack_require__(13);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__ionic_native_badge__ = __webpack_require__(96);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__ionic_native_badge__ = __webpack_require__(98);
 var __assign = (this && this.__assign) || Object.assign || function(t) {
     for (var s, i = 1, n = arguments.length; i < n; i++) {
         s = arguments[i];
@@ -3953,13 +4091,6 @@ ChatPage = __decorate([
 
 /***/ }),
 
-/***/ 642:
-/***/ (function(module, exports) {
-
-/* (ignored) */
-
-/***/ }),
-
 /***/ 662:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -3973,13 +4104,14 @@ ChatPage = __decorate([
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__providers_imgcache_imgcache__ = __webpack_require__(103);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__ionic_native_push__ = __webpack_require__(331);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__providers_notification_notification__ = __webpack_require__(332);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__providers_commons_commons__ = __webpack_require__(9);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__pages_chat_chat__ = __webpack_require__(59);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__providers_commons_commons__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__pages_chat_chat__ = __webpack_require__(60);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__providers_storage_storage__ = __webpack_require__(13);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11_ng_socket_io__ = __webpack_require__(76);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11_ng_socket_io__ = __webpack_require__(74);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_11_ng_socket_io___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_11_ng_socket_io__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__pages_publication_writing_publication_writing__ = __webpack_require__(51);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__ngrx_store__ = __webpack_require__(23);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__pages_account_account__ = __webpack_require__(59);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -3989,6 +4121,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
+
 
 
 
@@ -4063,9 +4196,8 @@ var MyApp = (function () {
                             break;
                         }
                         case 'user': {
-                            // this.storageService.getUser(action.category).subscribe((user)=>{
-                            //   this.nav.setRoot(UserPage,{user: this.commons.getUserId()});
-                            // });
+                            var accountPageModal = _this.modalCtrl.create(__WEBPACK_IMPORTED_MODULE_14__pages_account_account__["a" /* AccountPage */], { user: action.category });
+                            accountPageModal.present();
                             break;
                         }
                         case 'publication': {
@@ -4173,7 +4305,7 @@ PublicationComponent = __decorate([
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__providers_storage_storage__ = __webpack_require__(13);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_ionic_angular__ = __webpack_require__(5);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_commons_commons__ = __webpack_require__(9);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_commons_commons__ = __webpack_require__(8);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__pages_experience_writing_experience_writing__ = __webpack_require__(106);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -4273,7 +4405,7 @@ ExperienceComponent = __decorate([
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return CommentComponent; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__providers_storage_storage__ = __webpack_require__(13);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_commons_commons__ = __webpack_require__(9);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_commons_commons__ = __webpack_require__(8);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_ionic_angular__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__pages_comment_writing_comment_writing__ = __webpack_require__(105);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -4382,7 +4514,7 @@ CommentComponent = __decorate([
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__providers_storage_storage__ = __webpack_require__(13);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__ngrx_store__ = __webpack_require__(23);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_commons_commons__ = __webpack_require__(9);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_commons_commons__ = __webpack_require__(8);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__pages_comment_writing_comment_writing__ = __webpack_require__(105);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_ionic_angular__ = __webpack_require__(5);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -4466,12 +4598,12 @@ CommentListComponent = __decorate([
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return PublicationEffects; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__ngrx_effects__ = __webpack_require__(333);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs__ = __webpack_require__(139);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs__ = __webpack_require__(142);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_rxjs__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__reducers_publication_reducer__ = __webpack_require__(54);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__reducers_publication_reducer__ = __webpack_require__(56);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__ngrx_store__ = __webpack_require__(23);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__storage__ = __webpack_require__(13);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__commons_commons__ = __webpack_require__(9);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__commons_commons__ = __webpack_require__(8);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -4589,7 +4721,7 @@ PublicationEffects = __decorate([
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return PublicationListComponent; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__providers_commons_commons__ = __webpack_require__(9);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__providers_commons_commons__ = __webpack_require__(8);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -4642,8 +4774,8 @@ PublicationListComponent = __decorate([
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__providers_imgcache_imgcache__ = __webpack_require__(103);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_ionic_angular__ = __webpack_require__(5);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__pages_place_selecting_place_selecting__ = __webpack_require__(175);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__providers_commons_commons__ = __webpack_require__(9);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__pages_place_selecting_place_selecting__ = __webpack_require__(178);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__providers_commons_commons__ = __webpack_require__(8);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -4736,7 +4868,7 @@ PublicationHeaderComponent = __decorate([
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return PublicationBodyComponent; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(5);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_commons_commons__ = __webpack_require__(9);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_commons_commons__ = __webpack_require__(8);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -4819,7 +4951,7 @@ PublicationBodyComponent = __decorate([
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return PublicationFooterComponent; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(5);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_commons_commons__ = __webpack_require__(9);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_commons_commons__ = __webpack_require__(8);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__pages_publication_writing_publication_writing__ = __webpack_require__(51);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -4917,7 +5049,7 @@ PublicationFooterComponent = __decorate([
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ExperienceListComponent; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__providers_commons_commons__ = __webpack_require__(9);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__providers_commons_commons__ = __webpack_require__(8);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_ionic_angular__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__pages_experience_writing_experience_writing__ = __webpack_require__(106);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -5081,10 +5213,10 @@ FiltersBarComponent = __decorate([
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return PlaceFilterComponent; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(5);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_reducers_publication_reducer__ = __webpack_require__(54);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_reducers_publication_reducer__ = __webpack_require__(56);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ngrx_store__ = __webpack_require__(23);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__providers_storage_storage__ = __webpack_require__(13);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__providers_commons_commons__ = __webpack_require__(9);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__providers_commons_commons__ = __webpack_require__(8);
 var __assign = (this && this.__assign) || Object.assign || function(t) {
     for (var s, i = 1, n = arguments.length; i < n; i++) {
         s = arguments[i];
@@ -5211,7 +5343,7 @@ PlaceFilterComponent = __decorate([
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return UserFilterComponent; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__pages_publication_user_filter_publication_user_filter__ = __webpack_require__(178);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__pages_publication_user_filter_publication_user_filter__ = __webpack_require__(181);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_ionic_angular__ = __webpack_require__(5);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -5287,7 +5419,7 @@ UserFilterComponent = __decorate([
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return OrderingCriterionComponent; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(5);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__pages_publication_order_by_publication_order_by__ = __webpack_require__(177);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__pages_publication_order_by_publication_order_by__ = __webpack_require__(180);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -5399,7 +5531,7 @@ PublicationImageComponent = __decorate([
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return MyEmojiPickerComponent; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(5);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__pages_my_emoji_picker_my_emoji_picker__ = __webpack_require__(174);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__pages_my_emoji_picker_my_emoji_picker__ = __webpack_require__(177);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -5545,8 +5677,8 @@ ScoreInputComponent = __decorate([
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return PublicationActionsComponent; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(5);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__pages_publication_actions_menu_publication_actions_menu__ = __webpack_require__(176);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_commons_commons__ = __webpack_require__(9);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__pages_publication_actions_menu_publication_actions_menu__ = __webpack_require__(179);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_commons_commons__ = __webpack_require__(8);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -5614,7 +5746,7 @@ PublicationActionsComponent = __decorate([
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_storage_storage__ = __webpack_require__(13);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_commons_commons__ = __webpack_require__(9);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_commons_commons__ = __webpack_require__(8);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -5711,14 +5843,14 @@ ScoreHandlerComponent = __decorate([
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return InboxListComponent; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__providers_commons_commons__ = __webpack_require__(9);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__providers_commons_commons__ = __webpack_require__(8);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_storage_storage__ = __webpack_require__(13);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__pages_inbox_writing_inbox_writing__ = __webpack_require__(104);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_ionic_angular__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__ngrx_store__ = __webpack_require__(23);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_ng_socket_io__ = __webpack_require__(76);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_ng_socket_io__ = __webpack_require__(74);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_ng_socket_io___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6_ng_socket_io__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__pages_chat_chat__ = __webpack_require__(59);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__pages_chat_chat__ = __webpack_require__(60);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -5878,12 +6010,12 @@ InboxListComponent = __decorate([
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return InboxComponent; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(5);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__pages_chat_chat__ = __webpack_require__(59);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_ng_socket_io__ = __webpack_require__(76);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__pages_chat_chat__ = __webpack_require__(60);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_ng_socket_io__ = __webpack_require__(74);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_ng_socket_io___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_ng_socket_io__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__providers_commons_commons__ = __webpack_require__(9);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__providers_commons_commons__ = __webpack_require__(8);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__providers_storage_storage__ = __webpack_require__(13);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__ionic_native_badge__ = __webpack_require__(96);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__ionic_native_badge__ = __webpack_require__(98);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -6033,7 +6165,7 @@ EmptyContentComponent = __decorate([
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ChatActionsComponent; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(5);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__pages_chat_actions_menu_chat_actions_menu__ = __webpack_require__(173);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__pages_chat_actions_menu_chat_actions_menu__ = __webpack_require__(176);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -6160,9 +6292,9 @@ PublicationResumeComponent = __decorate([
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AccountActionsComponent; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__providers_commons_commons__ = __webpack_require__(9);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__providers_commons_commons__ = __webpack_require__(8);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_ionic_angular__ = __webpack_require__(5);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__pages_account_actions_menu_account_actions_menu__ = __webpack_require__(181);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__pages_account_actions_menu_account_actions_menu__ = __webpack_require__(173);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -6213,117 +6345,14 @@ AccountActionsComponent = __decorate([
 
 /***/ }),
 
-/***/ 77:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AccountPage; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(5);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_storage_storage__ = __webpack_require__(13);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_commons_commons__ = __webpack_require__(9);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__publication_writing_publication_writing__ = __webpack_require__(51);
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-
-
-
-
-
-/**
- * Generated class for the AccountPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
-var AccountPage = (function () {
-    function AccountPage(navCtrl, navParams, storage, commons, modalCtrl) {
-        this.navCtrl = navCtrl;
-        this.navParams = navParams;
-        this.storage = storage;
-        this.commons = commons;
-        this.modalCtrl = modalCtrl;
-        this.publications = [];
-        this.favorites = [];
-        this.show = { section: 'PUBLICATIONS' };
-        this.PUBLICATION_LIMIT = 50;
-        this.FAVORITE_LIMIT = 50;
-        this.user = null;
-        this.loggedUser = null;
-    }
-    AccountPage.prototype.ionViewDidLoad = function () {
-        console.log('ionViewDidLoad AccountPage');
-    };
-    AccountPage.prototype.ionViewWillLoad = function () {
-        console.log('ionViewDidLoad AccountPage');
-    };
-    AccountPage.prototype.ionViewWillEnter = function () {
-        this.initializeValues();
-    };
-    AccountPage.prototype.initializeValues = function () {
-        this.PUBLICATION_LIMIT = 50;
-        this.FAVORITE_LIMIT = 50;
-        this.getUser();
-        this.loggedUser = this.commons.getUserId();
-    };
-    AccountPage.prototype.getUser = function () {
-        var _this = this;
-        var userId = null;
-        if (this.navParams.get("user")) {
-            userId = this.navParams.get("user");
-        }
-        else {
-            userId = this.commons.getUserId();
-        }
-        this.storage.getUser(userId).subscribe(function (user) {
-            _this.user = user;
-            _this.publications = user.publications;
-        });
-    };
-    AccountPage.prototype.getFavorites = function () {
-        var _this = this;
-        this.storage.getFavorites(this.user._id, this.FAVORITE_LIMIT).subscribe(function (favorites) {
-            _this.favorites = favorites;
-        });
-    };
-    AccountPage.prototype.openPublication = function (publicationId) {
-        var _this = this;
-        this.storage.getPublications(1, [{ key: "_id", operation: "EQUAL", value: publicationId }], { field: "publication.timestamps.created", way: -1 }).subscribe(function (publication) {
-            var publicationWritingModal = _this.modalCtrl.create(__WEBPACK_IMPORTED_MODULE_4__publication_writing_publication_writing__["a" /* PublicationWritingPage */], { user: publication[0].user, publication: publication[0].publication, experiences: publication[0].experiences, comments: publication[0].comments });
-            publicationWritingModal.present();
-        });
-    };
-    AccountPage.prototype.getCaption = function (captionKey) {
-        return this.commons.translate([captionKey]);
-    };
-    return AccountPage;
-}());
-AccountPage = __decorate([
-    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
-        selector: 'page-account',template:/*ion-inline-start:"C:\Users\Matias\WebstormProjects\turinsta\src\pages\account\account.html"*/'<!--\n  Generated template for the AccountPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-content *ngIf="user" text-center>\n  <ion-item class="text-with-ellipsis">\n    <ion-avatar class="out-activity-avatar" item-start>\n      <img src="{{user.avatar}}"/>\n    </ion-avatar>\n    <p>{{user.followers.length}} {{getCaption(\'followers\')}} / {{user.followedes.length}} {{getCaption(\'followedes\')}}</p>\n    <h2 class="publication-important-text">{{user.username}}</h2>\n    <p item-right>{{user.score | number:\'1.0-1\' }} <ion-icon name="star" color="star"></ion-icon>\n      / {{user.publications.length}} <ion-icon name="images" color="secondary"></ion-icon>\n    </p>\n    <account-actions item-end [user]="user"></account-actions>\n  </ion-item>\n  <ion-segment [(ngModel)]="show.section" color="secondary">\n    <ion-segment-button value="PUBLICATIONS">\n      <ion-icon name="images"></ion-icon>\n    </ion-segment-button>\n    <ion-segment-button value="FAVORITES" (click)="getFavorites()">\n      <ion-icon name="heart"></ion-icon>\n    </ion-segment-button>\n  </ion-segment>\n  <div [ngSwitch]="show.section" padding>\n    <ion-list *ngSwitchCase="\'PUBLICATIONS\'">\n      <publication-resume *ngFor="let publication of publications" [publication]="publication" (openPublication)="openPublication($event)"></publication-resume>\n      <empty-content *ngIf="!publications.length && user._id==loggedUser" [message]="getCaption(\'ownPublicationListEmpty\')"></empty-content>\n      <empty-content *ngIf="!publications.length && user._id!=loggedUser" [message]="getCaption(\'foreignPublicationListEmpty\')"></empty-content>\n    </ion-list>\n    <ion-list *ngSwitchCase="\'FAVORITES\'">\n      <publication-resume *ngFor="let favorite of favorites" [publication]="favorite" (openPublication)="openPublication($event)"></publication-resume>\n      <empty-content *ngIf="!favorites.length && user._id==loggedUser" [message]="getCaption(\'ownFavoriteListEmpty\')"></empty-content>\n      <empty-content *ngIf="!favorites.length && user._id!=loggedUser" [message]="getCaption(\'foreignFavoriteListEmpty\')"></empty-content>\n    </ion-list>\n  </div>\n</ion-content>\n'/*ion-inline-end:"C:\Users\Matias\WebstormProjects\turinsta\src\pages\account\account.html"*/,
-    }),
-    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* NavParams */], __WEBPACK_IMPORTED_MODULE_2__providers_storage_storage__["a" /* StorageProvider */], __WEBPACK_IMPORTED_MODULE_3__providers_commons_commons__["a" /* CommonsProvider */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* ModalController */]])
-], AccountPage);
-
-//# sourceMappingURL=account.js.map
-
-/***/ }),
-
-/***/ 9:
+/***/ 8:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return CommonsProvider; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_http__ = __webpack_require__(67);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_add_operator_map__ = __webpack_require__(68);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_http__ = __webpack_require__(68);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_add_operator_map__ = __webpack_require__(69);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_add_operator_map___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_rxjs_add_operator_map__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_ionic_angular__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__ionic_storage__ = __webpack_require__(234);
