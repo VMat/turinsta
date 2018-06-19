@@ -185,6 +185,13 @@ export class StorageProvider {
       .map((res: Response) => res.json());
   }
 
+  getUserByCredential(credential) {
+    let params = new URLSearchParams();
+    params.set(credential.networkId, credential.credential);
+    return this.http.get(StorageProvider.baseUrl + 'users/credential', {params})
+      .map((res: Response) => res.json());
+  }
+
   getUnreadMessages(userId){
     let params = new URLSearchParams();
     params.set('notifications.unreadMessages', '1');

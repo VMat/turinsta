@@ -23,6 +23,10 @@
       <ion-icon item-start name="contact" color="primary"></ion-icon>
       <ion-label>{{getCaption("avatar")}}</ion-label>
     </ion-item>
+    <ion-item (click)="logout()">
+      <ion-icon item-start name="log-out" color="primary"></ion-icon>
+      <ion-label>{{getCaption("logout")}}</ion-label>
+    </ion-item>
   </ion-list>
   <ion-list *ngIf="user._id!=loggedUser">
     <ion-item *ngIf="!followedes.includes(user._id)" (click)="handleFollowed(false)">

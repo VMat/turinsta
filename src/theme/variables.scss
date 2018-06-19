@@ -36,6 +36,7 @@ $app-direction: ltr;
 $colors: (
   primary:    #488aff,
   secondary:   darkviolet,
+  lightSecondary:   violet,
   success:    #32db64,
   danger:     #f53d3d,
   info:       lightblue,
@@ -44,7 +45,8 @@ $colors: (
   gray:       gray,
   dark:       #222,
   //star:       #FFC300
-  star:       #E7A501
+  star:       #E7A501,
+  facebook:   darkblue,
 );
 
 

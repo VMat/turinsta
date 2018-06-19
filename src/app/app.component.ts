@@ -13,13 +13,16 @@ import { Socket } from 'ng-socket-io';
 import {PublicationWritingPage} from "../pages/publication-writing/publication-writing";
 import {Store} from "@ngrx/store";
 import {AccountPage} from "../pages/account/account";
+import {LoginPage} from "../pages/login/login";
+import * as firebase from "firebase";
+import {SignupPage} from "../pages/signup/signup";
 
 
 @Component({
   templateUrl: 'app.html'
 })
 export class MyApp {
-  rootPage:any = TabsPage;
+  rootPage:any = LoginPage;
   @ViewChild('nav') nav: Nav;
 
   constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen, imgcacheService: ImgcacheService, public push: Push,
@@ -31,7 +34,36 @@ export class MyApp {
       statusBar.styleDefault();
       splashScreen.hide();
       imgcacheService.initImgCache().then(() => {
-        // this.nav.setRoot(this.rootPage);
+        const config = {
+          apiKey: 'AIzaSyBwV3pwpdHCnLhsK76thpDLD11FMK5uBvk',
+          authDomain: "turinsta-189517.firebaseapp.com",
+          databaseURL: "https://turinsta-189517.firebaseio.com",
+          projectId: "turinsta-189517",
+          storageBucket: "turinsta-189517.appspot.com",
+          messagingSenderId: "519496244550"
+        };
+
+        const app = !firebase.apps.length ? firebase.initializeApp(config) : firebase.app();
+        app.auth().onAuthStateChanged( user => {
+          console.log("GOOGLE USER", user);
+          if(user){
+            this.storageService.getUserByCredential({networkId: 1, credential: user.uid})
+              .first().subscribe((user) => {
+                if(user){
+                  this.commons.setUserId(user._id);
+                  this.commons.setUserData();
+                  this.rootPage = TabsPage;
+                }
+                else {
+                  this.rootPage = SignupPage;
+                }
+              });
+          }
+          else {
+            this.rootPage = LoginPage;
+          }
+          this.nav.setRoot(this.rootPage);
+        });
       });
 
       const pushObject: PushObject = this.push.init({
@@ -46,7 +78,7 @@ export class MyApp {
         windows: {}
       });
 
-      // pushObject.setApplicationIconBadgeNumber(0);
+      pushObject.setApplicationIconBadgeNumber(0);
 
       pushObject.on('notification').subscribe((notification: any) => {
         console.log('Received a notification', notification);
@@ -75,7 +107,6 @@ export class MyApp {
                   let chatPage = this.modalCtrl.create(ChatPage, {chat: inbox, chatDescription: this.commons.getChatDescription(inbox), avatar: this.commons.getAvatar(inbox), socket: socket, unreadMessagesCount: unreadMessagesCount});
                   chatPage.present();
                 });
-
               });
               break;
             }

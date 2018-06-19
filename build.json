@@ -1,0 +1,18 @@
+{
+  "android": {
+    "debug": {
+      "keystore": "turinsta-key.keystore",
+      "storePassword": "Sarlanga124",
+      "alias": "turinsta-key",
+      "password" : "Sarlanga124",
+      "keystoreType": ""
+    },
+    "release": {
+      "keystore": "my.keystore",
+      "storePassword": "mypassword",
+      "alias": "my_app",
+      "password" : "mypassword",
+      "keystoreType": ""
+    }
+  }
+}

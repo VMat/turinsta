@@ -18,6 +18,14 @@ userService.getUser = (id,fields)=>{
   })
 };
 
+userService.getUserByCredential = (credential)=>{
+  return new Promise((resolve, reject)=>{
+    storageService.getUserByCredential(credential).
+      then(users=>resolve(users)).
+      catch(error=>reject(error))
+  })
+};
+
 userService.getFollowedes = (id,count)=>{
   return new Promise((resolve, reject)=>{
     storageService.getFollowedes(id,count).

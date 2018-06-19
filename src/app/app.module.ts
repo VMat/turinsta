@@ -74,6 +74,12 @@ import { ConnectivityProvider } from '../providers/connectivity/connectivity';
 import { GoogleMapsClusterProvider } from '../providers/google-maps-cluster/google-maps-cluster';
 import {Network} from "@ionic-native/network";
 import {Geolocation} from "@ionic-native/geolocation";
+import { GooglePlus } from '@ionic-native/google-plus';
+import {LoginPage} from "../pages/login/login";
+import { LoginProvider } from '../providers/login/login';
+import {Facebook} from "@ionic-native/facebook";
+import {SignupPage} from "../pages/signup/signup";
+
 
 @NgModule({
   declarations: [
@@ -97,6 +103,8 @@ import {Geolocation} from "@ionic-native/geolocation";
     ChatActionsMenuPage,
     AccountActionsMenuPage,
     UsernameWritingPage,
+    LoginPage,
+    SignupPage,
     PublicationHeaderComponent,
     PublicationBodyComponent,
     PublicationFooterComponent,
@@ -161,7 +169,9 @@ import {Geolocation} from "@ionic-native/geolocation";
     InboxWritingPage,
     ChatActionsMenuPage,
     AccountActionsMenuPage,
-    UsernameWritingPage
+    UsernameWritingPage,
+    LoginPage,
+    SignupPage,
   ],
   providers: [
     StatusBar,
@@ -182,7 +192,10 @@ import {Geolocation} from "@ionic-native/geolocation";
     ConnectivityProvider,
     GoogleMapsClusterProvider,
     Network,
-    Geolocation
+    Geolocation,
+    GooglePlus,
+    Facebook,
+    LoginProvider,
   ]
 })
 export class AppModule {}

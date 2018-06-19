@@ -1,0 +1,15 @@
+page-login {
+
+  .login-with-content {
+    background-color: color($colors,lightSecondary,base);
+  }
+
+  .scroll-content {
+    display: flex;
+    align-items: center;
+  }
+
+  .login-with-button {
+    height: 100px;
+  }
+}

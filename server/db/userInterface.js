@@ -19,6 +19,19 @@ UserInterface.getOne = (id,fields={})=>{
   return Commons.getOne(Users, id, fields);
 };
 
+UserInterface.getUserByCredential = (credential)=>{
+  return Commons.getN(Users,{"credentials.credential": credential.credential}).
+    then((users) => {
+      if(users.length){
+        const targetCredential = users[0].credentials.filter((userCredential) => {
+          return userCredential.networkId === credential.networkId && userCredential.credential === credential.credential;
+        });
+        return targetCredential.length ? users[0] : null;
+      }
+      return null
+    });
+};
+
 UserInterface.getFollowedes = (id, n)=>{
   return Commons.getN(Users,{followers: id},n,{username: 1}).
     select({username: 1, avatar: 1});

@@ -8,6 +8,8 @@ import {Store} from "@ngrx/store";
 import {UsernameWritingPage} from "../username-writing/username-writing";
 import {ImagePicker} from "@ionic-native/image-picker";
 import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-native/file-transfer';
+import {GooglePlus} from "@ionic-native/google-plus";
+import {LoginProvider} from "../../providers/login/login";
 
 /**
  * Generated class for the AccountActionsMenuPage page.
@@ -28,9 +30,9 @@ export class AccountActionsMenuPage {
   followedes: any = [];
   languages: any = [];
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private viewCtrl: ViewController,
+  constructor(public navParams: NavParams, private viewCtrl: ViewController,
               public commons: CommonsProvider, private storage: StorageProvider, private modalCtrl: ModalController, private store: Store<any>,
-              private imagePicker: ImagePicker, private loadingCtrl: LoadingController,private transfer: FileTransfer){
+              private imagePicker: ImagePicker, private loadingCtrl: LoadingController,private transfer: FileTransfer, private loginProvider: LoginProvider){
   }
 
   ionViewDidLoad() {
@@ -181,6 +183,12 @@ export class AccountActionsMenuPage {
         return ft.upload(i, uri, options);
       })
     );
+  }
+
+  logout(){
+    this.loginProvider.googleLogout();
+    this.loginProvider.facebookLogout();
+    this.viewCtrl.dismiss();
   }
 
   getCaption(captionKey){

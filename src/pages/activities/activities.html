@@ -36,7 +36,8 @@
     <div *ngSwitchCase="'OUT'" style="text-align: center">
       <ion-list>
         <ion-item *ngFor="let activity of activities | containsFilter:{'key':'direction', 'value':'OUT'}">
-          <p class="publication-important-text" text-wrap>{{getActivityCaption(activity.caption,activity.relatedUsers.length? activity.relatedUsers[0].username : '',activity.params)}}</p>
+          <p *ngIf="activity.relatedUsers" class="publication-important-text" text-wrap>{{getActivityCaption(activity.caption,activity.relatedUsers.length? activity.relatedUsers[0].username : '',activity.params)}}</p>
+          <p *ngIf="!activity.relatedUsers" class="publication-important-text" text-wrap>{{getActivityCaption(activity.caption,'',activity.params)}}</p>
           <ion-note>{{getAntiquity(activity.timestamps.created)}}</ion-note>
           <ion-thumbnail *ngIf="activity.publication" item-end (click)="openPublication(activity.publication)">
             <img src="{{activity.publication.images[0].url}}">

@@ -23,7 +23,8 @@ const userSchema = new schema({
   followedes: [{type: schema.Types.ObjectId, "ref": 'Users'}],
   bucketId: String,
   notificationKey: String,
-  language: {type: schema.Types.ObjectId, ref: 'Language'}
+  language: {type: schema.Types.ObjectId, ref: 'Language'},
+  credentials: [{networkId: Number, credential: String}],
 });
 
 const Users = mongoose.model('Users', userSchema, 'Users');

@@ -27,6 +27,12 @@ router.get('/:id',(req, res)=>{
     .catch(error=>{res.status(500).send(error)})
 });
 
+router.get('/credential',(req, res)=>{
+  userService.getUserByCredential(req.params.credential)
+    .then(user=>{res.status(200).json(user)})
+    .catch(error=>{res.status(500).send(error)})
+});
+
 router.get('/:id/followedes/count/:limit',(req, res)=>{
   userService.getFollowedes(req.params.id,req.params.limit)
     .then(user=>{res.status(200).json(user)})

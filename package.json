@@ -22,14 +22,16 @@
     "@angular/http": "4.4.3",
     "@angular/platform-browser": "4.4.3",
     "@angular/platform-browser-dynamic": "4.4.3",
-    "@ionic-native/badge": "^4.5.3",
+    "@ionic-native/badge": "^4.7.0",
     "@ionic-native/core": "4.3.0",
-    "@ionic-native/file": "^4.5.3",
-    "@ionic-native/file-transfer": "^4.5.3",
+    "@ionic-native/facebook": "^4.7.0",
+    "@ionic-native/file": "^4.7.0",
+    "@ionic-native/file-transfer": "^4.7.0",
     "@ionic-native/geolocation": "^4.7.0",
-    "@ionic-native/image-picker": "^4.5.3",
-    "@ionic-native/network": "^4.5.3",
-    "@ionic-native/push": "^4.5.3",
+    "@ionic-native/google-plus": "^4.7.0",
+    "@ionic-native/image-picker": "^4.7.0",
+    "@ionic-native/network": "^4.7.0",
+    "@ionic-native/push": "^4.7.0",
     "@ionic-native/splash-screen": "4.3.0",
     "@ionic-native/status-bar": "4.3.0",
     "@ionic-tools/emoji-picker": "^1.3.9",
@@ -45,14 +47,17 @@
     "cordova-plugin-badge": "^0.8.7",
     "cordova-plugin-compat": "^1.2.0",
     "cordova-plugin-device": "^1.1.7",
+    "cordova-plugin-facebook4": "^2.1.0",
     "cordova-plugin-file": "^5.0.0",
     "cordova-plugin-file-transfer": "^1.7.1",
     "cordova-plugin-geolocation": "^4.0.1",
+    "cordova-plugin-googleplus": "git+https://github.com/EddyVerbruggen/cordova-plugin-googleplus.git",
     "cordova-plugin-image-picker": "^1.1.3",
-    "cordova-plugin-ionic-webview": "^1.1.16",
+    "cordova-plugin-ionic-webview": "^1.2.1",
     "cordova-plugin-network-information": "^1.3.4",
     "cordova-plugin-splashscreen": "^4.1.0",
     "cordova-plugin-whitelist": "^1.3.3",
+    "firebase": "^5.0.4",
     "imgcache.js": "^1.1.1",
     "ionic-angular": "3.7.1",
     "ionic-img-cache": "^1.3.1",
@@ -61,7 +66,7 @@
     "jquery": "^3.3.1",
     "ng-socket-io": "^0.2.4",
     "node-js-marker-clusterer": "^1.0.0",
-    "phonegap-plugin-push": "^2.1.3",
+    "phonegap-plugin-push": "^2.2.3",
     "rxjs": "5.4.3",
     "sw-toolbox": "3.6.0",
     "tassign": "^1.0.0",
@@ -88,11 +93,20 @@
         "FCM_VERSION": "11.6.2"
       },
       "cordova-plugin-badge": {},
-      "cordova-plugin-geolocation": {}
+      "cordova-plugin-geolocation": {},
+      "cordova-plugin-googleplus": {
+        "WEB_APPLICATION_CLIENT_ID": "519496244550-q8l366vah96padohtpmg5os9a1qohpbb.apps.googleusercontent.com",
+        "REVERSE_CLIENT_ID": "com.googleusercontent.apps.519496244550-q8l366vah96padohtpmg5os9a1qohpbb"
+      },
+      "cordova-plugin-facebook4": {
+        "APP_ID": "187128888612912",
+        "APP_NAME": "TurInsta",
+        "ANDROID_SDK_VERSION": "4.+"
+      }
     },
     "platforms": [
-      "android",
-      "browser"
+      "browser",
+      "android"
     ]
   }
 }

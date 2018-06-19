@@ -1,14 +1,14 @@
 webpackJsonp([2],{
 
-/***/ 742:
+/***/ 762:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "PublicationUserFilterPageModule", function() { return PublicationUserFilterPageModule; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "PublicationWritingPageModule", function() { return PublicationWritingPageModule; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(5);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__publication_user_filter__ = __webpack_require__(181);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__publication_writing__ = __webpack_require__(52);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -18,23 +18,23 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 
 
 
-var PublicationUserFilterPageModule = (function () {
-    function PublicationUserFilterPageModule() {
+var PublicationWritingPageModule = (function () {
+    function PublicationWritingPageModule() {
     }
-    return PublicationUserFilterPageModule;
+    return PublicationWritingPageModule;
 }());
-PublicationUserFilterPageModule = __decorate([
+PublicationWritingPageModule = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["NgModule"])({
         declarations: [
-            __WEBPACK_IMPORTED_MODULE_2__publication_user_filter__["a" /* PublicationUserFilterPage */],
+            __WEBPACK_IMPORTED_MODULE_2__publication_writing__["a" /* PublicationWritingPage */],
         ],
         imports: [
-            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* IonicPageModule */].forChild(__WEBPACK_IMPORTED_MODULE_2__publication_user_filter__["a" /* PublicationUserFilterPage */]),
+            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* IonicPageModule */].forChild(__WEBPACK_IMPORTED_MODULE_2__publication_writing__["a" /* PublicationWritingPage */]),
         ],
     })
-], PublicationUserFilterPageModule);
+], PublicationWritingPageModule);
 
-//# sourceMappingURL=publication-user-filter.module.js.map
+//# sourceMappingURL=publication-writing.module.js.map
 
 /***/ })
 

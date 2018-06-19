@@ -942,6 +942,10 @@ db.getUser = (id,fields)=>{
   return userInterface.getOne(id,fields);
 };
 
+db.getUserByCredential = (credential)=>{
+  return userInterface.getUserByCredential(credential);
+};
+
 db.getFollowedes = (id,count)=>{
   return userInterface.getFollowedes(id,count);
 };

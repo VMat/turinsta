@@ -122,6 +122,10 @@ storageService.getUser = (id,fields)=>{
   return db.getUser(id,fields);
 };
 
+storageService.getUserByCredential = (credential)=>{
+  return db.getUserByCredential(credential);
+};
+
 storageService.getFollowedes = (id,count)=>{
   return db.getFollowedes(id,count);
 };
