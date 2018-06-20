@@ -14,6 +14,13 @@ router.get('/',(req, res)=>{
     .catch(error=>{res.status(500).send(error)})
 });
 
+router.get('/credential',(req, res)=>{
+  console.log("USER CREDENTIAL --> " + JSON.stringify(req.query));
+  userService.getUserByCredential(req.query)
+    .then(user=>{res.status(200).json(user)})
+    .catch(error=>{res.status(500).send(error)})
+});
+
 router.get('/:id',(req, res)=>{
   console.log("GET USER --> REQ.QUERY: " + JSON.stringify(req.query));
   //let rowSearchParams = JSON.parse(decodeURI(JSON.stringify(req.query)));
@@ -23,12 +30,6 @@ router.get('/:id',(req, res)=>{
   //}
   //console.log(JSON.stringify(searchParams));
   userService.getUser(req.params.id,req.query)
-    .then(user=>{res.status(200).json(user)})
-    .catch(error=>{res.status(500).send(error)})
-});
-
-router.get('/credential',(req, res)=>{
-  userService.getUserByCredential(req.params.credential)
     .then(user=>{res.status(200).json(user)})
     .catch(error=>{res.status(500).send(error)})
 });

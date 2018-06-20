@@ -187,7 +187,8 @@ export class StorageProvider {
 
   getUserByCredential(credential) {
     let params = new URLSearchParams();
-    params.set(credential.networkId, credential.credential);
+    params.set("networkId", credential.networkId);
+    params.set("credential", credential.credential);
     return this.http.get(StorageProvider.baseUrl + 'users/credential', {params})
       .map((res: Response) => res.json());
   }
