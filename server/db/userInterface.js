@@ -22,13 +22,14 @@ UserInterface.getOne = (id,fields={})=>{
 UserInterface.getUserByCredential = (credential)=>{
   return Commons.getN(Users,{"credentials.credential": credential.credential}).
     then((users) => {
+      console.log("USERS", users);
       if(users.length){
         const targetCredential = users[0].credentials.filter((userCredential) => {
           return userCredential.networkId === credential.networkId && userCredential.credential === credential.credential;
         });
-        return targetCredential.length ? users[0] : null;
+        return targetCredential.length ? Promise.resolve(users[0]) : Promise.resolve(null);
       }
-      return null
+      return Promise.resolve(null);
     });
 };
 

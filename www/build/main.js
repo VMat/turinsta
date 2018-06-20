@@ -1035,7 +1035,8 @@ var StorageProvider = StorageProvider_1 = (function () {
     };
     StorageProvider.prototype.getUserByCredential = function (credential) {
         var params = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["d" /* URLSearchParams */]();
-        params.set(credential.networkId, credential.credential);
+        params.set("networkId", credential.networkId);
+        params.set("credential", credential.credential);
         return this.http.get(StorageProvider_1.baseUrl + 'users/credential', { params: params })
             .map(function (res) { return res.json(); });
     };
@@ -2543,11 +2544,11 @@ var map = {
 		11
 	],
 	"../pages/inbox-writing/inbox-writing.module": [
-		754,
+		755,
 		10
 	],
 	"../pages/login/login.module": [
-		755,
+		754,
 		9
 	],
 	"../pages/my-emoji-picker/my-emoji-picker.module": [
@@ -2575,11 +2576,11 @@ var map = {
 		3
 	],
 	"../pages/publication-writing/publication-writing.module": [
-		762,
+		763,
 		2
 	],
 	"../pages/signup/signup.module": [
-		763,
+		762,
 		1
 	],
 	"../pages/username-writing/username-writing.module": [
@@ -3350,16 +3351,16 @@ AppModule = __decorate([
                     { loadChildren: '../pages/comment-writing/comment-writing.module#CommentWritingPageModule', name: 'CommentWritingPage', segment: 'comment-writing', priority: 'low', defaultHistory: [] },
                     { loadChildren: '../pages/description-writing/description-writing.module#DescriptionWritingPageModule', name: 'DescriptionWritingPage', segment: 'description-writing', priority: 'low', defaultHistory: [] },
                     { loadChildren: '../pages/experience-writing/experience-writing.module#ExperienceWritingPageModule', name: 'ExperienceWritingPage', segment: 'experience-writing', priority: 'low', defaultHistory: [] },
-                    { loadChildren: '../pages/inbox-writing/inbox-writing.module#InboxWritingPageModule', name: 'InboxWritingPage', segment: 'inbox-writing', priority: 'low', defaultHistory: [] },
                     { loadChildren: '../pages/login/login.module#LoginPageModule', name: 'LoginPage', segment: 'login', priority: 'low', defaultHistory: [] },
+                    { loadChildren: '../pages/inbox-writing/inbox-writing.module#InboxWritingPageModule', name: 'InboxWritingPage', segment: 'inbox-writing', priority: 'low', defaultHistory: [] },
                     { loadChildren: '../pages/my-emoji-picker/my-emoji-picker.module#MyEmojiPickerPageModule', name: 'MyEmojiPickerPage', segment: 'my-emoji-picker', priority: 'low', defaultHistory: [] },
                     { loadChildren: '../pages/place-selecting/place-selecting.module#PlaceSelectingPageModule', name: 'PlaceSelectingPage', segment: 'place-selecting', priority: 'low', defaultHistory: [] },
                     { loadChildren: '../pages/places/places.module#PlacesPageModule', name: 'PlacesPage', segment: 'places', priority: 'low', defaultHistory: [] },
                     { loadChildren: '../pages/publication-actions-menu/publication-actions-menu.module#PublicationActionsMenuPageModule', name: 'PublicationActionsMenuPage', segment: 'publication-actions-menu', priority: 'low', defaultHistory: [] },
                     { loadChildren: '../pages/publication-order-by/publication-order-by.module#PublicationOrderByPageModule', name: 'PublicationOrderByPage', segment: 'publication-order-by', priority: 'low', defaultHistory: [] },
                     { loadChildren: '../pages/publication-user-filter/publication-user-filter.module#PublicationUserFilterPageModule', name: 'PublicationUserFilterPage', segment: 'publication-user-filter', priority: 'low', defaultHistory: [] },
-                    { loadChildren: '../pages/publication-writing/publication-writing.module#PublicationWritingPageModule', name: 'PublicationWritingPage', segment: 'publication-writing', priority: 'low', defaultHistory: [] },
                     { loadChildren: '../pages/signup/signup.module#SignupPageModule', name: 'SignupPage', segment: 'signup', priority: 'low', defaultHistory: [] },
+                    { loadChildren: '../pages/publication-writing/publication-writing.module#PublicationWritingPageModule', name: 'PublicationWritingPage', segment: 'publication-writing', priority: 'low', defaultHistory: [] },
                     { loadChildren: '../pages/username-writing/username-writing.module#UsernameWritingPageModule', name: 'UsernameWritingPage', segment: 'username-writing', priority: 'low', defaultHistory: [] }
                 ]
             }),
