@@ -1,7 +1,13 @@
 const Users = require('../models/user');
 const Publications = require('../models/publication');
+const Languages = require('../models/language');
 const Commons = require('./commons');
 const NotificationService = require('../services/notificationService');
+const DefaultLanguage = {
+  _id: "5a5cf928734d1d3471842007",
+  short: "en",
+  name: "ENGLISH",
+};
 
 let UserInterface = {};
 
@@ -44,30 +50,33 @@ UserInterface.getFavorites = (id, n)=>{
 };
 
 UserInterface.insert = (user)=>{
-  const userToInsert = {
-    avatar            : user.photoURL,
-    username          : user.displayName,
-    score             : 0,
-    publications      : [],
-    notifications     : {
-      unseenActivities  : [],
-      unreadActivities  : [],
-    },
-    favorites         : [],
-    followers         : [],
-    followedes        : [],
-    bucketId          : null,
-    notificationKey   : null,
-    language          : user.language,
-    credentials       : [{
-      networkId: user.providerId,
-      credential: user.token,
-    }],
-  };
-  return Commons.insert(new Users(userToInsert))
-    .then((newUser) => {
-      newUser.bucketId = "Tur-".concat(newUser._id);
-      return Commons.update(Users, newUser);
+  Commons.getN(Languages,{short: user.language.split("-")[0]})
+    .then((matchedLanguage) => {
+      const userToInsert = {
+        avatar            : user.photoURL,
+        username          : user.displayName,
+        score             : 0,
+        publications      : [],
+        notifications     : {
+          unseenActivities  : [],
+          unreadActivities  : [],
+        },
+        favorites         : [],
+        followers         : [],
+        followedes        : [],
+        bucketId          : null,
+        notificationKey   : null,
+        language          : matchedLanguage.length ? matchedLanguage[0]._id : DefaultLanguage._id,
+        credentials       : [{
+          networkId: user.providerId,
+          credential: user.token,
+        }],
+      };
+      return Commons.insert(new Users(userToInsert))
+        .then((newUser) => {
+          newUser.bucketId = "Tur-".concat(newUser._id);
+          return Commons.update(Users, newUser);
+        });
     });
 };
 
