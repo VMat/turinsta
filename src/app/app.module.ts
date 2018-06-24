@@ -79,6 +79,7 @@ import {LoginPage} from "../pages/login/login";
 import { LoginProvider } from '../providers/login/login';
 import {Facebook} from "@ionic-native/facebook";
 import {SignupPage} from "../pages/signup/signup";
+import { FacebookProvider } from '../providers/facebook/facebook';
 
 
 @NgModule({
@@ -196,6 +197,7 @@ import {SignupPage} from "../pages/signup/signup";
     GooglePlus,
     Facebook,
     LoginProvider,
+    FacebookProvider,
   ]
 })
 export class AppModule {}

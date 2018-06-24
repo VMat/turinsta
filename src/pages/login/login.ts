@@ -24,7 +24,7 @@ export class LoginPage {
   }
 
   facebookLoginUser(): void {
-    this.loginProvider.facebookLogin();
+    this.loginProvider.facebookLogin(this.navCtrl);
   }
 
   ionViewDidLoad() {

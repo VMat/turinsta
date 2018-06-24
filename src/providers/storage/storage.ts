@@ -180,6 +180,11 @@ export class StorageProvider {
       .map((res: Response)=>res.json());
   }
 
+  createUser(user){
+    return this.http.post(StorageProvider.baseUrl + 'users/', user, {headers: StorageProvider.headers})
+      .map((res: Response) => res.json());
+  }
+
   getUser(id){
     return this.http.get(StorageProvider.baseUrl + 'users/' + id)
       .map((res: Response) => res.json());

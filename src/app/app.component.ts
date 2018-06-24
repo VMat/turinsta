@@ -14,7 +14,7 @@ import {PublicationWritingPage} from "../pages/publication-writing/publication-w
 import {Store} from "@ngrx/store";
 import {AccountPage} from "../pages/account/account";
 import {LoginPage} from "../pages/login/login";
-import * as firebase from "firebase";
+import {LoginProvider} from "../providers/login/login";
 import {SignupPage} from "../pages/signup/signup";
 
 
@@ -27,7 +27,7 @@ export class MyApp {
 
   constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen, imgcacheService: ImgcacheService, public push: Push,
               private notifications: NotificationProvider, private commons: CommonsProvider, private storageService: StorageProvider,
-              private modalCtrl: ModalController, private store: Store<any>) {
+              private modalCtrl: ModalController, private store: Store<any>, loginProvider: LoginProvider) {
     platform.ready().then(() => {
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
@@ -42,28 +42,7 @@ export class MyApp {
           storageBucket: "turinsta-189517.appspot.com",
           messagingSenderId: "519496244550"
         };
-
-        const app = !firebase.apps.length ? firebase.initializeApp(config) : firebase.app();
-        app.auth().onAuthStateChanged( user => {
-          console.log("GOOGLE USER", user);
-          if(user){
-            this.storageService.getUserByCredential({networkId: 1, credential: user.uid})
-              .first().subscribe((user) => {
-                if(user){
-                  this.commons.setUserId(user._id);
-                  this.commons.setUserData();
-                  this.rootPage = TabsPage;
-                }
-                else {
-                  this.rootPage = SignupPage;
-                }
-              });
-          }
-          else {
-            this.rootPage = LoginPage;
-          }
-          this.nav.setRoot(this.rootPage);
-        });
+        loginProvider.checkState(this.nav, config, SignupPage);
       });
 
       const pushObject: PushObject = this.push.init({

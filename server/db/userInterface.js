@@ -44,7 +44,31 @@ UserInterface.getFavorites = (id, n)=>{
 };
 
 UserInterface.insert = (user)=>{
-  return Commons.insert(new Users(user));
+  const userToInsert = {
+    avatar            : user.photoURL,
+    username          : user.displayName,
+    score             : 0,
+    publications      : [],
+    notifications     : {
+      unseenActivities  : [],
+      unreadActivities  : [],
+    },
+    favorites         : [],
+    followers         : [],
+    followedes        : [],
+    bucketId          : null,
+    notificationKey   : null,
+    language          : user.language,
+    credentials       : [{
+      networkId: user.providerId,
+      credential: user.token,
+    }],
+  };
+  return Commons.insert(new Users(userToInsert))
+    .then((newUser) => {
+      newUser.bucketId = "Tur-".concat(newUser._id);
+      return Commons.update(Users, newUser);
+    });
 };
 
 UserInterface.update = (user)=>{

@@ -30,7 +30,7 @@ export class AccountActionsMenuPage {
   followedes: any = [];
   languages: any = [];
 
-  constructor(public navParams: NavParams, private viewCtrl: ViewController,
+  constructor(public navParams: NavParams, private navCtrl: NavController, private viewCtrl: ViewController,
               public commons: CommonsProvider, private storage: StorageProvider, private modalCtrl: ModalController, private store: Store<any>,
               private imagePicker: ImagePicker, private loadingCtrl: LoadingController,private transfer: FileTransfer, private loginProvider: LoginProvider){
   }
@@ -186,9 +186,7 @@ export class AccountActionsMenuPage {
   }
 
   logout(){
-    this.loginProvider.googleLogout();
-    this.loginProvider.facebookLogout();
-    this.viewCtrl.dismiss();
+    this.loginProvider.logout();
   }
 
   getCaption(captionKey){
