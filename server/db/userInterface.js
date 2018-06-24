@@ -50,7 +50,7 @@ UserInterface.getFavorites = (id, n)=>{
 };
 
 UserInterface.insert = (user)=>{
-  Commons.getN(Languages,{short: user.language.split("-")[0]})
+  return Commons.getN(Languages,{short: user.language.split("-")[0]}, 1)
     .then((matchedLanguage) => {
       const userToInsert = {
         avatar            : user.photoURL,
@@ -72,9 +72,12 @@ UserInterface.insert = (user)=>{
           credential: user.token,
         }],
       };
+      console.log("userToInsert", userToInsert);
       return Commons.insert(new Users(userToInsert))
         .then((newUser) => {
+          console.log("newUser", newUser);
           newUser.bucketId = "Tur-".concat(newUser._id);
+          console.log("updatedUser", newUser);
           return Commons.update(Users, newUser);
         });
     });
