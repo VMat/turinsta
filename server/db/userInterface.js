@@ -26,7 +26,7 @@ UserInterface.getOne = (id,fields={})=>{
 };
 
 UserInterface.getUserByCredential = (credential)=>{
-  return Commons.getN(Users,{"credentials.credential": credential.credential}).
+  return Commons.getN(Users,{"credentials.credential": { "$in" : [credential.credential]}}).
     then((users) => {
       console.log("USERS", users);
       if(users.length){
