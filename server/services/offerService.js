@@ -7,7 +7,7 @@ OfferService.getOffers = () => {
     return Axios.get('https://despegar.com')
     .then((result) => {
       console.log('PAGE', result);
-      resolve(result);
+      resolve(result.toString());
     })
     .catch((err) => {
       reject(err);
