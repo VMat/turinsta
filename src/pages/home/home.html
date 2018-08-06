@@ -1,6 +1,22 @@
 <ion-content>
   <ion-slides class="home-slides" (ionSlideReachEnd)="toogleUpdateInboxes(true)">
     <ion-slide>
+      <ion-list>
+        <ion-item>
+          <ion-card>
+            <ion-card-header>
+              <ion-card-title>
+                {{'Publicidad 1'}}
+              </ion-card-title>
+            </ion-card-header>
+            <ion-card-content>
+              <img src="">
+            </ion-card-content>
+          </ion-card>
+        </ion-item>
+      </ion-list>
+    </ion-slide>
+    <ion-slide>
       <ion-header no-margin no-padding>
         <filters-bar></filters-bar>
       </ion-header>
@@ -11,15 +27,15 @@
         <!--<publication [data]="publication"></publication>-->
         <!--</ion-item>-->
         <!--</ion-list>-->
-        <ion-fab *ngIf="unreadMessagesCount" top right edge>
+        <ion-fab *ngIf="loggedUser && unreadMessagesCount" top right edge>
           <button ion-fab mini color="danger" (click)="openInboxPage()">{{unreadMessagesCount}}</button>
         </ion-fab>
-        <ion-fab bottom right edge>
+        <ion-fab *ngIf="loggedUser" bottom right edge>
           <button ion-fab mini color="success"><ion-icon name="add"></ion-icon></button>
-          <ion-fab-list side="left">
-            <button ion-fab><ion-icon name="camera"></ion-icon></button>
-            <button ion-fab><ion-icon name="image"></ion-icon></button>
-            <button ion-fab (click)="presentPublicationWritingModal()"><ion-icon name="create"></ion-icon></button>
+          <ion-fab-list side="top" >
+            <button ion-fab mini><ion-icon name="camera"></ion-icon></button>
+            <button ion-fab mini><ion-icon name="image"></ion-icon></button>
+            <button ion-fab mini (click)="presentPublicationWritingModal()"><ion-icon name="create"></ion-icon></button>
           </ion-fab-list>
         </ion-fab>
         <ion-infinite-scroll (ionInfinite)="doInfinite($event)">
@@ -30,7 +46,7 @@
         </ion-infinite-scroll>
       </ion-content>
     </ion-slide>
-    <ion-slide>
+    <ion-slide *ngIf="loggedUser">
       <ion-header>
         <ion-navbar>
           <ion-title>{{getCaption('chats')}}</ion-title>

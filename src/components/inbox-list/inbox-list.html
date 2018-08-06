@@ -5,8 +5,8 @@
 <empty-content *ngIf="!inboxes.length" [message]="getCaption('inboxListEmpty')"></empty-content>
 <ion-fab bottom right>
   <button ion-fab mini color="success"><ion-icon name="add"></ion-icon></button>
-  <ion-fab-list side="left">
-    <button ion-fab><ion-icon name="ios-people" (click)="presentNewInboxModal(true)"></ion-icon></button>
-    <button ion-fab><ion-icon name="ios-person" (click)="presentNewInboxModal(false)"></ion-icon></button>
+  <ion-fab-list side="top" >
+    <button ion-fab mini><ion-icon name="ios-people" (click)="presentNewInboxModal(true)"></ion-icon></button>
+    <button ion-fab mini><ion-icon name="ios-person" (click)="presentNewInboxModal(false)"></ion-icon></button>
   </ion-fab-list>
 </ion-fab>

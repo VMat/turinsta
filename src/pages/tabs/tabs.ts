@@ -7,6 +7,7 @@ import {Store} from "@ngrx/store";
 import {Badge} from "@ionic-native/badge";
 import {StorageProvider} from "../../providers/storage/storage";
 import {CommonsProvider} from "../../providers/commons/commons";
+import {LoginProvider} from "../../providers/login/login";
 
 
 @Component({
@@ -23,12 +24,18 @@ export class TabsPage {
 
   showFilters: boolean = false;
   activityParams = {unseenActivitiesCount: null};
+  loggedUser = null;
 
-  constructor(private store: Store<any>, private badge: Badge, private storage: StorageProvider, private commons: CommonsProvider){
+  constructor(private store: Store<any>, private badge: Badge, private storage: StorageProvider, private commons: CommonsProvider, private login: LoginProvider){
     this.store.select("user","unseenActivities").subscribe((unseenActivities)=>{
       console.log("unseenActivitiesBadge: " + unseenActivities);
       this.activityParams.unseenActivitiesCount = unseenActivities.length ? unseenActivities.length : null;
-    })
+    });
+    this.login.startNotifications();
+  }
+
+  ionViewWillLoad(){
+    this.loggedUser = this.commons.getUserId();
   }
 
   clearUnseenActivities(){

@@ -187,6 +187,7 @@ export class AccountActionsMenuPage {
 
   logout(){
     this.loginProvider.logout();
+    this.viewCtrl.dismiss();
   }
 
   getCaption(captionKey){

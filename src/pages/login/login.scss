@@ -1,7 +1,11 @@
 page-login {
 
   .login-with-content {
-    background-color: color($colors,lightSecondary,base);
+    background-color: color($colors,lightgray,base);
+  }
+
+  .login-icon {
+    font-size: 80px !important; //Preferred size here
   }
 
   .scroll-content {
@@ -10,6 +14,10 @@ page-login {
   }
 
   .login-with-button {
-    height: 100px;
+    color: color($colors,white,base);;
+  }
+
+  .fab-list-active {
+    margin-bottom: 130px;
   }
 }

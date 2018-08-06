@@ -33,8 +33,8 @@
   <ion-tabs>
     <ion-tab [root]="tab1Root" tabIcon="home" (ionSelect)="setActiveTab('home')"></ion-tab>
     <ion-tab [root]="tab2Root" tabIcon="globe" (ionSelect)="setActiveTab('places')"></ion-tab>
-    <ion-tab [root]="tab3Root" tabIcon="eye" [rootParams]="activityParams" tabBadge="{{activityParams.unseenActivitiesCount}}" tabBadgeStyle="danger" (ionSelect)="setActiveTab('activities')"></ion-tab>
-    <ion-tab [root]="tab4Root" tabIcon="contact" (ionSelect)="setActiveTab('account')"></ion-tab>
+    <ion-tab *ngIf="loggedUser" [root]="tab3Root" tabIcon="eye" [rootParams]="activityParams" tabBadge="{{activityParams.unseenActivitiesCount}}" tabBadgeStyle="danger" (ionSelect)="setActiveTab('activities')"></ion-tab>
+    <ion-tab *ngIf="loggedUser" [root]="tab4Root" tabIcon="contact" (ionSelect)="setActiveTab('account')"></ion-tab>
   </ion-tabs>
 </ion-content>
 

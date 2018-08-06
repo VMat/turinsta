@@ -79,7 +79,7 @@ export class ActivitiesPage {
 
   getActivityCaption(caption,user,params){
     if(params){
-      return this.commons.translate([caption],{...params,':user':user});
+      return this.commons.translate([caption], {...params, ':user': user});
     }
     else{
       return this.commons.translate([caption],{});

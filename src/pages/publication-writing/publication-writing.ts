@@ -25,8 +25,8 @@ export class PublicationWritingPage {
 
   publication: any = {};
   user: any = {};
-  experiences: any = [];
-  comments: any = [];
+  experiences = [];
+  comments = [];
   loggedUser: string = null;
   experienceListOpened: boolean = false;
   commentListOpened: boolean = false;
@@ -40,13 +40,13 @@ export class PublicationWritingPage {
   ){}
 
   ionViewWillLoad(){
-    if(Boolean(this.navParams.get("publication"))){
+    if(this.navParams.get("publication")){
       this.publication = this.navParams.get("publication");
       this.user = this.navParams.get("user");
-      this.experiences = this.navParams.get("experiences");
-      this.comments = this.navParams.get("comments");
+      this.experiences = this.navParams.get("experiences") !== 'undefined' ? this.navParams.get("experiences") : null;
+      this.comments = this.navParams.get("comments") !== 'undefined' ? this.navParams.get("comments") : null;
+      this.loggedUser = this.commons.getUserId();
     }
-    this.loggedUser = this.commons.getUserId();
   }
 
   scoreGivenFromUser(){
@@ -62,9 +62,9 @@ export class PublicationWritingPage {
     })
   }
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad PublicationWritingPage');
-  }
+  // ionViewDidLoad() {
+  //   console.log('ionViewDidLoad PublicationWritingPage');
+  // }
 
   checkEditPermission(){
     if(Boolean(this.publication._id)){

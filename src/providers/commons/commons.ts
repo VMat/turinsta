@@ -72,12 +72,13 @@ export class CommonsProvider {
     return translatedCaption;
   }
 
-  setUserId(userId){
+  setUserId(userId=null){
     sessionStorage.setItem("userId", userId);
   }
 
   getUserId(){
-    return sessionStorage.getItem("userId");
+    const userId = sessionStorage.getItem("userId");
+    return userId !== 'null' ? userId : null;
   }
 
   presentToast(message){

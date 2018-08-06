@@ -2,15 +2,12 @@ import { NgModule, ErrorHandler } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { MyApp } from './app.component';
-
 import { HomePage } from '../pages/home/home';
 import { PlacesPage } from '../pages/places/places';
 import { ActivitiesPage } from '../pages/activities/activities';
 import { AccountPage } from '../pages/account/account';
 import { TabsPage } from '../pages/tabs/tabs';
-
 import { PublicationComponent } from '../components/publication/publication'
-
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { StorageProvider } from '../providers/storage/storage';
@@ -80,6 +77,7 @@ import { LoginProvider } from '../providers/login/login';
 import {Facebook} from "@ionic-native/facebook";
 import {SignupPage} from "../pages/signup/signup";
 import { FacebookProvider } from '../providers/facebook/facebook';
+import { ScrapingProvider } from '../providers/scraping/scraping';
 
 
 @NgModule({
@@ -198,6 +196,7 @@ import { FacebookProvider } from '../providers/facebook/facebook';
     Facebook,
     LoginProvider,
     FacebookProvider,
+    ScrapingProvider,
   ]
 })
 export class AppModule {}

@@ -6,6 +6,7 @@ import {Store} from "@ngrx/store";
 import {getPublications, incrementPublicationRange} from "../../providers/reducers/publication.reducer";
 import {PublicationWritingPage} from "../publication-writing/publication-writing";
 import {CommonsProvider} from "../../providers/commons/commons";
+import {ScrapingProvider} from "../../providers/scraping/scraping";
 
 @Component({
   selector: 'page-home',
@@ -18,8 +19,10 @@ export class HomePage{
   unreadMessagesCount: number = null;
   updateInboxes: boolean = true;
   @ViewChild(Slides) slides: Slides;
+  loggedUser = null;
 
-  constructor(public storageService:StorageProvider, public navCtrl: NavController, private store: Store<any>, private modalCtrl: ModalController, private commons: CommonsProvider) {
+  constructor(public storageService:StorageProvider, public navCtrl: NavController, private store: Store<any>,
+              private modalCtrl: ModalController, private commons: CommonsProvider) {
     this.store.dispatch(getPublications());
     this.publications = store.select("publications");
     this.store.select("user","unreadMessages").subscribe((unreadMessages)=>{
@@ -27,6 +30,14 @@ export class HomePage{
       this.unreadMessagesCount = unreadMessages.reduce((acum,item)=>{
         return acum + item.messages.length;
       },0);
+    });
+  }
+
+  ionViewDidLoad(){
+    this.loggedUser = this.commons.getUserId();
+    this.storageService.getOffers().first().subscribe((scrapedPage)=>{
+      const offerPage = scrapedPage;
+      console.log('offerPage', offerPage);
     });
   }
 

@@ -34,21 +34,27 @@ $app-direction: ltr;
 // The "primary" color is the only required color in the map.
 
 $colors: (
-  primary:    #488aff,
-  secondary:   darkviolet,
+  primary:          #488aff,
+  secondary:        darkviolet,
   lightSecondary:   violet,
-  success:    #32db64,
-  danger:     #f53d3d,
-  info:       lightblue,
-  warning:    #FFC300,
-  light:      #f4f4f4,
-  gray:       gray,
-  dark:       #222,
-  //star:       #FFC300
-  star:       #E7A501,
-  facebook:   darkblue,
+  success:          #32db64,
+  danger:           #f53d3d,
+  info:             lightblue,
+  warning:          #FFC300,
+  light:            #f4f4f4,
+  white:            white,
+  lightgray:        lightgray,
+  gray:             gray,
+  dark:             #222,
+  //star:             #FFC300,
+  star:             #E7A501,
+  facebook:         darkblue,
+  twitter:          cyan,
+  guest:            gray,
 );
 
+$fab-size: 120px;
+$fab-mini-size: 40px;
 
 // App iOS Variables
 // --------------------------------------------------

@@ -6,8 +6,9 @@ const experienceApi = require('../rest/experienceApi');
 const userApi = require('../rest/userApi');
 const languageApi = require('../rest/languageApi');
 const inboxApi = require('../rest/inboxApi');
-const placesApi = require('../rest/placeApi');
+const placeApi = require('../rest/placeApi');
 const complaintApi = require('../rest/complaintApi');
+const offerApi = require('../rest/offerApi');
 
 routeServer.get('/', function (req, res){
   res.json(200, {msg: 'OK' });
@@ -35,9 +36,12 @@ routeServer.use('/languages', languageApi);
 routeServer.use('/inboxes', inboxApi);
 
 // API REST PLACES
-routeServer.use('/places', placesApi);
+routeServer.use('/places', placeApi);
 
 // API REST COMPLAINTS
 routeServer.use('/complaints', complaintApi);
+
+// API REST OFFERS
+routeServer.use('/offers', offerApi);
 
 module.exports = routeServer;

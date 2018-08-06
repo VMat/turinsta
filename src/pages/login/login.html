@@ -13,22 +13,65 @@
 </ion-header>
 
 <ion-content class="login-with-content" padding>
-  <ion-grid>
-    <ion-row>
-      <ion-col >
-        <button class="login-with-button" ion-button block color="danger" (click)="googleLoginUser()">
-          <ion-icon name="logo-googleplus"></ion-icon>
-          &nbsp;{{getCaption('googleLogin')}}
-        </button>
-      </ion-col>
-    </ion-row>
-    <ion-row>
-      <ion-col>
-        <button class="login-with-button" ion-button block color="facebook" (click)="facebookLoginUser()">
-          <ion-icon name="logo-facebook"></ion-icon>
-          &nbsp;{{getCaption('facebookLogin')}}
-        </button>
-      </ion-col>
-    </ion-row>
-  </ion-grid>
+  <ion-fab center middle>
+    <button ion-fab color="primary"><ion-icon class="login-icon" name="log-in"></ion-icon></button>
+    <ion-fab-list side="top">
+      <button ion-fab class="login-with-button" color="danger" (click)="googleLoginUser()">
+        <ion-icon name="logo-googleplus"></ion-icon>
+        <!--&nbsp;{{getCaption('googleLogin')}}-->
+      </button>
+    </ion-fab-list>
+    <ion-fab-list side="left">
+      <button ion-fab class="login-with-button" color="facebook" (click)="facebookLoginUser()">
+        <ion-icon name="logo-facebook"></ion-icon>
+        <!--&nbsp;    &nbsp;{{getCaption('facebookLogin')}}-->
+      </button>
+    </ion-fab-list>
+    <ion-fab-list side="right">
+      <button ion-fab class="login-with-button" color="twitter" (click)="twitterLoginUser()">
+        <ion-icon name="logo-twitter"></ion-icon>
+        <!--&nbsp;{{getCaption('twitterLogin')}}-->
+      </button>
+    </ion-fab-list>
+    <ion-fab-list side="bottom">
+      <button ion-fab class="login-with-button" color="guest" (click)="guestLoginUser()">
+        <ion-icon name="ios-person"></ion-icon>
+        <!--&nbsp;{{getCaption('guestLogin')}}-->
+      </button>
+    </ion-fab-list>
+  </ion-fab>
+  <!--<ion-grid>-->
+    <!--<ion-row>-->
+      <!--<ion-col >-->
+        <!--<button class="login-with-button" ion-button block color="danger" (click)="googleLoginUser()">-->
+          <!--<ion-icon name="logo-googleplus"></ion-icon>-->
+          <!--&nbsp;{{getCaption('googleLogin')}}-->
+        <!--</button>-->
+      <!--</ion-col>-->
+    <!--</ion-row>-->
+    <!--<ion-row>-->
+      <!--<ion-col>-->
+        <!--<button class="login-with-button" ion-button block color="facebook" (click)="facebookLoginUser()">-->
+          <!--<ion-icon name="logo-facebook"></ion-icon>-->
+      <!--&nbsp;    &nbsp;{{getCaption('facebookLogin')}}-->
+        <!--</button>-->
+      <!--</ion-col>-->
+    <!--</ion-row>-->
+    <!--<ion-row>-->
+      <!--<ion-col>-->
+        <!--<button class="login-with-button" ion-button block color="twitter" (click)="twitterLoginUser()">-->
+          <!--<ion-icon name="logo-twitter"></ion-icon>-->
+          <!--&nbsp;{{getCaption('twitterLogin')}}-->
+        <!--</button>-->
+      <!--</ion-col>-->
+    <!--</ion-row>-->
+    <!--<ion-row>-->
+      <!--<ion-col>-->
+        <!--<button class="login-with-button" ion-button block color="guest" (click)="guestLoginUser()">-->
+          <!--<ion-icon name="ios-person"></ion-icon>-->
+          <!--&nbsp;{{getCaption('guestLogin')}}-->
+        <!--</button>-->
+      <!--</ion-col>-->
+    <!--</ion-row>-->
+  <!--</ion-grid>-->
 </ion-content>

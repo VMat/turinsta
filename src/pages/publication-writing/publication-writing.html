@@ -60,7 +60,7 @@
     </div>
     <p *ngIf="publication.timestamps" item-end class="text-with-ellipsis">{{prettyDate(publication.timestamps.created)}}</p>
   </ion-item>
-  <ion-item>
+  <ion-item *ngIf="experiences.length || checkEditPermission()">
     <ion-item no-lines>
       <p>{{getCaption("publicationWritingExperiences")}} (<span>{{experiences.length}}</span>)</p>
       <button item-end ion-button icon-only clear (click)="toogleExperienceList()">
@@ -69,7 +69,7 @@
     </ion-item>
     <experience-list *ngIf="experienceListOpened" [experiences]=experiences [publicationOwner]=user._id [publicationId]=publication._id></experience-list>
   </ion-item>
-  <ion-item *ngIf="publication._id">
+  <ion-item *ngIf="publication._id && (comments.length || loggedUser)">
     <ion-item no-lines>
       <p>{{getCaption("publicationWritingComments")}} (<span>{{comments.length}}</span>)</p>
       <button item-end ion-button icon-only clear (click)="toogleCommentList()">
@@ -78,7 +78,7 @@
     </ion-item>
     <comment-list *ngIf="publication._id && commentListOpened" [comments]=comments [publicationId]=publication._id [publicationOwner]=user._id></comment-list>
   </ion-item>
-  <ion-item *ngIf="publication._id && !checkEditPermission()">
+  <ion-item *ngIf="publication._id && loggedUser && !checkEditPermission()">
     <score-handler [publicationScore]="scoreGivenFromUser()" [publicationId]="publication._id" [scoreInputShowed]=true (scoreChanged)="updateScore($event)"></score-handler>
   </ion-item>
 </ion-content>

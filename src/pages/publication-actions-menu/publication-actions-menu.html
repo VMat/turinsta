@@ -6,7 +6,7 @@
 -->
 <ion-content no-padding>
   <ion-list>
-    <ion-item *ngIf="checkNotOwner()" (click)="handleFavorite()">
+    <ion-item *ngIf="loggedUser && checkNotOwner()" (click)="handleFavorite()">
       <ion-icon item-start name="heart" color="danger"></ion-icon>
       <p *ngIf="!followedPublication">{{getCaption("publicationActionAddToFavorites")}}</p>
       <p *ngIf="followedPublication">{{getCaption("publicationActionRemoveFromFavorites")}}</p>
@@ -19,16 +19,16 @@
       <ion-icon item-start class="publication-icon" name="share" color="warning"></ion-icon>
       <p>{{getCaption("publicationActionShare")}}</p>
     </ion-item>
-    <ion-item *ngIf="checkNotOwner()" (click)="handleUser()">
+    <ion-item *ngIf="loggedUser && checkNotOwner()" (click)="handleUser()">
       <ion-icon item-start name="person-add" color="success"></ion-icon>
       <p *ngIf="!followedUser">{{getCaption("publicationActionFollowUser")}}</p>
       <p *ngIf="followedUser">{{getCaption("publicationActionStopFollowUser")}}</p>
     </ion-item>
-    <ion-item *ngIf="checkNotOwner()" (click)="viewUser()">
+    <ion-item *ngIf="checkNotOwner() || !loggedUser" (click)="viewUser()">
       <ion-icon item-start name="contact" color="primary"></ion-icon>
       <p>{{getCaption("publicationActionSeeUser")}}</p>
     </ion-item>
-    <ion-item *ngIf="checkNotOwner()" (click)="denunciate()">
+    <ion-item *ngIf="loggedUser && checkNotOwner()" (click)="denunciate()">
       <ion-icon item-start name="alert" color="danger"></ion-icon>
       <p>{{getCaption("publicationActionReportPublication")}}</p>
     </ion-item>

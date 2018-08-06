@@ -24,15 +24,22 @@ export class LoginPage {
   }
 
   facebookLoginUser(): void {
-    this.loginProvider.facebookLogin(this.navCtrl);
+    this.loginProvider.facebookLogin();
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad LoginPage');
   }
 
+  twitterLoginUser() {
+    this.loginProvider.twitterLogin();
+  }
+
+  guestLoginUser(){
+    this.loginProvider.guestLogin();
+  }
+
   getCaption(captionKey){
     return this.commons.translate([captionKey]);
   }
-
 }

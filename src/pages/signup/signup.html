@@ -4,14 +4,11 @@
   See http://ionicframework.com/docs/components/#navigation for more info on
   Ionic pages and navigation.
 -->
-<ion-header>
+<ion-header class="tabs-header">
   <ion-navbar>
-    <ion-item>
-      <button ion-button color="primary" icon-only clear (click)="rollbackSignup()">
-        <ion-icon name="arrow-back"></ion-icon>
-      </button>
-      <ion-title>Signup</ion-title>
-    </ion-item>
+    <ion-title align="center">
+      TurInsta
+    </ion-title>
   </ion-navbar>
 </ion-header>
 
@@ -19,24 +16,29 @@
   <ion-card>
     <ion-card-header>
       <ion-item>
+        <button item-start ion-button icon-only color="primary" clear (click)="rollbackSignup()">
+          <ion-icon name="arrow-back"></ion-icon>
+        </button>
+        <p item-end>{{user.providerId}}</p>
+      </ion-item>
+      <ion-item>
         <ion-avatar item-start>
           <img [src]="user.photoURL">
         </ion-avatar>
-        <ion-card-title>{{user.displayName}}</ion-card-title>
-        <p item-end>{{user.providerId}}</p>
+        <ion-card-title item-end>{{user.displayName}}</ion-card-title>
       </ion-item>
     </ion-card-header>
     <ion-card-content>
       <ion-list>
         <ion-item>
           <h4 item-start><b>{{'First name:'}}</b></h4>
-          <h4 item-end>{{user.first_name}}</h4>
+          <h4 item-end>{{user.name}}</h4>
         </ion-item>
         <ion-item>
           <h4 item-start><b>{{'Last name:'}}</b></h4>
-          <h4 item-end>{{user.last_name}}</h4>
+          <h4 item-end>{{user.lastName}}</h4>
         </ion-item>
-        <ion-item>
+        <ion-item *ngIf="user.birthday">
           <h4 item-start><b>{{'Birthday:'}}</b></h4>
           <h4 item-end>{{user.birthday}}</h4>
         </ion-item>
@@ -44,17 +46,16 @@
           <h4 item-start><b>{{'Email:'}}</b></h4>
           <h4 item-end>{{user.email}}</h4>
         </ion-item>
-        <ion-item>
+        <ion-item *ngIf="user.hometown">
           <h4 item-start><b>{{'Hometown:'}}</b></h4>
           <h4 item-end>{{user.hometown}}</h4>
         </ion-item>
-        <ion-item>
+        <ion-item *ngIf="user.location">
           <h4 item-start><b>{{'Location:'}}</b></h4>
           <h4 item-end>{{user.location}}</h4>
         </ion-item>
         <ion-item>
-          <button item-end ion-button icon-end color="primary" (click)="doSignup()">
-            {{'Continue'}}
+          <button item-end ion-button icon-only color="primary" clear (click)="doSignup()">
             <ion-icon name="arrow-forward"></ion-icon>
           </button>
         </ion-item>

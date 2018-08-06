@@ -14,3 +14,26 @@
 // To declare rules for a specific mode, create a child rule
 // for the .md, .ios, or .wp mode classes. The mode class is
 // automatically applied to the <body> element in the app.
+//.fab .fab-md .fab-in-list .fab-md-in-list .show {
+//  margin: 10px !important;
+//}
+
+ion-fab[bottom][edge] {
+  bottom: -50px;
+}
+
+ion-fab[top][edge] {
+  top: -80px;
+}
+
+ion-fab[right] {
+  right: -15px;
+}
+
+.fab[mini] {
+  margin: 10px 40px;
+}
+
+.fab-list-active {
+  margin-bottom: 60px;
+}

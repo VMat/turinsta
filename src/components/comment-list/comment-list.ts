@@ -23,14 +23,16 @@ export class CommentListComponent {
   @Input() publicationId: string = null;
   @Input() publicationOwner: string = null;
   @Input() commentId: string = null;
+  loggedUser = null;
 
   constructor(public storageService: StorageProvider, public commonsService: CommonsProvider, public store: Store<AppState>, private modalCtrl: ModalController) {
+    this.loggedUser = this.commonsService.getUserId();
   }
 
   presentCommentWritingModal() {
     let experienceWritingModal = this.modalCtrl.create(CommentWritingPage, {
       comment: {
-        user: this.commonsService.getUserId(),
+        user: this.loggedUser,
         publication: this.publicationId,
         parent: this.commentId
       }

@@ -12,15 +12,15 @@
       <ion-label>{{getCaption("userFilterAll")}}</ion-label>
       <ion-radio value="{{KEYS.ALL}}" (click)="close()"></ion-radio>
     </ion-item>
-    <ion-item>
+    <ion-item *ngIf="loggedUser">
       <ion-label>{{getCaption("userFilterFollowed")}}</ion-label>
       <ion-radio value="{{KEYS.FOLLOWERS}}" (click)="close({key: userPath + '.followers', value: loggedUser, operation: 'CONTAINS'})"></ion-radio>
     </ion-item>
-    <ion-item>
+    <ion-item *ngIf="loggedUser">
       <ion-label>{{getCaption("userFilterOwn")}}</ion-label>
       <ion-radio value="{{KEYS.OWN}}" (click)="close({key: userPath + '._id', value: loggedUser, operation: 'EQUAL'})"></ion-radio>
     </ion-item>
-    <ion-item>
+    <ion-item *ngIf="loggedUser">
       <ion-label>{{getCaption("publicationFilterFavorite")}}</ion-label>
       <ion-radio value="{{KEYS.FAVORITES}}" (click)="close({key: publicationPath + '._id', value: favorites, operation: 'IN'})"></ion-radio>
     </ion-item>

@@ -31,13 +31,47 @@ export class SignupPage {
   // };
 
   user: any = {};
+  language: any = null;
+  token: any = null;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private login: LoginProvider, private storage: StorageProvider, private commons: CommonsProvider) {
   }
 
   ionViewDidLoad() {
-    this.user = this.navParams.get('user');
+    const rawUser = this.navParams.get('user');
+    this.language = this.navParams.get('language');
+    this.token = this.navParams.get('token');
     console.log("SIGNUP PARAM", this.navParams.data);
+    switch (rawUser.providerId) {
+      case 'google.com': {
+        this.user = {
+          photoURL: rawUser.image.url,
+          providerId: rawUser.providerId,
+          name: rawUser.name.givenName,
+          lastName: rawUser.name.familyName,
+          displayName: rawUser.displayName,
+          email: rawUser.email,
+          birthday: null,
+          hometown: null,
+          location: null,
+        };
+        break;
+      }
+      case 'facebook.com': {
+        this.user = {
+          photoURL: rawUser.photoURL,
+          providerId: rawUser.providerId,
+          name: rawUser.first_name,
+          lastName: rawUser.last_name,
+          displayName: rawUser.displayName,
+          email: rawUser.email,
+          birthday: rawUser.birthday,
+          hometown: rawUser.hometown.name,
+          location: rawUser.location.name,
+        };
+        break;
+      }
+    }
   }
 
   rollbackSignup(){
@@ -45,7 +79,10 @@ export class SignupPage {
   }
 
   doSignup(){
-    this.storage.createUser(this.user).first().subscribe((user) => {
+    const data = this.user;
+    data.language = this.language;
+    data.token = this.token;
+    this.storage.createUser(data).first().subscribe((user) => {
       this.commons.setUserId(user._id);
       this.commons.setUserData();
       this.navCtrl.setRoot(TabsPage);

@@ -28,6 +28,7 @@ export class PublicationActionsMenuPage {
   followedUser: boolean = null;
   publication: string = null;
   user: any = null;
+  loggedUser = null;
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad PublicationActionsMenuPage');
@@ -35,6 +36,10 @@ export class PublicationActionsMenuPage {
     this.followedUser = this.navParams.get("followedUser");
     this.publication = this.navParams.get("publication");
     this.user = this.navParams.get("user");
+  }
+
+  ionViewWillLoad() {
+    this.loggedUser = this.commons.getUserId();
   }
 
   checkNotOwner(){
