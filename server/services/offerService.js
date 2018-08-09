@@ -17,8 +17,8 @@ OfferService.getOffers = () => {
 
   return new Promise((resolve, reject) => {
     HtmlToJson.request('https://despegar.com', {
-      'offers': ['.ux-home-offer', function (offer) {
-        return JSON.stringify(offer['0']);
+      'offers': ['.ux-home-offer', function ($offer) {
+        return $offer.text();
       }]
     }, function (err, result) {
       if(err) reject(err);
