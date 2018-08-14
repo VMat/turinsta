@@ -16,15 +16,21 @@ OfferService.getOffers = () => {
   // });
 
   return new Promise((resolve, reject) => {
-    HtmlToJson.request('https://despegar.com', {
-      'offers': ['.ux-home-offer', function ($offer) {
-        return $offer.text();
-      }]
-    }, function (err, result) {
-      if(err) reject(err);
-      console.log('htmltojson', result);
-      resolve(result);
-    });
+    HtmlToJson.request('https://despegar.com',
+      ['.ux-home-offer', {
+        'description': function ($offer) {
+          return $offer.text();
+        },
+        'image': function ($offer) {
+          return $offer.find('img').attr('src');
+        }}
+      ],
+      function (err, result) {
+        if(err) reject(err);
+        console.log('htmltojson', result);
+        resolve(result);
+      }
+    );
   });
 };
 
