@@ -14,6 +14,7 @@ OfferService.getOffers = () => {
       resolve(jsonCreated);
     })
     .catch((err) => {
+      console.log('ERR', err);
       reject(err);
     });
   });
