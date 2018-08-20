@@ -8,8 +8,8 @@ OfferService.getOffers = () => {
   return new Promise((resolve, reject) => {
     return Axios.get('https://despegar.com')
     .then((res) => {
-      console.log('PAGE', res.data);
-      const jsonCreated = html2json(res.data);
+      console.log('PAGE', res.body);
+      const jsonCreated = html2json(res.body);
       console.log('JSON', jsonCreated);
       resolve(jsonCreated);
     })
