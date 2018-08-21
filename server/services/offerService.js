@@ -8,17 +8,12 @@ OfferService.getOffers = () => {
   return new Promise((resolve, reject) => {
     return Axios.get('https://despegar.com')
     .then((res) => {
-      // const mySubString = res.data.substring(
-      //   res.data.lastIndexOf('<div class="ui-home-main-offer'),
-      //   res.data.lastIndexOf("</body>") + 7
-      // );
-      let rawData = res.data.split('<div class="ui-home-main-offer');
+      let rawData = res.data.split('<div class="ui-home-main-offer ');
       rawData.pop();
       rawData.shift();
       rawData = rawData.map((item) => {
         return '<div class="ui-home-main-offer' + item;
       });
-      // const mySubString = '<div class="ui-home-main-offer' + res.data.split('<div class="ui-home-main-offer')[1];
       console.log('PAGE', rawData);
       const offers = html2json(rawData.join(''));
       console.log('OFFERS', offers);
