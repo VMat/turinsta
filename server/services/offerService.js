@@ -12,11 +12,17 @@ OfferService.getOffers = () => {
       //   res.data.lastIndexOf('<div class="ui-home-main-offer'),
       //   res.data.lastIndexOf("</body>") + 7
       // );
-      const mySubString = '<div class="ui-home-main-offer' + res.data.split('<div class="ui-home-main-offer')[1];
-      console.log('PAGE', mySubString);
-      const jsonCreated = html2json(mySubString);
-      console.log('JSON', jsonCreated);
-      resolve(JSON.stringify(jsonCreated));
+      let rawData = res.data.split('<div class="ui-home-main-offer');
+      rawData.pop();
+      rawData.shift();
+      rawData.map((item) => {
+        return '<div class="ui-home-main-offer' + item;
+      });
+      // const mySubString = '<div class="ui-home-main-offer' + res.data.split('<div class="ui-home-main-offer')[1];
+      console.log('PAGE', rawData);
+      const offers = html2json(rawData);
+      console.log('OFFERS', offers);
+      resolve(offers);
     })
     .catch((err) => {
       console.log('ERR', err);
