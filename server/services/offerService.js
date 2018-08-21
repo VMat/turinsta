@@ -9,8 +9,8 @@ OfferService.getOffers = () => {
     return Axios.get('https://despegar.com')
     .then((res) => {
       var mySubString = res.data.substring(
-        str.lastIndexOf("<body") + 1,
-        str.lastIndexOf("</body>")
+        res.data.lastIndexOf("<body") + 1,
+        res.data.lastIndexOf("</body>")
       );
       console.log('PAGE', mySubString);
       const jsonCreated = html2json(mySubString);
