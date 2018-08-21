@@ -8,11 +8,11 @@ OfferService.getOffers = () => {
   return new Promise((resolve, reject) => {
     return Axios.get('https://despegar.com')
     .then((res) => {
-      let rawData = res.data.split('<div class="ui-home-main-offer "');
+      let rawData = res.data.split('<div class="ux-home-offer "');
       rawData.pop();
       rawData.shift();
       rawData = rawData.map((item) => {
-        return '<div class="ui-home-main-offer "' + item;
+        return '<div class="ux-home-offer "' + item;
       });
       console.log('PAGE', rawData);
       const offers = html2json(rawData.join(''));
