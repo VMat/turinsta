@@ -20,7 +20,7 @@ OfferService.getOffers = () => {
       });
       // const mySubString = '<div class="ui-home-main-offer' + res.data.split('<div class="ui-home-main-offer')[1];
       console.log('PAGE', rawData);
-      const offers = html2json(rawData);
+      const offers = html2json(rawData.join(''));
       console.log('OFFERS', offers);
       resolve(offers);
     })
