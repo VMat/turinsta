@@ -15,7 +15,7 @@ OfferService.getOffers = () => {
       console.log('PAGE', mySubString);
       const jsonCreated = html2json(mySubString);
       console.log('JSON', jsonCreated);
-      resolve(jsonCreated);
+      resolve(JSON.stringify(jsonCreated));
     })
     .catch((err) => {
       console.log('ERR', err);
