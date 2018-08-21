@@ -15,7 +15,7 @@ OfferService.getOffers = () => {
       let rawData = res.data.split('<div class="ui-home-main-offer');
       rawData.pop();
       rawData.shift();
-      rawData.map((item) => {
+      rawData = rawData.map((item) => {
         return '<div class="ui-home-main-offer' + item;
       });
       // const mySubString = '<div class="ui-home-main-offer' + res.data.split('<div class="ui-home-main-offer')[1];
